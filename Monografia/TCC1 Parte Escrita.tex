@@ -1,6 +1,6 @@
 %!TEX TS-program = xelatex
-%!BIB program = bibtex
-%!LW recipe=xelatex-bibtex-xelatex-xelatex
+%!BIB program = biber
+%!LW recipe=xelatex-biber-xelatex-x2
 
 %% abtex2-modelo-trabalho-academico.tex, v<VERSION> laurocesar
 %% Copyright 2012-<COPYRIGHT_YEAR> by abnTeX2 group at http://www.abntex.net.br/ 
@@ -54,14 +54,18 @@
 % Pacotes básicos 
 % ---
 \usepackage{lmodern}			% Usa a fonte Latin Modern			
+% \usepackage{mlmodern}			% Usa a fonte Latin Modern			
 \usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
-\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+% \usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
 \usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
 \graphicspath{ {./Imagens/} }
 \usepackage{microtype} 			% para melhorias de justificação
 % ---
+
+\usepackage[backend=biber]{biblatex}
+\addbibresource{library.bib}
 		
 % ---
 % Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
@@ -106,7 +110,7 @@
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
-\titulo{Paralelização de Algoritmos Notórios de\\ Clustering em GPUs NVIDIA}
+\titulo{Paralelização de Algoritmos Notórios de Clustering em GPUs NVIDIA}
 \autor{Vinícius Henrique Almeida Praxedes}
 \local{Brasil}
 \data{2019, Novembro}
@@ -505,7 +509,7 @@
 % ---
 % inserir o sumario
 % ---
-\pdfbookmark[0]{\contentsname}{toc}
+% \pdfbookmark[0]{\contentsname}{toc}
 \tableofcontents*
 \cleardoublepage
 % ---
@@ -799,7 +803,8 @@ A tabela abaixo representa o cronograma de pesquisa e desenvolvimento deste trab
 % ----------------------------------------------------------
 % Referências bibliográficas
 % ----------------------------------------------------------
-\bibliography{library}
+% \bibliography{library}
+\printbibliography
 
 % % ----------------------------------------------------------
 % % Glossário
