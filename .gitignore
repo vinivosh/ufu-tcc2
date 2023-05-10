@@ -525,3 +525,6 @@ pyrightconfig.json
 
 Template-TCC-BCC*/
 /template_tcc_bcc.zip
+
+# Dataset files
+code/**/*.data
