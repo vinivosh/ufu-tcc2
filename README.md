@@ -1,6 +1,6 @@
 # ufu-tcc2
 
-Repositório para código do meu Trabalho de Conclusão de Curso, na Universidade Federal de Uberlândia, curso de Ciência da Computação, tanto a monografia, a apresentação, quanto aplicações relacionadas à elas
+Repositório para código do meu Trabalho de Conclusão de Curso, na Universidade Federal de Uberlândia, curso de Ciência da Computação, tanto a monografia, a apresentação, quanto aplicações relacionadas à elas.
 
 # Monografia
 
