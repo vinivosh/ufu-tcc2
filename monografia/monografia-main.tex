@@ -28,14 +28,14 @@ brazil]{facom-ufu-abntex2}
 \orientador{Daniel Duarte Abdala} %TCC
 %\coorientador{Algum?} %TCC
 
-\titulo{Paralelização de Algoritmos Notórios de Agrupamento em GPUs NVIDIA} %TCC
+\titulo{Paralelização de Algoritmos Notórios de Agrupamento de Dados em GPUs NVIDIA} %TCC
 
 \hypersetup{pdfkeywords={palavra 1}{palavra 2}{palavra 4}{palavra 4}{palavra 5}} %TCC
 
 % ----
 % Variáveis e definições
-\def\qntAlgrtm{quatro}
-\def\qntAlgrtmNaoExtenso{4}
+\def\qntAlgrtm{dois}
+\def\qntAlgrtmNaoExtenso{2}
 % ----
 
 \begin{document} 
@@ -221,7 +221,7 @@ Nem todo algoritmo pode ser paralelizado, no entanto. Existem procedimentos e al
 E é a paralelização de uma classe de algoritmos em especial que é o foco desta pesquisa: algoritmos de \textit{clustering}, ou clusterização. Tais algoritmos, de forma sucinta, agrupam objetos de maneira que os objetos no mesmo grupo, ou \textit{cluster}, sejam mais parecidos entre si, de acordo com alguma métrica, do que com objetos de outros grupos. A análise de clusters é essencial em diversas áreas da computação, como mineração de dados, aprendizado de máquina, compressão de dados, entre outras.
 
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-% Checar se essa citação do site da NVIDIA está correta! Esse bagulho no Bib usou o modelo "misc", não sei se está correto. O Mendeley gerou assim, então talvez esteja...
+% Checar se essa citação do site da NVIDIA está correta! Esse bagulho no Bib usou o modelo "misc", não sei se está correto. O Mendeley gerou assim, então talvez esteja…
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 A hipótese principal é a de que algoritmos de clustering, em geral, são altamente paralelizáveis, e apresentam um ganho considerável de desempenho (menor tempo de execução) quando implementados para utilizar o poder de paralelismo vetorial de placas de vídeo NVIDIA, através da linguagem CUDA \cite{CUDAZone}. Mais que isso, através de uma análise sistemática de estudos prévios e implementações de tais algoritmos em CUDA, visa-se generalizar o processo de paralelização destes. Isto é, identificar quais partes são necessariamente seriais, quais são paralelizáveis, e que sequência de passos gerais deve ser seguida para se conseguir paralelizar com sucesso e ganho significativo de desempenho um algoritmo de clustering qualquer.
@@ -230,7 +230,10 @@ A hipótese principal é a de que algoritmos de clustering, em geral, são altam
 % Tenho que substituir essas referências aqui por referências de versões seriais de cada algoritmo. Usar as referências das versões aceleradas em GPUs mais adiante, ao invés de aqui parece fazer bem mais sentido
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-O foco de pesquisa são \qntAlgrtm{} algoritmos de clustering especialmente notórios: \textit{K-means} \cite{GPU-accelerated-K-Means}, \textit{Clustering Hierárquico}, \textit{DBSCAN} \cite{G-DBSCAN}, ou \textit{Clusterização Espacial Baseada em Densidade de Aplicações com Ruído}, e \textit{Random Forests} -- que mesmo não sendo exclusivamente um algoritmo de clusterização, pode ser utilizado justamente para tal. Implementações e estudos realizados sobre estes serão analisados, e implementações novas terão desempenho comparado com estas.
+O foco de pesquisa são \qntAlgrtm{} algoritmos de clustering especialmente notórios: \textit{K-means} \cite{GPU-accelerated-K-Means}, \textit{Clustering Hierárquico}. Implementações e estudos realizados sobre estes serão analisados, e implementações novas terão desempenho comparado com estas.
+
+% ? Old text here:
+% , \textit{DBSCAN} \cite{G-DBSCAN}, ou \textit{Clusterização Espacial Baseada em Densidade de Aplicações com Ruído}, e \textit{Random Forests} -- que mesmo não sendo exclusivamente um algoritmo de clusterização, pode ser utilizado justamente para tal.
 
 % ----
 
