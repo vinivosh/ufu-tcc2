@@ -209,9 +209,21 @@ brazil]{facom-ufu-abntex2}
 \chapter{Introdução}
 % ----------------------------------------------------------
 
-A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. Desde os primórdios da área buscamos algoritmos e procedimentos que, dados os mesmos parâmetros de entrada, executem a mesma tarefa na menor quantidade de tempo possível. Outros recursos como espaço de memória utilizado, eficiência energética ou uso da rede em muitos cenários são mais importantes que o tempo de execução, mas ainda sim a mesma continua sendo um dos mais estudados parâmetros para categorização e avaliação de algoritmos e procedimentos na computação. De fato o tempo de execução -- em ciclos, ou passos, de processamento -- é a métrica utilizada na análise de uma das maiores incógnitas da computação, o problema P versus NP.
+A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. Desde os primórdios da área buscamos algoritmos e procedimentos que, dados os mesmos parâmetros de entrada, executem a mesma tarefa na menor quantidade de tempo possível. Outros recursos como espaço de memória utilizado, eficiência energética ou uso da rede em muitos cenários são mais importantes que o tempo de execução, mas ainda assim ela continua sendo um dos mais estudados parâmetros para categorização e avaliação de algoritmos e procedimentos na computação. De fato o tempo de execução -- em ciclos, ou passos, de processamento -- é a métrica utilizada na análise de uma das maiores incógnitas da computação, o problema P versus NP.
 
-Um grande avanço na quantidade de poder de processamento dos computadores e, portanto, diminuição do tempo de execução de algoritmos, foi a paralelização dos processadores. A habilidade de poder executar duas ou mais ações simultaneamente possibilitou muitos ganhos palpáveis na velocidade de execução de algoritmos e procedimentos, porém introduziu uma necessidade de mudança na forma de se pensar em resoluções de problemas computacionalmente: paralelizar um algoritmo antes serial não é uma tarefa trivial, e requer cuidados especiais com concorrência no acesso a recursos da máquina, dependência de dados e cálculos, sincronização, entre outros dilemas.
+% TODO
+% TODO
+% ? TODO: Adicionar no parágrafo acima uma citação básica sobre o problema P vs NP
+% TODO
+% TODO
+
+Um grande avanço na quantidade de poder de processamento dos computadores e, portanto, diminuição do tempo de execução de algoritmos, foi a criação dos processadores multinúcleo, permitindo a paralelização de processos. A habilidade de poder executar duas ou mais ações simultaneamente possibilitou muitos ganhos palpáveis na velocidade de execução de algoritmos e procedimentos, porém introduziu uma necessidade de mudança na forma de se pensar em resoluções de problemas computacionalmente: paralelizar um algoritmo serial (não-paralelo) não é uma tarefa trivial, e requer cuidados especiais com concorrência no acesso a recursos da máquina, interdependência de dados e cálculos, sincronização, entre outros dilemas.
+
+% TODO
+% TODO
+% TODO Continuar depois a revisão textual a partir deste comentário!
+% TODO
+% TODO
 
 Um dos componentes que mais utilizam da paralelização num computador moderno são as GPUs, unidades de processamento gráfico, ou placas de vídeo, que são basicamente processadores especializados em operações vetoriais, altamente paralelizadas, usualmente dedicados a operações gráficas, e com sua própria memória dedicada, a VRAM. Enquanto processadores de uso geral, CPUs, costumam ter no máximo dezenas de núcleos para processamento paralelo, GPUs possuem milhares ou até milhões de núcleos para operações vetoriais.
 
