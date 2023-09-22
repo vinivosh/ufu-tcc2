@@ -197,17 +197,16 @@ brazil]{facom-ufu-abntex2}
 
 
 
+
+
 % ----------------------------------------------------------
 % ELEMENTOS TEXTUAIS
 % ----------------------------------------------------------
 \textual
 
-
-% ----------------------------------------------------------
-% Capítulo - Introdução
-% ----------------------------------------------------------
+% * ############################################################################
 \chapter{Introdução}
-% ----------------------------------------------------------
+% * ############################################################################
 
 A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. Desde os primórdios da área buscamos algoritmos e procedimentos que, dados os mesmos parâmetros de entrada, executem a mesma tarefa na menor quantidade de tempo possível. Outros recursos como espaço de memória utilizado, eficiência energética ou uso da rede em muitos cenários são mais importantes que o tempo de execução, mas ainda assim ela continua sendo um dos mais estudados parâmetros para categorização e avaliação de algoritmos e procedimentos na computação. De fato o tempo de execução -- em ciclos, ou passos, de processamento -- é a métrica utilizada na análise de uma das maiores incógnitas da computação, o problema P versus NP.
 
@@ -219,15 +218,21 @@ A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. 
 
 Um grande avanço na quantidade de poder de processamento dos computadores e, portanto, diminuição do tempo de execução de algoritmos, foi a criação dos processadores multinúcleo, permitindo a paralelização de processos. A habilidade de poder executar duas ou mais ações simultaneamente possibilitou muitos ganhos palpáveis na velocidade de execução de algoritmos e procedimentos, porém introduziu uma necessidade de mudança na forma de se pensar em resoluções de problemas computacionalmente: paralelizar um algoritmo serial (não-paralelo) não é uma tarefa trivial, e requer cuidados especiais com concorrência no acesso a recursos da máquina, interdependência de dados e cálculos, sincronização, entre outros dilemas.
 
+Um dos componentes que mais utilizam da paralelização num computador moderno são as GPUs --- unidades de processamento gráfico, ou placas de vídeo --- que são basicamente processadores especializados em operações vetoriais, altamente paralelizadas, usualmente utilizados para computação gráfica, e com sua própria memória dedicada, a VRAM. Enquanto processadores de uso geral, CPUs, costumam ter no máximo dezenas de núcleos para processamento paralelo, GPUs possuem milhares ou até milhões de núcleos para operações vetoriais.
+
+No entanto, cada vez mais está sendo descoberto e aproveitado o potencial de uso das GPUs em atividades não apenas voltadas para renderização, interfaces e outras operações gráficas, mas sim para a computação de propósito geral. Diversos algoritmos modernos e antigos beneficiam-se imensamente da paralelização enorme proporcionada por GPUs, e com ferramentas como a biblioteca e linguagem CUDA criada pela NVIDIA, está cada vez mais fácil implementar o uso de placas de vídeo em conjunto com CPUs convencionais nos mais variados algoritmos.
+
+% TODO
+% TODO
+% ? Seria mais adequado o uso do termo "sequencial" ao invés de "serial", ao descrever algoritmos não-paralelos? Pesquisar isso!
+% TODO
+% TODO
+
 % TODO
 % TODO
 % TODO Continuar depois a revisão textual a partir deste comentário!
 % TODO
 % TODO
-
-Um dos componentes que mais utilizam da paralelização num computador moderno são as GPUs, unidades de processamento gráfico, ou placas de vídeo, que são basicamente processadores especializados em operações vetoriais, altamente paralelizadas, usualmente dedicados a operações gráficas, e com sua própria memória dedicada, a VRAM. Enquanto processadores de uso geral, CPUs, costumam ter no máximo dezenas de núcleos para processamento paralelo, GPUs possuem milhares ou até milhões de núcleos para operações vetoriais.
-
-No entanto, cada vez mais está sendo descoberto e aproveitado o potencial de uso das GPUs em atividades não apenas voltadas para renderização, interfaces e outras operações gráficas, mas para a computação de propósito geral. Diversos algoritmos modernos e antigos beneficiam-se imensamente da paralelização enorme proporcionada por GPUs, e com ferramentas como a biblioteca e linguagem CUDA criada pela NVIDIA, está cada vez mais fácil implementar o uso de placas de vídeo em conjunto com CPUs convencionais nos mais variados algoritmos.
 
 Nem todo algoritmo pode ser paralelizado, no entanto. Existem procedimentos e algoritmos que são inerentemente seriais, como o cálculo do $n$-ésimo número da sequência de \textit{Fibonacci}, que requer que dois números prévios da sequência tenham sido calculados para obtermos o atual -- salvo, é claro, alguma descoberta teórica matemática do comportamento da sequência que nos permitisse uma nova maneira de calcular o $n$-ésimo elemento sem essa necessidade.
 
@@ -249,12 +254,6 @@ O foco de pesquisa são \qntAlgrtm{} algoritmos de clustering especialmente not�
 
 % ? Old text here:
 % , \textit{DBSCAN} \cite{G-DBSCAN}, ou \textit{Clusterização Espacial Baseada em Densidade de Aplicações com Ruído}, e \textit{Random Forests} -- que mesmo não sendo exclusivamente um algoritmo de clusterização, pode ser utilizado justamente para tal.
-
-% ----
-
-
-
-% ----
 
 \section{Objetivos}
 
@@ -309,23 +308,27 @@ Além disso, a apresentação nesse estudo de um procedimento genérico para par
 
 
 
-% ----------------------------------------------------------
-% Capítulo - Fundamentação Teórica
-% ----------------------------------------------------------
 
+
+% * ############################################################################
 \chapter{Fundamentação Teórica}
+% * ############################################################################
 
 Para compreender a pesquisa científica aqui realizada, é necessário primeiro entender o que são algoritmos de clusterização, tanto de maneira geral quanto específica, explorando os fundamentos e funcionamento dos \qntAlgrtm{} algoritmos pesquisados. Veremos que a complexidade de tempo destes algoritmos tendem a ser inconvenientemente altas ($O(n\cdot\log{n})$, $O(n^2)$ ou até $O(n^3)$ sendo complexidades comuns) e por isso qualquer ganho de velocidade significativo obtido valerá muito a pena.
 
 Também é imprescindível explorar o funcionamento dos processadores vetoriais --- sendo as \textit{Unidades de Processamento Gráfico} (GPUs) o principal exemplo destes e sobre o qual essa pesquisa irá focar --- e entender por quê usá-los para paralelizar algoritmos de clusterização proporcionará, em tese, um ganho de velocidade expressivo na execução destes, abrandando o peso de suas complexidades de tempo. Além de tudo isso, será apresentada brevemente a arquitetura que será utilizada para paralelizar os algoritmos estudados: a plataforma e modelo de programação CUDA, da NVIDIA, que permitirá extrair o poder de paralelização das placas de vídeo NVIDIA.
 
-% ----
+
+
+% * ####################################
 
 \section{Agrupamento de dados}
 
 A clusterização, ou clustering, é a tarefa de agrupar um conjunto de elementos de modo que cada elemento de um grupo se \enquote{pareça} mais com outros elementos do grupo (cluster) que pertence do que com elementos dos grupos que não pertence --- para algum significado bem definido de semelhança. É um processo muito comum e virtualmente necessário nas áreas de mineração de dados, análise estatística, análise de imagem, aprendizado de máquina, reconhecimento de padrões, e muitas outras.
 
 O significado de um cluster não pode ser bem definido e vai depender do conjunto de dados a ser analisado e a forma que os resultados obtidos serão utilizados --- de fato, esse é o principal motivo pelo qual tantos algoritmos diferentes de clustering existem \cite{SoManyClustAlg}. O comum em todas definições usadas é que um cluster é um conjunto de objetos de dados. Esses objetos são representados num espaço de dimensões iguais ao número de dados relevantes para cada objeto, e os algoritmos tentam criar grupos (clusters) nesse espaço que agrupem os objetos de uma maneira significativa, ou útil, para o estudo sendo feito e a definição de cluster sendo utilizada.
+
+% TODO adicionar citações, figuras de agrumento de dados
 
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 % Talvez seria melhor colocar esse parágrafo num formato de lista? Não sei...
@@ -340,49 +343,87 @@ Diversos modelos de cluster podem ser usados para definir o que é um cluster: \
 
 O resultado, ou saída, de um algoritmo de clusterização é comumente um rotulamento dos objetos de dados passados na entrada, o que indicará a divisão em clusters feita por ele. Classificações podem ser feitas quanto à natureza da clusterização obtida pelos algoritmos: \textbf{\textit{hard clustering}}, onde cada objeto pertence ou não a um cluster; \textbf{\textit{fuzzy clustering}}, onde cada objeto pertence uma certa porcentagem a cada cluster, o que pode significar, por exemplo, a chance do objeto pertencer àquele cluster \cite{FuzzyClusteringSurvey}. E subclassificações mais granulares ainda podem ser definidas, como: \textbf{clusterização de particionamento estrito}, onde cada objeto pertence a exatamente um cluster; \textbf{clusterização de particionamento estrito com \textit{outliers}}, onde objetos pertencem a exatamente um cluster, ou nenhum cluster, assim sendo considerados \textit{outliers}.
 
-% ? ####################################
+
+
+% * ####################################
+
+% ? ################
 % ? Planning writing
-% ? ####################################
+% ? ################
 
 \section{Programação Vetorial}
 
 [Escrever uma sub-seção sobre Programação Vetorial]
 
+\begin{itemize}
+  \item Tópico histórico, de onde ela vem, pra que ela serve
+  \item Processadores que dão suporte pra operações vetoriais (hoje em dia, basicamente apenas GPUs. APUs tbm?)
+  \item História da NVIDIA criando o CUDA
+  \item Mudança de paradigma em relação à programação serial: escalar -> vetorial
+\end{itemize}
+
+
+
+% * ####################################
+
 \section{NVIDIA CUDA}
 
 [Escrever uma sub-seção sobre programação em CUDA]
+
+\begin{itemize}
+  \item O que é?
+  \item Exemplos básicos de código  
+  \item Como criar um projeto cuda, onde vai cada parte (sequencial, vetorial, etc)
+\end{itemize}
+
+
+
+% * ####################################
 
 \section{Algoritmo 1: K-Means}
 
 [Escrever uma sub-seção sobre o K-Means]
 
+\begin{itemize}  
+  \item Um dos algoritmos mais tradicionais, explicar a história dele
+  \item Explicar Como ele é usado
+\end{itemize}
+
+
+
+% * ####################################
+
 \section{Algoritmo 2: Hierarchical Clustering}
 
 [Escrever uma sub-seção sobre o Hierarchical Clustering]
 
-% \section{DBSCAN}
 
-% \section{Random Forests}
 
-% ? ####################################
 
-% ----
 
-% \section{Processadores Vetoriais}
-
-% \subsection{A Arquitetura NVIDIA / CUDA}
-
-% \subsection{Como Programar em CUDA: Um Overview}
-
-% ----
+% * ############################################################################
 
 % \chapter{Levantamento do Estado da Arte}
 
-% ----------------------------------------------------------
-% Capítulo - Metodologia de Desenvolvimento e Pesquisa
-% ----------------------------------------------------------
+% ?
+% ?
+% ? Precisamos mesmo de um capítulo para isto? Talvez uma seção/sub-seção em algum outro capítulo/seção caiba melhor
+% ?
+% ?
 
+
+
+
+
+% * ############################################################################
 \chapter{Metodologia de Desenvolvimento e Pesquisa}
+% * ############################################################################
+
+% TODO
+% TODO
+% TODO Adicionar aqui uma figura, um diagrama, explicativo, sobre a metodologia usada para paralelizar um algoritmo de agrupamento genérico (vide arquivo ../Notes_230922_171133.pdf)
+% TODO
+% TODO
 
 A pesquisa realizada neste trabalho consiste de estudos e análises de trabalhos prévios, desenvolvimento de uma versão paralelizada de um algoritmo de clustering e experimentos sobre essa implementação. Pode-se dividir tal metodologia em um conjunto de etapas.
 
@@ -394,9 +435,11 @@ A terceira etapa consiste da busca de um procedimento geral para paralelizar um 
 
 A quarta etapa, por fim, se trata de diversos experimentos de ganho de velocidade, ou \textit{speedup}, do algoritmo que teve aqui sua versão acelerada em GPU implementada e apresentada. Esses experimentos irão dar uma ideia do quão significativo foi o ganho de desempenho ao paralelizar o algoritmo usando CUDA, se há um teto ou chão para tais ganhos, como o \textit{speedup} aumenta ou diminui com o aumento do dataset a ser analisado, assim como realizar uma análise de outros parâmetros importantes que não sejam velocidade, como uso de memória --- afinal, as VRAMs das placas de vídeo são comumente mais limitadas em tamanho que as RAMs utilizadas pelas CPUs.
 
-% \chapter{Experimentos e Datasets}
+\chapter{Experimentos e Datasets}
 
-% \chapter{Conclusões}
+\chapter{Resultados}
+
+\chapter{Conclusões e Trabalhos Futuros}
 
 
 
