@@ -232,40 +232,52 @@ Um dos componentes que mais utilizam da paralelização num computador moderno s
 
 No entanto, cada vez mais está sendo descoberto e aproveitado o potencial de uso das GPUs em atividades não apenas voltadas para renderização, interfaces e outras operações gráficas, mas sim para a computação de propósito geral. Diversos algoritmos modernos e antigos beneficiam-se imensamente do poder de alta paralelização proporcionado pelas GPUs, e com ferramentas como a biblioteca e linguagem CUDA criada pela NVIDIA, está cada vez mais fácil implementar o uso de placas de vídeo em conjunto com processadores convencionais nos mais variados algoritmos.
 
+Nem todo algoritmo pode ser paralelizado, no entanto. Existem procedimentos e algoritmos que são inerentemente seriais (também chamados de sequenciais), como o cálculo do $n$-ésimo número da sequência de \textit{Fibonacci}, que requer que dois números prévios da sequência tenham sido calculados para obtermos o atual --- salvo, é claro, alguma descoberta teórica matemática do comportamento da sequência que nos permitisse uma nova maneira de calcular o $n$-ésimo elemento sem essa necessidade.
+
+É importante entender também que nenhum algoritmo é paralelizável por completo. Sempre existirão partes de algoritmos que necessariametne devem ser executadas serialmente para seu funcionamento correto. Há um limite teórico de ganho máximo que pode ser obtido ao se paralelizar um algoritmo qualquer. Esse limite é definido pela Lei de Amdahl \cite{Amdahl-Law}: $\frac{1}{1-p}$, onde $p$ é a razão entre tempo de execução gasto rodando código paralelizável e tempo de execução gasto no total.
+
 % TODO
 % TODO
-% TODO Continuar depois a revisão textual a partir deste comentário!
+% ? TODO: Falar aqui também da Lei de Gustafson? Apresentada no artigo de 1988: Reevaluating Amdahl's Law. Pode ser bem importante! É uma estimativa menos pessimista que a Lei de Amdahl, que leva em conta o fato de que, ao se aumentar os recursos computacionais, geralmente os algoritmos passam a ser utilizados em datasets cada vez maiores, aumentando muito a parcela de tempo de execução gasta em código paralelo, enquanto a gasta em código serial se mantém praticamente constante
 % TODO
 % TODO
 
-Nem todo algoritmo pode ser paralelizado, no entanto. Existem procedimentos e algoritmos que são inerentemente seriais, como o cálculo do $n$-ésimo número da sequência de \textit{Fibonacci}, que requer que dois números prévios da sequência tenham sido calculados para obtermos o atual --- salvo, é claro, alguma descoberta teórica matemática do comportamento da sequência que nos permitisse uma nova maneira de calcular o $n$-ésimo elemento sem essa necessidade.
+E é a paralelização de uma classe de algoritmos em particular que é o foco desta pesquisa: os algoritmos de agrupamento de dados, também chamados de clusterização de dados, ou de \textit{clustering}. Tais algoritmos, de forma sucinta, agrupam objetos de maneira que os objetos no mesmo grupo, ou \textit{cluster}, sejam mais parecidos entre si, de acordo com alguma métrica, do que com objetos de outros grupos. A análise de clusters é essencial em diversas áreas da computação e estatística, como mineração de dados, aprendizado de máquina, compressão de dados, entre outras.
 
-É importante entender também que nenhum algoritmo é paralelizável por completo. Sempre existem partes de algoritmos que devem ser executadas serialmente para funcionar corretamente. O ganho máximo da paralelização de um algoritmo qualquer é uma função da parcela do seu código que pode ser paralelizada, e é definida pela Lei de Amdahl \cite{Amdahl-Law}: $\frac{1}{1-p}$, onde $p$ é a razão entre código paralelizável e código não-paralelizável.
+% TODO
+% TODO
+% ! TODO: Checar se essa citação abaixo, do site da NVIDIA, está correta! Esse bagulho no Bib usou o modelo "misc", não sei se está correto. O Mendeley gerou assim, então talvez esteja…
+% TODO
+% TODO
 
-E é a paralelização de uma classe de algoritmos em especial que é o foco desta pesquisa: algoritmos de \textit{clustering}, ou clusterização. Tais algoritmos, de forma sucinta, agrupam objetos de maneira que os objetos no mesmo grupo, ou \textit{cluster}, sejam mais parecidos entre si, de acordo com alguma métrica, do que com objetos de outros grupos. A análise de clusters é essencial em diversas áreas da computação, como mineração de dados, aprendizado de máquina, compressão de dados, entre outras.
+A hipótese principal deste trabalho é a de que algoritmos de clustering, em geral, são altamente paralelizáveis e apresentam um ganho considerável de desempenho (menor tempo de execução) quando implementados para utilizar o poder de paralelismo vetorial de placas de vídeo NVIDIA, através da linguagem CUDA \cite{CUDAZone}. Mais que isso, através de uma análise sistemática de estudos prévios e implementações de tais algoritmos em CUDA, visa-se generalizar o processo de paralelização destes. Isto é, identificar quais partes são necessariamente seriais, quais são paralelizáveis, e que sequência de passos gerais deve ser seguida para se conseguir paralelizar com sucesso um algoritmo de clustering qualquer e obter ganhos significativos de desempenho.
 
-% !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-% Checar se essa citação do site da NVIDIA está correta! Esse bagulho no Bib usou o modelo "misc", não sei se está correto. O Mendeley gerou assim, então talvez esteja…
-% !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% TODO
+% TODO
+% ! TODO: Tenho que substituir essas referências abaixo por referências de versões seriais de cada algoritmo. Usar as referências das versões aceleradas em GPUs mais adiante, ao invés de aqui parece fazer bem mais sentido
+% ! TODO: Adicionar o 
+% TODO
+% TODO
 
-A hipótese principal é a de que algoritmos de clustering, em geral, são altamente paralelizáveis, e apresentam um ganho considerável de desempenho (menor tempo de execução) quando implementados para utilizar o poder de paralelismo vetorial de placas de vídeo NVIDIA, através da linguagem CUDA \cite{CUDAZone}. Mais que isso, através de uma análise sistemática de estudos prévios e implementações de tais algoritmos em CUDA, visa-se generalizar o processo de paralelização destes. Isto é, identificar quais partes são necessariamente seriais, quais são paralelizáveis, e que sequência de passos gerais deve ser seguida para se conseguir paralelizar com sucesso e ganho significativo de desempenho um algoritmo de clustering qualquer.
+O foco de pesquisa são \qntAlgrtm{} algoritmos de clustering especialmente notórios: o \textit{K-means} \cite{GPU-accelerated-K-Means} e o \textit{Clustering Hierárquico}. Implementações e estudos realizados sobre estes foram analisados, e implementações paralelas em GPU tiveram seu desempenho comparado com as seriais em CPU.
 
-% !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-% Tenho que substituir essas referências aqui por referências de versões seriais de cada algoritmo. Usar as referências das versões aceleradas em GPUs mais adiante, ao invés de aqui parece fazer bem mais sentido
-% !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-O foco de pesquisa são \qntAlgrtm{} algoritmos de clustering especialmente notórios: \textit{K-means} \cite{GPU-accelerated-K-Means}, \textit{Clustering Hierárquico}. Implementações e estudos realizados sobre estes serão analisados, e implementações novas terão desempenho comparado com estas.
-
-% ? Old text here:
+% * Texto antigo do parágrafo acima:
 % , \textit{DBSCAN} \cite{G-DBSCAN}, ou \textit{Clusterização Espacial Baseada em Densidade de Aplicações com Ruído}, e \textit{Random Forests} --- que mesmo não sendo exclusivamente um algoritmo de clusterização, pode ser utilizado justamente para tal.
 
 \section{Objetivos}
+
+% TODO #########################################################################
+% TODO
+% TODO: Continuar depois a revisão textual a partir deste comentário!
+% TODO
+% TODO #########################################################################
 
 \subsection{Objetivo Geral}
 
 Esse trabalho tem como objetivo principal testar a validez de sua hipótese (discutida mais à fundo na seção 1.2) de que algoritmos de clusterização são intrinsecamente paralelizáveis, e que o ganho de velocidade ao serem paralelizados é altamente significativo.
 
 Além disso, deseja-se compilar aqui um vasto conhecimento de como paralelizar esses algoritmos em geral, analisando principalmente os \qntAlgrtm{} aqui estudados a fundo (k-means, clustering hierárquico, DBSCAN e Random Forests) e usando este aprendizado para criar um passo-a-passo genérico de como realizar tal modificação de código em um algoritmo de clusterização qualquer.
+
 
 \subsection{Objetivos Específicos}
 
