@@ -286,47 +286,47 @@ Além disso, deseja-se compilar aqui um vasto conhecimento de como paralelizar e
 
 \subsection{Objetivos Específicos}
 
-% TODO #########################################################################
-% TODO
-% TODO: Continuar depois a revisão textual a partir deste comentário!
-% TODO
-% TODO #########################################################################
-
 Para atingir o objetivo geral, é necessário completar diversos objetivos menores, ou \textit{milestones}, antes, criando um caminho de pesquisa que foi seguido --- não necessariamente na ordem apresentada. São estes:
 
 \begin{itemize}
-    \item Pesquisar extensamente a bibliografia da área, realizando assim um levantamento do estado da arte de algoritmos paralelos de agrupamento;
-
-    \item Estudar implementações já realizadas dos \qntAlgrtm{} algoritmos aqui estudados, a fim de adquirir conhecimento de como a paralelização em CUDA deve ser realizada;
-
-    \item Paralelizar um algoritmo de clustering \enquote{novo}, isto é, nunca antes paralelizado e exibido em trabalho científico, a fim de solidificar o conhecimento e prática de programação em CUDA. Foi escolhido o algoritmo de Agrupamento Hierárquico para tal;
-
-    \item Quantificar o ganho de desempenho das implementações paralelas, realizando diversos experimentos de \textit{speedup}, usando diversos datasets de tamanhos e dimensionalidades variadas;
-
-    \item Comparar o código serial (sem paralelização) com o código paralelo dos \qntAlgrtm{} algoritmos analisados, extraindo assim um conhecimento de como paralelizar um algoritmo de clusterização genérico;
+  \item Pesquisar extensamente a bibliografia da área, realizando assim um levantamento do estado da arte de algoritmos paralelos de agrupamento;
+  
+  \item Estudar implementações já realizadas dos \qntAlgrtm{} algoritmos aqui estudados, a fim de adquirir conhecimento de como a paralelização em CUDA deve ser realizada;
+  
+  \item Paralelizar um algoritmo de clustering \enquote{novo}, isto é, nunca antes paralelizado e exibido em trabalho científico, a fim de solidificar o conhecimento e prática de programação em CUDA. Foi escolhido o algoritmo de Agrupamento Hierárquico para tal;
+  
+  \item Quantificar o ganho de desempenho das implementações paralelas, realizando diversos experimentos de \textit{speedup}, usando diversos datasets de tamanhos e dimensionalidades variadas;
+  
+  \item Comparar o código serial (sem paralelização) com o código paralelo dos \qntAlgrtm{} algoritmos analisados, extraindo assim um conhecimento de como paralelizar um algoritmo de clusterização genérico;
 \end{itemize}
 
-% ----
 
 
-
-% ----
+% * ####################################
 
 \section{Hipótese}
 
 A hipótese que esta pesquisa procura testar é a de que algoritmos de clusterização em geral são inerentemente vetoriais e, consequentemente, se beneficiariam significativamente de arquiteturas de processamento vetoriais, como uma unidade de processamento gráfico, ou GPU.
 
-Um problema ser vetorial diz respeito ao escopo de itens de dados relevantes ao problema. Grande parte dos problemas da computação são escalares, o que significa que eles lidam com itens de dados unitários, como por exemplo \textit{integers} ou \textit{floats}, um de cada vez. Já um problema vetorial lida com itens de dados que são conjuntos unidimensionais, chamados vetores, que são formados por vários itens unitários de dados agrupados.
+Um problema ser vetorial diz respeito ao escopo de tipos de dados relevantes ao problema. Grande parte dos problemas da computação são escalares, o que significa que eles lidam com dados unitários, como por exemplo \textit{integers} ou \textit{floats}, um de cada vez. Já um problema vetorial lida com dados que são conjuntos unidimensionais, chamados vetores, que são formados por vários itens unitários de dados agrupados.
 
 Um algoritmo que tente resolver um problema vetorial terá desempenho maior quando executado num processador vetorial, isto é, um processador que possui um conjunto de instruções capaz de manipular vetores. Apesar de um algoritmo de um problema vetorial ainda puder ser implementado e executado com sucesso num processador escalar, o desempenho será menor pois os dados vetoriais do problema terão que ter seus elementos processados um a um pelo processador, já que ele não trabalha com vetores propriamente ditos em seu conjunto de instruções.
 
-Grande parte do ganho de desempenho supracitado vem do paralelismo proporcionado pelos processadores vetoriais, como GPUs, ao manipular conjuntos maiores de dados de uma só vez, e em vários núcleos simultaneamente, além de economizar traduções de endereço de memória e operações de obtenção (\textit{fetch}) e decodificação (\textit{decode}) de instruções, pois haverá um número muito menor de instruções e endereços de memória quando os dados estão agrupados em vetores, que podem ser manipulados e usados em operações como se fossem apenas um item de dados.
+Grande parte do ganho de desempenho supracitado vem do paralelismo proporcionado pelos processadores vetoriais, como GPUs, ao manipular conjuntos maiores de dados de uma só vez, e em vários núcleos simultaneamente. A natureza vetorial da GPU permite economizar traduções de endereço de memória e operações de obtenção (\textit{fetch}) e decodificação (\textit{decode}) de instruções, se comparado com o processamento escalar de uma CPU, pelo fato de se necessitar, na GPU, um número muito menor de instruções e endereços de memória quando os dados estão agrupados em vetores, que podem ser manipulados e usados em operações como se fossem, cada um, apenas um item de dados.
 
-Este trabalho, então, visa demonstrar que algoritmos de clusterização, em geral, são intrinsecamente vetoriais. Isto é, qualquer algoritmo de clustering concebível será de natureza vetorial, pois estes analisam dados e tentam agrupá-los de a acordo com algum grau de semelhança entre eles, análise essa que pode ser feita com conjuntos dos itens de dados (vetores), ao invés de individualmente. Logo, qualquer algoritmo de clusterização teria uma parcela de seu código que seria paralelizável, e assim ganhariam desempenho significativo com uma execução numa GPU.
+Este trabalho, então, visa demonstrar que algoritmos de agrupamento de dados, em geral, são intrinsecamente vetoriais. Isto é, qualquer algoritmo de clustering concebível será de natureza vetorial, pois estes analisam dados e tentam agrupá-los de acordo com algum grau de semelhança entre eles, análise esta que pode ser feita usando conjuntos dos itens de dados (vetores), ao invés de individualmente, mesmo que o \textit{dataset} inicial possua apenas dados de natureza escalar. Logo, qualquer algoritmo de agrupamento teria uma parcela do seu código que seria paralelizável e, assim, ganhariam desempenho significativo com uma execução numa GPU. Mais que isso, a parcela de tempo de execução do algoritmo gasta rodando código paralelo cresceria de acordo com o tamanho do conjunto de dados sendo analisado, garantindo ganhos ainda maiores.
 
-% ----
+
+
+% * ####################################
 
 \section{Justificativa}
+
+% TODO #########################################################################
+% TODO
+% TODO: Continuar depois a revisão textual a partir deste comentário!
+% TODO
+% TODO #########################################################################
 
 A pesquisa feita aqui pode ser de grande utilidade para a área de análise de clusters, e impulsionar a implementação de mais algoritmos paralelos de clusterização.
 
