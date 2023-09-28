@@ -212,19 +212,15 @@ brazil]{facom-ufu-abntex2}
 \chapter{Introdução}
 % * ############################################################################
 
-A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. Desde os primórdios da área buscamos algoritmos e procedimentos que, dados os mesmos parâmetros de entrada, executem a mesma tarefa na menor quantidade de tempo possível. Outros recursos como espaço de memória utilizado, eficiência energética ou uso da rede em muitos cenários são mais importantes que o tempo de execução, mas ainda assim ela continua sendo um dos mais estudados parâmetros para categorização e avaliação de algoritmos e procedimentos na computação. De fato o tempo de execução -- em ciclos, ou passos, de processamento -- é a métrica utilizada na análise de uma das maiores incógnitas da computação, o problema P versus NP.
+A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. Desde os primórdios da área buscamos algoritmos e procedimentos que, dados os mesmos parâmetros de entrada, executem a mesma tarefa na menor quantidade de tempo possível. Outros recursos como espaço de memória utilizado, eficiência energética ou uso da rede em muitos cenários são mais importantes que o tempo de execução, mas ainda assim ela continua sendo um dos mais estudados parâmetros para categorização e avaliação de algoritmos e procedimentos na computação. De fato o tempo de execução --- em ciclos, ou passos, de processamento --- é a métrica utilizada na análise de uma das maiores incógnitas da computação, o problema P versus NP.
 
 % TODO
 % TODO
-% ? TODO: Adicionar no parágrafo acima uma citação básica sobre o problema P vs NP
+% TODO: Adicionar no parágrafo acima uma citação básica sobre o problema P vs NP
 % TODO
 % TODO
 
 Um grande avanço na quantidade de poder de processamento dos computadores e, portanto, diminuição do tempo de execução de algoritmos, foi a criação dos processadores multinúcleo, permitindo a paralelização de processos. A habilidade de poder executar duas ou mais ações simultaneamente possibilitou muitos ganhos palpáveis na velocidade de execução de algoritmos e procedimentos, porém introduziu uma necessidade de mudança na forma de se pensar em resoluções de problemas computacionalmente: paralelizar um algoritmo serial (não-paralelo) não é uma tarefa trivial, e requer cuidados especiais com concorrência no acesso a recursos da máquina, interdependência de dados e cálculos, sincronização, entre outros dilemas.
-
-Um dos componentes que mais utilizam da paralelização num computador moderno são as GPUs --- unidades de processamento gráfico, ou placas de vídeo --- que são basicamente processadores especializados em operações vetoriais, altamente paralelizadas, usualmente utilizadas para computação gráfica, e com sua própria memória dedicada, a VRAM. Enquanto processadores de uso geral, CPUs, costumam ter no máximo dezenas de núcleos para processamento paralelo, GPUs possuem dezenas, milhares, de núcleos para operações vetoriais.
-
-No entanto, cada vez mais está sendo descoberto e aproveitado o potencial de uso das GPUs em atividades não apenas voltadas para renderização, interfaces e outras operações gráficas, mas sim para a computação de propósito geral. Diversos algoritmos modernos e antigos beneficiam-se imensamente do poder de alta paralelização proporcionado pelas GPUs, e com ferramentas como a biblioteca e linguagem CUDA criada pela NVIDIA, está cada vez mais fácil implementar o uso de placas de vídeo em conjunto com processadores convencionais nos mais variados algoritmos.
 
 % TODO
 % TODO
@@ -232,13 +228,17 @@ No entanto, cada vez mais está sendo descoberto e aproveitado o potencial de us
 % TODO
 % TODO
 
+Um dos componentes que mais utilizam da paralelização num computador moderno são as GPUs --- unidades de processamento gráfico, ou placas de vídeo --- que são basicamente processadores especializados em operações vetoriais, altamente paralelizadas, usualmente utilizadas para computação gráfica, e com sua própria memória dedicada, a VRAM. Enquanto processadores de uso geral, CPUs, costumam ter no máximo dezenas de núcleos para processamento paralelo, GPUs possuem dezenas, milhares, de núcleos para operações vetoriais.
+
+No entanto, cada vez mais está sendo descoberto e aproveitado o potencial de uso das GPUs em atividades não apenas voltadas para renderização, interfaces e outras operações gráficas, mas sim para a computação de propósito geral. Diversos algoritmos modernos e antigos beneficiam-se imensamente do poder de alta paralelização proporcionado pelas GPUs, e com ferramentas como a biblioteca e linguagem CUDA criada pela NVIDIA, está cada vez mais fácil implementar o uso de placas de vídeo em conjunto com processadores convencionais nos mais variados algoritmos.
+
 % TODO
 % TODO
 % TODO Continuar depois a revisão textual a partir deste comentário!
 % TODO
 % TODO
 
-Nem todo algoritmo pode ser paralelizado, no entanto. Existem procedimentos e algoritmos que são inerentemente seriais, como o cálculo do $n$-ésimo número da sequência de \textit{Fibonacci}, que requer que dois números prévios da sequência tenham sido calculados para obtermos o atual -- salvo, é claro, alguma descoberta teórica matemática do comportamento da sequência que nos permitisse uma nova maneira de calcular o $n$-ésimo elemento sem essa necessidade.
+Nem todo algoritmo pode ser paralelizado, no entanto. Existem procedimentos e algoritmos que são inerentemente seriais, como o cálculo do $n$-ésimo número da sequência de \textit{Fibonacci}, que requer que dois números prévios da sequência tenham sido calculados para obtermos o atual --- salvo, é claro, alguma descoberta teórica matemática do comportamento da sequência que nos permitisse uma nova maneira de calcular o $n$-ésimo elemento sem essa necessidade.
 
 É importante entender também que nenhum algoritmo é paralelizável por completo. Sempre existem partes de algoritmos que devem ser executadas serialmente para funcionar corretamente. O ganho máximo da paralelização de um algoritmo qualquer é uma função da parcela do seu código que pode ser paralelizada, e é definida pela Lei de Amdahl \cite{Amdahl-Law}: $\frac{1}{1-p}$, onde $p$ é a razão entre código paralelizável e código não-paralelizável.
 
@@ -257,7 +257,7 @@ A hipótese principal é a de que algoritmos de clustering, em geral, são altam
 O foco de pesquisa são \qntAlgrtm{} algoritmos de clustering especialmente notórios: \textit{K-means} \cite{GPU-accelerated-K-Means}, \textit{Clustering Hierárquico}. Implementações e estudos realizados sobre estes serão analisados, e implementações novas terão desempenho comparado com estas.
 
 % ? Old text here:
-% , \textit{DBSCAN} \cite{G-DBSCAN}, ou \textit{Clusterização Espacial Baseada em Densidade de Aplicações com Ruído}, e \textit{Random Forests} -- que mesmo não sendo exclusivamente um algoritmo de clusterização, pode ser utilizado justamente para tal.
+% , \textit{DBSCAN} \cite{G-DBSCAN}, ou \textit{Clusterização Espacial Baseada em Densidade de Aplicações com Ruído}, e \textit{Random Forests} --- que mesmo não sendo exclusivamente um algoritmo de clusterização, pode ser utilizado justamente para tal.
 
 \section{Objetivos}
 
