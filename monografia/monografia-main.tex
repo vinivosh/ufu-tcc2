@@ -292,17 +292,18 @@ Além disso, deseja-se compilar aqui um vasto conhecimento de como paralelizar e
 % TODO
 % TODO #########################################################################
 
-Para atingir o objetivo geral, será necessário completar diversos objetivos menores, ou \textit{milestones}, antes, criando um caminho de pesquisa a ser seguido --- não necessariamente na ordem apresentada. São estes:
+Para atingir o objetivo geral, é necessário completar diversos objetivos menores, ou \textit{milestones}, antes, criando um caminho de pesquisa que foi seguido --- não necessariamente na ordem apresentada. São estes:
 
 \begin{itemize}
-    \item Pesquisar extensamente a bibliografia da área, realizando assim um levantamento do estado da arte de algoritmos paralelos de clusterização;
+    \item Pesquisar extensamente a bibliografia da área, realizando assim um levantamento do estado da arte de algoritmos paralelos de agrupamento;
+
     \item Estudar implementações já realizadas dos \qntAlgrtm{} algoritmos aqui estudados, a fim de adquirir conhecimento de como a paralelização em CUDA deve ser realizada;
-    % !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    % Tenho que aprofundar nesse tópico, explicando qual algoritmo de clustering "novo" será paralelizado afinal, quando eu escolher um de fato!
-    % !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    \item Paralelizar um algoritmo de clustering \enquote{novo}, isto é, nunca antes paralelizado e exibido em trabalho científico, a fim de solidificar o conhecimento e prática de programação em CUDA;
-    \item Quantificar o ganho de desempenho das implementações paralelas, realizando diversos experimentos de \textit{speedup};
-    \item Comparar código monolítico (sem paralelização) com código paralelo dos \qntAlgrtm{} algoritmos analisados, extraindo assim um conhecimento de como paralelizar um algoritmo de clusterização genérico;
+
+    \item Paralelizar um algoritmo de clustering \enquote{novo}, isto é, nunca antes paralelizado e exibido em trabalho científico, a fim de solidificar o conhecimento e prática de programação em CUDA. Foi escolhido o algoritmo de Agrupamento Hierárquico para tal;
+
+    \item Quantificar o ganho de desempenho das implementações paralelas, realizando diversos experimentos de \textit{speedup}, usando diversos datasets de tamanhos e dimensionalidades variadas;
+
+    \item Comparar o código serial (sem paralelização) com o código paralelo dos \qntAlgrtm{} algoritmos analisados, extraindo assim um conhecimento de como paralelizar um algoritmo de clusterização genérico;
 \end{itemize}
 
 % ----
