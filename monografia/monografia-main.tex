@@ -224,7 +224,7 @@ Um grande avanço na quantidade de poder de processamento dos computadores e, po
 
 % TODO
 % TODO
-% ? Seria mais adequado o uso do termo "sequencial" ao invés de "serial", ao descrever algoritmos não-paralelos? Pesquisar isso!
+% ? TODO: Seria mais adequado o uso do termo "sequencial" ao invés de "serial", ao descrever algoritmos não-paralelos? Pesquisar isso!
 % TODO
 % TODO
 
@@ -259,27 +259,38 @@ A hipótese principal deste trabalho é a de que algoritmos de clustering, em ge
 % TODO
 % TODO
 
-O foco de pesquisa são \qntAlgrtm{} algoritmos de clustering especialmente notórios: o \textit{K-means} \cite{GPU-accelerated-K-Means} e o \textit{Clustering Hierárquico}. Implementações e estudos realizados sobre estes foram analisados, e implementações paralelas em GPU tiveram seu desempenho comparado com as seriais em CPU.
+O foco de pesquisa são \qntAlgrtm{} algoritmos de agrupamento especialmente notórios: o \textit{K-means} \cite{GPU-accelerated-K-Means} e o \textit{Agrupamento Hierárquico}. Implementações e estudos realizados sobre estes foram analisados, e implementações paralelas em GPU tiveram seu desempenho comparado com as seriais em CPU.
 
 % * Texto antigo do parágrafo acima:
 % , \textit{DBSCAN} \cite{G-DBSCAN}, ou \textit{Clusterização Espacial Baseada em Densidade de Aplicações com Ruído}, e \textit{Random Forests} --- que mesmo não sendo exclusivamente um algoritmo de clusterização, pode ser utilizado justamente para tal.
 
+
+
+% * ####################################
+
 \section{Objetivos}
+
+
+
+% * ####################################
+
+\subsection{Objetivo Geral}
+
+Este trabalho tem como objetivo principal testar a validez de sua hipótese (discutida mais à fundo na seção 1.2) de que algoritmos de clusterização são intrinsecamente paralelizáveis, e que o ganho de velocidade ao serem paralelizados é altamente significativo.
+
+Além disso, deseja-se compilar aqui um vasto conhecimento de como paralelizar esses algoritmos em geral, analisando principalmente os \qntAlgrtm{} aqui estudados a fundo (K-Means e Agrupamento Hierárquico) e usando este aprendizado para criar um passo-a-passo genérico de como realizar tal modificação de código em um algoritmo de agrupamento qualquer.
+
+
+
+% * ####################################
+
+\subsection{Objetivos Específicos}
 
 % TODO #########################################################################
 % TODO
 % TODO: Continuar depois a revisão textual a partir deste comentário!
 % TODO
 % TODO #########################################################################
-
-\subsection{Objetivo Geral}
-
-Esse trabalho tem como objetivo principal testar a validez de sua hipótese (discutida mais à fundo na seção 1.2) de que algoritmos de clusterização são intrinsecamente paralelizáveis, e que o ganho de velocidade ao serem paralelizados é altamente significativo.
-
-Além disso, deseja-se compilar aqui um vasto conhecimento de como paralelizar esses algoritmos em geral, analisando principalmente os \qntAlgrtm{} aqui estudados a fundo (k-means, clustering hierárquico, DBSCAN e Random Forests) e usando este aprendizado para criar um passo-a-passo genérico de como realizar tal modificação de código em um algoritmo de clusterização qualquer.
-
-
-\subsection{Objetivos Específicos}
 
 Para atingir o objetivo geral, será necessário completar diversos objetivos menores, ou \textit{milestones}, antes, criando um caminho de pesquisa a ser seguido --- não necessariamente na ordem apresentada. São estes:
 
@@ -363,11 +374,11 @@ O resultado, ou saída, de um algoritmo de clusterização é comumente um rotul
 
 % * ####################################
 
+\section{Programação Vetorial}
+
 % ? ################
 % ? Planning writing
 % ? ################
-
-\section{Programação Vetorial}
 
 [Escrever uma sub-seção sobre Programação Vetorial]
 
