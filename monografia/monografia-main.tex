@@ -336,21 +336,21 @@ Além disso, a apresentação nesse estudo de um procedimento genérico para par
 \chapter{Fundamentação Teórica}
 % * ############################################################################
 
-% TODO #########################################################################
-% TODO
-% TODO: Continuar depois a revisão textual a partir deste comentário!
-% TODO
-% TODO #########################################################################
+Para compreender a pesquisa científica aqui realizada, é necessário primeiro entender o que são algoritmos de agrupamento, tanto de maneira geral quanto específica, explorando os fundamentos e funcionamento dos \qntAlgrtm{} algoritmos pesquisados. Veremos que a complexidade de tempo desses algoritmos tendem a ser inconvenientemente altas ($O(n\cdot\log{n})$, $O(n^2)$ ou até $O(n^3)$ sendo complexidades comuns) e por isso qualquer ganho de velocidade significativo obtido será de imensa relevância para a usabilidade prática do algoritmo.
 
-Para compreender a pesquisa científica aqui realizada, é necessário primeiro entender o que são algoritmos de clusterização, tanto de maneira geral quanto específica, explorando os fundamentos e funcionamento dos \qntAlgrtm{} algoritmos pesquisados. Veremos que a complexidade de tempo destes algoritmos tendem a ser inconvenientemente altas ($O(n\cdot\log{n})$, $O(n^2)$ ou até $O(n^3)$ sendo complexidades comuns) e por isso qualquer ganho de velocidade significativo obtido valerá muito a pena.
-
-Também é imprescindível explorar o funcionamento dos processadores vetoriais --- sendo as \textit{Unidades de Processamento Gráfico} (GPUs) o principal exemplo destes e sobre o qual essa pesquisa irá focar --- e entender por quê usá-los para paralelizar algoritmos de clusterização proporcionará, em tese, um ganho de velocidade expressivo na execução destes, abrandando o peso de suas complexidades de tempo. Além de tudo isso, será apresentada brevemente a arquitetura que será utilizada para paralelizar os algoritmos estudados: a plataforma e modelo de programação CUDA, da NVIDIA, que permitirá extrair o poder de paralelização das placas de vídeo NVIDIA.
+Também é imprescindível explorar o funcionamento dos processadores vetoriais --- sendo as \textit{Unidades de Processamento Gráfico} (GPUs) o principal exemplo destes e exatamente no qual essa pesquisa irá focar --- e entender por que usá-los para paralelizar algoritmos de agrupamento proporcionará, em tese, um ganho de velocidade expressivo na execução destes, abrandando o peso de suas complexidades de tempo. Além de tudo isso, será apresentada brevemente a arquitetura utilizada para paralelizar os algoritmos estudados: a plataforma e modelo de programação CUDA, da NVIDIA, que permitirá extrair o poder de paralelização das placas de vídeo NVIDIA além de bibliotecas como a \textit{Numba}, que permite a programação vetorial facilitada na linguagem Python.
 
 
 
 % * ####################################
 
 \section{Agrupamento de dados}
+
+% TODO #########################################################################
+% TODO
+% TODO: Continuar depois a revisão textual a partir deste comentário!
+% TODO
+% TODO #########################################################################
 
 A clusterização, ou clustering, é a tarefa de agrupar um conjunto de elementos de modo que cada elemento de um grupo se \enquote{pareça} mais com outros elementos do grupo (cluster) que pertence do que com elementos dos grupos que não pertence --- para algum significado bem definido de semelhança. É um processo muito comum e virtualmente necessário nas áreas de mineração de dados, análise estatística, análise de imagem, aprendizado de máquina, reconhecimento de padrões, e muitas outras.
 
