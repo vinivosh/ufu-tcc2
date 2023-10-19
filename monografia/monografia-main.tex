@@ -340,6 +340,12 @@ Para compreender a pesquisa científica aqui realizada, é necessário primeiro 
 
 Também é imprescindível explorar o funcionamento dos processadores vetoriais --- sendo as \textit{Unidades de Processamento Gráfico} (GPUs) o principal exemplo destes e exatamente no qual essa pesquisa irá focar --- e entender por que usá-los para paralelizar algoritmos de agrupamento proporcionará, em tese, um ganho de velocidade expressivo na execução destes, abrandando o peso de suas complexidades de tempo. Além de tudo isso, será apresentada brevemente a arquitetura utilizada para paralelizar os algoritmos estudados: a plataforma e modelo de programação CUDA, da NVIDIA, que permitirá extrair o poder de paralelização das placas de vídeo NVIDIA além de bibliotecas como a \textit{Numba}, que permite a programação vetorial facilitada na linguagem Python.
 
+% TODO
+% TODO
+% ? TODO: Adicionar citação a respeito da biblioteca Numba aqui? Ou deixar pra fazer isso apenas ao aprofundarmos nela um pouco, mais adiante?
+% TODO
+% TODO
+
 
 
 % * ####################################
@@ -356,18 +362,26 @@ A clusterização, ou clustering, é a tarefa de agrupar um conjunto de elemento
 
 O significado de um cluster não pode ser bem definido e vai depender do conjunto de dados a ser analisado e a forma que os resultados obtidos serão utilizados --- de fato, esse é o principal motivo pelo qual tantos algoritmos diferentes de clustering existem \cite{SoManyClustAlg}. O comum em todas definições usadas é que um cluster é um conjunto de objetos de dados. Esses objetos são representados num espaço de dimensões iguais ao número de dados relevantes para cada objeto, e os algoritmos tentam criar grupos (clusters) nesse espaço que agrupem os objetos de uma maneira significativa, ou útil, para o estudo sendo feito e a definição de cluster sendo utilizada.
 
+% TODO
+% TODO
 % TODO adicionar citações, figuras de agrumento de dados
+% TODO
+% TODO
 
-% !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-% Talvez seria melhor colocar esse parágrafo num formato de lista? Não sei...
-% Também não sei se meu uso do negrito aqui é permitido formalmente.
-% !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% TODO
+% TODO
+% ? TODO: Talvez seria melhor colocar esse parágrafo num formato de lista? Não sei...
+% ? TODO: Também não sei se meu uso do negrito aqui é permitido formalmente.
+% TODO
+% TODO
 
 Diversos modelos de cluster podem ser usados para definir o que é um cluster: \textbf{modelos de centroide}, onde cada cluster possui um centro e os objetos pertencerão aos clusters com centros mais próximos deles, dada uma definição de distância no espaço de dados; \textbf{modelos de densidade}, que definem clusters como regiões densas e conexas no espaço de dados, contrastando com regiões menos densas que separam os clusters; \textbf{modelos de conectividade}, que constroem clusters a partir de conexões de objetos por distância; \textbf{modelos de distribuição}, que utilizam de distribuições estatísticas, como a distribuição normal ou exponencial, para modelar agrupamentos dos objetos; entre dezenas de outros modelos. Entender o modelo de cluster utilizado é essencial para compreender um algoritmo de clusterização e as diferenças entre a multitude destes.
 
-% !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-% Eu preciso realmente ficar colocando termos em inglês não traduzidos (intraduzíveis de maneira sã, na maioria das vezes) em itálico? Isso me parece bem brega.
-% !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% TODO
+% TODO
+% ? TODO: Eu preciso realmente ficar colocando termos em inglês não traduzidos (intraduzíveis de maneira sã, na maioria das vezes) em itálico? Isso me parece bem brega.
+% TODO
+% TODO
 
 O resultado, ou saída, de um algoritmo de clusterização é comumente um rotulamento dos objetos de dados passados na entrada, o que indicará a divisão em clusters feita por ele. Classificações podem ser feitas quanto à natureza da clusterização obtida pelos algoritmos: \textbf{\textit{hard clustering}}, onde cada objeto pertence ou não a um cluster; \textbf{\textit{fuzzy clustering}}, onde cada objeto pertence uma certa porcentagem a cada cluster, o que pode significar, por exemplo, a chance do objeto pertencer àquele cluster \cite{FuzzyClusteringSurvey}. E subclassificações mais granulares ainda podem ser definidas, como: \textbf{clusterização de particionamento estrito}, onde cada objeto pertence a exatamente um cluster; \textbf{clusterização de particionamento estrito com \textit{outliers}}, onde objetos pertencem a exatamente um cluster, ou nenhum cluster, assim sendo considerados \textit{outliers}.
 
