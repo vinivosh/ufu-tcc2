@@ -361,15 +361,9 @@ Também é imprescindível explorar o funcionamento dos processadores vetoriais 
 
 \section{Agrupamento de dados}
 
-% TODO #########################################################################
-% TODO
-% TODO: Continuar depois a revisão textual a partir deste comentário!
-% TODO
-% TODO #########################################################################
+O agrupamento de dados, também chamado de clusterização de dados (data clustering, em inglês), é a tarefa de agrupar um conjunto de elementos de modo que cada elemento de um grupo se \enquote{pareça} mais com outros elementos do grupo (\textit{cluster}) que pertence do que com elementos dos grupos que não pertencem, dado algum significado bem definido de semelhança entre os dados. É um processo muito comum e virtualmente imprescindível nas áreas de mineração de dados, análise estatística, análise de imagem, aprendizado de máquina, reconhecimento de padrões, e muitas outras.
 
-A clusterização, ou clustering, é a tarefa de agrupar um conjunto de elementos de modo que cada elemento de um grupo se \enquote{pareça} mais com outros elementos do grupo (cluster) que pertence do que com elementos dos grupos que não pertence --- para algum significado bem definido de semelhança. É um processo muito comum e virtualmente necessário nas áreas de mineração de dados, análise estatística, análise de imagem, aprendizado de máquina, reconhecimento de padrões, e muitas outras.
-
-O significado de um cluster não pode ser bem definido e vai depender do conjunto de dados a ser analisado e a forma que os resultados obtidos serão utilizados --- de fato, esse é o principal motivo pelo qual tantos algoritmos diferentes de clustering existem \cite{SoManyClustAlg}. O comum em todas definições usadas é que um cluster é um conjunto de objetos de dados. Esses objetos são representados num espaço de dimensões iguais ao número de dados relevantes para cada objeto, e os algoritmos tentam criar grupos (clusters) nesse espaço que agrupem os objetos de uma maneira significativa, ou útil, para o estudo sendo feito e a definição de cluster sendo utilizada.
+O significado de um cluster não pode ser bem definido e vai depender do conjunto de dados a ser analisado e a forma que os resultados obtidos serão utilizados --- de fato, esse é o principal motivo pelo qual tantos algoritmos diferentes de agrupamento existem \cite{SoManyClustAlg}. O fator comum na maioria das definições propostas é que um cluster é um conjunto de \textit{datapoints} --- pontos, ou objetos de dados. Esses objetos são representados num espaço geométrico com o número de dimensões iguais ao número de variáveis necessárias para descrever cada datapoint, e os algoritmos de agrupamento tentam criar grupos nesse espaço que agrupem os objetos de uma maneira significativa, ou útil, para o estudo sendo feito e a definição de \enquote{grupo} sendo utilizada.
 
 % TODO
 % TODO
@@ -384,15 +378,9 @@ O significado de um cluster não pode ser bem definido e vai depender do conjunt
 % TODO
 % TODO
 
-Diversos modelos de cluster podem ser usados para definir o que é um cluster: \textbf{modelos de centroide}, onde cada cluster possui um centro e os objetos pertencerão aos clusters com centros mais próximos deles, dada uma definição de distância no espaço de dados; \textbf{modelos de densidade}, que definem clusters como regiões densas e conexas no espaço de dados, contrastando com regiões menos densas que separam os clusters; \textbf{modelos de conectividade}, que constroem clusters a partir de conexões de objetos por distância; \textbf{modelos de distribuição}, que utilizam de distribuições estatísticas, como a distribuição normal ou exponencial, para modelar agrupamentos dos objetos; entre dezenas de outros modelos. Entender o modelo de cluster utilizado é essencial para compreender um algoritmo de clusterização e as diferenças entre a multitude destes.
+Diversos modelos de grupo podem ser usados para definir o que é um grupo: \textbf{modelos de centroide}, onde cada grupo possui um centro e cada datapoint pertencerá ao grupo com centro mais próximo dele, dada uma definição de distância no espaço geométrico dos dados; \textbf{modelos de densidade}, que definem grupos como regiões densas e conexas no espaço, contrastando com regiões menos densas que separam os grupos; \textbf{modelos de conectividade}, que constroem grupos a partir de conexões de datapoints definidas por um limiar de distância; \textbf{modelos de distribuição}, que utilizam de distribuições estatísticas, como a distribuição normal ou exponencial, para modelar o agrupamento dos datapoints; entre dezenas de outros modelos. Entender o modelo de grupo utilizado é essencial para compreender um algoritmo de agrupamento e as diferenças entre a multitude destes.
 
-% TODO
-% TODO
-% ? TODO: Eu preciso realmente ficar colocando termos em inglês não traduzidos (intraduzíveis de maneira sã, na maioria das vezes) em itálico? Isso me parece bem brega.
-% TODO
-% TODO
-
-O resultado, ou saída, de um algoritmo de clusterização é comumente um rotulamento dos objetos de dados passados na entrada, o que indicará a divisão em clusters feita por ele. Classificações podem ser feitas quanto à natureza da clusterização obtida pelos algoritmos: \textbf{\textit{hard clustering}}, onde cada objeto pertence ou não a um cluster; \textbf{\textit{fuzzy clustering}}, onde cada objeto pertence uma certa porcentagem a cada cluster, o que pode significar, por exemplo, a chance do objeto pertencer àquele cluster \cite{FuzzyClusteringSurvey}. E subclassificações mais granulares ainda podem ser definidas, como: \textbf{clusterização de particionamento estrito}, onde cada objeto pertence a exatamente um cluster; \textbf{clusterização de particionamento estrito com \textit{outliers}}, onde objetos pertencem a exatamente um cluster, ou nenhum cluster, assim sendo considerados \textit{outliers}.
+O resultado, ou saída, de um algoritmo de agrupamento é comumente um rotulamento dos datapoints passados na entrada, o que indicará a divisão em grupos feita por ele. Classificações podem ser feitas quanto à natureza do agrupamento obtido pelos algoritmos: \textbf{\textit{hard clustering}}, onde cada objeto pertence ou não a um grupo; \textbf{\textit{fuzzy clustering}}, onde cada objeto pertence uma certa porcentagem a cada grupo, o que pode representar, por exemplo, a chance do objeto pertencer àquele grupo, ou até o grau de semelhança do datapoint comparado aos outros datapoints de cada grupo \cite{FuzzyClusteringSurvey}. E subclassificações ainda mais granulares podem ser definidas, como: \textbf{clusterização de particionamento estrito}, onde cada objeto pertence a exatamente um cluster; \textbf{clusterização de particionamento estrito com \textit{outliers}}, onde objetos pertencem a exatamente um cluster, ou nenhum cluster, assim sendo considerados \textit{outliers}, entre outras classificações.
 
 
 
@@ -476,6 +464,12 @@ O resultado, ou saída, de um algoritmo de clusterização é comumente um rotul
 % TODO Adicionar aqui uma figura, um diagrama, explicativo, sobre a metodologia usada para paralelizar um algoritmo de agrupamento genérico (vide arquivo ../Notes_230922_171133.pdf)
 % TODO
 % TODO
+
+% TODO #########################################################################
+% TODO
+% TODO: Continuar depois a revisão textual a partir deste comentário!
+% TODO
+% TODO #########################################################################
 
 A pesquisa realizada neste trabalho consiste de estudos e análises de trabalhos prévios, desenvolvimento de uma versão paralelizada de um algoritmo de clustering e experimentos sobre essa implementação. Pode-se dividir tal metodologia em um conjunto de etapas.
 
