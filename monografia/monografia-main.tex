@@ -239,6 +239,8 @@ Nem todo algoritmo pode ser paralelizado, no entanto. Existem procedimentos e al
 % TODO
 % TODO
 % ? TODO: Falar aqui também da Lei de Gustafson? Apresentada no artigo de 1988: Reevaluating Amdahl's Law. Pode ser bem importante! É uma estimativa menos pessimista que a Lei de Amdahl, que leva em conta o fato de que, ao se aumentar os recursos computacionais, geralmente os algoritmos passam a ser utilizados em datasets cada vez maiores, aumentando muito a parcela de tempo de execução gasta em código paralelo, enquanto a gasta em código serial se mantém praticamente constante
+
+% ? não
 % TODO
 % TODO
 
@@ -251,6 +253,12 @@ E é a paralelização de uma classe de algoritmos em particular que é o foco d
 % TODO
 
 A hipótese principal deste trabalho é a de que algoritmos de clustering, em geral, são altamente paralelizáveis e apresentam um ganho considerável de desempenho (menor tempo de execução) quando implementados para utilizar o poder de paralelismo vetorial de placas de vídeo NVIDIA, através da linguagem CUDA \cite{CUDAZone}. Mais que isso, através de uma análise sistemática de estudos prévios e implementações de tais algoritmos em CUDA, visa-se generalizar o processo de paralelização destes. Isto é, identificar quais partes são necessariamente seriais, quais são paralelizáveis, e que sequência de passos gerais deve ser seguida para se conseguir paralelizar com sucesso um algoritmo de clustering qualquer e obter ganhos significativos de desempenho.
+
+% TODO
+% TODO
+% TODO: Revisar todos acronismos (definir as siglas todas no primeiro uso, e apenas no primeiro uso)
+% TODO
+% TODO
 
 % TODO
 % TODO
@@ -343,6 +351,7 @@ Também é imprescindível explorar o funcionamento dos processadores vetoriais 
 % TODO
 % TODO
 % ? TODO: Adicionar citação a respeito da biblioteca Numba aqui? Ou deixar pra fazer isso apenas ao aprofundarmos nela um pouco, mais adiante?
+% SIM
 % TODO
 % TODO
 
@@ -445,11 +454,12 @@ O resultado, ou saída, de um algoritmo de clusterização é comumente um rotul
 
 % * ############################################################################
 
-% \chapter{Levantamento do Estado da Arte}
+\chapter{Levantamento do Estado da Arte}
 
 % ?
 % ?
 % ? Precisamos mesmo de um capítulo para isto? Talvez uma seção/sub-seção em algum outro capítulo/seção caiba melhor
+% SIM
 % ?
 % ?
 

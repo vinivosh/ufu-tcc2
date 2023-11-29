@@ -42,7 +42,7 @@
 
 ## Sanando Dúvidas de Português Muito Comuns
 
-Essas me pegam desprevinido sempre! Bom manter salvo aqui pra referência rápida (e offline!)
+Essas me pegam desprevinido sempre! Bom manter salvo aqui pra referência rápida (e offline!).
 
 ### Os Quatro Porquês
 
