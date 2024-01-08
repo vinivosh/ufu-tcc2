@@ -1,9 +1,12 @@
+import math
+
 from os.path import exists as os_path_exists
 from urllib.request import urlopen
 from itertools import permutations
 
 import numpy as np
 import pandas as pd
+import numba
 
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
@@ -19,6 +22,10 @@ def downloadFileIfNeeded(filePath, url):
         with open(filePath, 'w') as f:
             f.write(html)
 
+
+# * ############################################################################
+# * K-means CPU
+# * ############################################################################
 
 def kMeansCPU(dataset:pd.DataFrame, k=3, maxIter=100, plotResults=False, debug=False):
     if plotResults:
@@ -49,6 +56,130 @@ def kMeansCPU(dataset:pd.DataFrame, k=3, maxIter=100, plotResults=False, debug=F
         if plotResults:
             # Plotando clusters
             centroids_2D = pca.transform(centroids.T)
+            plt.title(f'Iteration {iteration}')
+            plt.scatter(x=dataset_2D[:,0], y=dataset_2D[:,1], c=closestCent)
+            plt.scatter(x=centroids_2D[:,0], y=centroids_2D[:,1], marker='+', linewidths=2, color='red')
+            plt.show()
+
+        if debug: print(debugStr)
+
+        iteration += 1
+
+    return closestCent
+
+
+# * ############################################################################
+# * Funções auxiliares paralelizadas (para uso no k-means GPU)
+# * 
+# * Essas são funções vetorizadas que rodarão na GPU. Contém as partes do K-means que mais demandam poder computacional
+# * ############################################################################
+
+@numba.guvectorize(
+    ['void(float64[:,:], float64[:], float64[:])'],
+    '(k,d),(d)->(k)',
+    nopython=True,
+    target='cuda'
+)
+def calcDistances(centroids:list[list[np.float64]], rowDataset:list[np.float64], rowResults:list[np.float64]):
+    d = len(rowDataset) # Dimensionality
+
+    for centroidIndex, centroid in enumerate(centroids):
+        distance = 0.0
+        for dim in range(d): distance += (rowDataset[dim] - centroid[dim]) ** 2
+        distance = distance ** (1/2)
+
+        rowResults[centroidIndex] = distance
+
+
+@numba.guvectorize(
+    ['void(float64[:],int64[:])'],
+    '(k)->()',
+    nopython=True,
+    target='cuda'
+)
+def calcClosestCentroids(rowDistances:list[np.float64], closestCent:np.int64):
+    minDistance = rowDistances[0]
+    minDistanceIndex = 0
+
+    # Retornar o index do valor mínimo em rowDistances
+    for index, distance in enumerate(rowDistances):
+        if distance < minDistance:
+            minDistance = distance
+            minDistanceIndex = index
+
+    closestCent[0] = minDistanceIndex
+
+
+@numba.guvectorize(
+    ['void(float64[:],float64[:])'],
+    '(d)->(d)',
+    nopython=True,
+    target='cuda'
+)
+def calcLogs(rowDataset:list[np.float64], rowResults:list[np.float64]):
+    # Calcular o log natural de cada dimensão do datapoint
+    for dimIdx, dimValue in enumerate(rowDataset): rowResults[dimIdx] = math.log(dimValue)
+
+
+# * ############################################################################
+# * K-means GPU
+# * ############################################################################
+
+def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, plotResults=False, debug=False):
+    if plotResults:
+        # Inicializando variáveis para exibição gráfica
+        pca = PCA(n_components=2) # dois eixos no gráfico
+        dataset_2D = pca.fit_transform(dataset.values)
+
+    n = len(dataset)
+    d = len(dataset.iloc[0])
+
+    # Gerando centróides iniciais randomicamente
+    centroids:pd.DataFrame = pd.concat([(dataset.apply(lambda x: float(x.sample().iloc[0]))) for _ in range(k)], axis=1) # * Paralelizar isto provavelmente é irrelevante, visto que sempre teremos poucos centróides
+    centroids_OLD = pd.DataFrame()
+
+    centroids__np = centroids.T.to_numpy()
+    centroids_OLD__np = centroids_OLD.T.to_numpy()
+    dataset__np = dataset.to_numpy()
+
+    iteration = 1
+
+    while iteration <= maxIter and not np.array_equal(centroids_OLD__np ,centroids__np):
+        if plotResults or debug: clear_output(wait=True)
+        if debug: debugStr = f'Iteration {iteration}\n\nCentroids:\n{centroids.T}\n\n'
+
+        # Para cada datapoint, calcular distâncias entre ele e cada centróide; depois, encontrar o centróide mais próximo e salvar seu index
+        distances = np.zeros((n, k))
+        calcDistances(centroids__np, dataset__np, distances)
+
+        if debug: debugStr += f'Distances:\n{distances}\n\n'
+
+        closestCent = np.zeros(n, np.int64)
+        calcClosestCentroids(distances, closestCent)
+        del distances
+        if debug: debugStr += f'Closest centroid index:\n{closestCent}\n\n'
+
+        centroids_OLD__np = centroids__np.copy()
+
+        datasetLogs = np.zeros((n, d))
+        calcLogs(dataset__np, datasetLogs)
+
+        # meansByClosestCent[0] = médias dos logs de todos datapoints cujo centróide mais próximo é o centróide de index zero
+        meansByClosestCent = np.zeros((k, d))
+
+        for centroidIdx in range(k):
+            x = [(True if closestCent[dpIdx] == centroidIdx else False) for dpIdx in range(n)]
+            # relevantLogs conterá agora todos itens de datasetLogs cujo datapoint correspondente está mais próximo do centróide de index centroidIdx
+            relevantLogs = datasetLogs[x]
+            del x
+            meansByClosestCent[centroidIdx] = relevantLogs.mean(axis=0)
+            del relevantLogs
+
+            centroids__np[centroidIdx] = np.exp(meansByClosestCent[centroidIdx])
+
+        if plotResults:
+            # Plotando clusters
+            centroids_2D = pca.transform(centroids__np)
             plt.title(f'Iteration {iteration}')
             plt.scatter(x=dataset_2D[:,0], y=dataset_2D[:,1], c=closestCent)
             plt.scatter(x=centroids_2D[:,0], y=centroids_2D[:,1], marker='+', linewidths=2, color='red')
