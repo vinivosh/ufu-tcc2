@@ -528,3 +528,5 @@ Template-TCC-BCC*/
 
 # Dataset files
 code/**/*.data
+code/**/WESAD
+code/**/WESAD.zip
