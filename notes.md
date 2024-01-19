@@ -33,6 +33,13 @@
 
 # Notas Misc.
 
+## Reunião com Professor (18/01/24)
+
+- Entrega máxima ideal da parte escrita: 15 de abril de 2024
+- Capítulos mais fáceis de fazer por hora: capítulo 2 (Fundamentação Teórica) e capítulo 4 (Metodologia de Desenvolvimento e Pesquisa)
+
+
+
 ## Links úteis
 
 - [Trabalhos de Conclusão de Curso feitos por alunos da FACOM](https://repositorio.ufu.br/handle/123456789/5142/browse?type=type&order=ASC&rpp=20&value=Trabalho+de+Conclus%C3%A3o+de+Curso)
