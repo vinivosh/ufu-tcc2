@@ -128,7 +128,7 @@ def calcLogs(rowDataset:list[np.float64], rowResults:list[np.float64]):
 # * K-means GPU
 # * ############################################################################
 
-def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, plotResults=False, debug=False):
+def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResults=False, debug=False):
     if plotResults:
         # Inicializando variáveis para exibição gráfica
         pca = PCA(n_components=2) # dois eixos no gráfico
@@ -148,19 +148,22 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, plotResults=False, debug=F
     iteration = 1
 
     while iteration <= maxIter and not np.array_equal(centroids_OLD__np ,centroids__np):
+        strToPrint = ''
+
         if plotResults or debug: clear_output(wait=True)
-        if debug: debugStr = f'Iteration {iteration}\n\nCentroids:\n{centroids.T}\n\n'
+        if printIter: strToPrint += f'Iteration {iteration}\n\n'
+        if debug: strToPrint += f'Centroids:\n{centroids.T}\n\n'
 
         # Para cada datapoint, calcular distâncias entre ele e cada centróide; depois, encontrar o centróide mais próximo e salvar seu index
         distances = np.zeros((n, k))
         calcDistances(centroids__np, dataset__np, distances)
 
-        if debug: debugStr += f'Distances:\n{distances}\n\n'
+        if debug: strToPrint += f'Distances:\n{distances}\n\n'
 
         closestCent = np.zeros(n, np.int64)
         calcClosestCentroids(distances, closestCent)
         del distances
-        if debug: debugStr += f'Closest centroid index:\n{closestCent}\n\n'
+        if debug: strToPrint += f'Closest centroid index:\n{closestCent}\n\n'
 
         centroids_OLD__np = centroids__np.copy()
 
@@ -188,7 +191,7 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, plotResults=False, debug=F
             plt.scatter(x=centroids_2D[:,0], y=centroids_2D[:,1], marker='+', linewidths=2, color='red')
             plt.show()
 
-        if debug: print(debugStr)
+        if debug or printIter: print(strToPrint)
 
         iteration += 1
 
