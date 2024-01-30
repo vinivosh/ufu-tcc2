@@ -27,7 +27,7 @@ def downloadFileIfNeeded(filePath, url):
 # * K-means CPU
 # * ############################################################################
 
-def kMeansCPU(dataset:pd.DataFrame, k=3, maxIter=100, plotResults=False, debug=False):
+def kMeansCPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResults=False, debug=False):
     if plotResults:
         # Inicializando variáveis para exibição gráfica
         pca = PCA(n_components=2) # dois eixos no gráfico
@@ -40,15 +40,18 @@ def kMeansCPU(dataset:pd.DataFrame, k=3, maxIter=100, plotResults=False, debug=F
     iteration = 1
 
     while iteration <= maxIter and not centroids_OLD.equals(centroids):
-        if plotResults or debug: clear_output(wait=True)
-        if debug: debugStr = f'Iteration {iteration}\n\nCentroids:\n{centroids.T}\n\n'
+        strToPrint = ''
+
+        if plotResults or debug or printIter: clear_output(wait=True)
+        if printIter: strToPrint += f'Iteration #{iteration}/{maxIter}\n\n'
+        if debug: strToPrint += f'Centroids:\n{centroids.T}\n\n'
 
         # Para cada datapoint, calcular distâncias entre ele e cada centróide; depois, encontrar o centróide mais próximo e salvar seu index
         distances = centroids.apply(lambda x: np.sqrt(((dataset - x) ** 2).sum(axis=1))) # ! Parte altamente paralelizável!
-        if debug: debugStr += f'Distances:\n{distances}\n\n'
+        if debug: strToPrint += f'Distances:\n{distances}\n\n'
         closestCent = distances.idxmin(axis=1)
         del distances
-        if debug: debugStr += f'Closest centroid index:\n{closestCent}\n\n'
+        if debug: strToPrint += f'Closest centroid index:\n{closestCent}\n\n'
 
         centroids_OLD = centroids
         centroids = dataset.groupby(closestCent).apply(lambda x: np.exp(np.log(x).mean())).T # ! Parte altamente paralelizável!
@@ -61,7 +64,7 @@ def kMeansCPU(dataset:pd.DataFrame, k=3, maxIter=100, plotResults=False, debug=F
             plt.scatter(x=centroids_2D[:,0], y=centroids_2D[:,1], marker='+', linewidths=2, color='red')
             plt.show()
 
-        if debug: print(debugStr)
+        if debug or printIter: print(strToPrint, end='')
 
         iteration += 1
 
