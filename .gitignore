@@ -526,9 +526,20 @@ pyrightconfig.json
 Template-TCC-BCC*/
 /template_tcc_bcc.zip
 
+########################################
 # Dataset files
+########################################
+
+# Iris
 code/**/*.data
+
+# WESAD
 code/**/WESAD
 code/**/WESAD.zip
-code/**/heterogeneity+activity+recognition*
+
+# Rice C and O
 code/**/rice+cammeo+and+osmancik*
+code/**/Rice_Cammeo_Osmancik*
+
+# HHAR
+code/**/heterogeneity+activity+recognition*
