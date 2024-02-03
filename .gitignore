@@ -533,16 +533,9 @@ Template-TCC-BCC*/
 # Iris
 code/**/*.data
 
-# WESAD
-code/**/WESAD
-code/**/WESAD.zip
-
 # Rice C and O
 code/**/rice+cammeo+and+osmancik*
 code/**/Rice_Cammeo_Osmancik*
-
-# HHAR
-code/**/heterogeneity+activity+recognition*
 
 # HTRU2
 code/**/htru2*
@@ -550,3 +543,10 @@ code/examples-and-tests/miniboone+particle+identification.zip
 
 # MiniBooNE
 code/**/MiniBooNE*
+
+# WESAD
+code/**/WESAD
+code/**/WESAD.zip
+
+# HHAR
+code/**/heterogeneity+activity+recognition*
