@@ -178,6 +178,8 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
             # relevantLogs conterá agora todos itens de datasetLogs cujo datapoint correspondente está mais próximo do centróide de index centroidIdx
             relevantLogs = datasetLogs[x]
             del x
+            # Se relevantLogs tiver zero itens, então não existia nenhum datapoint cujo centróide mais próximo era o centroids__np[centroidIdx]. Logo, podemos pular o re-cálculo desse centróide, já que ele não mudaria de qualquer maneira!
+            if len(relevantLogs) == 0: continue
             meansByClosestCent[centroidIdx] = relevantLogs.mean(axis=0)
             del relevantLogs
 
