@@ -388,18 +388,39 @@ O resultado, ou saída, de um algoritmo de agrupamento é comumente um rotulamen
 
 \section{Programação Vetorial}
 
-% ? ################
-% ? Planning writing
-% ? ################
+% % ? ################
+% % ? Planning writing
+% % ? ################
 
-[Escrever uma sub-seção sobre Programação Vetorial]
+% [Escrever uma sub-seção sobre Programação Vetorial]
 
-\begin{itemize}
-  \item Tópico histórico, de onde ela vem, pra que ela serve
-  \item Processadores que dão suporte pra operações vetoriais (hoje em dia, basicamente apenas GPUs. APUs tbm?)
-  \item História da NVIDIA criando o CUDA
-  \item Mudança de paradigma em relação à programação serial: escalar -> vetorial
-\end{itemize}
+% \begin{itemize}
+%   \item Tópico histórico, de onde ela vem, pra que ela serve
+%   \item Processadores que dão suporte pra operações vetoriais (hoje em dia, basicamente apenas GPUs. APUs tbm?)
+%   \item História da NVIDIA criando o CUDA
+%   \item Mudança de paradigma em relação à programação serial: escalar -> vetorial
+% \end{itemize}
+
+A programação vetorial é uma abordagem computacional que visa aproveitar ao máximo o potencial de processamento de unidades de processamento que suportam operações vetoriais. Essa abordagem permite realizar operações em conjuntos de dados (vetores) de uma só vez, em vez de processar individualmente cada elemento do vetor. Isso resulta em um aumento significativo no desempenho computacional, especialmente em algoritmos que manipulam grandes volumes de dados.
+
+\subsection{História}
+
+A história da programação vetorial é intrinsecamente ligada ao avanço da computação e à necessidade de lidar com conjuntos massivos de dados de maneira eficiente. O conceito de processamento vetorial remonta ao desenvolvimento dos primeiros supercomputadores e ao surgimento das primeiras GPUs, com destaque para a evolução da arquitetura das GPUs NVIDIA.
+
+A ideia por trás da programação vetorial é aproveitar ao máximo o poder de processamento dos processadores, executando uma mesma instrução em múltiplos conjuntos de dados simultaneamente. Isso é especialmente útil em tarefas que envolvem operações repetitivas sobre grandes vetores ou matrizes de dados, como aquelas encontradas em algoritmos de processamento de imagem, simulações físicas e, mais recentemente, em algoritmos de agrupamento de dados.
+
+Ao longo do tempo, a programação vetorial evoluiu significativamente, impulsionada pelo avanço das arquiteturas de processadores e pela demanda por computação paralela cada vez mais poderosa. Um dos marcos importantes nessa evolução foi a introdução do tipo de processamento SIMD (Single Instruction, Multiple Data) nos supercomputadores na década de 1970 (FLYNN, 1972). Essa abordagem permitiu que uma única instrução fosse executada em múltiplos dados simultaneamente, proporcionando um aumento significativo no desempenho computacional para uma ampla gama de aplicações.
+
+Com o surgimento das GPUs, inicialmente desenvolvidas para renderização gráfica em jogos e aplicações de multimídia, surgiu uma nova oportunidade para a programação vetorial. As GPUs são compostas por centenas ou até milhares de núcleos de processamento, o que as torna altamente paralelizáveis e adequadas para executar operações vetoriais em larga escala. Isso possibilitou a utilização das GPUs não apenas para gráficos, mas também para tarefas de computação de propósito geral (GPGPU), incluindo processamento de grandes conjuntos de dados e algoritmos de aprendizado de máquina.
+
+Um exemplo emblemático da aplicação da programação vetorial em GPUs NVIDIA é o algoritmo de agrupamento de dados conhecido como k-means. O k-means é amplamente utilizado em análise de dados e mineração de dados para agrupar pontos de dados em clusters com base em características semelhantes. A paralelização deste algoritmo em GPUs NVIDIA pode resultar em um significativo aumento de desempenho, permitindo o processamento rápido de grandes conjuntos de dados.
+
+Em suma, a programação vetorial desempenha um papel fundamental no avanço da computação paralela e no desenvolvimento de algoritmos eficientes para lidar com conjuntos massivos de dados. Com a contínua evolução da arquitetura de processadores e o aumento da demanda por computação paralela, é esperado que a programação vetorial continue a desempenhar um papel crucial no desenvolvimento de soluções computacionais rápidas e escaláveis para uma variedade de aplicações, como processamento de sinais, computação gráfica, simulações físicas, aprendizado de máquina e muito mais. Ela permite acelerar algoritmos complexos, reduzindo o tempo de execução e aumentando a eficiência computacional.
+
+% Fontes (organizar no .bib posteriormente) e candidatos a fontes da sub-seção acima
+% FLYNN, Michael J. Some computer organizations and their effectiveness. IEEE transactions on computers, v. 100, n. 9, p. 948-960, 1972. - https://andreprzybysz.com/2023/04/19/classificacao-de-flynn-para-categorizar-as-arquiteturas-de-processadores/
+
+% https://www.ufpe.br/documents/39830/745800/17_GiorgiaMattos/c2c5feb6-6e54-461b-b761-7e22900857d8
 
 
 
