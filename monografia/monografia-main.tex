@@ -403,6 +403,8 @@ O resultado, ou saída, de um algoritmo de agrupamento é comumente um rotulamen
 
 A programação vetorial é uma abordagem computacional que visa aproveitar ao máximo o potencial de processamento de unidades de processamento que suportam operações vetoriais. Essa abordagem permite realizar operações em conjuntos de dados (vetores) de uma só vez, em vez de processar individualmente cada elemento do vetor. Isso resulta em um aumento significativo no desempenho computacional, especialmente em algoritmos que manipulam grandes volumes de dados.
 
+
+
 \subsection{História}
 
 A história da programação vetorial é intrinsecamente ligada ao avanço da computação e à necessidade de lidar com conjuntos massivos de dados de maneira eficiente. O conceito de processamento vetorial remonta ao desenvolvimento dos primeiros supercomputadores e ao surgimento das primeiras GPUs, com destaque para a evolução da arquitetura das GPUs NVIDIA.
@@ -413,7 +415,7 @@ Ao longo do tempo, a programação vetorial evoluiu significativamente, impulsio
 
 Com o surgimento das GPUs, inicialmente desenvolvidas para renderização gráfica em jogos e aplicações de multimídia, surgiu uma nova oportunidade para a programação vetorial. As GPUs são compostas por centenas ou até milhares de núcleos de processamento, o que as torna altamente paralelizáveis e adequadas para executar operações vetoriais em larga escala. Isso possibilitou a utilização das GPUs não apenas para gráficos, mas também para tarefas de computação de propósito geral (GPGPU), incluindo processamento de grandes conjuntos de dados e algoritmos de aprendizado de máquina.
 
-Um exemplo emblemático da aplicação da programação vetorial em GPUs NVIDIA é o algoritmo de agrupamento de dados conhecido como k-means. O k-means é amplamente utilizado em análise de dados e mineração de dados para agrupar pontos de dados em clusters com base em características semelhantes. A paralelização deste algoritmo em GPUs NVIDIA pode resultar em um significativo aumento de desempenho, permitindo o processamento rápido de grandes conjuntos de dados.
+Um exemplo emblemático da aplicação da programação vetorial em GPUs NVIDIA é o algoritmo de agrupamento de dados conhecido como k-means. O k-means é amplamente utilizado em análise de dados e mineração de dados para agrupar pontos de dados em clusters com base em características semelhantes. A paralelização deste algoritmo em GPUs NVIDIA pode resultar em um significativo aumento de desempenho, permitindo o processamento rápido de grandes conjuntos de dados (Shane, 2012).
 
 Em suma, a programação vetorial desempenha um papel fundamental no avanço da computação paralela e no desenvolvimento de algoritmos eficientes para lidar com conjuntos massivos de dados. Com a contínua evolução da arquitetura de processadores e o aumento da demanda por computação paralela, é esperado que a programação vetorial continue a desempenhar um papel crucial no desenvolvimento de soluções computacionais rápidas e escaláveis para uma variedade de aplicações, como processamento de sinais, computação gráfica, simulações físicas, aprendizado de máquina e muito mais. Ela permite acelerar algoritmos complexos, reduzindo o tempo de execução e aumentando a eficiência computacional.
 
@@ -421,6 +423,28 @@ Em suma, a programação vetorial desempenha um papel fundamental no avanço da 
 % FLYNN, Michael J. Some computer organizations and their effectiveness. IEEE transactions on computers, v. 100, n. 9, p. 948-960, 1972. - https://andreprzybysz.com/2023/04/19/classificacao-de-flynn-para-categorizar-as-arquiteturas-de-processadores/
 
 % https://www.ufpe.br/documents/39830/745800/17_GiorgiaMattos/c2c5feb6-6e54-461b-b761-7e22900857d8
+
+% (Shane, 2012) ?
+
+
+
+\subsection{Processadores Vetoriais}
+
+É importante entender que nem todo processador oferece suporte para operações vetoriais, ou as oferecem com níveis de paralelismo inferiores a outros tipos de processadores mais especializados. Essas operações são essenciais para o desenvolvimento de algoritmos eficientes em uma variedade de aplicações computacionais. Examina-se aqui a arquitetura e as capacidades de diversos tipos de processadores, destacando sua importância na aceleração de operações paralelas e no aumento da eficiência computacional.
+
+Os \textbf{processadores} com suporte de processamento paralelo \textbf{SIMD} desempenham um papel crucial na execução de operações vetoriais, permitindo a aplicação de uma única instrução em múltiplos conjuntos de dados simultaneamente. Esse tipo de processamento paralelo foi o foco de extensões como as SSE (\textit{Streaming SIMD Extensions}), que permitiram um grande aumento de performance na execução de aplicações como processamento de sinal digital e processamento gráfico. Essas extensões são encontradas na gigantesca maioria das CPUs x86 atuais, a família de arquiteturas de processadores mais usada até hoje em computadores pessoais.
+
+% ######################################
+[Inserir aqui parágrafo(s) sobre GPUs, o foco do trabalho]
+% ######################################
+
+Os \textbf{processadores VLIW} (\textit{Very Long Instruction Word}) são definidos pela sua capacidade de executar múltiplas operações em paralelo por meio de instruções muito longas. Destaca-se sua presença em sistemas embarcados e a eficiência proporcionada pela execução simultânea de operações vetoriais, especialmente em aplicações de processamento de sinal e comunicações digitais. Arquiteturas deste tipo já foram amplamente utilizadas em GPUs, porém houve uma mudança para arquiteturas RISC (\textit{Reduced Instruction Set Computer}), mais simples, para acelerar também a execução de tarefas não-gráficas.
+
+% Fontes:
+
+% https://razor.com.br/blog/post-6/entenda-os-diferentes-tipos-de-processadores
+
+% https://ifpr.edu.br/pronatec/wp-content/uploads/sites/46/2012/07/Montador_e_Reparador_de_computadores.pdf
 
 
 
