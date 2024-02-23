@@ -1,0 +1,9 @@
+Average execution time for K-Means GPU: 599.0551959514618
+Slowest execution time for K-Means GPU: 877.0152900218964
+Fastest execution time for K-Means GPU: 418.75992608070374
+
+Execution time for K-Means GPU run #1: 877.0152900218964
+Execution time for K-Means GPU run #2: 517.5773544311523
+Execution time for K-Means GPU run #3: 418.75992608070374
+Execution time for K-Means GPU run #4: 518.2692308425903
+Execution time for K-Means GPU run #5: 663.6541783809662

@@ -1,0 +1,9 @@
+Average execution time for K-Means CPU: 1474.8143037319182
+Slowest execution time for K-Means CPU: 1900.1679074764252
+Fastest execution time for K-Means CPU: 1066.2703456878662
+
+Execution time for K-Means CPU run #1: 1328.5695922374725
+Execution time for K-Means CPU run #2: 1626.38077378273
+Execution time for K-Means CPU run #3: 1900.1679074764252
+Execution time for K-Means CPU run #4: 1066.2703456878662
+Execution time for K-Means CPU run #5: 1452.6828994750977
