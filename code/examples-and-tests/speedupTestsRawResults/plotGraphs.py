@@ -11,6 +11,9 @@ if __name__ == '__main__':
     with open(DATA_FILE_PATH, 'r') as file:
         data = pd.read_csv(file)
 
+    # Uncomment the line below to not include the two largest datasets
+    # data = data.drop(index=[3, 4])
+
     print(f'Data loaded:\n{data}\n\n')
 
     fig, ax1 = plt.subplots()
