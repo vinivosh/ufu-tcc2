@@ -444,13 +444,21 @@ Há também os \textbf{processadores DSP} (\textit{Digital Signal Processors}), 
 
 Este segmento aborda uma variedade de processadores especializados em diferentes domínios, como processamento de imagens, áudio e vídeo. Destaca-se sua arquitetura --- muitas vezes utilizando um conjunto de instruções VLIW --- otimizada para operações específicas do domínio e a incorporação de operações vetoriais para melhorar o desempenho em aplicações especializadas.
 
+% TODO
+% TODO
+% TODO: Usar essa referência para o parágrafo acima? (Eliane, 2013) Eliane, 2013 — https://ifpr.edu.br/pronatec/wp-content/uploads/sites/46/2012/07/Montador_e_Reparador_de_computadores.pdf
+% TODO
+% TODO
+
 As \textbf{TPUs} (\textit{Tensor Processing Units}) são unidades de processamento especializadas desenvolvidas pela Google para otimizar operações relacionadas a tensores --- abstrações geométricas que podem ser representadas como vetores multidimensionais, usadas largamente em algoritmos de aprendizado de máquina e servindo de base para a biblioteca \textbf{TensorFlow}, também desenvolvida pela Google. Esses processadores Possuem uma arquitetura voltada para operações matriciais e vetoriais, e contribuem para acelerar o treinamento e a inferência de modelos de inteligência artificial.
 
 O estudo dos processadores que suportam operações vetoriais revela a diversidade de arquiteturas e tecnologias disponíveis para acelerar o processamento paralelo em uma variedade de domínios. Esses processadores desempenham um papel crucial no desenvolvimento de algoritmos eficientes e na melhoria do desempenho computacional em aplicações exigentes. O contínuo avanço dessas tecnologias promete impulsionar ainda mais a inovação na computação e expandir os limites do que é possível realizar com eficiência computacional.
 
-% Fontes candidatas:
-
-% https://razor.com.br/blog/post-6/entenda-os-diferentes-tipos-de-processadores
+% TODO
+% TODO
+% TODO: Usar essa referência para os últimos parágrafos? https://razor.com.br/blog/post-6/entenda-os-diferentes-tipos-de-processadores
+% TODO
+% TODO
 
 
 
@@ -458,13 +466,49 @@ O estudo dos processadores que suportam operações vetoriais revela a diversida
 
 \section{NVIDIA CUDA}
 
-[Escrever uma sub-seção sobre programação em CUDA]
+% % ? ################
+% % ? Planning writing
+% % ? ################
 
-\begin{itemize}
-  \item O que é?
-  \item Exemplos básicos de código  
-  \item Como criar um projeto cuda, onde vai cada parte (sequencial, vetorial, etc)
-\end{itemize}
+% [Escrever uma sub-seção sobre programação em CUDA]
+
+% \begin{itemize}
+%   \item O que é?
+%   \item Exemplos básicos de código  
+%   \item Como criar um projeto cuda, onde vai cada parte (sequencial, vetorial, etc)
+% \end{itemize}
+
+O CUDA (\textit{Compute Unified Device Architecture}) teve sua origem na virada do século, quando a NVIDIA percebeu o potencial das GPUs para além do processamento gráfico e começou a explorar sua capacidade para tarefas de propósito geral. A história do CUDA remonta ao início dos anos 2000, quando a NVIDIA lançou suas primeiras GPUs com arquiteturas capazes de executar operações paralelas de forma eficiente.
+
+% TODO
+% TODO
+% TODO: usar essa fonte pro parágrafo acima? (Frank, 2002) https://dsp-book.narod.ru/ESDUA.pdf - Frank Vahid and Tony Givargis, John Wiley and Sons, 2002
+% TODO
+% TODO
+
+Com o aumento da demanda por poder computacional e a necessidade de lidar com conjuntos massivos de dados em aplicações não relacionadas a gráficos, surgiu a ideia de utilizar as GPUs para computação paralela. Assim, em 2006, a NVIDIA lançou o CUDA como parte da arquitetura Tesla, usada primeiro na série G80 de GPUs, marcando o início de uma nova era na computação paralela.
+
+O lançamento do CUDA permitiu que os desenvolvedores aproveitassem o poder de processamento massivo das GPUs para uma ampla gama de aplicações computacionais. Ao fornecer uma plataforma de programação acessível e eficiente, o CUDA abriu as portas para a aceleração de algoritmos complexos em áreas como aprendizado de máquina, simulação científica, processamento de imagens e muito mais.
+
+Desde então, o CUDA tem passado por várias iterações e atualizações, incorporando novas tecnologias e recursos para tornar a programação em GPUs mais acessível e eficiente. Uma das principais inovações foi a introdução da arquitetura Fermi em 2010, que trouxe melhorias significativas na eficiência energética e na capacidade de processamento das GPUs NVIDIA. Com a Fermi, o CUDA ganhou suporte para novos recursos, como cálculos de precisão dupla de ponto flutuante, o que o tornou ainda mais adequado para aplicações científicas e de computação de alta precisão.
+
+Além disso, o lançamento da arquitetura Kepler em 2012 marcou outro marco importante para o CUDA. Trouxe melhorias significativas na eficiência de computação e na capacidade de execução de instruções paralelas, permitindo o desenvolvimento de algoritmos mais complexos e a execução de tarefas de computação intensiva com maior eficiência.
+
+Ao longo dos anos, o ecossistema em torno do CUDA cresceu significativamente, com uma vasta gama de ferramentas, bibliotecas e frameworks disponíveis para desenvolvedores. O lançamento do CUDA Toolkit proporcionou aos desenvolvedores um conjunto abrangente de ferramentas para desenvolver, otimizar e depurar aplicativos CUDA. Além disso, bibliotecas como cuDNN (\textit{CUDA Deep Neural Network Library}) e cuBLAS (\textit{CUDA Basic Linear Algebra Subprograms}) tornaram-se fundamentais para o desenvolvimento de aplicativos de aprendizado de máquina e processamento de dados em larga escala.
+
+% TODO
+% TODO
+% TODO: usar essa fonte pro parágrafo acima? (Thomas, 2020) https://medium.com/luisfredgs/computação-paralela-com-cuda-c-a1cf6dbc4db2
+% TODO
+% TODO
+
+Outro aspecto importante do ecossistema CUDA é a comunidade de desenvolvedores, que continua a crescer e contribuir com uma variedade de projetos e recursos. Plataformas como o NVIDIA Developer Forums e eventos como a Conferência de Desenvolvedores NVIDIA (\textit{NVIDIA GPU Technology Conference}) desempenham um papel crucial na promoção da colaboração e na troca de conhecimentos entre os desenvolvedores CUDA em todo o mundo.
+
+O CUDA encontrou aplicação em uma ampla variedade de setores, incluindo ciências, engenharia, medicina, finanças e entretenimento. Empresas e instituições de pesquisa em todo o mundo têm utilizado o CUDA para acelerar suas pesquisas e desenvolver soluções inovadoras para problemas complexos.
+
+Por exemplo, na área da medicina, o CUDA é usado para acelerar simulações de dinâmica molecular e processamento de imagens médicas. No setor financeiro, ele é utilizado para análise de dados em tempo real e modelagem financeira avançada. Na indústria de entretenimento, o CUDA é fundamental para a renderização de gráficos em filmes, jogos e animações em 3D.
+
+Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade de domínios, demonstrando seu papel como uma plataforma essencial para a computação paralela e o desenvolvimento de soluções de alto desempenho em todo o mundo.
 
 
 
