@@ -594,14 +594,25 @@ A quinta etapa, por fim, consistiu em diversos experimentos de ganho de velocida
 
 
 \chapter{Experimentos e Datasets}
+\label{chp:exp}
 
-[Escrever capítulo sobre os experimentos realisados e conjuntos de dados utilizados nestes]
+[Escrever capítulo sobre os experimentos realizados e conjuntos de dados utilizados nestes]
 
 
 
 
 
 \chapter{Resultados}
+
+Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realizadas diversas rodadas de execuções em ambas versões dos algoritmos aqui analisados.
+
+Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que diferenças entre execuções também pudesse ser levada em consideração nos resultados — o \textit{k-means}, especialmente, está suscetível a mudanças significativas na eficiência de cada uma de suas execuções, pelo fato dos centroides iniciais serem selecionados aleatoriamente na implementação aqui testada. Uma execução pode ter centroides iniciais mais próximos dos centroides finais, executando mais rapidamente, enquanto outra execução pode ter centroides iniciais muito distantes dos centroides finais, demorando mais para atingir a condição de parada.
+
+
+
+\section{K-Means}
+
+[Apresentar os resultados das execuções do k-means CPU e k-means GPU.]
 
 
 
