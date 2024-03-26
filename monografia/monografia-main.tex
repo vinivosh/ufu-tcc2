@@ -363,7 +363,7 @@ Também é imprescindível explorar o funcionamento dos processadores vetoriais 
 
 O agrupamento de dados, também chamado de clusterização de dados (data clustering, em inglês), é a tarefa de agrupar um conjunto de elementos de modo que cada elemento de um grupo se \enquote{pareça} mais com outros elementos do grupo (\textit{cluster}) que pertence do que com elementos dos grupos que não pertencem, dado algum significado bem definido de semelhança entre os dados. É um processo muito comum e virtualmente imprescindível nas áreas de mineração de dados, análise estatística, análise de imagem, aprendizado de máquina, reconhecimento de padrões, e muitas outras.
 
-O significado de um cluster não pode ser bem definido e vai depender do conjunto de dados a ser analisado e a forma que os resultados obtidos serão utilizados --- de fato, esse é o principal motivo pelo qual tantos algoritmos diferentes de agrupamento existem \cite{SoManyClustAlg}. O fator comum na maioria das definições propostas é que um cluster é um conjunto de \textit{datapoints} --- pontos, ou objetos de dados. Esses objetos são representados num espaço geométrico com o número de dimensões iguais ao número de variáveis necessárias para descrever cada datapoint, e os algoritmos de agrupamento tentam criar grupos nesse espaço que agrupem os objetos de uma maneira significativa, ou útil, para o estudo sendo feito e a definição de \enquote{grupo} sendo utilizada.
+O significado de um cluster não pode ser bem definido e vai depender do conjunto de dados a ser analisado e a forma que os resultados obtidos serão utilizados --- de fato, esse é o principal motivo pelo qual tantos algoritmos diferentes de agrupamento existem \cite{SoManyClustAlg}. O fator comum na maioria das definições propostas é que um cluster é um conjunto de \textit{datapoints} --- pontos, ou objetos de dados ou até mesmo instâncias. Esses objetos são representados num espaço geométrico com o número de dimensões iguais ao número de variáveis necessárias para descrever cada datapoint, e os algoritmos de agrupamento tentam criar grupos nesse espaço que agrupem os objetos de uma maneira significativa, ou útil, para o estudo sendo feito e a definição de \enquote{grupo} sendo utilizada.
 
 % TODO
 % TODO
@@ -382,6 +382,8 @@ Diversos modelos de grupo podem ser usados para definir o que é um grupo: \text
 
 O resultado, ou saída, de um algoritmo de agrupamento é comumente um rotulamento dos datapoints passados na entrada, o que indicará a divisão em grupos feita por ele. Classificações podem ser feitas quanto à natureza do agrupamento obtido pelos algoritmos: \textbf{\textit{hard clustering}}, onde cada objeto pertence ou não a um grupo; \textbf{\textit{fuzzy clustering}}, onde cada objeto pertence uma certa porcentagem a cada grupo, o que pode representar, por exemplo, a chance do objeto pertencer àquele grupo, ou até o grau de semelhança do datapoint comparado aos outros datapoints de cada grupo \cite{FuzzyClusteringSurvey}. E subclassificações ainda mais granulares podem ser definidas, como: \textbf{clusterização de particionamento estrito}, onde cada objeto pertence a exatamente um cluster; \textbf{clusterização de particionamento estrito com \textit{outliers}}, onde objetos pertencem a exatamente um cluster, ou nenhum cluster, assim sendo considerados \textit{outliers}, entre outras classificações.
 
+Os algoritmos de agrupamento são essenciais na análise de dados, permitindo a identificação de padrões e estruturas em conjuntos de dados não rotulados. Eles pertencem à categoria de \textbf{algoritmos de aprendizado não supervisionado} e são amplamente utilizados em diversas áreas da computação, matemática, economia, estatística, dentre outras. A paralelização desses algoritmos visa melhorar a eficiência computacional, permitindo o processamento mais rápido de grandes volumes de dados.
+
 
 
 % * ####################################
@@ -395,9 +397,9 @@ O resultado, ou saída, de um algoritmo de agrupamento é comumente um rotulamen
 % [Escrever uma sub-seção sobre Programação Vetorial]
 
 % \begin{itemize}
-%   \item Tópico histórico, de onde ela vem, pra que ela serve
-%   \item Processadores que dão suporte pra operações vetoriais (hoje em dia, basicamente apenas GPUs. APUs tbm?)
-%   \item História da NVIDIA criando o CUDA
+  %   \item Tópico histórico, de onde ela vem, pra que ela serve
+  %   \item Processadores que dão suporte pra operações vetoriais (hoje em dia, basicamente apenas GPUs. APUs tbm?)
+  %   \item História da NVIDIA criando o CUDA
 %   \item Mudança de paradigma em relação à programação serial: escalar -> vetorial
 % \end{itemize}
 
