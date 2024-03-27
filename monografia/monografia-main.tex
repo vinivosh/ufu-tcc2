@@ -627,6 +627,30 @@ A introdução do HAC paralelo, e particularmente do framework ParChain, marcou 
 
 
 
+% * ####################################
+
+\section{Outras Pesquisas Relevantes}
+
+\textbf{TODO: Escrever um parágrafo introdutorio básico aqui?}
+
+% TODO
+% TODO
+% TODO: Vide acima
+% TODO
+% TODO
+
+O estudo "CLUE: A Fast Parallel Clustering Algorithm for High Granularity Calorimeters in High-Energy Physics" \cite{clueParallelAlgo2020} desenvolveu um novo algoritmo de agrupamento chamado CLUE, destinado a otimizar o processo de agrupamento em calorímetros de alta granularidade utilizados em física de alta energia. O algoritmo foi projetado para ser totalmente paralelizável e eficiente, lidando com um grande número de "hits" ou depósitos de energia, que podem variar de milhares a milhões, dependendo da granularidade e do número de partículas que entram no detector.
+
+O CLUE utiliza uma abordagem baseada em densidade para o agrupamento, calculando duas variáveis-chave para cada ponto: a densidade local e a separação. Utiliza também um índice espacial de grade fixa para acelerar a consulta de vizinhos, tornando o processo mais rápido e escalável. Além disso, o algoritmo pode efetivamente identificar e agrupar formas de clusters não esféricos e rejeitar ruídos, adaptando-se às necessidades específicas da análise de dados em calorímetros.
+
+A implementação do CLUE em GPUs mostrou ser significativamente mais rápida do que as implementações em CPU de thread único, alcançando um aumento de velocidade de 48 a 112 vezes, dependendo do número de pontos processados. Esse desempenho é crucial para a reconstrução de eventos em física de partículas, onde o tempo de processamento é limitado e grandes volumes de dados precisam ser analisados rapidamente.
+
+O estudo confirmou que o algoritmo CLUE é altamente escalável, mantendo um desempenho linear em relação ao número de pontos de entrada, o que é ideal para o tratamento de dados provenientes de calorímetros de alta granularidade, como os previstos para o CMS no LHC de alta luminosidade.
+
+Este desenvolvimento representa um avanço significativo na análise de dados em física de alta energia, permitindo um processamento de dados mais rápido e eficiente, o que é essencial para explorar o potencial completo de futuros experimentos de física de partículas.
+
+
+
 
 
 % * ############################################################################
