@@ -431,14 +431,19 @@ Em suma, a programação vetorial desempenha um papel fundamental no avanço da 
 
 
 \subsection{Processadores Vetoriais}
+\label{ssc:vetorial}
 
 É importante entender que nem todo processador oferece suporte para operações vetoriais, ou as oferecem com níveis de paralelismo inferiores a outros tipos de processadores mais especializados. Essas operações são essenciais para o desenvolvimento de algoritmos eficientes em uma variedade de aplicações computacionais. Examina-se aqui a arquitetura e as capacidades de diversos tipos de processadores, destacando sua importância na aceleração de operações paralelas e no aumento da eficiência computacional.
 
 Os \textbf{processadores} com suporte de processamento paralelo \textbf{SIMD} desempenham um papel crucial na execução de operações vetoriais, permitindo a aplicação de uma única instrução em múltiplos conjuntos de dados simultaneamente. Esse tipo de processamento paralelo foi o foco de extensões como as SSE (\textit{Streaming SIMD Extensions}), que permitiram um grande aumento de performance na execução de aplicações como processamento de sinal digital e processamento gráfico. Essas extensões são encontradas na gigantesca maioria das CPUs x86 atuais, a família de arquiteturas de processadores mais usada até hoje em computadores pessoais.
 
-% ######################################
-[Inserir aqui parágrafo(s) sobre GPUs, o foco do trabalho]
-% ######################################
+% TODO
+% TODO
+% TODO: Vide abaixo!
+% TODO
+% TODO
+
+\textbf{TODO: Inserir aqui parágrafo(s) sobre GPUs, o foco do trabalho}
 
 Os \textbf{processadores VLIW} (\textit{Very Long Instruction Word}) são definidos pela sua capacidade de executar múltiplas operações em paralelo por meio de instruções muito longas. Destaca-se sua presença em sistemas embarcados e a eficiência proporcionada pela execução simultânea de operações vetoriais, especialmente em aplicações de processamento de sinal e comunicações digitais. Arquiteturas deste tipo já foram amplamente utilizadas em GPUs, porém houve uma mudança para arquiteturas RISC (\textit{Reduced Instruction Set Computer}), mais simples, para acelerar também a execução de tarefas não-gráficas.
 
@@ -665,15 +670,21 @@ Este desenvolvimento representa um avanço significativo na análise de dados em
 % TODO
 % TODO
 
-A avaliação dos estudos recentes sobre a paralelização de algoritmos de agrupamento, especialmente os que utilizam GPUs NVIDIA, revela avanços significativos tanto na eficiência quanto na utilidade prática dos processos de agrupamento. Estas melhorias são notáveis em aplicações que variam desde o processamento de imagens até a física de alta energia.
+A avaliação dos estudos recentes sobre a paralelização de algoritmos de agrupamento, especialmente os que utilizam a plataforma CUDA para implementá-los em GPUs NVIDIA, revela avanços significativos tanto na eficiência quanto na utilidade prática dos processos de agrupamento. Estas melhorias são notáveis em aplicações que variam desde o processamento de imagens até a física de alta energia.
 
-Os avanços na utilização de GPUs para paralelização têm demonstrado que é possível obter reduções significativas nos tempos de processamento, mantendo, ou até mesmo melhorando, a qualidade dos resultados destes tipos de algoritmos.
+Os avanços na utilização de processadores vetoriais para paralelização têm demonstrado que é possível obter reduções significativas nos tempos de processamento, mantendo, ou até mesmo melhorando, a qualidade dos resultados destes tipos de algoritmos.
 
 No entanto, apesar dos avanços significativos, ainda existem lacunas importantes a serem preenchidas. Uma das principais lacunas é a falta de algoritmos paralelos que sejam eficientes para diferentes tipos e tamanhos de conjuntos de dados. Outra área que merece atenção é a escalabilidade dos algoritmos paralelizados. À medida que os conjuntos de dados continuam a crescer em tamanho e complexidade, torna-se crucial que os algoritmos de agrupamento possam escalar eficientemente para atender a essas demandas crescentes.
 
-Direções futuras na pesquisa podem incluir o desenvolvimento de algoritmos paralelos que sejam mais adaptáveis a diferentes tipos e tamanhos de dados, além da integração de técnicas de aprendizado de máquina para melhorar a precisão e eficiência dos processos de agrupamento. Além disso, pode ser útil explorar mais a fundo o potencial das novas arquiteturas de GPU e outras plataformas de computação paralela, como as TPUs e FPGAs, para avançar ainda mais na paralelização destes algoritmos.
+% ?
+% ?
+% ? A palavra "escalar" pode ser usada assim no português mesmo? Eu encontrei uns exemplos na WikiPédia, mas também parece ser utilizada a palavra "escalonar" ao invés. Qual o mais correto?
+% ?
+% ?
 
-A exploração de técnicas híbridas, que combinem métodos de agrupamento clássicos com novas abordagens baseadas em aprendizado profundo (Deep Learning), também pode oferecer caminhos promissores para melhorar tanto a velocidade quanto a qualidade dos algoritmos de agrupamento paralelizados. Finalmente, há uma necessidade contínua de pesquisa que aborde questões de eficiência energética e sustentabilidade ambiental no contexto da computação de alto desempenho aplicada ao agrupamento de dados.
+Direções futuras na pesquisa podem incluir o desenvolvimento de algoritmos paralelos que sejam mais adaptáveis a diferentes tipos e tamanhos de dados, além da integração de técnicas de aprendizado de máquina para melhorar a precisão e eficiência dos processos de agrupamento. Além disso, pode ser útil explorar mais a fundo o potencial das novas arquiteturas de GPU e outras plataformas de computação paralela, como as TPUs e FPGAs (vide o capítulo \ref{ssc:vetorial}), para avançar ainda mais na paralelização destes algoritmos.
+
+A exploração de técnicas híbridas, que combinem métodos de agrupamento clássicos com novas abordagens baseadas em aprendizado profundo (\textit{Deep Learning}), também pode oferecer caminhos promissores para melhorar tanto a velocidade quanto a qualidade dos algoritmos. Finalmente, há uma necessidade contínua de pesquisa que aborde questões de eficiência energética e sustentabilidade ambiental no contexto da computação de alto desempenho aplicada ao agrupamento de dados.
 
 
 
