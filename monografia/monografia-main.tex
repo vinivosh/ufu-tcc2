@@ -599,13 +599,27 @@ As pesquisas aqui resumidas buscam explorar a história da paralelização de al
 
 % * ####################################
 
+\section{K-Means e Variantes}
+
+No estudo \enquote{\textit{Parallelization of Partitioning Around Medoids} [\dots]} \cite{pamKMedoids2020}, os autores propuseram uma implementação paralela do \textbf{algoritmo de agrupamento K-Medoids}, especificamente da sua versão conhecida como \textbf{PAM (\textit{Partitioning Around Medoids})}, que é utilizada para dividir conjuntos de dados em clusters de forma que minimizem as distâncias internas. Esta versão paralela foi desenvolvida para ser executada em Unidades de Processamento Gráfico (GPUs) utilizando a arquitetura CUDA da NVIDIA.
+
+O principal desafio do K-Medoids reside em sua alta complexidade computacional, especialmente para grandes conjuntos de dados, o que pode tornar sua aplicação inviável em contextos práticos. Para superar esse problema, os autores optaram por uma abordagem paralela, que não necessita da criação de uma tabela completa de distâncias, reduzindo assim o consumo de memória e acelerando o processo de cálculo.
+
+Os resultados foram promissores, demonstrando que a versão paralelizada em GPU do algoritmo PAM conseguiu uma melhoria significativa de desempenho em comparação com as implementações tradicionais em CPU e até mesmo com implementações em Matlab, que usam uma tabela de distâncias pré-calculada. Especificamente, o estudo relatou um aumento de velocidade de mais de 11 vezes em relação à CPU e de 2 a 3 vezes em relação ao Matlab para grandes volumes de dados.
+
+Este avanço significa que o método K-Medoids, adaptado para uso em GPUs, torna-se uma alternativa mais viável para o agrupamento de grandes conjuntos de dados, oferecendo melhorias tanto em termos de tempo de execução quanto na capacidade de lidar com volumes de dados maiores sem exigir quantidades excessivas de memória. Portanto, a pesquisa contribui significativamente para a área de mineração de dados e aprendizado de máquina, abrindo novas possibilidades para o uso eficiente do K-Medoids em aplicações práticas de big data.
+
+
+
+% * ####################################
+
 \section{Algoritmos Hierárquicos}
 
 O \textbf{Agrupamento Aglomerativo Paralelo} é uma técnica fundamental no campo da mineração de dados e aprendizado de máquina, especialmente quando lidamos com grandes conjuntos de dados. Tradicionalmente, os \textbf{algoritmos de agrupamento aglomerativo} (\textbf{HAC}, em inglês), conhecidos por sua abordagem hierárquica, eram limitados pela capacidade computacional e de memória das máquinas. Com a evolução da computação paralela, surgiu a necessidade de adaptar estes algoritmos para ambientes onde múltiplos processos podem ser executados simultaneamente, melhorando significativamente a eficiência e a escalabilidade do agrupamento de grandes quantidades de instâncias.
 
 Antes do desenvolvimento do algoritmo K-Means, um dos métodos de agrupamento mais populares, havia um forte interesse no agrupamento aglomerativo devido à sua capacidade de revelar a estrutura hierárquica dos dados. No entanto, sua aplicação era bastante limitada devido ao alto custo computacional e à demanda por grandes quantidades de memória. A paralelização do agrupamento aglomerativo surgiu como uma solução para essas limitações, permitindo o processamento de dados em grande escala de uma maneira mais viável.
 
-Um avanço significativo no Agrupamento Aglomerativo Paralelo foi realizado através do desenvolvimento do \textbf{framework ParChain}, discutido no artigo \enquote{ParChain: A Framework for Parallel Hierarchical [\dots]} \cite{parChainHAC2021}. O ParChain propõe uma estrutura para projetar algoritmos paralelos de agrupamento hierárquico aglomerativo que utilizam memória linear, em contraste com a memória quadrática requerida pelos algoritmos paralelos anteriores. Baseado na paralelização do algoritmo de cadeias de vizinhos mais próximos, o ParChain permite que múltiplos clusters sejam mesclados em cada rodada, melhorando a eficiência e a escalabilidade do processo de agrupamento.
+Um avanço significativo no Agrupamento Aglomerativo Paralelo foi realizado através do desenvolvimento do \textbf{framework ParChain}, discutido no artigo \enquote{\textit{ParChain: A Framework for Parallel Hierarchical} [\dots]} \cite{parChainHAC2021}. O ParChain propõe uma estrutura para projetar algoritmos paralelos de agrupamento hierárquico aglomerativo que utilizam memória linear, em contraste com a memória quadrática requerida pelos algoritmos paralelos anteriores. Baseado na paralelização do algoritmo de cadeias de vizinhos mais próximos, o ParChain permite que múltiplos clusters sejam mesclados em cada rodada, melhorando a eficiência e a escalabilidade do processo de agrupamento.
 
 O estudo demonstrou que implementações altamente otimizadas do ParChain, utilizando 48 núcleos com \textit{hyper-threading} bidirecional, alcançaram uma aceleração significativa em comparação com os algoritmos paralelos HAC de última geração. Mais especificamente, observou-se uma aceleração entre 5,8--110,1 vezes no tempo de execução, além de uma redução de até 237,3 vezes no espaço necessário. Assim, o framework foi capaz de escalonar para tamanhos de conjuntos de dados com dezenas de milhões de pontos --- um feito que os algoritmos existentes não conseguiam alcançar.
 
