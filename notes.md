@@ -45,6 +45,10 @@
 - [Trabalhos de Conclusão de Curso feitos por alunos da FACOM](https://repositorio.ufu.br/handle/123456789/5142/browse?type=type&order=ASC&rpp=20&value=Trabalho+de+Conclus%C3%A3o+de+Curso)
 - [Datasets open-source que podem ser usados para testes e experimentos](https://archive.ics.uci.edu/datasets?NumInstances=1000-inf&NumFeatures=0-10&skip=0&take=10&sort=desc&orderBy=NumHits&search=&Types=Multivariate) (DSs daqui foram usados até no doutorado do Daniel Abdala!)
 
+### LaTeX
+
+- [Definições para exibição de código fonte no documento](https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings)
+
 
 
 ## Sanando Dúvidas de Português Muito Comuns
