@@ -42,7 +42,7 @@ brazil]{facom-ufu-abntex2}
 % Python style for highlighting
 \newcommand\pythonstyle{\lstset{
 language=Python,
-basicstyle=\ttm,
+basicstyle=\ttm\small,
 morekeywords={self},                  % Add keywords here
 keywordstyle=\ttb\color{deepblue},
 emph={MyClass,__init__},              % Custom highlighting
@@ -871,8 +871,48 @@ A \textbf{quinta etapa}, por fim, consistiu em diversos experimentos de ganho de
 \textbf{TODO: Escrever essa seção, com pedaços de código.}
 
 \begin{python}
-  def f(x):
-    return x ** 2 # Comentário teste com acentos. É isso mesmo. Mamãe. Testando quebra de linha também dentro desse código de coitado...
+def kMeansCPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResults=False, debug=False):
+  if plotResults:
+      # Inicializando variáveis para exibição gráfica
+      pca = PCA(n_components=2) # dois eixos no gráfico
+      dataset_2D = pca.fit_transform(dataset)
+
+  # Gerando centróides iniciais randomicamente
+  centroids = pd.concat([(dataset.apply(lambda x: float(x.sample().iloc[0]))) for _ in range(k)], axis=1) # * Paralelizar isto provavelmente é irrelevante, visto que sempre teremos poucos centróides
+  centroids_OLD = pd.DataFrame()
+
+  iteration = 1
+
+  while iteration <= maxIter and not centroids_OLD.equals(centroids):
+      strToPrint = ''
+
+      if plotResults or debug or printIter: clear_output(wait=True)
+      if printIter: strToPrint += f'Iteration #{iteration}/{maxIter}\n\n'
+      if debug: strToPrint += f'Centroids:\n{centroids.T}\n\n'
+
+      # Para cada datapoint, calcular distâncias entre ele e cada centróide; depois, encontrar o centróide mais próximo e salvar seu index
+      distances = centroids.apply(lambda x: np.sqrt(((dataset - x) ** 2).sum(axis=1))) # ! Parte altamente paralelizável!
+      if debug: strToPrint += f'Distances:\n{distances}\n\n'
+      closestCent = distances.idxmin(axis=1)
+      del distances
+      if debug: strToPrint += f'Closest centroid index:\n{closestCent}\n\n'
+
+      centroids_OLD = centroids
+      centroids = dataset.groupby(closestCent).apply(lambda x: np.exp(np.log(x).mean())).T # ! Parte altamente paralelizável!
+
+      if plotResults:
+        # Plotando clusters
+        centroids_2D = pca.transform(centroids.T)
+        plt.title(f'Iteration {iteration}')
+        plt.scatter(x=dataset_2D[:,0], y=dataset_2D[:,1], c=closestCent)
+        plt.scatter(x=centroids_2D[:,0], y=centroids_2D[:,1], marker='+', linewidths=2, color='red')
+        plt.show()
+
+      if debug or printIter: print(strToPrint, end='')
+
+      iteration += 1
+
+  return closestCent
 \end{python}
 
 
