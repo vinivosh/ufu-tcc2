@@ -13,10 +13,89 @@ brazil]{facom-ufu-abntex2}
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 
 
-% ---
+% ##################
 % Pacotes adicionados por mim (além dos do modelo!)
-% ---
-\usepackage[autostyle=true]{csquotes}   %Pacote de quotations (aspas)
+% ##################
+
+%Pacote de quotations (aspas)
+\usepackage[autostyle=true]{csquotes}
+% % Pacote para caixas de texto de borda colorida (usadas na exibição de código)
+% \usepackage{tcolorbox}
+\usepackage{listings}
+
+% ##################
+% Configurando estilos de código Python para o pacote listings
+% Créditos par essa config: https://tex.stackexchange.com/a/83883/295210
+% ##################
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{linenumber}{rgb}{0.5,0.5,0.5}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+morekeywords={self},                  % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},              % Custom highlighting
+emphstyle=\ttb\color{deepred},        % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                             % Any extra options here
+showstringspaces=false,
+% 
+% Options added by me
+% 
+breaklines=true,
+breakatwhitespace=true,
+numbers=left,                         % where to put the line-numbers; possible values are (none, left, right)
+numbersep=5pt,                        % how far the line-numbers are from the code
+numberstyle=\tiny\color{linenumber},  % the style that is used for the line-numbers
+rulecolor=\color{black},              % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+}}
+
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+% Configurando chars unicode não suportados por padrão
+\lstset{literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\`E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {ã}{{\~a}}1 {ẽ}{{\~e}}1 {ĩ}{{\~i}}1 {õ}{{\~o}}1 {ũ}{{\~u}}1
+  {Ã}{{\~A}}1 {Ẽ}{{\~E}}1 {Ĩ}{{\~I}}1 {Õ}{{\~O}}1 {Ũ}{{\~U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {Ø}{{\O}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1 {¡}{{!`}}1 
+}
 
 
 % ---
@@ -32,14 +111,24 @@ brazil]{facom-ufu-abntex2}
 
 \hypersetup{pdfkeywords={palavra 1}{palavra 2}{palavra 4}{palavra 4}{palavra 5}} %TCC
 
-% ? ############################################################################
-% ? Variáveis e macros
-% ? ############################################################################
+
+
+
+
+% * ############################################################################
+% * Variáveis e macros
+% * ############################################################################
 
 \def\qntAlgrtm{dois}
 \def\qntAlgrtmNaoExtenso{2}
 
-% ? ############################################################################
+
+
+
+
+% * ############################################################################
+% * Documento
+% * ############################################################################
 
 \begin{document} 
 \frenchspacing 
@@ -779,7 +868,12 @@ A \textbf{quinta etapa}, por fim, consistiu em diversos experimentos de ganho de
 % TODO
 % TODO
 
-\textbf{TODO: Escrever essa seção, com pedaços de código}
+\textbf{TODO: Escrever essa seção, com pedaços de código.}
+
+\begin{python}
+  def f(x):
+    return x ** 2 # Comentário teste com acentos. É isso mesmo. Mamãe. Testando quebra de linha também dentro desse código de coitado...
+\end{python}
 
 
 
