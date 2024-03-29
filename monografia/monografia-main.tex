@@ -1,4 +1,4 @@
-\documentclass[12pt, %
+\documentclass[12pt,
 openright, 
 oneside, %
 %twoside, %TCC: Se seu texto tem mais de 100 páginas, descomente esta linha e comente a anterior
@@ -130,45 +130,63 @@ brazil]{facom-ufu-abntex2}
 
 
 
-\begin{resumo} %TCC:
- % ! MUDAR ISTO!!!
- Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
- objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão
- destes itens dependem do tipo de resumo (informativo ou indicativo) e do
- tratamento que cada item recebe no documento original. O resumo deve ser
- precedido da referência do documento, com exceção do resumo inserido no
- próprio documento. (\ldots) As palavras-chave devem figurar logo abaixo do
- resumo, antecedidas da expressão Palavras-chave:, separadas entre si por
- ponto e finalizadas também por ponto.
+% * ############################################################################
+\begin{resumo}
+% * ############################################################################
 
- \vspace{\onelineskip}
-    
- \noindent
- \textbf{Palavras-chave}: Até, cinco, palavras-chave, separadas, por, vírgulas. %TCC:
+% TODO
+% TODO
+% ! TODO: Escrever o resumo, depois de concluir o resto do trabalho!
+% TODO
+% TODO
+
+Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
+objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão
+destes itens dependem do tipo de resumo (informativo ou indicativo) e do
+tratamento que cada item recebe no documento original. O resumo deve ser
+precedido da referência do documento, com exceção do resumo inserido no
+próprio documento. (\ldots) As palavras-chave devem figurar logo abaixo do
+resumo, antecedidas da expressão Palavras-chave:, separadas entre si por
+ponto e finalizadas também por ponto.
+
+\vspace{\onelineskip}
+  
+\noindent
+\textbf{Palavras-chave}: Até, cinco, palavras-chave, separadas, por, vírgulas.
+
 \end{resumo}
 
-% ---
-% inserir lista de ilustrações
-% ---
+
+
+
+
+% * ############################################################################
+
+% ##################
+% Inserir lista de ilustrações
+% ##################
+
 \pdfbookmark[0]{\listfigurename}{lof}
 \listoffigures*
 \cleardoublepage
-% ---
 
-% ---
-% inserir lista de tabelas
-% ---
+
+
+% ##################
+% Inserir lista de tabelas
+% ##################
+
 \pdfbookmark[0]{\listtablename}{lot}
 \listoftables*
 \cleardoublepage
-% ---
 
 
 
-% ---
+% ##################
 % inserir lista de abreviaturas e siglas
-% ---
-\begin{siglas} %TCC:
+% ##################
+
+\begin{siglas}
   % \item[Fig.] Area of the $i^{th}$ component
   % \item[456] Isto é um número
   % \item[123] Isto é outro número
@@ -178,35 +196,41 @@ brazil]{facom-ufu-abntex2}
   \item[VRAM] \textit{Video Random Access Memory} --- Memória de Vídeo de Acesso Randômico. Um componente das GPUs que equivale à RAM das CPUs. Uma memória volátil de alta velocidade, usada para armazenamento de dados necessários às operações gráficas realizadas pela GPU
   \item[CUDA] [inserir informação]
 \end{siglas}
-% ---
 
-%% ---
-%% inserir lista de símbolos, se for adequado ao trabalho. %TCC:
-%% ---
+
+
+% ##################
+% Inserir lista de símbolos, se for adequado ao trabalho.
+% ##################
+
 %\begin{simbolos}
-%  \item[$ \Gamma $] Letra grega Gama
-%  \item[$ \Lambda $] Lambda
+  %  \item[$ \Gamma $] Letra grega Gama
+  %  \item[$ \Lambda $] Lambda
 %  \item[$ \zeta $] Letra grega minúscula zeta
 %  \item[$ \in $] Pertence
 %\end{simbolos}
-%% ---
 
-% ---
-% inserir o sumario
-% ---
+% ##################
+% Inserir o sumario
+% ##################
+
 \pdfbookmark[0]{\contentsname}{toc}
 \tableofcontents*
 \cleardoublepage
-% ---
 
 
 
 
 
-% ----------------------------------------------------------
-% ELEMENTOS TEXTUAIS
-% ----------------------------------------------------------
+% * ############################################################################
+% * ELEMENTOS TEXTUAIS
+% * ############################################################################
+
 \textual
+
+
+
+
 
 % * ############################################################################
 \chapter{Introdução}
@@ -263,7 +287,7 @@ A hipótese principal deste trabalho é a de que algoritmos de clustering, em ge
 % TODO
 % TODO
 % ! TODO: Tenho que substituir essas referências abaixo por referências de versões seriais de cada algoritmo. Usar as referências das versões aceleradas em GPUs mais adiante, ao invés de aqui parece fazer bem mais sentido
-% ! TODO: Adicionar o 
+% ! TODO: Adicionar referência para o algoritmo hierárquico
 % TODO
 % TODO
 
@@ -543,13 +567,36 @@ Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade
 
 % * ####################################
 
+\section{Biblioteca Numba}
+\label{sec:numba}
+
+
+% TODO
+% TODO
+% TODO: Vide abaixo
+% TODO
+% TODO
+
+\textbf{TODO: Escrever uma seção sobre a biblioteca Python Numba.}
+
+
+
+% * ####################################
+
 \section{Algoritmo 1: K-Means}
 
-[Escrever uma sub-seção sobre o K-Means]
+% TODO
+% TODO
+% TODO: Vide abaixo
+% TODO
+% TODO
 
-\begin{itemize}  
-  \item Um dos algoritmos mais tradicionais, explicar a história dele
-  \item Explicar como ele é usado
+\textbf{TODO: Escrever uma sub-seção sobre o K-Means.}
+
+\begin{itemize}
+  \item \textbf{Um dos algoritmos mais tradicionais, explicar a história dele;}
+  \item \textbf{Explicar brevemente seu funcionamento (talvez com um pseudo-código bem alto nível?);}
+  \item \textbf{Explicar como ele é usado (aplicações reais).}
 \end{itemize}
 
 
@@ -558,7 +605,13 @@ Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade
 
 \section{Algoritmo 2: Hierarchical Clustering}
 
-[Escrever uma sub-seção sobre o Hierarchical Clustering]
+% TODO
+% TODO
+% TODO: Vide abaixo
+% TODO
+% TODO
+
+\textbf{TODO: Escrever uma sub-seção sobre o Hierarchical Clustering, no mesmo estilo da seção do K-Means.}
 
 
 
@@ -704,28 +757,52 @@ A exploração de técnicas híbridas, que combinem métodos de agrupamento clá
 
 A pesquisa realizada neste trabalho consistiu de estudos e análises de trabalhos prévios, desenvolvimento de versões paralelizadas de \qntAlgrtm{} algoritmos de clustering e experimentos sobre essas implementações. Pode-se dividir tal metodologia em um conjunto de etapas que foram realizadas.
 
-A primeira etapa consistiu em uma extensa pesquisa bibliográfica. O intuito é levantar o estado da arte na área de algoritmos de agrupamento acelerados em GPU usando a linguagem e biblioteca CUDA da NVIDIA. O foco foi entender quais algoritmos já foram implementados com sucesso em CUDA, e como foram feitas tais implementações, além dos ganhos em desempenho destas. Essa etapa permitiu agregar conhecimento sobre como utilizar a biblioteca CUDA para acelerar algoritmos de agrupamento, além de mostrar uma prévia da magnitude de ganho de desempenho esperado de uma paralelização média desse tipo de algoritmo.
+A \textbf{primeira etapa} consistiu em uma extensa pesquisa bibliográfica. O intuito é levantar o estado da arte na área de algoritmos de agrupamento acelerados em GPU usando a linguagem e biblioteca CUDA da NVIDIA. O foco foi entender quais algoritmos já foram implementados com sucesso em CUDA, e como foram feitas tais implementações, além dos ganhos em desempenho destas. Essa etapa permitiu agregar conhecimento sobre como utilizar a biblioteca CUDA para acelerar algoritmos de agrupamento, além de mostrar uma prévia da magnitude de ganho de desempenho esperado de uma paralelização média desse tipo de algoritmo.
 
-A segunda etapa consistiu na implementação de duas versões, uma serial e uma paralela, de um dos mais antigos e conhecidos algoritmos de agrupamento de dados: o \textbf{K-Means}. A função dessa etapa da pesquisa foi aprender como programar, na prática, um algoritmo de agrupamento e, depois, como paralelizá-lo utilizando a biblioteca Python \textit{Numba}. Por ser um algoritmo mais antigo, já foi muito estudado anteriormente, tanto em versões seriais quanto paralelas, com grande presença na bibliografia da área. Assim, a implementação aqui realizada foi realizada puramente para fins de aprendizado. Os ganhos de velocidade da versão paralela foi então comparada também com os ganhos obtidos nos trabalhos analisados na primeira etapa. Isso serviu como uma validação da corretude da implementação feita.
+A \textbf{segunda etapa} consistiu na implementação de duas versões, uma serial e uma paralela, de um dos mais antigos e conhecidos algoritmos de agrupamento de dados: o \textbf{K-Means}. A função dessa etapa da pesquisa foi aprender como programar, na prática, um algoritmo de agrupamento e, depois, como paralelizá-lo utilizando a biblioteca Python \textit{Numba} --- que utiliza a plataforma CUDA, internamente. Por ser um algoritmo mais antigo, o k-means já foi muito estudado anteriormente, tanto em versões seriais quanto paralelas, com grande presença na bibliografia da área. Assim, a implementação aqui realizada foi feita puramente para fins de aprendizado. Os ganhos de velocidade da versão paralela foi então comparada também com os ganhos obtidos nos trabalhos analisados na primeira etapa. Isso serviu como uma validação da corretude da implementação feita.
 
-A terceira etapa consistiu na implementação de uma versão paralela um pouco mais \enquote{inédita} de algum algoritmo de agrupamento, ou seja, um algoritmo cuja implementação paralela foi raramente estudada à fundo em pesquisas. O algoritmo escolhido para essa etapa foi o de \textbf{Agrupamento Hierárquico}. Usando o aprendizado adquirido nas etapas anteriores, este algoritmo foi paralelizado em Python, utilizando novamente a biblioteca \textit{Numba}, e seus resultados comparados com a versão serial (rodando somente numa CPU) para garantir corretude.
+A \textbf{terceira etapa} consistiu na implementação de uma versão paralela um pouco mais \enquote{inédita} de algum algoritmo de agrupamento, ou seja, um algoritmo cuja implementação paralela foi raramente estudada à fundo em pesquisas. O algoritmo escolhido para essa etapa foi o de \textbf{Agrupamento Hierárquico}. Usando o aprendizado adquirido nas etapas anteriores, este algoritmo foi paralelizado em Python, utilizando novamente a biblioteca \textit{Numba}, e seus resultados comparados com a versão serial (rodando somente em uma thread, na CPU) para garantir corretude.
 
-A quarta etapa consistiu na busca de um procedimento geral para paralelizar um algoritmo de agrupamento genérico. Ou seja, o foco foi encontrar um passo-a-passo de modificações no código de um algoritmo serial que, ao fim, o transforme numa versão acelerada usando CUDA desse mesmo algoritmo, ainda mantendo sua corretude e proporcionando algum ganho significativo de desempenho.
+A \textbf{quarta etapa} consistiu na busca de um procedimento geral para paralelizar um algoritmo de agrupamento genérico. Ou seja, o foco foi encontrar um passo-a-passo de modificações no código de um algoritmo serial que, ao fim, o transforme numa versão acelerada usando CUDA desse mesmo algoritmo, ainda mantendo sua corretude e proporcionando algum ganho significativo de desempenho.
 
-A quinta etapa, por fim, consistiu em diversos experimentos de ganho de velocidade, ou \textit{speedup}, dos \qntAlgrtm{} algoritmos que tiveram aqui sua versões aceleradas em GPU implementadas e apresentadas. Os resultados desses experimentos proporcionaram uma boa visão da magnitude do ganho de desempenho ao paralelizar algoritmos de agrupamento usando CUDA, além de outros conhecimentos, como saber se há um teto ou chão para tais ganhos, como o \textit{speedup} aumenta ou diminui com o crescimento do número de datapoints ou variáveis no conjunto de dados a ser analisado, e também como outros parâmetros importantes que não sejam velocidade são afetados, como o uso de memória --- afinal, a VRAM das GPUs são comumente mais limitadas em capacidade do que a RAM utilizada pelas CPUs.
-
-
+A \textbf{quinta etapa}, por fim, consistiu em diversos experimentos de ganho de velocidade, ou \textit{speedup}, dos \qntAlgrtm{} algoritmos que tiveram aqui sua versões aceleradas em GPU implementadas e apresentadas. Os resultados desses experimentos proporcionaram uma boa visão da magnitude do ganho de desempenho ao paralelizar algoritmos de agrupamento usando CUDA, além de outros conhecimentos, como saber se há um teto ou chão para tais ganhos, como o \textit{speedup} aumenta ou diminui com o crescimento do número de datapoints ou variáveis no conjunto de dados a ser analisado, e também como outros parâmetros importantes que não sejam velocidade são afetados, como o uso de memória --- afinal, a VRAM das GPUs são comumente mais limitadas em capacidade do que a RAM utilizada pelas CPUs.
 
 
+
+% * ####################################
+
+\section{Implementação do K-Means}
+
+% TODO
+% TODO
+% TODO: Vide abaixo
+% TODO
+% TODO
+
+\textbf{TODO: Escrever essa seção, com pedaços de código}
+
+
+
+
+
+% * ############################################################################
 
 \chapter{Experimentos e Datasets}
 \label{chp:exp}
 
-[Escrever capítulo sobre os experimentos realizados e conjuntos de dados utilizados nestes]
+% TODO
+% TODO
+% TODO: Vide abaixo
+% TODO
+% TODO
+
+\textbf{TODO: Escrever capítulo sobre os experimentos realizados e conjuntos de dados utilizados nestes.}
 
 
 
 
+
+% * ############################################################################
 
 \chapter{Resultados}
 
@@ -734,6 +811,8 @@ Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realiz
 Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que diferenças entre execuções também pudesse ser levada em consideração nos resultados — o \textit{k-means}, especialmente, está suscetível a mudanças significativas na eficiência de cada uma de suas execuções, pelo fato dos centroides iniciais serem selecionados aleatoriamente na implementação aqui testada. Uma execução pode ter centroides iniciais mais próximos dos centroides finais, executando mais rapidamente, enquanto outra execução pode ter centroides iniciais muito distantes dos centroides finais, demorando mais para atingir a condição de parada.
 
 
+
+% * ####################################
 
 \section{K-Means}
 
@@ -757,135 +836,138 @@ Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que
 
 
 
+% * ############################################################################
+
 \chapter{Conclusões e Trabalhos Futuros}
 
+% TODO
+% TODO
+% TODO: Vide abaixo
+% TODO
+% TODO
 
-
-% ----------------------------------------------------------
-% Capítulo - Cronograma
-% ----------------------------------------------------------
-
-% \chapter{Cronograma}
-
-% A tabela abaixo representa o cronograma de pesquisa e desenvolvimento deste trabalho. Cada célula da mesma representa uma semana de tempo (sete dias corridos), considerando cada mês como tendo exatamente quatro semanas. O período coberto vai de dezembro de 2019 à julho de 2020, data estimada de término da conclusão desta monografia.
-
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[width=\textwidth]{Cronograma_2-0}
-%     \caption{Cronograma de pesquisa e desenvolvimento}
-%     % \label{fig:my_label}
-% \end{figure}
-
-
-\chapter{Desenvolvimento}
-
-\begin{figure}[!ht]
-    \centering
-  \includegraphics[width=0.55\linewidth]{imagemExemplo.pdf}
-  \caption[Isso é o que aparece no sumário]{Imagem de exemplo.}
-  \label{fig:graficosVariandoTamanhoRede}
-\end{figure}
-
-
-%TCC:
-%TCC:
-%TCC:
-%TCC:
-
-% ---
-% Conclusão
-% ---
-\chapter[Conclusão]{Conclusão}
-%TCC:
-E daí?
+\textbf{TODO: Escrever capítulo com conclusões do trabalho + sugestões do que prosseguir para trabalhos futuros.}
 
 
 
 
 
-% ----------------------------------------------------------
-% ELEMENTOS PÓS-TEXTUAIS
-% ----------------------------------------------------------
+% * ############################################################################
+
+
+
+
+
+% * ############################################################################
+% * ELEMENTOS PÓS-TEXTUAIS
+% * ############################################################################
+
 \postextual
 
 
-% ----------------------------------------------------------
-% Referências bibliográficas
-% ----------------------------------------------------------
+% * ############################################################################
+% * Referências bibliográficas
+% * ############################################################################
+
 \bibliography{references}
 
 
-% %% ----------------------------------------------------------
-% %% Apêndices TCC: só mantenha se for pertinente.
-% %% ----------------------------------------------------------
+% * ############################################################################
+% * Apêndices TCC: só mantenha se for pertinente.
+% * ############################################################################
 
-% % ---
-% % Inicia os apêndices
-% % ---
+% ##################
+% Inicializando os apêndices
+% ##################
+
 % \begin{apendicesenv}
-
+  
 % % Imprime uma página indicando o início dos apêndices
 % \part[apendices]{Apêndices}
 
-% % ----------------------------------------------------------
+% * ############################################################################
 % \chapter{Quisque libero justo}
-% % ----------------------------------------------------------
+% * ############################################################################
 
 % \lipsum[50]
 
-% % ----------------------------------------------------------
+% * ############################################################################
 % \chapter{Coisas que fiz e que achei interessante mas não tanto para entrar no corpo do texto}
-% % ----------------------------------------------------------
+% * ############################################################################
+
 % \lipsum[55-57]
 
 % \end{apendicesenv}
-% % ---
 
 
-% ----------------------------------------------------------
-% Anexos %TCC: so mantenha se pertinente.
-% ----------------------------------------------------------
+% * ############################################################################
+% * Anexos (so mantenha se pertinente)
+% * ############################################################################
 
-% ---
+% ##################
 % Inicia os anexos
-% ---
+% ##################
+
 \begin{anexosenv}
 
 % Imprime uma página indicando o início dos anexos
+
 \part[anexos]{Anexos}
 
-% ---
+
+
+
+
+% * ############################################################################
 \chapter{Eu sempre quis aprender latim}
-% ---
+% * ############################################################################
 
 \lipsum[30]
 
 
 
-% ---
+
+
+% * ############################################################################
 \chapter{Coisas que eu não fiz mas que achei interessante o suficiente para colocar aqui}
-% ---
+% * ############################################################################
 
 \lipsum[31]
 
 
 
-% ---
+
+
+% * ############################################################################
 \chapter{Fusce facilisis lacinia dui}
-% ---
-
-
+% * ############################################################################
 
 \lipsum[32]
 
+
+
+
+
+% ##################
+% Finalizando anexos
+% ##################
+
 \end{anexosenv}
 
-%---------------------------------------------------------------------
-% INDICE REMISSIVO
-%---------------------------------------------------------------------
+
+
+
+
+% * ############################################################################
+% * Índice Remissivo
+% * ############################################################################
 
 \printindex
 
 
+
+
+
+% * ############################################################################
 
 \end{document}
