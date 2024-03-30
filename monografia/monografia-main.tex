@@ -26,7 +26,7 @@ brazil]{facom-ufu-abntex2}
 
 % ##################
 % Configurando estilos de código Python para o pacote listings
-% Créditos par essa config: https://tex.stackexchange.com/a/83883/295210
+% Créditos para a config modificada e usada aqui: https://tex.stackexchange.com/a/83883/295210
 % ##################
 
 % Redefinindo o nome usado nos trechos de código ("Listing" -> "Algoritmo")
@@ -79,6 +79,7 @@ rulecolor=\color{black},              % if not set, the frame-color may be chang
 % Python for external files
 \newcommand\pythonexternal[2][]{{
 \pythonstyle
+\lstset{inputencoding=utf8}
 \lstinputlisting[#1]{#2}}}
 
 % Python for inline
@@ -684,6 +685,7 @@ Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade
 % * ####################################
 
 \section{Algoritmo 1: K-Means}
+\label{sec:kmeans}
 
 % TODO
 % TODO
@@ -873,19 +875,14 @@ A \textbf{quinta etapa}, por fim, consistiu em diversos experimentos de ganho de
 
 \section{Implementação do K-Means}
 
-% TODO
-% TODO
-% TODO: Vide abaixo
-% TODO
-% TODO
+Como detalhado no capítulo \ref{sec:kmeans}, o \textbf{K-Means} é um dos mais importantes e amplamente utilizados algoritmos de agrupamento, mesmo com suas diversas limitações. Ele foi selecionado nessa pesquisa como exemplo inicial de paralelização de algoritmo por ser de fácil entendimento e possuir uma implementação relativamente simples.
 
-\textbf{TODO: Escrever essa seção, com pedaços de código...}
+Foram utilizadas bibliotecas Python renomadas na área de ciência de dados, como \textit{Numpy} e \textit{Pandas}, para facilitar a implementação e garantir uma execução altamente otimizada, visto que essas bibliotecas implementam chamadas em C/C++ para executar suas partes mais computacionalmente custosas, garantindo uma performance superior à chamadas de alto nível.
 
 \pythonexternal[
-  inputencoding=utf8,
   firstline=3,
   % lastline=,
-  caption={Makefile, foobar},
+  caption={Implementação serial do K-Means},
 ]{code-snippets/kMeansCPU.py}
 
 \textbf{TODO: Parágrafo após código.}
