@@ -33,7 +33,7 @@ def kMeansCPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
         pca = PCA(n_components=2) # dois eixos no gráfico
         dataset_2D = pca.fit_transform(dataset)
 
-    # Gerando centróides iniciais randomicamente
+    # Gerando centróides iniciais aleatoriamente
     centroids = pd.concat([(dataset.apply(lambda x: float(x.sample().iloc[0]))) for _ in range(k)], axis=1) # * Paralelizar isto provavelmente é irrelevante, visto que sempre teremos poucos centróides
     centroids_OLD = pd.DataFrame()
 
@@ -137,7 +137,7 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
     n = len(dataset)
     d = len(dataset.iloc[0])
 
-    # Gerando centróides iniciais randomicamente
+    # Gerando centróides iniciais aleatoriamente
     centroids:pd.DataFrame = pd.concat([(dataset.apply(lambda x: float(x.sample().iloc[0]))) for _ in range(k)], axis=1) # * Paralelizar isto provavelmente é irrelevante, visto que sempre teremos poucos centróides
     centroids_OLD = pd.DataFrame()
 
