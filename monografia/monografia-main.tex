@@ -21,6 +21,7 @@ brazil]{facom-ufu-abntex2}
 \usepackage[autostyle=true]{csquotes}
 % % Pacote para caixas de texto de borda colorida (usadas na exibição de código)
 % \usepackage{tcolorbox}
+% Pacote usado para exibição de código
 \usepackage{listings}
 
 % ##################
@@ -28,12 +29,17 @@ brazil]{facom-ufu-abntex2}
 % Créditos par essa config: https://tex.stackexchange.com/a/83883/295210
 % ##################
 
+% Redefinindo o nome usado nos trechos de código ("Listing" -> "Algoritmo")
+\renewcommand{\lstlistingname}{Algoritmo}
+% Redefinindo o nome usado no título da parte de lista de listings ("List of Listings" -> "Lista de Algoritmos")
+\renewcommand{\lstlistlistingname}{Lista de \lstlistingname s}
+
 % Default fixed font does not support bold face
 \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
 \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
 
 % Custom colors
-\usepackage{color}
+% \usepackage{color}
 \definecolor{deepblue}{rgb}{0,0,0.5}
 \definecolor{deepred}{rgb}{0.6,0,0}
 \definecolor{deepgreen}{rgb}{0,0.5,0}
@@ -45,8 +51,8 @@ language=Python,
 basicstyle=\ttm\small,
 morekeywords={self},                  % Add keywords here
 keywordstyle=\ttb\color{deepblue},
-emph={MyClass,__init__},              % Custom highlighting
-emphstyle=\ttb\color{deepred},        % Custom highlighting style
+% emph={MyClass,__init__},            % Custom highlighting
+% emphstyle=\ttb\color{deepred},      % Custom highlighting style
 stringstyle=\color{deepgreen},
 frame=tb,                             % Any extra options here
 showstringspaces=false,
@@ -95,7 +101,12 @@ rulecolor=\color{black},              % if not set, the frame-color may be chang
   {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {Ø}{{\O}}1 {å}{{\r a}}1 {Å}{{\r A}}1
   {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
   {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1 {¡}{{!`}}1 
+  % Novas adições feitas por mim
+  {…}{{...}}1
 }
+
+% Definindo a numeração dos blocos do pacote "listings" para ser por documento, e não por capítulo
+\lstset{numberbychapter=false}
 
 
 % ---
@@ -130,8 +141,8 @@ rulecolor=\color{black},              % if not set, the frame-color may be chang
 % * Documento
 % * ############################################################################
 
-\begin{document} 
-\frenchspacing 
+\begin{document}
+\frenchspacing
 
 % ----------------------------------------------------------
 % ELEMENTOS PRÉ-TEXTUAIS
@@ -868,52 +879,16 @@ A \textbf{quinta etapa}, por fim, consistiu em diversos experimentos de ganho de
 % TODO
 % TODO
 
-\textbf{TODO: Escrever essa seção, com pedaços de código.}
+\textbf{TODO: Escrever essa seção, com pedaços de código...}
 
-\begin{python}
-def kMeansCPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResults=False, debug=False):
-  if plotResults:
-      # Inicializando variáveis para exibição gráfica
-      pca = PCA(n_components=2) # dois eixos no gráfico
-      dataset_2D = pca.fit_transform(dataset)
+\pythonexternal[
+  inputencoding=utf8,
+  firstline=3,
+  % lastline=,
+  caption={Makefile, foobar},
+]{code-snippets/kMeansCPU.py}
 
-  # Gerando centróides iniciais randomicamente
-  centroids = pd.concat([(dataset.apply(lambda x: float(x.sample().iloc[0]))) for _ in range(k)], axis=1) # * Paralelizar isto provavelmente é irrelevante, visto que sempre teremos poucos centróides
-  centroids_OLD = pd.DataFrame()
-
-  iteration = 1
-
-  while iteration <= maxIter and not centroids_OLD.equals(centroids):
-      strToPrint = ''
-
-      if plotResults or debug or printIter: clear_output(wait=True)
-      if printIter: strToPrint += f'Iteration #{iteration}/{maxIter}\n\n'
-      if debug: strToPrint += f'Centroids:\n{centroids.T}\n\n'
-
-      # Para cada datapoint, calcular distâncias entre ele e cada centróide; depois, encontrar o centróide mais próximo e salvar seu index
-      distances = centroids.apply(lambda x: np.sqrt(((dataset - x) ** 2).sum(axis=1))) # ! Parte altamente paralelizável!
-      if debug: strToPrint += f'Distances:\n{distances}\n\n'
-      closestCent = distances.idxmin(axis=1)
-      del distances
-      if debug: strToPrint += f'Closest centroid index:\n{closestCent}\n\n'
-
-      centroids_OLD = centroids
-      centroids = dataset.groupby(closestCent).apply(lambda x: np.exp(np.log(x).mean())).T # ! Parte altamente paralelizável!
-
-      if plotResults:
-        # Plotando clusters
-        centroids_2D = pca.transform(centroids.T)
-        plt.title(f'Iteration {iteration}')
-        plt.scatter(x=dataset_2D[:,0], y=dataset_2D[:,1], c=closestCent)
-        plt.scatter(x=centroids_2D[:,0], y=centroids_2D[:,1], marker='+', linewidths=2, color='red')
-        plt.show()
-
-      if debug or printIter: print(strToPrint, end='')
-
-      iteration += 1
-
-  return closestCent
-\end{python}
+\textbf{TODO: Parágrafo após código.}
 
 
 
