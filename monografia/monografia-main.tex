@@ -871,15 +871,18 @@ A \textbf{quinta etapa}, por fim, consistiu em diversos experimentos de ganho de
 
 Como detalhado no capítulo \ref{sec:kmeans}, o \textbf{K-Means} é um dos mais importantes e amplamente utilizados algoritmos de agrupamento, mesmo com suas diversas limitações. Ele foi selecionado nessa pesquisa como exemplo inicial de paralelização de algoritmo por ser de fácil entendimento e possuir uma implementação relativamente simples.
 
-Foram utilizadas bibliotecas Python renomadas na área de ciência de dados, como \textit{Numpy} e \textit{Pandas}, para facilitar a implementação e garantir uma execução altamente otimizada, visto que essas bibliotecas implementam chamadas em C/C++ para executar suas partes mais computacionalmente custosas, garantindo uma performance superior à chamadas de alto nível.
+Foram utilizadas bibliotecas Python renomadas na área de ciência de dados, como \textit{Numpy} e \textit{Pandas}, para facilitar a implementação e garantir uma execução altamente otimizada, visto que essas bibliotecas implementam chamadas em C/C++ para executar suas partes mais computacionalmente custosas, garantindo uma performance superior à chamadas de alto nível \cite{sciPyAndNumpy2012}.
+
+O \textbf{Algoritmo \ref{code:kMeansCPU}} abaixo é a implementação da versão serial, \textit{single thread}, do algoritmo k-means, usada nos experimentos descritos no capítulo \ref{chp:exp}.
 
 \pythonexternal[
   firstline=3,
   % lastline=,
+  label=code:kMeansCPU,
   caption={Implementação serial do K-Means},
 ]{code-snippets/kMeansCPU.py}
 
-\textbf{TODO: Parágrafo após código.}
+Há duas importações importantes omitidas no código acima. Uma é a da biblioteca \textit{Numpy}, importada com o nome \textit{np}; a outra é a biblioteca \textit{Pandas}, importada com o nome \textit{pd}.
 
 
 
