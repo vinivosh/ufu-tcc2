@@ -883,9 +883,9 @@ Note que há duas importações importantes omitidas nos códigos exibidos neste
   caption={Implementação serial do K-Means},
 ]{code-snippets/kMeansCPU.py}
 
-A função \textit{\pythoninline{kMeansCPU}} declarada na linha 1 é uma implementação \enquote{concreta} do pseudo-código apresentado no capítulo \ref{sec:kmeans}. Ela recebe o dataset com os dados a serem agrupados através de um dataframe do Pandas (variável \textit{dataset}), além dos outros dois argumentos essenciais do k-means: o número de clusters \textit{k} e o número de iterações máximas \textit{maxIter}.
+A função \textit{\pythoninline{kMeansCPU}} declarada na linha 1 é uma implementação \enquote{concreta} do pseudocódigo apresentado no capítulo \ref{sec:kmeans}. Ela recebe o dataset com os dados a serem agrupados através de um dataframe do Pandas (variável \textit{dataset}), além dos outros dois argumentos essenciais do k-means: o número de clusters \textit{k} e o número de iterações máximas \textit{maxIter}.
 
-A primeira instrução a ser executada é a da linha 2, que inicializa os centróides usando valores aleatoriamente selecionados de dentro do conjunto de dados. Note que os centróides gerados não correspondem necessariamente a algum datapoint específico do dataset. Valores de qualquer datapoint podem ser selecionados e misturados para formar um centróide inicial. Isto é, pode existir um centróide inicial $c1 = (1.3, 2.3, 4.4, 3.7)$ mesmo não existindo nenhum datapoint com estes exatos valores no dataset. Em tal cenário, o valor da primeira variável poderia ter sido selecionado de um datapoint $d1 = (1.3, y1, z1, w1)$, enquanto o valor da terceira variável poderia ter originado de um datapoint $d2 = (x2, y2, 4.4, w2)$.
+A primeira instrução a ser executada no algoritmo é a da linha 2, que inicializa os centróides usando valores aleatoriamente selecionados de dentro do conjunto de dados. Note que os centróides gerados não correspondem necessariamente a algum datapoint específico do dataset. Valores de qualquer datapoint podem ser selecionados e misturados para formar um centróide inicial. Isto é, pode existir um centróide inicial $c1 = (1.3, 2.3, 4.4, 3.7)$ mesmo não existindo nenhum datapoint com estes exatos valores no dataset. Em tal cenário, o valor da primeira variável poderia ter sido selecionado de um datapoint $d1 = (1.3, y1, z1, w1)$, enquanto o valor da terceira variável poderia ter originado de um datapoint $d2 = (x2, y2, 4.4, w2)$.
 
 % TODO
 % TODO
@@ -893,7 +893,7 @@ A primeira instrução a ser executada é a da linha 2, que inicializa os centr�
 % TODO
 % TODO
 
-Há também um requisito para o formato da entrada de dados para essa implementação do k-means. Todas as variáveis devem ter seus valores normalizados.
+Há também um requisito de pré-processamento do conjunto de dados para essas implementações do k-means. Todas as variáveis devem ter seus valores normalizados. Esse processo é necessário para evitar que variáveis com amplitudes de valores maiores influenciem mais significativamente a construção dos clusters do que variáveis com amplitudes menores. É recomendado, em geral, o método de \textit{normalização min-max} para algoritmos como o k-means, que utilizam a distância euclidiana para a construção de grupos \cite{standardizOfVars1988}. Este processo é explicado detalhadamente no capítulo \ref{sec:datasets}.
 
 
 
@@ -910,7 +910,16 @@ Há também um requisito para o formato da entrada de dados para essa implementa
 % TODO
 % TODO
 
-\textbf{TODO: Escrever capítulo sobre os experimentos realizados e conjuntos de dados utilizados nestes.}
+\textbf{TODO: Escrever intro do capítulo sobre os experimentos realizados e conjuntos de dados utilizados nestes.}
+
+
+
+% * ####################################
+
+\section{Datasets Utilizados}
+\label{sec:datasets}
+
+\textbf{TODO: Escrever uma intro a respeito do processo de escolha dos datasets. Incluir aqui uma boa explicação do passo de pré-processamento comum feito para todos os datasets (normalização min-max).}
 
 
 
