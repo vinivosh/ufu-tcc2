@@ -109,7 +109,6 @@ rulecolor=\color{black},              % if not set, the frame-color may be chang
 % Definindo a numeração dos blocos do pacote "listings" para ser por documento, e não por capítulo
 \lstset{numberbychapter=false}
 
-
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
@@ -875,6 +874,8 @@ Foram utilizadas bibliotecas Python renomadas na área de ciência de dados, com
 
 O \textbf{Algoritmo \ref{code:kMeansCPU}} abaixo é a implementação da versão serial, \textit{single thread}, do algoritmo k-means, usada nos experimentos descritos no capítulo \ref{chp:exp}.
 
+Note que há duas importações importantes omitidas nos códigos exibidos neste capítulo, por motivos de brevidade. Uma é a da biblioteca Numpy, importada com o nome \textit{np}; a outra é a biblioteca Pandas, importada com o nome \textit{pd}.
+
 \pythonexternal[
   firstline=3,
   % lastline=,
@@ -882,7 +883,9 @@ O \textbf{Algoritmo \ref{code:kMeansCPU}} abaixo é a implementação da versão
   caption={Implementação serial do K-Means},
 ]{code-snippets/kMeansCPU.py}
 
-Há duas importações importantes omitidas no código acima. Uma é a da biblioteca \textit{Numpy}, importada com o nome \textit{np}; a outra é a biblioteca \textit{Pandas}, importada com o nome \textit{pd}.
+A função \textit{\pythoninline{kMeansCPU}} declarada na linha 1 é uma implementação \enquote{concreta} do pseudo-código apresentado no capítulo \ref{sec:kmeans}. Ela recebe o dataset com os dados a serem agrupados através de um dataframe do Pandas (variável \textit{dataset}), além dos outros dois argumentos essenciais do k-means: o número de clusters \textit{k} e o número de iterações máximas \textit{maxIter}.
+
+A primeira instrução a ser executada é a da linha 2, que inicializa os centróides usando valores aleatoriamente selecionados de dentro do conjunto de dados. Note que os centróides gerados não correspondem necessariamente a algum datapoint específico do dataset. Valores de qualquer datapoint podem ser selecionados e misturados para formar um centróide inicial. Isto é, pode existir um centróide inicial $c1 = (1.34, 2.31, 4.41, 3.77)$ mesmo não existindo nenhum datapoint com estes exatos valores no dataset. Em tal cenário, o valor da primeira variável poderia ter sido selecionado de um datapoint $d1 = (1.34, y1, z1, w1)$, enquanto o valor da terceira variável poderia ter originado de um datapoint $d2 = (x2, y2, 4.41, w2)$.
 
 
 
