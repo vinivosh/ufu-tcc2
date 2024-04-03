@@ -185,6 +185,8 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
 
             centroids__np[centroidIdx] = np.exp(meansByClosestCent[centroidIdx])
 
+        del meansByClosestCent
+
         if plotResults:
             # Plotando clusters
             centroids_2D = pca.transform(centroids__np)
