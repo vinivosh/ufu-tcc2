@@ -901,7 +901,7 @@ Na linha 12, os centróides usados para os cálculos de distância na iteração
 
 Na linha 13 finalmente é feito o cálculo dos novos centróides. Novamente, assim como a operação da linha 8, temos uma cadeia de operações do Pandas. Utilizando o método \textit{\pythoninline{groupby}} da objeto dataframe, agrupamos o dataset de acordo com a lista de centróides mais próximos. Isso gera $k$ sub-conjuntos do dataset, cada um deles contendo apenas os datapoints mais próximos a um certo centróide. Para cada um destes sub-conjuntos, é aplicada uma função lambda que, dado um sub-conjunto, calcula a média geométrica --- que, como discutido em mais detalhes no capítulo \ref{sec:kmeans}, é o único método correto para encontrar a média de valores normalizados \cite{geoMeanIsBetter1986} --- de todos os datapoints do sub-conjunto. Essa cadeia de operações resulta em um dataframe de dimensão $d \cdot k$, onde $d$ é o número de variáveis que descrevem cada datapoint do dataset (\textit{features}). Esse dataframe é então transposto, acessando a propriedade \textit{\pythoninline{T}} do dataframe, resultando em um novo dataframe final de dimensão $k \cdot d$, seguindo o mesmo formato usado na geração dos centróides iniciais e garantindo uma comparação correta entre os centróides de iterações consecutivas.
 
-É importante notar que a operação do cálculo da média geométrica é realizada aqui usando uma operação alternativa, mas equivalente, à sua definição:
+É importante notar que a operação supracitada do cálculo da média geométrica é realizada aqui utilizando uma operação alternativa, mas equivalente, à sua definição:
 
 \[ \sqrt[n]{\displaystyle \prod_{i=1}^{n} a_{i}} \]
 
@@ -910,6 +910,10 @@ Sendo a operação equivalente:
 \[ \exp{(\frac{1}{n} \cdot \displaystyle \sum_{i=1}^{n} \ln{a_{i}})} \]
 
 Essa escolha foi feita pois é computacionalmente muito mais eficiente utilizar o exponencial ($e^{f(x)}$) da média aritmética das somas dos logaritmos naturais dos $n$ elementos ao invés de utilizar a raiz $n$-ésima da multiplicação dos $n$ elementos. De fato, para datasets grandes com milhares de instâncias por cluster, seria inviável multiplicar milhares de números e depois calcular a raíz $n$-ésima destes. Uma operação desse tipo necessitaria de quantidades exorbitantes de memória para armazenar o gigantesco resultado da multiplicação de milhares de termos. Utilizando a operação equivalente, é possível efetivamente \enquote{trocar} essa multiplicação por uma adição, uma operação muito menos custosa em espaço de memória, tornando o cálculo inteiro viável.
+
+Por fim, na linha 15 do algoritmo \ref{code:kMeansCPU}, finalizamos o loop com sua última instrução, o acréscimo do valor $1$ na variável de controle \textit{\pythoninline{iteration}}, para manter a contagem de iterações correta.
+
+Saindo do laço de repetição, o algoritmo k-means é finalizado com uma última instrução, a de retorno do resultado, armazenado em \textit{\pythoninline{closestCent}}, na linha 17. Como explicado anteriormente, esse resultado é um dataframe do Pandas onde cada datapoint $i$ possui apenas um valor $(j)$, o índice do centróide $Cj$ mais próximo a este datapoint, o que define a qual grupo ele pertence.
 
 % TODO
 % TODO
