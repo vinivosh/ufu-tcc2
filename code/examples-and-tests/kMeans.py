@@ -167,6 +167,7 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
 
         centroids_OLD__np = centroids__np.copy()
 
+        # ! MEU DEUS DO CÉU… EU ESTOU RECALCULANDO ISSO A CADA ITERAÇÃO SEM NENHUM MOTIVO KKKKKKKKKKKKKKKKKKKKKKKK. OTIMIZAR ISSO IMEDIATAMENTE!!!!!!!
         datasetLogs = np.zeros((n, d))
         calcLogs(dataset__np, datasetLogs)
 

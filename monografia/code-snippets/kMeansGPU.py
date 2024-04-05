@@ -2,12 +2,10 @@ import math; import numpy as np; import pandas as pd; import numba
 
 @numba.guvectorize(
     ['void(float64[:,:], float64[:], float64[:])'],
-    '(k,d),(d)->(k)',
-    nopython=True,
-    target='cuda'
+    '(k,d),(d)->(k)', nopython=True, target='cuda'
 )
 def calcDistances(centroids:list[list[np.float64]], rowDataset:list[np.float64], rowResults:list[np.float64]):
-    d = len(rowDataset) # Dimensionality
+    d = len(rowDataset)
 
     for centroidIndex, centroid in enumerate(centroids):
         distance = 0.0
@@ -19,9 +17,7 @@ def calcDistances(centroids:list[list[np.float64]], rowDataset:list[np.float64],
 
 @numba.guvectorize(
     ['void(float64[:],int64[:])'],
-    '(k)->()',
-    nopython=True,
-    target='cuda'
+    '(k)->()', nopython=True, target='cuda'
 )
 def calcClosestCentroids(rowDistances:list[np.float64], closestCent:np.int64):
     minDistance = rowDistances[0]
@@ -37,9 +33,7 @@ def calcClosestCentroids(rowDistances:list[np.float64], closestCent:np.int64):
 
 @numba.guvectorize(
     ['void(float64[:],float64[:])'],
-    '(d)->(d)',
-    nopython=True,
-    target='cuda'
+    '(d)->(d)', nopython=True, target='cuda'
 )
 def calcLogs(rowDataset:list[np.float64], rowResults:list[np.float64]):
     for dimIdx, dimValue in enumerate(rowDataset): rowResults[dimIdx] = math.log(dimValue)
