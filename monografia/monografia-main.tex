@@ -927,7 +927,9 @@ Saindo do laço de repetição, o algoritmo k-means é finalizado com uma últim
 
 \textbf{TODO: Escrever parágrafos explicando quais linhas são as mais altamente paralelizáveis do K-Means CPU --- as que foram o foco de modificação na implementação do K-Means GPU.}
 
-Tendo em vista os supracitados trechos de código mais computacionalmente custosos e com grande potencial para paralelização, foi implementado o \textbf{K-Means versão paralela}, rodando em GPU.
+Tendo em vista os supracitados trechos de código mais computacionalmente custosos e com grande potencial para paralelização, foi implementada outra versão do k-means, utilizando o alto poder de processamento vetorial da GPU.
+
+O \textbf{Algoritmo \ref{code:kMeansGPU}} abaixo é a implementação da versão paralela, \textit{multithread}, do algoritmo k-means, usada nos experimentos (vide capítulo \ref{chp:exp}). Note que aqui há mais duas novas importações omitidas: o módulo integrado \textit{\pythoninline{math}} e a biblioteca \textit{\pythoninline{numba}}.
 
 \pythonexternal[
   firstline=47,
