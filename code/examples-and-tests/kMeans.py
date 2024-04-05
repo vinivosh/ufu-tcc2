@@ -1,4 +1,5 @@
 import math
+import time
 
 from os.path import exists as os_path_exists
 from urllib.request import urlopen
@@ -145,6 +146,25 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
     centroids_OLD__np = centroids_OLD.T.to_numpy()
     dataset__np = dataset.to_numpy()
 
+    with open('kMeansGPU.log', 'a') as logFile:
+        startT = time.time()
+        # * Pré-calcular, serialmente, os logaritmos de todos datapoints
+        datasetLogs = np.zeros((n, d))
+        np.log(dataset__np, datasetLogs)
+        # for rowIdx, rowDataset in enumerate(dataset__np):
+            # for dimIdx, dimValue in enumerate(rowDataset): datasetLogs[rowIdx][dimIdx] = math.log(dimValue)
+        deltaT = time.time() - startT
+        logFile.write(f'Time elapsed to compute the logs of all datapoints (CPU) = {deltaT}s\n')
+
+        del datasetLogs
+
+        startT = time.time()
+        # * Pré-calcular, paralelamente, os logaritmos de todos datapoints
+        datasetLogs = np.zeros((n, d))
+        calcLogs(dataset__np, datasetLogs)
+        deltaT = time.time() - startT
+        logFile.write(f'Time elapsed to compute the logs of all datapoints (GPU) = {deltaT}s\n\n')
+
     iteration = 1
 
     while iteration <= maxIter and not np.array_equal(centroids_OLD__np ,centroids__np):
@@ -166,10 +186,6 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
         if debug: strToPrint += f'Closest centroid index:\n{closestCent}\n\n'
 
         centroids_OLD__np = centroids__np.copy()
-
-        # ! MEU DEUS DO CÉU… EU ESTOU RECALCULANDO ISSO A CADA ITERAÇÃO SEM NENHUM MOTIVO KKKKKKKKKKKKKKKKKKKKKKKK. OTIMIZAR ISSO IMEDIATAMENTE!!!!!!!
-        datasetLogs = np.zeros((n, d))
-        calcLogs(dataset__np, datasetLogs)
 
         # meansByClosestCent[0] = médias dos logs de todos datapoints cujo centróide mais próximo é o centróide de index zero
         meansByClosestCent = np.zeros((k, d))
