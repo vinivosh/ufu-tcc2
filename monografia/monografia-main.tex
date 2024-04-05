@@ -925,7 +925,16 @@ Saindo do laço de repetição, o algoritmo k-means é finalizado com uma últim
 % TODO
 % TODO
 
-\textbf{TODO: Escrever parágrafos explicando quais linhas são a mais altamente paralelizáveis do K-Means CPU --- as que foram o foco de modificação na implementação do K-Means GPU.}
+\textbf{TODO: Escrever parágrafos explicando quais linhas são as mais altamente paralelizáveis do K-Means CPU --- as que foram o foco de modificação na implementação do K-Means GPU.}
+
+Tendo em vista os supracitados trechos de código mais computacionalmente custosos e com grande potencial para paralelização, foi implementado o \textbf{K-Means versão paralela}, rodando em GPU.
+
+\pythonexternal[
+  firstline=47,
+  % lastline=,
+  label=code:kMeansGPU,
+  caption={Implementação paralela do K-Means (Função Principal)},
+]{code-snippets/kMeansGPU.py}
 
 
 
