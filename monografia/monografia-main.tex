@@ -944,6 +944,35 @@ O \textbf{Algoritmo \ref{code:kMeansGPU}} abaixo é a implementação da versão
   label=code:kMeansGPU,
   caption={Implementação paralela do K-Means (Função Principal)},
 ]{code-snippets/kMeansGPU.py}
+  
+A função \textit{\pythoninline{kMeansGPU}} acima é a função principal dessa implementação do k-means, que por sua chama outras três funções, onde o processamento mais intenso é realizado pela GPU. Essas funções são discutidas mais adiante.
+
+\pythonexternal[
+  firstline=3,
+  lastline=17,
+  label=code:kMeansGPU,
+  caption={Implementação paralela do cálculo de distâncias},
+]{code-snippets/kMeansGPU.py}
+
+\textbf{TODO: Escrever parágrafos explicando a função calcDistances().}
+
+\pythonexternal[
+  firstline=20,
+  lastline=35,
+  label=code:kMeansGPU,
+  caption={Implementação paralela do cálculo dos centróides mais próximos},
+]{code-snippets/kMeansGPU.py}
+  
+\textbf{TODO: Escrever parágrafos explicando a função calcClosestCentroids().}
+
+\pythonexternal[
+  firstline=38,
+  lastline=45,
+  label=code:kMeansGPU,
+  caption={Implementação paralela do cálculo dos logaritmos dos datapoints},
+]{code-snippets/kMeansGPU.py}
+  
+\textbf{TODO: Escrever parágrafos explicando a função calcLogs().}
 
 
 
