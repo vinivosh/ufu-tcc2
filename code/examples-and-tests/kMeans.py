@@ -148,6 +148,7 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
     centroids__np = centroids.T.to_numpy()
     centroids_OLD__np = centroids_OLD.T.to_numpy()
     dataset__np = dataset.to_numpy()
+    del dataset
 
     # * Pré-calcular, paralelamente, os logaritmos de todos datapoints
     datasetLogs = np.zeros((n, d))

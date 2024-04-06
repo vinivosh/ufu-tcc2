@@ -38,6 +38,7 @@ def calcClosestCentroids(rowDistances:list[np.float64], closestCent:np.int64):
 def calcLogs(rowDataset:list[np.float64], rowResults:list[np.float64]):
     for dimIdx, dimValue in enumerate(rowDataset): rowResults[dimIdx] = math.log(dimValue)
 
+
 def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100):
     n = len(dataset)
     d = len(dataset.iloc[0])
@@ -48,6 +49,10 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100):
     centroids__np = centroids.T.to_numpy()
     centroids_OLD__np = centroids_OLD.T.to_numpy()
     dataset__np = dataset.to_numpy()
+    del dataset
+
+    datasetLogs = np.zeros((n, d))
+    calcLogs(dataset__np, datasetLogs)
 
     iteration = 1
 
@@ -60,9 +65,6 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100):
         del distances
 
         centroids_OLD__np = centroids__np.copy()
-
-        datasetLogs = np.zeros((n, d))
-        calcLogs(dataset__np, datasetLogs)
 
         meansByClosestCent = np.zeros((k, d))
 
