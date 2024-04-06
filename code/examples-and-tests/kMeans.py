@@ -232,7 +232,7 @@ def getClassificationHits(results:pd.DataFrame, dataset:pd.DataFrame, classColum
 
         hits = 0
 
-        print(f'Counting hits for class "{class_}" being index "{position}" in the results dataset...')
+        if debug: print(f'Counting hits for class "{class_}" being index "{position}" in the results dataset...')
 
         for rowIndex in range(0, len(results)):
             row = results.iloc[[rowIndex]]
@@ -253,9 +253,8 @@ def getClassificationHits(results:pd.DataFrame, dataset:pd.DataFrame, classColum
                 
             # print(f'dpIndex = {datapointIndex}; result = {resultClassIndex}; rowDataset = {correctClass}; isCorrect = {isCorrect}')
 
-        print(f'Total hits: {hits}\n')
+        if debug: print(f'Total hits: {hits}\n')
         return hits
-        return np.random.randint(0, 50 + 1)
 
     if debug: print('#################### Computing classification hits... ####################\n')
 
@@ -313,6 +312,6 @@ def getClassificationHits(results:pd.DataFrame, dataset:pd.DataFrame, classColum
             bestHitsPerClass = hitsPerClass
             bestPerm = permutation
 
-        print(f'totalHits = {totalHits}\nbestHits = {bestHits}; bestHitsPerClass = {bestHitsPerClass}; bestPerm = {bestPerm}\n\n')
+        if debug: print(f'totalHits = {totalHits}\nbestHits = {bestHits}; bestHitsPerClass = {bestHitsPerClass}; bestPerm = {bestPerm}\n\n')
 
     return (bestHits, bestHitsPerClass, bestPerm)
