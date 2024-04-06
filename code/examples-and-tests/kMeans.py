@@ -38,6 +38,9 @@ def kMeansCPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
     centroids = pd.concat([(dataset.apply(lambda x: float(x.sample().iloc[0]))) for _ in range(k)], axis=1) # * Paralelizar isto provavelmente é irrelevante, visto que sempre teremos poucos centróides
     centroids_OLD = pd.DataFrame()
 
+    # * Pré-calcular, serialmente, os logaritmos de todos datapoints
+    datasetLogs = np.log(dataset)
+
     iteration = 1
 
     while iteration <= maxIter and not centroids_OLD.equals(centroids):
@@ -55,7 +58,7 @@ def kMeansCPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
         if debug: strToPrint += f'Closest centroid index:\n{closestCent}\n\n'
 
         centroids_OLD = centroids
-        centroids = dataset.groupby(closestCent).apply(lambda x: np.exp(np.log(x).mean())).T # ! Parte altamente paralelizável!
+        centroids = datasetLogs.groupby(closestCent).apply(lambda x: np.exp(x.mean())).T # ! Parte altamente paralelizável!
 
         if plotResults:
             # Plotando clusters
@@ -146,24 +149,9 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
     centroids_OLD__np = centroids_OLD.T.to_numpy()
     dataset__np = dataset.to_numpy()
 
-    with open('kMeansGPU.log', 'a') as logFile:
-        startT = time.time()
-        # * Pré-calcular, serialmente, os logaritmos de todos datapoints
-        datasetLogs = np.zeros((n, d))
-        np.log(dataset__np, datasetLogs)
-        # for rowIdx, rowDataset in enumerate(dataset__np):
-            # for dimIdx, dimValue in enumerate(rowDataset): datasetLogs[rowIdx][dimIdx] = math.log(dimValue)
-        deltaT = time.time() - startT
-        logFile.write(f'Time elapsed to compute the logs of all datapoints (CPU) = {deltaT}s\n')
-
-        del datasetLogs
-
-        startT = time.time()
-        # * Pré-calcular, paralelamente, os logaritmos de todos datapoints
-        datasetLogs = np.zeros((n, d))
-        calcLogs(dataset__np, datasetLogs)
-        deltaT = time.time() - startT
-        logFile.write(f'Time elapsed to compute the logs of all datapoints (GPU) = {deltaT}s\n\n')
+    # * Pré-calcular, paralelamente, os logaritmos de todos datapoints
+    datasetLogs = np.zeros((n, d))
+    calcLogs(dataset__np, datasetLogs)
 
     iteration = 1
 
