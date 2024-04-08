@@ -1,6 +1,14 @@
 import math; import numpy as np; import pandas as pd; import numba
 
 @numba.guvectorize(
+    ['void(float64[:],float64[:])'],
+    '(d)->(d)', nopython=True, target='cuda'
+)
+def calcLogs(rowDataset:list[np.float64], rowResults:list[np.float64]):
+    for dimIdx, dimValue in enumerate(rowDataset): rowResults[dimIdx] = math.log(dimValue)
+
+
+@numba.guvectorize(
     ['void(float64[:,:], float64[:], float64[:])'],
     '(k,d),(d)->(k)', nopython=True, target='cuda'
 )
@@ -29,14 +37,6 @@ def calcClosestCentroids(rowDistances:list[np.float64], closestCent:np.int64):
             minDistanceIndex = index
 
     closestCent[0] = minDistanceIndex
-
-
-@numba.guvectorize(
-    ['void(float64[:],float64[:])'],
-    '(d)->(d)', nopython=True, target='cuda'
-)
-def calcLogs(rowDataset:list[np.float64], rowResults:list[np.float64]):
-    for dimIdx, dimValue in enumerate(rowDataset): rowResults[dimIdx] = math.log(dimValue)
 
 
 def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100):

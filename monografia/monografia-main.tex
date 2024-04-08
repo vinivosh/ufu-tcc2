@@ -939,7 +939,7 @@ Tendo em vista os supracitados trechos de código mais computacionalmente custos
 O \textbf{Algoritmo \ref{code:kMeansGPU}} abaixo é a implementação da versão paralela, \textit{multithread}, do algoritmo k-means, usada nos experimentos (vide capítulo \ref{chp:exp}). Note que aqui há mais duas novas importações omitidas: o módulo integrado \textit{\pythoninline{math}} e a biblioteca \textit{\pythoninline{numba}}.
 
 \pythonexternal[
-  firstline=41,
+  firstline=42,
   % lastline=,
   label=code:kMeansGPU,
   caption={Implementação paralela do K-Means (Função Principal)},
@@ -949,7 +949,16 @@ A função \textit{\pythoninline{kMeansGPU}} acima é a função principal dessa
 
 \pythonexternal[
   firstline=3,
-  lastline=15,
+  lastline=8,
+  label=code:kMeansGPU.calcLogs,
+  caption={Implementação paralela do cálculo dos logaritmos dos datapoints},
+]{code-snippets/kMeansGPU.py}
+  
+\textbf{TODO: Escrever parágrafos explicando a função calcLogs().}
+
+\pythonexternal[
+  firstline=11,
+  lastline=23,
   label=code:kMeansGPU.calcDistances,
   caption={Implementação paralela do cálculo de distâncias},
 ]{code-snippets/kMeansGPU.py}
@@ -957,22 +966,13 @@ A função \textit{\pythoninline{kMeansGPU}} acima é a função principal dessa
 \textbf{TODO: Escrever parágrafos explicando a função calcDistances().}
 
 \pythonexternal[
-  firstline=18,
-  lastline=31,
+  firstline=26,
+  lastline=39,
   label=code:kMeansGPU.calcClosestCentroids,
   caption={Implementação paralela do cálculo dos centróides mais próximos},
 ]{code-snippets/kMeansGPU.py}
 
 \textbf{TODO: Escrever parágrafos explicando a função calcClosestCentroids().}
-
-\pythonexternal[
-  firstline=34,
-  lastline=39,
-  label=code:kMeansGPU.calcLogs,
-  caption={Implementação paralela do cálculo dos logaritmos dos datapoints},
-]{code-snippets/kMeansGPU.py}
-  
-\textbf{TODO: Escrever parágrafos explicando a função calcLogs().}
 
 
 
