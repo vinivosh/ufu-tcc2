@@ -947,9 +947,15 @@ O \textbf{Algoritmo \ref{code:kMeansGPU}} abaixo é a implementação da versão
   caption={Implementação paralela do K-Means (Função Principal)},
 ]{code-snippets/kMeansGPU.py}
   
-A função \textit{\pythoninline{kMeansGPU}} acima é a função principal dessa implementação do k-means, que por sua vez chama outras três onde o processamento mais intenso é realizado paralelamente pela GPU. Essas outras funções são discutidas mais adiante (algoritmos \ref{code:kMeansGPU.calcDistances}, \ref{code:kMeansGPU.calcClosestCentroids} e \ref{code:kMeansGPU.calcLogs}).
+A função \textit{\pythoninline{kMeansGPU}} acima é a função principal dessa implementação do k-means, que por sua vez chama outras três onde o processamento mais intenso é realizado paralelamente pela GPU. Essas outras funções são discutidas mais adiante (algoritmos \ref{code:kMeansGPU.calcDistances}, \ref{code:kMeansGPU.calcClosestCentroids} e \ref{code:kMeansGPU.calcLogs}). A estrutura do código não muda muito em relação ao Algoritmo \ref{code:kMeansCPU}, então apenas as partes mais modificadas serão explicadas aqui.
 
-A estrutura do código não muda muito em relação ao Algoritmo \ref{code:kMeansCPU}, então apenas as partes mais modificadas serão explicadas aqui.
+Como aprofundado no capítulo \ref{sec:numba}, as funções implementadas com a biblioteca \textit{Numba} para execução em CUDA possuem diversas limitações. A mais relevante aqui é que não é possível manipular objetos dataframe do Pandas e nem chamar seus métodos, ou sequer chamar funções dessa biblioteca. Por isso, é estritamente necessário que sejam utilizadas funções e objetos equivalentes do \textit{Numpy}.
+
+Por este motivo, são feitas as declarações de duas variáveis importantes: \textit{\pythoninline{n}} na linha 2, armazenando a quantidade de instâncias do dataset, e \textit{\pythoninline{d}}, armazenando a quantidade de variáveis que compõe cada datapoint. Ambas informações são inferidas a partir do dataframe passado à função. Além disso, são feitas também as conversões de objetos dataframe para arrays do \textit{Numpy} nas linhas 8--11.
+
+Na linha 13 é inicializado o primeiro objeto que será passado a uma função vetorial que será executada na GPU, o array de floats 64 bits (tipo de dado padrão do \textit{Numpy}) \textit{\pythoninline{datasetLogs}}, de dimensão $n \cdot d$. Usando a função \textit{\pythoninline{np.zeros}}, inicializamos todos os valores do array como zero. Note que é necessário sempre inicializar um objeto como este para servir de retorno das funções vetoriais que rodam na GPU, pois elas não podem retornar diretamente um resultado.
+
+Na linha 14 é chamada a primeira função paralelizada, a \textit{\pythoninline{calcLogs}} (Algoritmo \ref{code:kMeansGPU.calcLogs}). Esse é o passo de cálculo dos logarítimos de todos os datapoints, equivalente à operação realizada na linha 5 do Algoritmo \ref{code:kMeansCPU}.
 
 \pythonexternal[
   firstline=3,
