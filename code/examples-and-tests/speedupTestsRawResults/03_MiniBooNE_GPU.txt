@@ -1,204 +1,59 @@
-Average execution time for K-Means GPU: 2.1998203599452975
-Slowest execution time for K-Means GPU: 3.632992744445801
-Fastest execution time for K-Means GPU: 0.8179795742034912
+Avg exec K-Means GPU: 1.6873877382278442
+Max exec K-Means GPU: 2.523550033569336
+Min exec time K-Means GPU: 1.0601780414581299
+ 
+Average hits: 65861.08
+Avg exec K-Means GPU classificationHits(): 19.928181495666504
 
-Execution time for K-Means GPU run #1: 2.280186891555786
-Execution time for K-Means GPU run #2: 2.3416473865509033
-Execution time for K-Means GPU run #3: 2.7024424076080322
-Execution time for K-Means GPU run #4: 2.052088499069214
-Execution time for K-Means GPU run #5: 2.3732197284698486
-Execution time for K-Means GPU run #6: 2.544783115386963
-Execution time for K-Means GPU run #7: 1.9132962226867676
-Execution time for K-Means GPU run #8: 2.3786654472351074
-Execution time for K-Means GPU run #9: 2.171921968460083
-Execution time for K-Means GPU run #10: 2.005784749984741
-Execution time for K-Means GPU run #11: 1.9643113613128662
-Execution time for K-Means GPU run #12: 2.030508279800415
-Execution time for K-Means GPU run #13: 2.1733078956604004
-Execution time for K-Means GPU run #14: 2.4391374588012695
-Execution time for K-Means GPU run #15: 2.0166091918945312
-Execution time for K-Means GPU run #16: 1.9572815895080566
-Execution time for K-Means GPU run #17: 1.7685320377349854
-Execution time for K-Means GPU run #18: 2.4323601722717285
-Execution time for K-Means GPU run #19: 2.235959768295288
-Execution time for K-Means GPU run #20: 1.9354875087738037
-Execution time for K-Means GPU run #21: 2.0615475177764893
-Execution time for K-Means GPU run #22: 1.7595412731170654
-Execution time for K-Means GPU run #23: 2.555982828140259
-Execution time for K-Means GPU run #24: 1.9185192584991455
-Execution time for K-Means GPU run #25: 1.5051753520965576
-Execution time for K-Means GPU run #26: 2.3643903732299805
-Execution time for K-Means GPU run #27: 1.9711544513702393
-Execution time for K-Means GPU run #28: 3.1818363666534424
-Execution time for K-Means GPU run #29: 2.1162922382354736
-Execution time for K-Means GPU run #30: 2.4213979244232178
-Execution time for K-Means GPU run #31: 3.1461498737335205
-Execution time for K-Means GPU run #32: 2.5271549224853516
-Execution time for K-Means GPU run #33: 2.426180601119995
-Execution time for K-Means GPU run #34: 2.1518802642822266
-Execution time for K-Means GPU run #35: 1.9074077606201172
-Execution time for K-Means GPU run #36: 1.7131426334381104
-Execution time for K-Means GPU run #37: 2.85520076751709
-Execution time for K-Means GPU run #38: 1.6518068313598633
-Execution time for K-Means GPU run #39: 2.1145520210266113
-Execution time for K-Means GPU run #40: 2.1181888580322266
-Execution time for K-Means GPU run #41: 2.823970079421997
-Execution time for K-Means GPU run #42: 2.181130886077881
-Execution time for K-Means GPU run #43: 1.8135342597961426
-Execution time for K-Means GPU run #44: 2.2208638191223145
-Execution time for K-Means GPU run #45: 2.0687406063079834
-Execution time for K-Means GPU run #46: 2.8454782962799072
-Execution time for K-Means GPU run #47: 2.234924554824829
-Execution time for K-Means GPU run #48: 2.602567672729492
-Execution time for K-Means GPU run #49: 2.1676554679870605
-Execution time for K-Means GPU run #50: 3.1733591556549072
-Execution time for K-Means GPU run #51: 2.4753732681274414
-Execution time for K-Means GPU run #52: 2.3879549503326416
-Execution time for K-Means GPU run #53: 2.2698848247528076
-Execution time for K-Means GPU run #54: 1.767956256866455
-Execution time for K-Means GPU run #55: 2.2137451171875
-Execution time for K-Means GPU run #56: 2.5774879455566406
-Execution time for K-Means GPU run #57: 2.4390015602111816
-Execution time for K-Means GPU run #58: 2.2222156524658203
-Execution time for K-Means GPU run #59: 2.8502204418182373
-Execution time for K-Means GPU run #60: 2.128720283508301
-Execution time for K-Means GPU run #61: 2.9453794956207275
-Execution time for K-Means GPU run #62: 3.0167205333709717
-Execution time for K-Means GPU run #63: 2.0885825157165527
-Execution time for K-Means GPU run #64: 1.9149525165557861
-Execution time for K-Means GPU run #65: 2.5349299907684326
-Execution time for K-Means GPU run #66: 2.016951322555542
-Execution time for K-Means GPU run #67: 1.881854772567749
-Execution time for K-Means GPU run #68: 1.2926909923553467
-Execution time for K-Means GPU run #69: 2.5420446395874023
-Execution time for K-Means GPU run #70: 2.8115687370300293
-Execution time for K-Means GPU run #71: 2.310767650604248
-Execution time for K-Means GPU run #72: 1.9623963832855225
-Execution time for K-Means GPU run #73: 2.752668619155884
-Execution time for K-Means GPU run #74: 2.1147425174713135
-Execution time for K-Means GPU run #75: 2.1218302249908447
-Execution time for K-Means GPU run #76: 0.9242043495178223
-Execution time for K-Means GPU run #77: 2.279932975769043
-Execution time for K-Means GPU run #78: 1.0282597541809082
-Execution time for K-Means GPU run #79: 2.223313093185425
-Execution time for K-Means GPU run #80: 2.0148544311523438
-Execution time for K-Means GPU run #81: 2.066235303878784
-Execution time for K-Means GPU run #82: 2.8585822582244873
-Execution time for K-Means GPU run #83: 2.853161334991455
-Execution time for K-Means GPU run #84: 2.0607290267944336
-Execution time for K-Means GPU run #85: 2.021426200866699
-Execution time for K-Means GPU run #86: 1.6100578308105469
-Execution time for K-Means GPU run #87: 2.137904644012451
-Execution time for K-Means GPU run #88: 2.6792092323303223
-Execution time for K-Means GPU run #89: 2.087733507156372
-Execution time for K-Means GPU run #90: 2.163325309753418
-Execution time for K-Means GPU run #91: 2.270293712615967
-Execution time for K-Means GPU run #92: 1.705476999282837
-Execution time for K-Means GPU run #93: 1.3478639125823975
-Execution time for K-Means GPU run #94: 2.2315073013305664
-Execution time for K-Means GPU run #95: 2.0706419944763184
-Execution time for K-Means GPU run #96: 1.9614403247833252
-Execution time for K-Means GPU run #97: 2.234107732772827
-Execution time for K-Means GPU run #98: 2.805675506591797
-Execution time for K-Means GPU run #99: 2.528092861175537
-Execution time for K-Means GPU run #100: 1.599874496459961
-Execution time for K-Means GPU run #101: 2.28886342048645
-Execution time for K-Means GPU run #102: 1.9689288139343262
-Execution time for K-Means GPU run #103: 2.234729290008545
-Execution time for K-Means GPU run #104: 1.9043056964874268
-Execution time for K-Means GPU run #105: 1.987558364868164
-Execution time for K-Means GPU run #106: 2.4274744987487793
-Execution time for K-Means GPU run #107: 2.3269033432006836
-Execution time for K-Means GPU run #108: 2.752692937850952
-Execution time for K-Means GPU run #109: 2.1641957759857178
-Execution time for K-Means GPU run #110: 2.1732513904571533
-Execution time for K-Means GPU run #111: 2.552217721939087
-Execution time for K-Means GPU run #112: 1.7010855674743652
-Execution time for K-Means GPU run #113: 0.8179795742034912
-Execution time for K-Means GPU run #114: 1.235199213027954
-Execution time for K-Means GPU run #115: 2.222783327102661
-Execution time for K-Means GPU run #116: 1.7647690773010254
-Execution time for K-Means GPU run #117: 1.825667142868042
-Execution time for K-Means GPU run #118: 1.9239082336425781
-Execution time for K-Means GPU run #119: 2.0032854080200195
-Execution time for K-Means GPU run #120: 1.965148687362671
-Execution time for K-Means GPU run #121: 1.7610485553741455
-Execution time for K-Means GPU run #122: 2.220869541168213
-Execution time for K-Means GPU run #123: 2.125121593475342
-Execution time for K-Means GPU run #124: 2.555940866470337
-Execution time for K-Means GPU run #125: 1.0872726440429688
-Execution time for K-Means GPU run #126: 1.552239179611206
-Execution time for K-Means GPU run #127: 2.2744717597961426
-Execution time for K-Means GPU run #128: 2.7687971591949463
-Execution time for K-Means GPU run #129: 2.5849010944366455
-Execution time for K-Means GPU run #130: 2.0622339248657227
-Execution time for K-Means GPU run #131: 1.4913532733917236
-Execution time for K-Means GPU run #132: 2.038231611251831
-Execution time for K-Means GPU run #133: 2.325965642929077
-Execution time for K-Means GPU run #134: 2.52583909034729
-Execution time for K-Means GPU run #135: 1.8625357151031494
-Execution time for K-Means GPU run #136: 2.23360538482666
-Execution time for K-Means GPU run #137: 1.5579278469085693
-Execution time for K-Means GPU run #138: 2.7423720359802246
-Execution time for K-Means GPU run #139: 2.372199773788452
-Execution time for K-Means GPU run #140: 2.3001463413238525
-Execution time for K-Means GPU run #141: 2.2327866554260254
-Execution time for K-Means GPU run #142: 1.9307098388671875
-Execution time for K-Means GPU run #143: 2.873084545135498
-Execution time for K-Means GPU run #144: 3.1296777725219727
-Execution time for K-Means GPU run #145: 2.385427474975586
-Execution time for K-Means GPU run #146: 2.051348924636841
-Execution time for K-Means GPU run #147: 2.4983880519866943
-Execution time for K-Means GPU run #148: 2.6569976806640625
-Execution time for K-Means GPU run #149: 2.5977282524108887
-Execution time for K-Means GPU run #150: 2.2461283206939697
-Execution time for K-Means GPU run #151: 1.8613719940185547
-Execution time for K-Means GPU run #152: 2.3024492263793945
-Execution time for K-Means GPU run #153: 1.6331851482391357
-Execution time for K-Means GPU run #154: 2.2413275241851807
-Execution time for K-Means GPU run #155: 2.0245895385742188
-Execution time for K-Means GPU run #156: 1.9328083992004395
-Execution time for K-Means GPU run #157: 1.8940315246582031
-Execution time for K-Means GPU run #158: 3.319488286972046
-Execution time for K-Means GPU run #159: 2.384993076324463
-Execution time for K-Means GPU run #160: 2.0951836109161377
-Execution time for K-Means GPU run #161: 1.9777414798736572
-Execution time for K-Means GPU run #162: 2.1045949459075928
-Execution time for K-Means GPU run #163: 2.5586228370666504
-Execution time for K-Means GPU run #164: 2.4465444087982178
-Execution time for K-Means GPU run #165: 2.0340843200683594
-Execution time for K-Means GPU run #166: 2.2262942790985107
-Execution time for K-Means GPU run #167: 2.0521695613861084
-Execution time for K-Means GPU run #168: 2.130894899368286
-Execution time for K-Means GPU run #169: 2.067858934402466
-Execution time for K-Means GPU run #170: 2.2260286808013916
-Execution time for K-Means GPU run #171: 2.092107057571411
-Execution time for K-Means GPU run #172: 2.228623867034912
-Execution time for K-Means GPU run #173: 2.394155979156494
-Execution time for K-Means GPU run #174: 2.832968235015869
-Execution time for K-Means GPU run #175: 2.022599935531616
-Execution time for K-Means GPU run #176: 1.9275362491607666
-Execution time for K-Means GPU run #177: 1.8298976421356201
-Execution time for K-Means GPU run #178: 1.667877197265625
-Execution time for K-Means GPU run #179: 2.2324278354644775
-Execution time for K-Means GPU run #180: 2.6779253482818604
-Execution time for K-Means GPU run #181: 1.5600247383117676
-Execution time for K-Means GPU run #182: 2.837860584259033
-Execution time for K-Means GPU run #183: 2.8339736461639404
-Execution time for K-Means GPU run #184: 1.4452433586120605
-Execution time for K-Means GPU run #185: 1.8242793083190918
-Execution time for K-Means GPU run #186: 2.2335736751556396
-Execution time for K-Means GPU run #187: 1.8877935409545898
-Execution time for K-Means GPU run #188: 1.823930263519287
-Execution time for K-Means GPU run #189: 1.9271841049194336
-Execution time for K-Means GPU run #190: 2.9952569007873535
-Execution time for K-Means GPU run #191: 2.237187623977661
-Execution time for K-Means GPU run #192: 2.9810211658477783
-Execution time for K-Means GPU run #193: 1.8314437866210938
-Execution time for K-Means GPU run #194: 2.1260321140289307
-Execution time for K-Means GPU run #195: 2.4900848865509033
-Execution time for K-Means GPU run #196: 2.3944530487060547
-Execution time for K-Means GPU run #197: 3.632992744445801
-Execution time for K-Means GPU run #198: 1.255007028579712
-Execution time for K-Means GPU run #199: 2.450880765914917
-Execution time for K-Means GPU run #200: 2.767364740371704
+
+
+Execution K-Means GPU run #1: 1.6653363704681396; curr avg: 1.6653363704681396; Hits: 65891 (done in 19.9442); curr avg hits: 65891.0
+Execution K-Means GPU run #2: 1.7058887481689453; curr avg: 1.6856125593185425; Hits: 65780 (done in 20.0339); curr avg hits: 65835.5
+Execution K-Means GPU run #3: 1.862180233001709; curr avg: 1.7444684505462646; Hits: 65891 (done in 20.0457); curr avg hits: 65854.0
+Execution K-Means GPU run #4: 1.706181287765503; curr avg: 1.7348966598510742; Hits: 65891 (done in 19.9099); curr avg hits: 65863.25
+Execution K-Means GPU run #5: 1.6876466274261475; curr avg: 1.7254466533660888; Hits: 65780 (done in 19.9441); curr avg hits: 65846.6
+Execution K-Means GPU run #6: 1.300502061843872; curr avg: 1.6546225547790527; Hits: 65891 (done in 19.8279); curr avg hits: 65854.0
+Execution K-Means GPU run #7: 1.46427583694458; curr avg: 1.6274301665169852; Hits: 65891 (done in 19.8131); curr avg hits: 65859.28571428571
+Execution K-Means GPU run #8: 1.7960596084594727; curr avg: 1.6485088467597961; Hits: 65891 (done in 19.9669); curr avg hits: 65863.25
+Execution K-Means GPU run #9: 1.6284630298614502; curr avg: 1.646281533771091; Hits: 65780 (done in 19.8388); curr avg hits: 65854.0
+Execution K-Means GPU run #10: 1.9258959293365479; curr avg: 1.6742429733276367; Hits: 65780 (done in 19.8216); curr avg hits: 65846.6
+Execution K-Means GPU run #11: 1.4644505977630615; curr avg: 1.6551709391854026; Hits: 65891 (done in 19.9911); curr avg hits: 65850.63636363637
+Execution K-Means GPU run #12: 1.3775811195373535; curr avg: 1.632038454214732; Hits: 65891 (done in 19.8695); curr avg hits: 65854.0
+Execution K-Means GPU run #13: 2.0614659786224365; curr avg: 1.6650713407076323; Hits: 65891 (done in 20.0020); curr avg hits: 65856.84615384616
+Execution K-Means GPU run #14: 1.2608857154846191; curr avg: 1.6362009389059884; Hits: 65891 (done in 19.7319); curr avg hits: 65859.28571428571
+Execution K-Means GPU run #15: 2.205836057662964; curr avg: 1.6741766134897869; Hits: 65780 (done in 19.8543); curr avg hits: 65854.0
+Execution K-Means GPU run #16: 2.02165150642395; curr avg: 1.695893794298172; Hits: 65891 (done in 19.9888); curr avg hits: 65856.3125
+Execution K-Means GPU run #17: 1.822904109954834; curr avg: 1.7033649893367993; Hits: 65891 (done in 19.9668); curr avg hits: 65858.35294117648
+Execution K-Means GPU run #18: 2.5002262592315674; curr avg: 1.7476350598865085; Hits: 65779 (done in 19.9741); curr avg hits: 65853.94444444444
+Execution K-Means GPU run #19: 1.6222853660583496; curr avg: 1.7410377075797634; Hits: 65891 (done in 19.9455); curr avg hits: 65855.8947368421
+Execution K-Means GPU run #20: 2.523550033569336; curr avg: 1.780163323879242; Hits: 66502 (done in 19.8677); curr avg hits: 65888.2
+Execution K-Means GPU run #21: 1.4124329090118408; curr avg: 1.762652351742699; Hits: 65780 (done in 19.8607); curr avg hits: 65883.04761904762
+Execution K-Means GPU run #22: 1.7874960899353027; curr avg: 1.7637816125696355; Hits: 65891 (done in 19.9716); curr avg hits: 65883.40909090909
+Execution K-Means GPU run #23: 1.6632730960845947; curr avg: 1.759411677070286; Hits: 65891 (done in 19.8932); curr avg hits: 65883.73913043478
+Execution K-Means GPU run #24: 1.712517261505127; curr avg: 1.7574577430884044; Hits: 65891 (done in 19.8909); curr avg hits: 65884.04166666667
+Execution K-Means GPU run #25: 1.8583619594573975; curr avg: 1.761493911743164; Hits: 65891 (done in 19.8150); curr avg hits: 65884.32
+Execution K-Means GPU run #26: 1.57291841506958; curr avg: 1.7542410080249493; Hits: 65891 (done in 19.8765); curr avg hits: 65884.57692307692
+Execution K-Means GPU run #27: 1.4178621768951416; curr avg: 1.7417825327979193; Hits: 65780 (done in 20.4661); curr avg hits: 65880.70370370371
+Execution K-Means GPU run #28: 1.7495453357696533; curr avg: 1.7420597757611955; Hits: 65891 (done in 20.0846); curr avg hits: 65881.07142857143
+Execution K-Means GPU run #29: 1.2610893249511719; curr avg: 1.7254745878022293; Hits: 65780 (done in 19.9518); curr avg hits: 65877.58620689655
+Execution K-Means GPU run #30: 1.4510746002197266; curr avg: 1.716327921549479; Hits: 65891 (done in 19.8664); curr avg hits: 65878.03333333334
+Execution K-Means GPU run #31: 1.2227706909179688; curr avg: 1.700406720561366; Hits: 65891 (done in 19.9396); curr avg hits: 65878.45161290323
+Execution K-Means GPU run #32: 1.654935598373413; curr avg: 1.6989857479929924; Hits: 65891 (done in 19.8813); curr avg hits: 65878.84375
+Execution K-Means GPU run #33: 1.3381469249725342; curr avg: 1.6880512382044937; Hits: 65891 (done in 19.8212); curr avg hits: 65879.21212121213
+Execution K-Means GPU run #34: 2.507570505142212; curr avg: 1.712154746055603; Hits: 65675 (done in 19.8686); curr avg hits: 65873.20588235294
+Execution K-Means GPU run #35: 1.4114227294921875; curr avg: 1.7035624027252196; Hits: 65891 (done in 19.9008); curr avg hits: 65873.71428571429
+Execution K-Means GPU run #36: 1.7785449028015137; curr avg: 1.7056452499495611; Hits: 65780 (done in 19.9000); curr avg hits: 65871.11111111111
+Execution K-Means GPU run #37: 1.1413853168487549; curr avg: 1.6903949814873773; Hits: 65777 (done in 19.9225); curr avg hits: 65868.56756756757
+Execution K-Means GPU run #38: 1.0601780414581299; curr avg: 1.673810325170818; Hits: 65891 (done in 19.9596); curr avg hits: 65869.15789473684
+Execution K-Means GPU run #39: 1.6191489696502686; curr avg: 1.6724087519523425; Hits: 65891 (done in 19.8502); curr avg hits: 65869.71794871795
+Execution K-Means GPU run #40: 1.7685389518737793; curr avg: 1.6748120069503785; Hits: 65780 (done in 19.8932); curr avg hits: 65867.475
+Execution K-Means GPU run #41: 1.8111345767974854; curr avg: 1.6781369476783565; Hits: 65780 (done in 19.7987); curr avg hits: 65865.34146341463
+Execution K-Means GPU run #42: 1.854818344116211; curr avg: 1.6823436475935436; Hits: 65780 (done in 19.9006); curr avg hits: 65863.30952380953
+Execution K-Means GPU run #43: 1.7172484397888184; curr avg: 1.683155386946922; Hits: 65891 (done in 19.9731); curr avg hits: 65863.95348837209
+Execution K-Means GPU run #44: 2.225217342376709; curr avg: 1.6954749768430537; Hits: 65780 (done in 19.8822); curr avg hits: 65862.04545454546
+Execution K-Means GPU run #45: 1.8669931888580322; curr avg: 1.6992864926656088; Hits: 65780 (done in 19.9207); curr avg hits: 65860.22222222222
+Execution K-Means GPU run #46: 1.8800950050354004; curr avg: 1.7032171124997346; Hits: 65891 (done in 20.0477); curr avg hits: 65860.89130434782
+Execution K-Means GPU run #47: 1.5645296573638916; curr avg: 1.7002663155819506; Hits: 65891 (done in 20.2325); curr avg hits: 65861.53191489361
+Execution K-Means GPU run #48: 1.2783610820770264; curr avg: 1.6914766232172649; Hits: 65891 (done in 19.9284); curr avg hits: 65862.14583333333
+Execution K-Means GPU run #49: 1.3958408832550049; curr avg: 1.6854432407690554; Hits: 65891 (done in 19.8864); curr avg hits: 65862.73469387754
+Execution K-Means GPU run #50: 1.782668113708496; curr avg: 1.6873877382278442; Hits: 65780 (done in 19.8871); curr avg hits: 65861.08

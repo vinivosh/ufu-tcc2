@@ -1,54 +1,13 @@
-Average execution time for K-Means CPU: 125.22373925209045
-Slowest execution time for K-Means CPU: 255.44068837165833
-Fastest execution time for K-Means CPU: 63.61643171310425
+Avg exec K-Means CPU: 118.91324937343597
+Max exec K-Means CPU: 204.1211473941803
+Min exec time K-Means CPU: 78.53434443473816
+ 
+Average hits: 2999521.0
+Avg exec K-Means CPU classificationHits(): 1350.4769006371498
 
-Execution time for K-Means CPU run #1: 191.2997109889984
-Execution time for K-Means CPU run #2: 86.0339412689209
-Execution time for K-Means CPU run #3: 242.77950263023376
-Execution time for K-Means CPU run #4: 190.37928223609924
-Execution time for K-Means CPU run #5: 85.29891848564148
-Execution time for K-Means CPU run #6: 159.78359627723694
-Execution time for K-Means CPU run #7: 160.33140659332275
-Execution time for K-Means CPU run #8: 100.67591261863708
-Execution time for K-Means CPU run #9: 168.04111194610596
-Execution time for K-Means CPU run #10: 93.72098398208618
-Execution time for K-Means CPU run #11: 85.80812501907349
-Execution time for K-Means CPU run #12: 63.61643171310425
-Execution time for K-Means CPU run #13: 235.70034503936768
-Execution time for K-Means CPU run #14: 63.74886965751648
-Execution time for K-Means CPU run #15: 205.5261001586914
-Execution time for K-Means CPU run #16: 115.98768615722656
-Execution time for K-Means CPU run #17: 116.02901530265808
-Execution time for K-Means CPU run #18: 167.92054176330566
-Execution time for K-Means CPU run #19: 212.8015594482422
-Execution time for K-Means CPU run #20: 255.44068837165833
-Execution time for K-Means CPU run #21: 85.12850260734558
-Execution time for K-Means CPU run #22: 107.40576267242432
-Execution time for K-Means CPU run #23: 78.01604294776917
-Execution time for K-Means CPU run #24: 152.42620420455933
-Execution time for K-Means CPU run #25: 144.3959138393402
-Execution time for K-Means CPU run #26: 85.20243191719055
-Execution time for K-Means CPU run #27: 77.76176309585571
-Execution time for K-Means CPU run #28: 85.30287051200867
-Execution time for K-Means CPU run #29: 115.2210590839386
-Execution time for K-Means CPU run #30: 77.76991629600525
-Execution time for K-Means CPU run #31: 189.13935899734497
-Execution time for K-Means CPU run #32: 210.9737868309021
-Execution time for K-Means CPU run #33: 78.00072860717773
-Execution time for K-Means CPU run #34: 144.3415687084198
-Execution time for K-Means CPU run #35: 107.26130628585815
-Execution time for K-Means CPU run #36: 122.64976525306702
-Execution time for K-Means CPU run #37: 85.71717882156372
-Execution time for K-Means CPU run #38: 130.78663396835327
-Execution time for K-Means CPU run #39: 108.42355275154114
-Execution time for K-Means CPU run #40: 115.15243005752563
-Execution time for K-Means CPU run #41: 100.28015232086182
-Execution time for K-Means CPU run #42: 85.47417736053467
-Execution time for K-Means CPU run #43: 107.82028317451477
-Execution time for K-Means CPU run #44: 78.17618441581726
-Execution time for K-Means CPU run #45: 85.5878837108612
-Execution time for K-Means CPU run #46: 107.77302956581116
-Execution time for K-Means CPU run #47: 85.54026126861572
-Execution time for K-Means CPU run #48: 107.67504453659058
-Execution time for K-Means CPU run #49: 92.78448581695557
-Execution time for K-Means CPU run #50: 108.07495331764221
+
+
+Execution K-Means CPU run #1: 78.53434443473816; curr avg: 78.53434443473816; Hits: 2999521 (done in 1354.6263); curr avg hits: 2999521.0
+Execution K-Means CPU run #2: 99.28022265434265; curr avg: 88.9072835445404; Hits: 2999521 (done in 1348.2274); curr avg hits: 2999521.0
+Execution K-Means CPU run #3: 93.71728301048279; curr avg: 90.51061669985454; Hits: 2999521 (done in 1352.8512); curr avg hits: 2999521.0
+Execution K-Means CPU run #4: 204.1211473941803; curr avg: 118.91324937343597; Hits: 2999521 (done in 1346.2028); curr avg hits: 2999521.0
