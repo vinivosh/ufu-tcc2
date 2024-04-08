@@ -957,6 +957,18 @@ Na linha 13 é inicializado o primeiro objeto que será passado a uma função v
 
 Na linha 14 é chamada a primeira função paralelizada, a \textit{\pythoninline{calcLogs}} (Algoritmo \ref{code:kMeansGPU.calcLogs}). Esse é o passo de cálculo dos logarítimos de todos os datapoints, equivalente à operação realizada na linha 5 do Algoritmo \ref{code:kMeansCPU}.
 
+Dentro do laço de repetição \textit{while}, a primeira operação a ser feita é novamente a inicialização de um array multidimensional, \textit{\pythoninline{distances}}, de tamanho $n \cdot k$, na linha 19, que é então passado na chamada da segunda função paralelizada, a \textit{\pythoninline{calcDistances}}, na linha 20. Como o nome indica, essa função vetorial realiza, na GPU, o cálculo das distâncias entre todos os datapoints e os $k$ centróides. Corresponde às excuções da linha 10 do Algoritmo \ref{code:kMeansCPU}.
+
+Em seguida, nas linhas 22--24, é realizada a inicialização de mais um array, desta vez unidimensional, de tamanho $n$, chamado \textit{\pythoninline{closestCent}} e a chamada da terceira função paralelizada, a \textit{\pythoninline{calcClosestCentroids}}, que vai calcular o centróide mais próximo de cada datapoint do dataset. Essa operação é equivalente às realizadas na linha 11 do Algoritmo \ref{code:kMeansCPU}. Note que ao inicializar a variável de retorno, foi necessário passar um segundo argumento para a função \textit{\pythoninline{np.zeros}}, indicando que o array irá armazenar inteiros de 64 bits. Isso é necessário quando não se deseja usar floats de 64 bits no array. Como \textit{\pythoninline{closestCent}} irá armazenar apenas os índices dos centróides mais próximos, faz todo sentido utilizar inteiros aqui.
+
+Deste ponto em diante, não são mais feitas operações vetoriais na GPU no algoritmo. Isso pois o que resta são partes que não são particularmente exigentes em poder de processamento.
+
+Na linha 26, a cópia dos centróides atuais para a variável \textit{\pythoninline{centroids_OLD__np}} é realizada, permitindo comparar centróides calculados entre duas iterações consecutivas do k-means. Isto é realizado com o método \textit{\pythoninline{copy}} dos arrays do \textit{Numpy}.
+
+A inicialização de mais um array é feita na linha 28, dessa vez \textit{\pythoninline{meansByClosestCent}}, de dimensão $n \cdot d$, que irá armazenar, para cada centróide, as médias das coordenadas de todos os datapoints --- dos logarítimos das coordenadas, mais precisamente --- mais próximos dele.
+
+
+
 \pythonexternal[
   firstline=3,
   lastline=8,
