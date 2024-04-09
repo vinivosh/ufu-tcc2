@@ -965,9 +965,17 @@ Deste ponto em diante, não são mais feitas operações vetoriais na GPU no alg
 
 Na linha 26, a cópia dos centróides atuais para a variável \textit{\pythoninline{centroids_OLD__np}} é realizada, permitindo comparar centróides calculados entre duas iterações consecutivas do k-means. Isto é realizado com o método \textit{\pythoninline{copy}} dos arrays do \textit{Numpy}.
 
-A inicialização de mais um array é feita na linha 28, dessa vez \textit{\pythoninline{meansByClosestCent}}, de dimensão $n \cdot d$, que irá armazenar, para cada centróide, as médias das coordenadas de todos os datapoints --- dos logarítimos das coordenadas, mais precisamente --- mais próximos dele.
+A inicialização de mais um array é feita na linha 28, dessa vez \textit{\pythoninline{meansByClosestCent}}, de dimensão $n \cdot d$, que irá armazenar, para cada centróide, as médias das coordenadas de todos os datapoints --- ou dos logarítimos das delas, mais precisamente --- mais próximos dele.
 
+Na linha 30 é iniciado um outro laço de repetição que realiza, para cada centróide, o cálculo do novo centróide respectivo que será usado na próxima iteração. Tal operação é realizada de maneira serial. Primeiro, na linha 31, é criada uma \enquote{máscara} que é usada, na linha 32, para filtrar apenas os logarítimos dos datapoints mais próximos do centróide atualmente sendo calculado, armazenando estes na variável \textit{\pythoninline{relevantLogs}}. Esse laço de repetição inteiro corresponde às operações da linha 15 no Algoritmo \ref{code:kMeansCPU}.
 
+É feita também uma checagem importante na linha 34. É checado se não há nenhum datapoint mais próximo ao centróide atual, um cenário que pode ocorrer em execuções do k-means. Quando isso ocorre, o cálculo do novo centróide atual é simplesmente pulado. Isso causa esse centróide a se manter o mesmo na próxima iteração, o que é o esperado quando não há nenhuma informação para cálculo de sua nova posição. Sem essa checagem, um \textit{warning} do \textit{Numpy} ocorreria mais adiante, no cálculo da média dos datapoints.
+
+Na linha 35 é finalmente realizado o cálculo da média dos logarítimos dos datapoints mais próximos ao centróide atual, usando a função \textit{\pythoninline{mean}} do \textit{Numpy}. O valor é salvo na variável \textit{\pythoninline{meansByClosestCent}}, no índice correspondente ao centróide atualmente sendo analisado.
+
+Então, na linha 38 é realizada a operação final que gera o novo centróide, o exponencial ($e^{x}$), operação inversa ao logarítimo natural ($\ln{x}$), do valor calculado na linha 35. Com isso, é concluído o cálculo dos novos centróides e o laço de repetição interno é fechado.
+
+As linhas 40 e 41 incluem apenas a marcação da variável \textit{\pythoninline{meansByClosestCent}} para exclusão e o acréscimo em um da variável de controle \textit{\pythoninline{iteration}}. O laço de repetição das iterações do k-means é então fechado, e na última linha o resultado do agrupamento é devolvido, na variável \textit{\pythoninline{closestCent}}.
 
 \pythonexternal[
   firstline=3,
