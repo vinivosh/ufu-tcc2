@@ -977,6 +977,8 @@ Então, na linha 38 é realizada a operação final que gera o novo centróide, 
 
 As linhas 40 e 41 incluem apenas a marcação da variável \textit{\pythoninline{meansByClosestCent}} para exclusão e o acréscimo em um da variável de controle \textit{\pythoninline{iteration}}. O laço de repetição das iterações do k-means é então fechado, e na última linha o resultado do agrupamento é devolvido, na variável \textit{\pythoninline{closestCent}}.
 
+Os Algoritmos \ref{code:kMeansGPU.calcLogs}, \ref{code:kMeansGPU.calcDistances} e \ref{code:kMeansGPU.calcClosestCentroids} abaixo mostram as funções vetoriais que rodam na GPU NVIDIA, onde os cálculos mais pesados são realizados. Como discutido mais a fundo no capítulo \ref{sec:numba}, funções como essas, implementadas com a biblioteca\textit{Numba} para rodar em CUDA, trabalham com um elemento de cada vez, sendo chamadas milhares de vezes e rodando paralelamente, cada chamada em um núcleo (\textit{CUDA core}) da GPU, fazendo o cálculo apenas de seu respectivo elemento ou sub-conjunto da estrutura de dados sendo processada, atingindo altíssimos níveis de paralelição. Estas funções também não podem retornar valores diretamente, necessitando ao invés de uma variável de retorno, passada como argumento. Essa variável foi definida aqui sempre como o último argumento da função.
+
 \pythonexternal[
   firstline=3,
   lastline=8,
@@ -984,7 +986,9 @@ As linhas 40 e 41 incluem apenas a marcação da variável \textit{\pythoninline
   caption={Implementação paralela do cálculo dos logaritmos dos datapoints},
 ]{code-snippets/kMeansGPU.py}
   
-\textbf{TODO: Escrever parágrafos explicando a função calcLogs().}
+A função \textit{\pythoninline{calcLogs}} acima é chamada apenas uma vez em cada execução do Algoritmo \ref{code:kMeansGPU} (na linha 14), para calcular o logarítimo de todos os datapoints do conjunto de dados.
+
+Ela recebe um datapoint apenas (\textit{\pythoninline{rowDataset}}) e, na linha 6, calcula o logarítimo natural de cada variável que compõe o datapoint, salvando o resultado no array de retorno (\textit{\pythoninline{rowResults}}). Nas linhas 2 e 3 são declaradas as especificações obrigatórias de tipo e dimensionalidade dos argumentos da função. Ambos são vetores unidimensionais de floats de 64 bits e de tamanho $d$, letra que representa a quantidade de dimensões dos datapoints.
 
 \pythonexternal[
   firstline=11,
