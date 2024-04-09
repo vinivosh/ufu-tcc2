@@ -1,0 +1,26 @@
+Avg exec K-Means CPU: 116.57449887990951
+Max exec K-Means CPU: 275.24043250083923
+Min exec time K-Means CPU: 70.05526375770569
+
+
+
+Execution K-Means CPU run #1: 86.61235094070435; curr avg: 86.61235094070435; 
+Execution K-Means CPU run #2: 118.04515361785889; curr avg: 102.32875227928162; 
+Execution K-Means CPU run #3: 275.24043250083923; curr avg: 159.9659790198008; 
+Execution K-Means CPU run #4: 78.44966340065002; curr avg: 139.58690011501312; 
+Execution K-Means CPU run #5: 107.69467115402222; curr avg: 133.20845432281493; 
+Execution K-Means CPU run #6: 70.05526375770569; curr avg: 122.6829225619634; 
+Execution K-Means CPU run #7: 78.03111362457275; curr avg: 116.30409271376473; 
+Execution K-Means CPU run #8: 77.76918721199036; curr avg: 111.48722952604294; 
+Execution K-Means CPU run #9: 85.16525530815125; curr avg: 108.56256572405498; 
+Execution K-Means CPU run #10: 84.75460505485535; curr avg: 106.181769657135; 
+Execution K-Means CPU run #11: 85.3818736076355; curr avg: 104.29087001627141; 
+Execution K-Means CPU run #12: 137.41615676879883; curr avg: 107.05131057898204; 
+Execution K-Means CPU run #13: 138.96525526046753; curr avg: 109.50622940063477; 
+Execution K-Means CPU run #14: 93.79012632369995; curr avg: 108.38365060942513; 
+Execution K-Means CPU run #15: 84.51274538040161; curr avg: 106.79225692749023; 
+Execution K-Means CPU run #16: 246.58052277565002; curr avg: 115.52902354300022; 
+Execution K-Means CPU run #17: 129.17223143577576; curr avg: 116.33156518375172; 
+Execution K-Means CPU run #18: 167.77647018432617; curr avg: 119.18961546156142; 
+Execution K-Means CPU run #19: 85.55763053894043; curr avg: 117.41951099194978; 
+Execution K-Means CPU run #20: 100.51926875114441; curr avg: 116.57449887990951; 
