@@ -997,7 +997,13 @@ Ela recebe um datapoint apenas (\textit{\pythoninline{rowDataset}}) e, na linha 
   caption={Implementação paralela do cálculo de distâncias},
 ]{code-snippets/kMeansGPU.py}
 
-\textbf{TODO: Escrever parágrafos explicando a função calcDistances().}
+A função \textit{\pythoninline{calcDistances}} acima é chamada a cada iteração do Algoritmo \ref{code:kMeansGPU} (na linha 20) para calcular as distâncias euclidianas entre todos os datapoints do dataset e cada um dos $k$ centróides.
+
+Ela recebe a lista de todos os centróides (variável \textit{\pythoninline{centroids}}) e apenas um datapoint do dataset (variável \textit{\pythoninline{rowDataset}}). A primeira instrução executada na função, na linha 6, é a inferência da dimensionalidade do datapoint, que é salva na variável \textit{\pythoninline{d}}.
+
+Após isso, na linha 8, é iniciado um laço de repetição que, para cada centróide, calcula a distância dele para o datapoint sendo processado. Esse cálculo é feito usando a fórmula generalizada da distância euclidiana, somando o quadrado das diferenças entre as coordenadas do centróide e as do datapoint e depois calculando a raiz-quadrada do valor final. Esse cálculo é feito nas linhas 9--11. Na última linha do laço de repetição, a linha 13, a distância é salva no vetor de retorno \textit{\pythoninline{rowResults}}, no índice correspondente ao centróide atual.
+
+Nas linhas 2 e 3 são declarados o tipo e dimensionalidade dos argumentos da função. \textit{\pythoninline{centroids}} é um vetor multidimensional $k \cdot d$, \textit{\pythoninline{rowDataset}} é um vetor unidimensional de tamanho $d$ e, por fim, a variável de retorno \textit{\pythoninline{rowResults}} é um vetor unidimensional de tamanho $k$. Todas as variáveis são vetores de floats de 64 bits.
 
 \pythonexternal[
   firstline=26,
