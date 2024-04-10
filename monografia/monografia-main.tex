@@ -999,9 +999,9 @@ Ela recebe um datapoint apenas (\textit{\pythoninline{rowDataset}}) e, na linha 
 
 A função \textit{\pythoninline{calcDistances}} acima é chamada a cada iteração do Algoritmo \ref{code:kMeansGPU} (na linha 20) para calcular as distâncias euclidianas entre todos os datapoints do dataset e cada um dos $k$ centróides.
 
-Ela recebe a lista de todos os centróides (variável \textit{\pythoninline{centroids}}) e apenas um datapoint do dataset (variável \textit{\pythoninline{rowDataset}}). A primeira instrução executada na função, na linha 6, é a inferência da dimensionalidade do datapoint, que é salva na variável \textit{\pythoninline{d}}.
+Ela recebe a lista de todos os centróides (variável \textit{\pythoninline{centroids}}) e apenas um datapoint do dataset (variável \textit{\pythoninline{rowDataset}}). A primeira instrução executada na função, na linha 6, é a inferência da dimensionalidade do datapoint, que é salva na variável \textit{\pythoninline{d}}. Após isso, na linha 8, é iniciado um laço de repetição que, para cada centróide, calcula a distância dele para o datapoint sendo processado.
 
-Após isso, na linha 8, é iniciado um laço de repetição que, para cada centróide, calcula a distância dele para o datapoint sendo processado. Esse cálculo é feito usando a fórmula generalizada da distância euclidiana, somando o quadrado das diferenças entre as coordenadas do centróide e as do datapoint e depois calculando a raiz-quadrada do valor final. Esse cálculo é feito nas linhas 9--11. Na última linha do laço de repetição, a linha 13, a distância é salva no vetor de retorno \textit{\pythoninline{rowResults}}, no índice correspondente ao centróide atual.
+Esse cálculo é feito usando a fórmula generalizada da distância euclidiana, somando o quadrado das diferenças entre as coordenadas do centróide e as do datapoint e depois calculando a raiz-quadrada do valor final. Esse cálculo é feito nas linhas 9--11. Na última linha do laço de repetição, a linha 13, a distância é salva no vetor de retorno \textit{\pythoninline{rowResults}}, no índice correspondente ao centróide atual.
 
 Nas linhas 2 e 3 são declarados o tipo e dimensionalidade dos argumentos da função. \textit{\pythoninline{centroids}} é um vetor multidimensional $k \cdot d$, \textit{\pythoninline{rowDataset}} é um vetor unidimensional de tamanho $d$ e, por fim, a variável de retorno \textit{\pythoninline{rowResults}} é um vetor unidimensional de tamanho $k$. Todas as variáveis são vetores de floats de 64 bits.
 
@@ -1012,7 +1012,17 @@ Nas linhas 2 e 3 são declarados o tipo e dimensionalidade dos argumentos da fun
   caption={Implementação paralela do cálculo dos centróides mais próximos},
 ]{code-snippets/kMeansGPU.py}
 
-\textbf{TODO: Escrever parágrafos explicando a função calcClosestCentroids().}
+Por fim, há a função acima, \textit{\pythoninline{calcClosestCentroids}}, a última função vetorial chamada pela \textit{\pythoninline{kMeansGPU}}. A chamada é realizada a cada iteração do Algoritmo \ref{code:kMeansGPU} (na linha 23) para encontrar o centróide mais próximo de cada datapoint do dataset.
+
+É a mais simples das funções vetoriais usadas nessa implementação. Ela recebe (na variável \textit{\pythoninline{rowDistances}}) apenas uma linha do vetor multidimensional retornado pelo Algoritmo \ref{code:kMeansGPU.calcDistances}, que contém as distâncias entre um datapoint específico e os $k$ centróides.
+
+Na linha 6 e 7 são inicializadas duas variáveis importantes. A primeira, \textit{\pythoninline{minDistance}}, irá guardar a menor distância encontrada e é inicializada com o primeiro valor do vetor de distâncias; a segunda variável, \textit{\pythoninline{minDistanceIndex}} irá guardar, como o nome indica, o índice da menor distância encontrada no vetor de distâncias, e é inicializada com o valor zero, em concordância com o centróide armazenado em \textit{\pythoninline{minDistance}}.
+
+Então, nas linhas 9--12 é realizada a busca pela menor distância, de maneira simplória. Um laço de repetição percorre todos os $k$ centróides e compara a distância dele ao datapoint com a menor distância encontrada até então. Se ela for estritamente menor, a menor distância salva em \textit{\pythoninline{minDistance}} é atualizada para corresponder ao centróide atual, assim como o índice em \textit{\pythoninline{minDistanceIndex}}.
+
+Ao final desse laço de repetição, teremos o índice do centróide mais próximo ao datapoint sendo analisado salvo na variável \textit{\pythoninline{minDistanceIndex}}. Assim, ela é retornada através da variável de retorno, \textit{\pythoninline{closestCent}}, na linha 14. Note que essa variável é acessada como se fosse um vetor, mesmo sendo na verdade escalar, com o valor salvo no índice zero. Isso é um detalhe de implementação das funções vetoriais implementadas com Numba, como explicado no capítulo \ref{sec:numba}.
+
+Nas linhas 1--4 temos, como sempre, a definição de dimensionalidade e tipo das variáveis recebidas pela função. \textit{\pythoninline{rowDistances}} é um vetor unidimensionald e tamanho $k$, composto por floats de 64 bits. Já a variável de retorno, \textit{\pythoninline{closestCent}}, é um valor escalar, um inteiro de 64 bits.
 
 
 
