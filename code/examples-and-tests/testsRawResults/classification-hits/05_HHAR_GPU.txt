@@ -1,0 +1,10 @@
+Avg exec K-Means GPU: 568.3950791358948
+Max exec K-Means GPU: 568.3950791358948
+Min exec time K-Means GPU: 568.3950791358948
+ 
+Average hits: 3944384.0
+Avg exec K-Means GPU classificationHits(): 18560.795105457306
+
+
+
+Execution K-Means GPU run #1: 568.3950791358948; curr avg: 568.3950791358948; Hits: 3944384 (done in 18560.7951); curr avg hits: 3944384.0
