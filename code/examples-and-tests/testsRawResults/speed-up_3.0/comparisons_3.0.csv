@@ -1,0 +1,6 @@
+dataset,instances,variables,clusters,speedup_test_runs,avg_speedup,slow_speedup,fast_speedup,avg_cpu,slow_cpu,fast_cpu,avg_gpu,slow_gpu,fast_gpu,precision_test_runs,avg_precision_percent_improvement,avg_precision_percent_cpu,avg_precision_percent_gpu,avg_hits_cpu,avg_hits_gpu
+01 _Rice,3810,7,2,100,tba,tba,tba,tba,tba,tba,tba,tba,tba,100,tba,tba,tba,tba,tba
+02_HTRU2,17898,8,2,100,tba,tba,tba,tba,tba,tba,tba,tba,tba,100,tba,tba,tba,tba,tba
+03_MiniBooNE,129596,50,2,100,tba,tba,tba,tba,tba,tba,tba,tba,tba,50,tba,tba,tba,tba,tba
+04_WESAD,4588552,8,3,20,tba,tba,tba,tba,tba,tba,tba,tba,tba,4,tba,tba,tba,tba,tba
+05_HHAR,13932632,3,7,10,tba,tba,tba,tba,tba,tba,tba,tba,tba,1,tba,tba,tba,tba,tba

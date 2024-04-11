@@ -1,0 +1,16 @@
+Avg exec K-Means CPU: 1500.6155308113025
+Max exec K-Means CPU: 1510.7154283950076
+Min exec time K-Means CPU: 1475.3098005929933
+
+
+
+Execution K-Means CPU run #1: 1503.802011480002; curr avg: 1503.802011480002; 
+Execution K-Means CPU run #2: 1499.6767393670016; curr avg: 1501.7393754235018; 
+Execution K-Means CPU run #3: 1499.1540359909995; curr avg: 1500.8775956126676; 
+Execution K-Means CPU run #4: 1499.569933057006; curr avg: 1500.5506799737523; 
+Execution K-Means CPU run #5: 1505.5436114760087; curr avg: 1501.5492662742035; 
+Execution K-Means CPU run #6: 1500.038451884; curr avg: 1501.2974638758362; 
+Execution K-Means CPU run #7: 1509.3013085590064; curr avg: 1502.4408702591463; 
+Execution K-Means CPU run #8: 1510.7154283950076; curr avg: 1503.475190026129; 
+Execution K-Means CPU run #9: 1503.0439873110008; curr avg: 1503.427278613337; 
+Execution K-Means CPU run #10: 1475.3098005929933; curr avg: 1500.6155308113025; 

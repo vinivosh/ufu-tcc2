@@ -1,0 +1,26 @@
+Avg exec K-Means GPU: 3.3438469714979875
+Max exec K-Means GPU: 6.567439993996231
+Min exec time K-Means GPU: 1.6826526849981747
+
+
+
+Execution K-Means GPU run #1: 1.6826526849981747; curr avg: 1.6826526849981747; 
+Execution K-Means GPU run #2: 4.277872015998582; curr avg: 2.9802623504983785; 
+Execution K-Means GPU run #3: 2.2358132929948624; curr avg: 2.732112664663873; 
+Execution K-Means GPU run #4: 3.8458327039988944; curr avg: 3.0105426744976285; 
+Execution K-Means GPU run #5: 2.094411623002088; curr avg: 2.8273164641985202; 
+Execution K-Means GPU run #6: 4.573692371996003; curr avg: 3.118379115498101; 
+Execution K-Means GPU run #7: 4.285843698999088; curr avg: 3.2851597702839563; 
+Execution K-Means GPU run #8: 1.8509275949982111; curr avg: 3.105880748373238; 
+Execution K-Means GPU run #9: 2.081194214995776; curr avg: 2.9920266891090757; 
+Execution K-Means GPU run #10: 2.0684165860002395; curr avg: 2.899665678798192; 
+Execution K-Means GPU run #11: 2.6005483269982506; curr avg: 2.8724731922709243; 
+Execution K-Means GPU run #12: 3.5243451239948627; curr avg: 2.9267958532479192; 
+Execution K-Means GPU run #13: 3.5395680199944763; curr avg: 2.9739321737668853; 
+Execution K-Means GPU run #14: 5.30589746300393; curr avg: 3.140501122998103; 
+Execution K-Means GPU run #15: 3.5530543939967174; curr avg: 3.1680046743980106; 
+Execution K-Means GPU run #16: 5.346044884994626; curr avg: 3.304132187560299; 
+Execution K-Means GPU run #17: 6.567439993996231; curr avg: 3.4960914702918244; 
+Execution K-Means GPU run #18: 2.2505318709954736; curr avg: 3.4268937147753604; 
+Execution K-Means GPU run #19: 2.0592926160024945; curr avg: 3.3549147095767884; 
+Execution K-Means GPU run #20: 3.133559948000766; curr avg: 3.3438469714979875; 
