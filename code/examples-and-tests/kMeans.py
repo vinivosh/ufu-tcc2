@@ -138,6 +138,8 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
         pca = PCA(n_components=2) # dois eixos no gráfico
         dataset_2D = pca.fit_transform(dataset.values)
 
+    startTimeNS = time.perf_counter_ns()
+
     n = len(dataset)
     d = len(dataset.iloc[0])
 
@@ -145,14 +147,33 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
     centroids:pd.DataFrame = pd.concat([(dataset.apply(lambda x: float(x.sample().iloc[0]))) for _ in range(k)], axis=1) # * Paralelizar isto provavelmente é irrelevante, visto que sempre teremos poucos centróides
     centroids_OLD = pd.DataFrame()
 
+    elapsedTimeS = (time.perf_counter_ns() - startTimeNS) * 1e-9
+    print(f'    Time to initialize variables and random centroids: {elapsedTimeS} s')
+
+    startTimeNS = time.perf_counter_ns()
+
     centroids__np = centroids.T.to_numpy()
     centroids_OLD__np = centroids_OLD.T.to_numpy()
     dataset__np = dataset.to_numpy()
     del dataset
 
+    elapsedTimeS = (time.perf_counter_ns() - startTimeNS) * 1e-9
+    print(f'    Time to convert dataset and centroids to Numpy arrays: {elapsedTimeS} s')
+
+    startTimeNS = time.perf_counter_ns()
+
     # * Pré-calcular, paralelamente, os logaritmos de todos datapoints
     datasetLogs = np.zeros((n, d))
     calcLogs(dataset__np, datasetLogs)
+
+    elapsedTimeS = (time.perf_counter_ns() - startTimeNS) * 1e-9
+    print(f'    Time to compute calcLogs(): {elapsedTimeS} s')
+
+    startTimeOverallIterationsNS = time.perf_counter_ns()
+
+    totalTimeCalcDistancesNS = 0
+    totalTimeCalcClosestCentroidsNS = 0
+    totalTimeCalcNewCentroidsNS = 0
 
     iteration = 1
 
@@ -163,21 +184,31 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
         if printIter: strToPrint += f'Iteration {iteration}\n\n'
         if debug: strToPrint += f'Centroids:\n{centroids.T}\n\n'
 
+        startTimeNS = time.perf_counter_ns()
+
         # Para cada datapoint, calcular distâncias entre ele e cada centróide; depois, encontrar o centróide mais próximo e salvar seu index
         distances = np.zeros((n, k))
         calcDistances(centroids__np, dataset__np, distances)
 
+        totalTimeCalcDistancesNS += (time.perf_counter_ns() - startTimeNS)
+
         if debug: strToPrint += f'Distances:\n{distances}\n\n'
+
+        startTimeNS = time.perf_counter_ns()
 
         closestCent = np.zeros(n, np.int64)
         calcClosestCentroids(distances, closestCent)
         del distances
         if debug: strToPrint += f'Closest centroid index:\n{closestCent}\n\n'
 
+        totalTimeCalcClosestCentroidsNS += (time.perf_counter_ns() - startTimeNS)
+
         centroids_OLD__np = centroids__np.copy()
 
         # meansByClosestCent[0] = médias dos logs de todos datapoints cujo centróide mais próximo é o centróide de index zero
         meansByClosestCent = np.zeros((k, d))
+
+        startTimeNS = time.perf_counter_ns()
 
         for centroidIdx in range(k):
             x = [(True if closestCent[dpIdx] == centroidIdx else False) for dpIdx in range(n)]
@@ -190,6 +221,8 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
             del relevantLogs
 
             centroids__np[centroidIdx] = np.exp(meansByClosestCent[centroidIdx])
+
+        totalTimeCalcNewCentroidsNS += (time.perf_counter_ns() - startTimeNS)
 
         del meansByClosestCent
 
@@ -204,6 +237,18 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
         if debug or printIter: print(strToPrint)
 
         iteration += 1
+
+    elapsedTimeS = (time.perf_counter_ns() - startTimeOverallIterationsNS) * 1e-9
+    print(f'    Time to run {iteration - 1} iterations of K-Means GPU: {elapsedTimeS} s. Avg per iteration: {elapsedTimeS / (iteration - 1)}')
+
+    avgTimeS = (totalTimeCalcDistancesNS / (iteration - 1)) * 1e-9
+    print(f'        Average time per iteration to run calcDistances(): {avgTimeS} s. Total time: {totalTimeCalcDistancesNS * 1e-9} s')
+
+    avgTimeS = (totalTimeCalcClosestCentroidsNS / (iteration - 1)) * 1e-9
+    print(f'        Average time per iteration to run calcClosestCentroids(): {avgTimeS} s. Total time: {totalTimeCalcClosestCentroidsNS * 1e-9} s')
+
+    avgTimeS = (totalTimeCalcNewCentroidsNS / (iteration - 1)) * 1e-9
+    print(f'        Average time per iteration to calculate new centroids: {avgTimeS} s. Total time: {totalTimeCalcNewCentroidsNS * 1e-9} s')
 
     return closestCent
 
