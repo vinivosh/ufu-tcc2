@@ -38,6 +38,11 @@
 - Entrega máxima ideal da parte escrita: 15 de abril de 2024
 - Capítulos mais fáceis de fazer por hora: capítulo 2 (Fundamentação Teórica) e capítulo 4 (Metodologia de Desenvolvimento e Pesquisa)
 
+## Reunião com Professor (10/04/24)
+
+- Discutir no capítulo 4 como foram identificadas quais partes podiam ser paralelizáveis, e como seria feito isso em outros algoritmos
+  - Dá pra citar brevemente um exemplo do Algoritmo Hierárquico mostrando por similaridade como seria feita essa identificação nele
+
 
 
 ## Links úteis
