@@ -1,4 +1,5 @@
 import math
+import random
 import time
 
 from os.path import exists as os_path_exists
@@ -138,27 +139,37 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
         pca = PCA(n_components=2) # dois eixos no gráfico
         dataset_2D = pca.fit_transform(dataset.values)
 
-    startTimeNS = time.perf_counter_ns()
-
     n = len(dataset)
     d = len(dataset.iloc[0])
 
-    # Gerando centróides iniciais aleatoriamente
-    centroids:pd.DataFrame = pd.concat([(dataset.apply(lambda x: float(x.sample().iloc[0]))) for _ in range(k)], axis=1) # * Paralelizar isto provavelmente é irrelevante, visto que sempre teremos poucos centróides
-    centroids_OLD = pd.DataFrame()
+    startTimeNS = time.perf_counter_ns()
+
+    # # Gerando centróides iniciais aleatoriamente
+    # centroids:pd.DataFrame = pd.concat([(dataset.apply(lambda x: float(x.sample().iloc[0]))) for _ in range(k)], axis=1) # * Paralelizar isto provavelmente é irrelevante, visto que sempre teremos poucos centróides
+
+    # Gerando centróides iniciais aleatoriamente (FEITO DIREITO AGORA LMAO)
+    randomDPIdxs = random.sample(range(n), k)
+    centroids__np = np.zeros((k, d))
+    for centroidIdx in range(k):
+        randomDP = dataset.iloc[randomDPIdxs[centroidIdx]]
+        for dimIdx in range(d): centroids__np[centroidIdx][dimIdx] = randomDP.iloc[dimIdx]
 
     elapsedTimeS = (time.perf_counter_ns() - startTimeNS) * 1e-9
     print(f'    Time to initialize variables and random centroids: {elapsedTimeS} s')
 
     startTimeNS = time.perf_counter_ns()
 
-    centroids__np = centroids.T.to_numpy()
+    centroids_OLD = pd.DataFrame()
+
+    # centroids__np = centroids.T.to_numpy()
     centroids_OLD__np = centroids_OLD.T.to_numpy()
     dataset__np = dataset.to_numpy()
     del dataset
 
     elapsedTimeS = (time.perf_counter_ns() - startTimeNS) * 1e-9
     print(f'    Time to convert dataset and centroids to Numpy arrays: {elapsedTimeS} s')
+
+    print(f'Initial centroids:\n{pd.DataFrame(centroids__np)}\n', end='')
 
     startTimeNS = time.perf_counter_ns()
 
@@ -182,7 +193,7 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
 
         if plotResults or debug: clear_output(wait=True)
         if printIter: strToPrint += f'Iteration {iteration}\n\n'
-        if debug: strToPrint += f'Centroids:\n{centroids.T}\n\n'
+        if debug: strToPrint += f'Centroids:\n{pd.DataFrame(centroids__np)}\n\n'
 
         startTimeNS = time.perf_counter_ns()
 
