@@ -169,7 +169,7 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
     elapsedTimeS = (time.perf_counter_ns() - startTimeNS) * 1e-9
     print(f'    Time to convert dataset and centroids to Numpy arrays: {elapsedTimeS} s')
 
-    print(f'Initial centroids:\n{pd.DataFrame(centroids__np)}\n', end='')
+    # print(f'Initial centroids:\n{pd.DataFrame(centroids__np)}\n', end='')
 
     startTimeNS = time.perf_counter_ns()
 
@@ -219,21 +219,27 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
         # meansByClosestCent[0] = médias dos logs de todos datapoints cujo centróide mais próximo é o centróide de index zero
         meansByClosestCent = np.zeros((k, d))
 
-        startTimeNS = time.perf_counter_ns()
+        # meansByClosestCent = datasetLogs[closestCent[:, 0] == centroidIdx].mean(axis=0)
 
         for centroidIdx in range(k):
-            x = [(True if closestCent[dpIdx] == centroidIdx else False) for dpIdx in range(n)]
-            # relevantLogs conterá agora todos itens de datasetLogs cujo datapoint correspondente está mais próximo do centróide de index centroidIdx
-            relevantLogs = datasetLogs[x]
-            del x
-            # Se relevantLogs tiver zero itens, então não existia nenhum datapoint cujo centróide mais próximo era o centroids__np[centroidIdx]. Logo, podemos pular o re-cálculo desse centróide, já que ele não mudaria de qualquer maneira!
-            if len(relevantLogs) == 0: continue
-            meansByClosestCent[centroidIdx] = relevantLogs.mean(axis=0)
-            del relevantLogs
+            # x = [(True if closestCent[dpIdx] == centroidIdx else False) for dpIdx in range(n)]
+            # # # relevantLogs conterá agora todos itens de datasetLogs cujo datapoint correspondente está mais próximo do centróide de index centroidIdx
+            
+            # relevantLogs = datasetLogs[x]
+            # del x
+            # # Se relevantLogs tiver zero itens, então não existia nenhum datapoint cujo centróide mais próximo era o centroids__np[centroidIdx]. Logo, podemos pular o re-cálculo desse centróide, já que ele não mudaria de qualquer maneira!
+            # if len(relevantLogs) == 0: continue
+
+            startTimeNS = time.perf_counter_ns()
+
+            # meansByClosestCent[centroidIdx] = relevantLogs.mean(axis=0)
+            meansByClosestCent[centroidIdx] = datasetLogs[closestCent[:,] == centroidIdx].mean(axis=0)
 
             centroids__np[centroidIdx] = np.exp(meansByClosestCent[centroidIdx])
 
-        totalTimeCalcNewCentroidsNS += (time.perf_counter_ns() - startTimeNS)
+            totalTimeCalcNewCentroidsNS += (time.perf_counter_ns() - startTimeNS)
+
+            # del relevantLogs
 
         del meansByClosestCent
 
@@ -258,8 +264,8 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
     avgTimeS = (totalTimeCalcClosestCentroidsNS / (iteration - 1)) * 1e-9
     print(f'        Average time per iteration to run calcClosestCentroids(): {avgTimeS} s. Total time: {totalTimeCalcClosestCentroidsNS * 1e-9} s')
 
-    avgTimeS = (totalTimeCalcNewCentroidsNS / (iteration - 1)) * 1e-9
-    print(f'        Average time per iteration to calculate new centroids: {avgTimeS} s. Total time: {totalTimeCalcNewCentroidsNS * 1e-9} s')
+    avgTimeS = (totalTimeCalcNewCentroidsNS / ((iteration - 1) * k)) * 1e-9
+    print(f'        Average time per centroid per iteration to calculate new centroids: {avgTimeS} s. Total time: {totalTimeCalcNewCentroidsNS * 1e-9} s')
 
     return closestCent
 
