@@ -74,7 +74,6 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100):
 
         for centroidIdx in range(k):
             meansByClosestCent[centroidIdx] = datasetLogs[closestCent[:,] == centroidIdx].mean(axis=0)
-
             centroids__np[centroidIdx] = np.exp(meansByClosestCent[centroidIdx])
 
         del meansByClosestCent
