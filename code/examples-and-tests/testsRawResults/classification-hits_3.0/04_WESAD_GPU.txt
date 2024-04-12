@@ -1,0 +1,14 @@
+Avg exec K-Means GPU: 2.4722656896003175
+Max exec K-Means GPU: 3.6419793820023187
+Min exec time K-Means GPU: 2.0466001339955255
+ 
+Average hits: 2983255.8
+Avg exec K-Means GPU classificationHits(): 1359.5830824894015
+
+
+
+Execution K-Means GPU run #1: 3.6419793820023187; curr avg: 3.6419793820023187; Hits: 2797043 (done in 1363.6844); curr avg hits: 2797043.0
+Execution K-Means GPU run #2: 2.069092489000468; curr avg: 2.8555359355013934; Hits: 2999521 (done in 1368.7824); curr avg hits: 2898282.0
+Execution K-Means GPU run #3: 2.0466001339955255; curr avg: 2.585890668332771; Hits: 2786274 (done in 1362.9415); curr avg hits: 2860946.0
+Execution K-Means GPU run #4: 2.0513989930041134; curr avg: 2.4522677495006064; Hits: 3333920 (done in 1351.1686); curr avg hits: 2979189.5
+Execution K-Means GPU run #5: 2.5522574499991606; curr avg: 2.4722656896003175; Hits: 2999521 (done in 1351.3384); curr avg hits: 2983255.8

@@ -1,0 +1,59 @@
+Avg exec K-Means GPU: 0.6746978010600287
+Max exec K-Means GPU: 0.9333424280011968
+Min exec time K-Means GPU: 0.3278178879991174
+ 
+Average hits: 65872.18
+Avg exec K-Means GPU classificationHits(): 19.504936039420063
+
+
+
+Execution K-Means GPU run #1: 0.7222958989987092; curr avg: 0.7222958989987092; Hits: 65891 (done in 19.5652); curr avg hits: 65891.0
+Execution K-Means GPU run #2: 0.6410379449989705; curr avg: 0.6816669219988398; Hits: 65891 (done in 19.6062); curr avg hits: 65891.0
+Execution K-Means GPU run #3: 0.7173474079972948; curr avg: 0.6935604173316582; Hits: 65891 (done in 19.6265); curr avg hits: 65891.0
+Execution K-Means GPU run #4: 0.6269499439986248; curr avg: 0.6769077989983998; Hits: 65891 (done in 19.6789); curr avg hits: 65891.0
+Execution K-Means GPU run #5: 0.718289348998951; curr avg: 0.68518410899851; Hits: 65780 (done in 19.5730); curr avg hits: 65868.8
+Execution K-Means GPU run #6: 0.6585401560005266; curr avg: 0.6807434501655129; Hits: 65891 (done in 19.5743); curr avg hits: 65872.5
+Execution K-Means GPU run #7: 0.7461449869988428; curr avg: 0.6900865268559885; Hits: 65780 (done in 19.7247); curr avg hits: 65859.28571428571
+Execution K-Means GPU run #8: 0.6738629879982909; curr avg: 0.6880585844987763; Hits: 65891 (done in 19.6959); curr avg hits: 65863.25
+Execution K-Means GPU run #9: 0.6851199199991242; curr avg: 0.6877320662210372; Hits: 65780 (done in 19.2217); curr avg hits: 65854.0
+Execution K-Means GPU run #10: 0.7302881110008457; curr avg: 0.691987670699018; Hits: 65891 (done in 19.2861); curr avg hits: 65857.7
+Execution K-Means GPU run #11: 0.5798673009994673; curr avg: 0.6817949098172407; Hits: 65891 (done in 19.4418); curr avg hits: 65860.72727272728
+Execution K-Means GPU run #12: 0.6453410190006252; curr avg: 0.6787570855825228; Hits: 65891 (done in 19.5002); curr avg hits: 65863.25
+Execution K-Means GPU run #13: 0.7709771890004049; curr avg: 0.6858509396915906; Hits: 65891 (done in 19.5666); curr avg hits: 65865.38461538461
+Execution K-Means GPU run #14: 0.5583494349993998; curr avg: 0.6767436893564341; Hits: 65891 (done in 19.4297); curr avg hits: 65867.21428571429
+Execution K-Means GPU run #15: 0.8318502190013533; curr avg: 0.6870841246660954; Hits: 65780 (done in 19.4508); curr avg hits: 65861.4
+Execution K-Means GPU run #16: 0.6940911980018427; curr avg: 0.6875220667495796; Hits: 65780 (done in 19.5106); curr avg hits: 65856.3125
+Execution K-Means GPU run #17: 0.6279746070031251; curr avg: 0.6840192749997882; Hits: 65891 (done in 19.5579); curr avg hits: 65858.35294117648
+Execution K-Means GPU run #18: 0.5545234009987325; curr avg: 0.6768250597775073; Hits: 65891 (done in 19.7009); curr avg hits: 65860.16666666667
+Execution K-Means GPU run #19: 0.7684345970010327; curr avg: 0.6816466143682192; Hits: 65780 (done in 19.7107); curr avg hits: 65855.94736842105
+Execution K-Means GPU run #20: 0.6596962100011297; curr avg: 0.6805490941498646; Hits: 65891 (done in 19.4718); curr avg hits: 65857.7
+Execution K-Means GPU run #21: 0.6346128110017162; curr avg: 0.678361652095191; Hits: 65891 (done in 19.5202); curr avg hits: 65859.28571428571
+Execution K-Means GPU run #22: 0.6325329760002205; curr avg: 0.6762785304545105; Hits: 65891 (done in 19.6172); curr avg hits: 65860.72727272728
+Execution K-Means GPU run #23: 0.8919549650017871; curr avg: 0.6856557667391747; Hits: 65780 (done in 19.5851); curr avg hits: 65857.21739130435
+Execution K-Means GPU run #24: 0.7768626340002811; curr avg: 0.6894560528750541; Hits: 65780 (done in 19.5621); curr avg hits: 65854.0
+Execution K-Means GPU run #25: 0.6709611019978183; curr avg: 0.6887162548399647; Hits: 65780 (done in 19.5820); curr avg hits: 65851.04
+Execution K-Means GPU run #26: 0.799564074997761; curr avg: 0.6929796325383415; Hits: 65780 (done in 19.5795); curr avg hits: 65848.30769230769
+Execution K-Means GPU run #27: 0.6440206160004891; curr avg: 0.6911663356295321; Hits: 65891 (done in 19.5714); curr avg hits: 65849.88888888889
+Execution K-Means GPU run #28: 0.6049436590001278; curr avg: 0.6880869543213392; Hits: 65891 (done in 19.4629); curr avg hits: 65851.35714285714
+Execution K-Means GPU run #29: 0.9137607509983354; curr avg: 0.6958688093791665; Hits: 65891 (done in 19.6975); curr avg hits: 65852.72413793103
+Execution K-Means GPU run #30: 0.6464875599995139; curr avg: 0.6942227677331781; Hits: 65891 (done in 19.2669); curr avg hits: 65854.0
+Execution K-Means GPU run #31: 0.7502867510011129; curr avg: 0.6960312833224663; Hits: 65780 (done in 19.3420); curr avg hits: 65851.6129032258
+Execution K-Means GPU run #32: 0.6702812170005927; curr avg: 0.6952265937499078; Hits: 65780 (done in 19.3414); curr avg hits: 65849.375
+Execution K-Means GPU run #33: 0.7100580780024757; curr avg: 0.6956760326666522; Hits: 65780 (done in 19.5425); curr avg hits: 65847.27272727272
+Execution K-Means GPU run #34: 0.7660031899977184; curr avg: 0.6977444784705071; Hits: 65780 (done in 19.3695); curr avg hits: 65845.29411764706
+Execution K-Means GPU run #35: 0.6821758699989005; curr avg: 0.6972996610856041; Hits: 65891 (done in 19.3619); curr avg hits: 65846.6
+Execution K-Means GPU run #36: 0.8258103109983495; curr avg: 0.7008694013609582; Hits: 65780 (done in 19.3838); curr avg hits: 65844.75
+Execution K-Means GPU run #37: 0.49819964700145647; curr avg: 0.6953918404323229; Hits: 65891 (done in 19.3770); curr avg hits: 65846.0
+Execution K-Means GPU run #38: 0.5843688580025628; curr avg: 0.6924701829999609; Hits: 65891 (done in 19.4528); curr avg hits: 65847.18421052632
+Execution K-Means GPU run #39: 0.3278178879991174; curr avg: 0.6831201241537854; Hits: 65891 (done in 19.6745); curr avg hits: 65848.30769230769
+Execution K-Means GPU run #40: 0.609060535000026; curr avg: 0.6812686344249415; Hits: 65891 (done in 19.4205); curr avg hits: 65849.375
+Execution K-Means GPU run #41: 0.4644102060010482; curr avg: 0.675979404463383; Hits: 65891 (done in 19.5118); curr avg hits: 65850.39024390244
+Execution K-Means GPU run #42: 0.6408031030005077; curr avg: 0.6751418734761717; Hits: 65891 (done in 19.6455); curr avg hits: 65851.35714285714
+Execution K-Means GPU run #43: 0.6420298339980945; curr avg: 0.674371826046449; Hits: 65891 (done in 19.5863); curr avg hits: 65852.27906976744
+Execution K-Means GPU run #44: 0.7011212230027013; curr avg: 0.6749797668863639; Hits: 65780 (done in 19.3072); curr avg hits: 65850.63636363637
+Execution K-Means GPU run #45: 0.6296648190000269; curr avg: 0.6739727680444452; Hits: 65891 (done in 19.2901); curr avg hits: 65851.53333333334
+Execution K-Means GPU run #46: 0.6262356730003376; curr avg: 0.6729350051087037; Hits: 65891 (done in 19.5875); curr avg hits: 65852.39130434782
+Execution K-Means GPU run #47: 0.6188798420007515; curr avg: 0.671784895255343; Hits: 65891 (done in 19.2509); curr avg hits: 65853.21276595745
+Execution K-Means GPU run #48: 0.9333424280011968; curr avg: 0.6772340105208817; Hits: 66726 (done in 19.3099); curr avg hits: 65871.39583333333
+Execution K-Means GPU run #49: 0.5187470359996951; curr avg: 0.6739995824694289; Hits: 65891 (done in 19.4783); curr avg hits: 65871.79591836735
+Execution K-Means GPU run #50: 0.7089105119994201; curr avg: 0.6746978010600287; Hits: 65891 (done in 19.6750); curr avg hits: 65872.18

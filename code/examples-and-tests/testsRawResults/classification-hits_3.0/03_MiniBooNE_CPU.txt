@@ -1,0 +1,59 @@
+Avg exec K-Means CPU: 9.417266973119986
+Max exec K-Means CPU: 14.194940845998644
+Min exec time K-Means CPU: 4.912863940000534
+ 
+Average hits: 65839.94
+Avg exec K-Means CPU classificationHits(): 19.549856232419987
+
+
+
+Execution K-Means CPU run #1: 9.255959267000435; curr avg: 9.255959267000435; Hits: 65891 (done in 19.7092); curr avg hits: 65891.0
+Execution K-Means CPU run #2: 10.719658308000362; curr avg: 9.987808787500398; Hits: 65891 (done in 19.4785); curr avg hits: 65891.0
+Execution K-Means CPU run #3: 6.135355434998928; curr avg: 8.703657669999908; Hits: 65891 (done in 19.6728); curr avg hits: 65891.0
+Execution K-Means CPU run #4: 14.194940845998644; curr avg: 10.076478463999592; Hits: 65780 (done in 19.7141); curr avg hits: 65863.25
+Execution K-Means CPU run #5: 10.360139032000006; curr avg: 10.133210577599675; Hits: 65780 (done in 19.6858); curr avg hits: 65846.6
+Execution K-Means CPU run #6: 11.994970838000881; curr avg: 10.44350395433321; Hits: 65780 (done in 19.5028); curr avg hits: 65835.5
+Execution K-Means CPU run #7: 11.296355903999938; curr avg: 10.565339947142743; Hits: 65780 (done in 19.3760); curr avg hits: 65827.57142857143
+Execution K-Means CPU run #8: 9.176322366998647; curr avg: 10.39171274962473; Hits: 65780 (done in 20.0662); curr avg hits: 65821.625
+Execution K-Means CPU run #9: 6.5482192109993775; curr avg: 9.96465791199969; Hits: 65891 (done in 19.6177); curr avg hits: 65829.33333333333
+Execution K-Means CPU run #10: 9.848524421002367; curr avg: 9.953044562899958; Hits: 65780 (done in 19.7282); curr avg hits: 65824.4
+Execution K-Means CPU run #11: 8.699957299999369; curr avg: 9.839127538999906; Hits: 65891 (done in 19.5019); curr avg hits: 65830.45454545454
+Execution K-Means CPU run #12: 8.19750965899948; curr avg: 9.70232604899987; Hits: 65891 (done in 19.6102); curr avg hits: 65835.5
+Execution K-Means CPU run #13: 8.211742718001915; curr avg: 9.587665792769258; Hits: 65780 (done in 19.5133); curr avg hits: 65831.23076923077
+Execution K-Means CPU run #14: 7.966087859000254; curr avg: 9.471838797500043; Hits: 65891 (done in 19.4346); curr avg hits: 65835.5
+Execution K-Means CPU run #15: 10.080282463000913; curr avg: 9.512401708533435; Hits: 65780 (done in 19.4429); curr avg hits: 65831.8
+Execution K-Means CPU run #16: 8.695323628999176; curr avg: 9.461334328562543; Hits: 65891 (done in 19.5480); curr avg hits: 65835.5
+Execution K-Means CPU run #17: 9.616421247999824; curr avg: 9.470457088529443; Hits: 65891 (done in 19.5397); curr avg hits: 65838.76470588235
+Execution K-Means CPU run #18: 10.330457820000447; curr avg: 9.518234906944498; Hits: 65891 (done in 19.4606); curr avg hits: 65841.66666666667
+Execution K-Means CPU run #19: 10.326776142999734; curr avg: 9.560789708842142; Hits: 65780 (done in 19.5539); curr avg hits: 65838.42105263157
+Execution K-Means CPU run #20: 9.849239220002346; curr avg: 9.575212184400153; Hits: 65780 (done in 19.5522); curr avg hits: 65835.5
+Execution K-Means CPU run #21: 10.788476063000417; curr avg: 9.632986654809688; Hits: 65780 (done in 19.6364); curr avg hits: 65832.85714285714
+Execution K-Means CPU run #22: 11.969565504001366; curr avg: 9.739194784318402; Hits: 65780 (done in 19.4999); curr avg hits: 65830.45454545454
+Execution K-Means CPU run #23: 9.155373178000445; curr avg: 9.713811236217621; Hits: 65891 (done in 19.4936); curr avg hits: 65833.08695652174
+Execution K-Means CPU run #24: 7.96626205800203; curr avg: 9.640996687125304; Hits: 65891 (done in 19.4664); curr avg hits: 65835.5
+Execution K-Means CPU run #25: 6.313446696000028; curr avg: 9.507894687480293; Hits: 65891 (done in 19.5664); curr avg hits: 65837.72
+Execution K-Means CPU run #26: 9.385823680000613; curr avg: 9.503199648731075; Hits: 65780 (done in 19.5801); curr avg hits: 65835.5
+Execution K-Means CPU run #27: 10.576945451000938; curr avg: 9.542968011778107; Hits: 65780 (done in 19.5678); curr avg hits: 65833.44444444444
+Execution K-Means CPU run #28: 10.768672565001907; curr avg: 9.586743174393243; Hits: 65780 (done in 19.4140); curr avg hits: 65831.53571428571
+Execution K-Means CPU run #29: 10.097280996000336; curr avg: 9.604347926862452; Hits: 65780 (done in 19.5706); curr avg hits: 65829.75862068965
+Execution K-Means CPU run #30: 8.195046143999207; curr avg: 9.557371200767012; Hits: 65891 (done in 19.5350); curr avg hits: 65831.8
+Execution K-Means CPU run #31: 8.895361078997666; curr avg: 9.536016035548645; Hits: 65891 (done in 19.4358); curr avg hits: 65833.70967741935
+Execution K-Means CPU run #32: 8.415682032002223; curr avg: 9.50100559793782; Hits: 65891 (done in 19.4290); curr avg hits: 65835.5
+Execution K-Means CPU run #33: 10.976741558999493; curr avg: 9.545724869485143; Hits: 65780 (done in 19.4497); curr avg hits: 65833.81818181818
+Execution K-Means CPU run #34: 5.85384061899822; curr avg: 9.437140038588469; Hits: 65891 (done in 19.5408); curr avg hits: 65835.5
+Execution K-Means CPU run #35: 7.740278307999688; curr avg: 9.388658274857361; Hits: 65891 (done in 19.6574); curr avg hits: 65837.08571428571
+Execution K-Means CPU run #36: 11.467476204998093; curr avg: 9.44640321736127; Hits: 65780 (done in 19.5183); curr avg hits: 65835.5
+Execution K-Means CPU run #37: 10.08304384299845; curr avg: 9.46360972075687; Hits: 65780 (done in 19.5546); curr avg hits: 65834.0
+Execution K-Means CPU run #38: 12.201553217000765; curr avg: 9.535660865394867; Hits: 65780 (done in 19.6686); curr avg hits: 65832.57894736843
+Execution K-Means CPU run #39: 10.056433147001371; curr avg: 9.549014000820675; Hits: 65780 (done in 19.4252); curr avg hits: 65831.23076923077
+Execution K-Means CPU run #40: 10.800982725999347; curr avg: 9.580313218950142; Hits: 65891 (done in 19.4270); curr avg hits: 65832.725
+Execution K-Means CPU run #41: 11.50916389700069; curr avg: 9.62735835743918; Hits: 65891 (done in 19.6125); curr avg hits: 65834.14634146342
+Execution K-Means CPU run #42: 7.489203502002056; curr avg: 9.5764499085002; Hits: 65891 (done in 19.4996); curr avg hits: 65835.5
+Execution K-Means CPU run #43: 7.2608646279986715; curr avg: 9.52259908802342; Hits: 65891 (done in 19.5624); curr avg hits: 65836.79069767441
+Execution K-Means CPU run #44: 7.4777876820007805; curr avg: 9.476126101522906; Hits: 65780 (done in 19.4846); curr avg hits: 65835.5
+Execution K-Means CPU run #45: 10.080101959996682; curr avg: 9.489547787266767; Hits: 65780 (done in 19.6106); curr avg hits: 65834.26666666666
+Execution K-Means CPU run #46: 8.914254822997464; curr avg: 9.477041418478304; Hits: 65891 (done in 19.5240); curr avg hits: 65835.5
+Execution K-Means CPU run #47: 10.588340768998023; curr avg: 9.500686085510639; Hits: 65891 (done in 19.4613); curr avg hits: 65836.68085106384
+Execution K-Means CPU run #48: 9.385460189998412; curr avg: 9.498285546020801; Hits: 65891 (done in 19.6178); curr avg hits: 65837.8125
+Execution K-Means CPU run #49: 4.912863940000534; curr avg: 9.404705513244878; Hits: 65891 (done in 19.4326); curr avg hits: 65838.89795918367
+Execution K-Means CPU run #50: 10.03277850700033; curr avg: 9.417266973119986; Hits: 65891 (done in 19.5425); curr avg hits: 65839.94

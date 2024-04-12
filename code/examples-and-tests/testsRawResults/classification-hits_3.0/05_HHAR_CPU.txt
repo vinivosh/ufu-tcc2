@@ -1,0 +1,16 @@
+[More to be done]
+
+################################################################################
+
+
+
+Avg exec K-Means CPU: 1273.7193967639978
+Max exec K-Means CPU: 1273.7193967639978
+Min exec time K-Means CPU: 1273.7193967639978
+ 
+Average hits: 3944392.0
+Avg exec K-Means CPU classificationHits(): 17446.449214914996
+
+
+
+Execution K-Means CPU run #1: 1273.7193967639978; curr avg: 1273.7193967639978; Hits: 3944392 (done in 17446.4492); curr avg hits: 3944392.0
