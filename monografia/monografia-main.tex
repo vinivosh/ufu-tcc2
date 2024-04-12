@@ -975,15 +975,13 @@ O \textbf{Algoritmo \ref{code:kMeansGPU}} abaixo é a implementação da versão
   
 A função \textit{\pythoninline{kMeansGPU}} acima é a função principal dessa implementação do k-means, que por sua vez chama outras três onde o processamento mais intenso é realizado paralelamente pela GPU. Essas outras funções são discutidas mais adiante (algoritmos \ref{code:kMeansGPU.calcLogs}, \ref{code:kMeansGPU.calcDistances} e \ref{code:kMeansGPU.calcClosestCentroids}). A estrutura do código não muda muito em relação ao Algoritmo \ref{code:kMeansCPU}, então apenas as partes mais modificadas serão explicadas aqui.
 
-% TODO
-% TODO
-% TODO: Descrever aqui a seleção de centróides iniciais nas linhas 5--9, que mudou bastante em relação ao kMeansCPU!
-% TODO
-% TODO
-
 Como aprofundado no capítulo \ref{sec:numba}, as funções implementadas com a biblioteca \textit{Numba} para execução em CUDA possuem diversas limitações. A mais relevante aqui é que não é possível manipular objetos dataframe do Pandas e nem chamar seus métodos, ou sequer chamar funções dessa biblioteca. Por isso, é estritamente necessário que sejam utilizadas funções e objetos equivalentes do \textit{Numpy}.
 
 Por este motivo, são feitas as declarações de duas variáveis importantes: \textit{\pythoninline{n}} na linha 2, armazenando a quantidade de instâncias do dataset, e \textit{\pythoninline{d}} na linha 3, armazenando a quantidade de variáveis que compõe cada datapoint. Ambas informações são inferidas a partir do dataframe passado à função. Além disso, são feitas também as conversões de objetos dataframe para arrays do \textit{Numpy} nas linhas 13--15.
+
+O processo de seleção arbitrária dos centróides iniciais também foi modificada em relação ao Algoritmo \ref{code:kMeansCPU}. Ao invés de usar uma cadeia de funções e métodos do \textit{Pandas}, é usada a biblioteca integrada \textit{Random} e um laço de repetição simples para escolher $k$ datapoints aleatórios do dataset, que servirão de centróides iniciais. Esse processo é iniciado na linha 5, com o uso da função \textit{\pythoninline{random.sample}} para selecionar $k$ números inteiros aleatórios, mas diferentes entre si, de dentro da faixa $[0, n-1]$. Tais números são armazenados num vetor de tamanho $k$ chamado \textit{\pythoninline{randomDPIdxs}}, e são usados como índices para acessar diretamente os datapoints aleatórios. Na linha 6 é inicializado o vetor de centróides, \textit{\pythoninline{centroids__np}}, na forma de um array do \textit{Numpy} de tamanho $k \cdot d$. Então, no laço de repetição das linhas 7--9, é realizado o acesso e armazenamento dos datapoints aleatórios na variável \textit{\pythoninline{centroids__np}}, usando o método \textit{\pythoninline{iloc}} do \textit{Pandas} para acesso direto e performático.
+
+Note que a natureza dos centróides iniciais gerados por esse método se difere bastante da natureza dos gerados pelo método usado no Algoritmo \ref{code:kMeansCPU}. Lá, os centróides são uma mistura de valores retirados de vários datapoints, enquanto aqui os centróides são, cada um, um datapoint aleatório apenas. Essa diferença, no entanto, não tem efeito estatisticamente significativo na precisão dos resultados gerados pelas implementações, como evidenciado no Capítulo \ref{sec:testesDePrecisao}.
 
 Na linha 17 é inicializado o primeiro objeto que será passado a uma função vetorial que será executada na GPU, o array de floats 64 bits (tipo de dado padrão do \textit{Numpy}) \textit{\pythoninline{datasetLogs}}, de dimensão $n \cdot d$. Usando a função \textit{\pythoninline{np.zeros}}, inicializamos todos os valores do array como zero. Note que é necessário sempre inicializar um objeto como este para servir de retorno das funções vetoriais que rodam na GPU, pois elas não podem retornar diretamente um resultado.
 
@@ -1102,7 +1100,7 @@ Nas linhas 1--4 temos, como sempre, a definição de dimensionalidade e tipo das
 
 Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realizadas diversas rodadas de execuções em ambas versões dos algoritmos aqui analisados.
 
-Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que diferenças entre execuções também pudesse ser levada em consideração nos resultados — o \textit{k-means}, especialmente, está suscetível a mudanças significativas na eficiência de cada uma de suas execuções, pelo fato dos centroides iniciais serem selecionados aleatoriamente na implementação aqui testada. Uma execução pode ter centroides iniciais mais próximos dos centroides finais, executando mais rapidamente, enquanto outra execução pode ter centroides iniciais muito distantes dos centroides finais, demorando mais para atingir a condição de parada.
+Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que diferenças entre execuções também pudesse ser levada em consideração nos resultados — o \textit{k-means}, especialmente, está suscetível a mudanças significativas na eficiência de cada uma de suas execuções, pelo fato dos centroides iniciais serem selecionados aleatoriamente na implementação aqui testada. Uma execução pode ter centroides iniciais mais próximos dos centroides finais, executando mais rapidamente, enquanto outra pode ter centroides iniciais muito distantes dos centroides finais, demorando mais para atingir a condição de parada.
 
 
 
@@ -1125,6 +1123,21 @@ Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que
   \includegraphics[width=0.95\textwidth]{kMeansResultsAvgZoomed.png}
   \label{fig:kMeansAvgZoomed}
 \end{figure}
+
+
+
+% * ####################################
+
+\section{Precisão}
+\label{sec:testesDePrecisao}
+
+% TODO
+% TODO
+% TODO: Vide abaixo
+% TODO
+% TODO
+
+\textbf{TODO: Escrever uma seção apresentando e discutindo os resultados dos testes de precisão e corretude rodados com cada dataset e implementação do K-Means.}
 
 
 
