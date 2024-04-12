@@ -1,4 +1,4 @@
-import math; import numpy as np; import pandas as pd; import numba
+import math; import random; import numpy as np; import pandas as pd; import numba
 
 @numba.guvectorize(
     ['void(float64[:],float64[:])'],
@@ -43,10 +43,14 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100):
     n = len(dataset)
     d = len(dataset.iloc[0])
 
-    centroids:pd.DataFrame = pd.concat([(dataset.apply(lambda x: float(x.sample().iloc[0]))) for _ in range(k)], axis=1)
+    randomDPIdxs = random.sample(range(n), k)
+    centroids__np = np.zeros((k, d))
+    for centroidIdx in range(k):
+        randomDP = dataset.iloc[randomDPIdxs[centroidIdx]]
+        for dimIdx in range(d): centroids__np[centroidIdx][dimIdx] = randomDP.iloc[dimIdx]
+
     centroids_OLD = pd.DataFrame()
 
-    centroids__np = centroids.T.to_numpy()
     centroids_OLD__np = centroids_OLD.T.to_numpy()
     dataset__np = dataset.to_numpy()
     del dataset
@@ -69,12 +73,7 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100):
         meansByClosestCent = np.zeros((k, d))
 
         for centroidIdx in range(k):
-            x = [(True if closestCent[dpIdx] == centroidIdx else False) for dpIdx in range(n)]
-            relevantLogs = datasetLogs[x]
-            del x
-            if len(relevantLogs) == 0: continue
-            meansByClosestCent[centroidIdx] = relevantLogs.mean(axis=0)
-            del relevantLogs
+            meansByClosestCent[centroidIdx] = datasetLogs[closestCent[:,] == centroidIdx].mean(axis=0)
 
             centroids__np[centroidIdx] = np.exp(meansByClosestCent[centroidIdx])
 
