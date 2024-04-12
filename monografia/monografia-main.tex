@@ -975,6 +975,12 @@ O \textbf{Algoritmo \ref{code:kMeansGPU}} abaixo é a implementação da versão
   
 A função \textit{\pythoninline{kMeansGPU}} acima é a função principal dessa implementação do k-means, que por sua vez chama outras três onde o processamento mais intenso é realizado paralelamente pela GPU. Essas outras funções são discutidas mais adiante (algoritmos \ref{code:kMeansGPU.calcLogs}, \ref{code:kMeansGPU.calcDistances} e \ref{code:kMeansGPU.calcClosestCentroids}). A estrutura do código não muda muito em relação ao Algoritmo \ref{code:kMeansCPU}, então apenas as partes mais modificadas serão explicadas aqui.
 
+% TODO
+% TODO
+% TODO: Descrever aqui a seleção de centróides iniciais nas linhas 5--9, que mudou bastante em relação ao kMeansCPU!
+% TODO
+% TODO
+
 Como aprofundado no capítulo \ref{sec:numba}, as funções implementadas com a biblioteca \textit{Numba} para execução em CUDA possuem diversas limitações. A mais relevante aqui é que não é possível manipular objetos dataframe do Pandas e nem chamar seus métodos, ou sequer chamar funções dessa biblioteca. Por isso, é estritamente necessário que sejam utilizadas funções e objetos equivalentes do \textit{Numpy}.
 
 Por este motivo, são feitas as declarações de duas variáveis importantes: \textit{\pythoninline{n}} na linha 2, armazenando a quantidade de instâncias do dataset, e \textit{\pythoninline{d}} na linha 3, armazenando a quantidade de variáveis que compõe cada datapoint. Ambas informações são inferidas a partir do dataframe passado à função. Além disso, são feitas também as conversões de objetos dataframe para arrays do \textit{Numpy} nas linhas 13--15.
