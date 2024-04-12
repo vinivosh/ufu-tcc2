@@ -1,4 +1,4 @@
-# import math
+import math
 # import random
 import time
 
@@ -15,9 +15,6 @@ import numba
 # from IPython.display import clear_output
 
 
-
-N = 5888 * 200
-D = 3
 
 def getCudaCores():
     '''Source of this code: https://stackoverflow.com/a/63833950'''
@@ -67,7 +64,7 @@ def sumArrays(arr1:list[np.float64], arr2:list[np.float64], arrResult:list[np.fl
 
 
 
-def sumGPU(arr:np.array, cores:int=-1, n_:int=-1, d_:int=-1):
+def sumGPUv1(arr:np.array, cores:int=-1, n_:int=-1, d_:int=-1):
     if n_ <= 0: n_ = len(arr)
     if d_ <= 0: d_ = len(arr[0])
     if cores <= 0: cores = getCudaCores()
@@ -97,12 +94,21 @@ def sumGPU(arr:np.array, cores:int=-1, n_:int=-1, d_:int=-1):
 
     return np.sum(arrAcum, axis=0)
 
+# @numba.cuda.reduce
+# def sum_reduce(a, b):
+#     return a + b
+@numba.cuda.reduce
+def sumGPUv2(dp1:np.array, dp2:np.array):
+    return dp1 + dp2
 
 
 if __name__ == '__main__':
     # CUDA_CORES = getCudaCores()
     CUDA_CORES = 5888
     print(f'Available CUDA cores: {CUDA_CORES}')
+
+    N = CUDA_CORES * math.ceil(1e8 / CUDA_CORES)
+    D = 3
 
     arr = np.full((N, D), 3.14159265, np.float64)
 
@@ -112,8 +118,19 @@ if __name__ == '__main__':
     elapsedTimeS = (time.perf_counter_ns() - startTimeNS) * 1e-9
     print(f'Numpy | Sum = {sum}\nDone in {elapsedTimeS:.8f} s')
 
-    # GPU sum
+    # GPU sum v1
     startTimeNS = time.perf_counter_ns()
-    sum = sumGPU(arr, CUDA_CORES, N, D)
+    sum = sumGPUv1(arr, CUDA_CORES, N, D)
     elapsedTimeS = (time.perf_counter_ns() - startTimeNS) * 1e-9
-    print(f'sumGPU | Sum = {sum}\n(len={len(sum)})\nDone in {elapsedTimeS:.8f} s')
+    print(f'sumGPUv1 | Sum = {sum}\n(len={len(sum)})\nDone in {elapsedTimeS:.8f} s')
+
+    # GPU sum v2
+    startTimeNS = time.perf_counter_ns()
+
+    sum = np.zeros(D)
+    for dimIdx in range(D):
+        sum[dimIdx] = sumGPUv2(arr[:,dimIdx].copy())
+
+    elapsedTimeS = (time.perf_counter_ns() - startTimeNS) * 1e-9
+
+    print(f'sumGPUv2 | Sum = {sum}\n(len={len(sum)})\nDone in {elapsedTimeS:.8f} s')
