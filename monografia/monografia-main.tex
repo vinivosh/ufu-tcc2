@@ -372,7 +372,7 @@ E é a paralelização de uma classe de algoritmos em particular que é o foco d
 
 % TODO
 % TODO
-% ! TODO: Checar se essa citação abaixo, do site da NVIDIA, está correta! Esse bagulho no Bib usou o modelo "misc", não sei se está correto. O Mendeley gerou assim, então talvez esteja…
+% ! TODO: Checar se essa citação abaixo, do site da NVIDIA, está correta! Esse bagulho no Bib usou o modelo "misc", não sei se está correto. O Mendeley gerou assim, então talvez esteja...
 % TODO
 % TODO
 
@@ -740,7 +740,7 @@ Portanto, surge a necessidade de paralelizar esses algoritmos, aproveitando o po
 As pesquisas aqui resumidas buscam explorar a história da paralelização de algoritmos de agrupamento, destacando os avanços significativos nesta área e sua importância contínua na era da análise de enormes volumes de dados.
 
 % ?
-% ? Concluindo…
+% ? Concluindo...
 % ?
 
 Como evidenciado nas seções seguintes, a avaliação dos estudos recentes sobre a paralelização de algoritmos de agrupamento, especialmente os que utilizam a plataforma CUDA para implementá-los em GPUs NVIDIA, revela avanços significativos tanto na eficiência quanto na utilidade prática dos processos de agrupamento. Estas melhorias são notáveis em aplicações que variam desde o processamento de imagens até a física de alta energia.
@@ -899,6 +899,25 @@ A \textbf{quinta etapa}, por fim, consistiu em diversos experimentos de ganho de
 
 % * ####################################
 
+\section{Análise de Potencial de Paralelização}
+\label{chp:analisePotencParalel}
+
+\textbf{TODO: Escrever uma seção aqui explicando bem como é feita a identificação das partes paralelizáveis de um algoritmo, especialmente um de clustering. Incluir:}
+
+\begin{itemize}
+  \item \textbf{Parágrafos introdutórios;}
+
+  \item \textbf{Exemplo de identificação num algoritmo toy (não-clustering);}
+
+  \item \textbf{Exemplo de identificação no pseudocódigo do K-Means;}
+
+  \item \textbf{Exemplo de identificação no pseudocódigo do Hierarquichal Clustering.}
+\end{itemize}
+
+
+
+% * ####################################
+
 \section{Implementação do K-Means}
 
 Como detalhado no capítulo \ref{sec:kmeans}, o \textbf{K-Means} é um dos mais importantes e amplamente utilizados algoritmos de agrupamento, mesmo com suas diversas limitações. Ele foi selecionado nessa pesquisa como exemplo inicial de paralelização de algoritmo por ser de fácil entendimento e possuir uma implementação relativamente simples.
@@ -954,13 +973,43 @@ Por fim, na linha 17 do algoritmo \ref{code:kMeansCPU}, finalizamos o loop com s
 
 Saindo do laço de repetição, o algoritmo k-means é finalizado com uma última instrução, a de retorno do resultado, armazenado em \textit{\pythoninline{closestCent}}, na linha 19. Como explicado anteriormente, esse resultado é um dataframe do Pandas onde cada datapoint $i$ possui apenas um valor $(j)$, o índice do centroide $Cj$ mais próximo a este datapoint, o que define a qual grupo ele pertence.
 
-% TODO
-% TODO
-% TODO: Vide abaixo
-% TODO
-% TODO
+Analisando o código explicado acima, é fácil identificar os trechos onde são realizadas as operações mais custosas e com enorme potencial para paralelização. Para isso, basta encontrar as partes onde uma mesma operação é realizada uma quantidade imensa de vezes a cada execução e cujas operações são independentes entre si. Isso significa que a paralelização na GPU é, em tese, plausível e possivelmente acarretaria num ganho de performance. Esse processo é explicado em mais detalhes no Capítulo \ref{chp:analisePotencParalel}.
 
-\textbf{TODO: Escrever parágrafos explicando quais linhas são as mais altamente paralelizáveis do K-Means CPU --- as que foram o foco de modificação na implementação do K-Means GPU.}
+Há três trechos de código onde tal potencial de ganho de velocidade é imenso. O primeiro é onde calculamos os logarítimos naturais das coordenadas de todos os datapoints, na linha 5, replicada também àbaixo.
+
+\pythonexternal[
+  numbers=none,
+  firstline=7,
+  lastline=7,
+  label=codeSnippet:kMeansCPU.logs,
+  % caption={K-Means serial: cálculo de logarítimos dos datapoints},
+]{code-snippets/kMeansCPU.py}
+
+Essa linha de código é executada apenas uma vez no algoritmo. Porém, o cálculo realizado por ela é feito em todos os elementos do dataset. Logo, é uma operação de complexidade de tempo $O(n)$, podendo ser bem custosa para datasets com um alto número de instâncias. Como o cálculo é uma simples função matemática aplicada à cada datapoint, sem nenhum outro valor de entrada para computar o resultado, conclui-se então que cada operação é independente das outras.
+
+O trecho abaixo é o segundo que é promissor para ganhos com a paralelização. É o da linha 10 do k-means serial, onde são calculadas as distâncias.
+
+\pythonexternal[
+  numbers=none,
+  firstline=12,
+  lastline=12,
+  label=codeSnippet:kMeansCPU.distances,
+  % caption={K-Means serial: cálculo de disâncias},
+]{code-snippets/kMeansCPU.py}
+
+Aqui é feita uma operação de cálculo de distância euclidiana entre todas as $n$ instâncias do dataset e todos os $k$ centroides. Essa operação é realizada dentro de um laço de repetição que será executado $i$ vezes, onde $i$ é o número de iterações necessárias para convergir nos centroides finais. Logo, é uma operação de complexidade $O(nki)$, ainda mais custosa que a anterior. Novamente, o cálculo não depende de nenhuma informação a não ser as coordenadas de um datapoint e um centroide em particular, logo são independentes entre si e podem ser paralelizadas.
+
+O terceiro e último trecho custoso e paralelizável abaixo é o da linha 11, onde são encontrados e salvos os índices dos centroides mais próximos, usados no cálculo dos novos centroides a cada iteração.
+
+\pythonexternal[
+  numbers=none,
+  firstline=13,
+  lastline=13,
+  label=codeSnippet:kMeansCPU.closestCentroids,
+  % caption={K-Means serial: busca das menores distâncias},
+]{code-snippets/kMeansCPU.py}
+
+A operação realizada aqui é uma busca feita no vetor de centroides, de tamanho $k$, para cada datapoint do dataset. Assim, como a linha 10 explicada anteriormente, essa também está dentro do laço de repetição das iterações do k-means. Logo, a operação inteira também possui complexidade $O(nki)$. Uma simples busca pelo menor valor no vetor de centroides é menos custosa computacionalmente que o cálculo das disâncias euclidianas, porém ainda assim há um bom potencial em se paralelizar essa busca na GPU, visto que $n$ cresce muito ao se trabalhar com big data e ciência de dados.
 
 Tendo em vista os supracitados trechos de código mais computacionalmente custosos e com grande potencial para paralelização, foi implementada outra versão do k-means, utilizando o alto poder de processamento vetorial da GPU.
 
@@ -980,6 +1029,12 @@ Como aprofundado no capítulo \ref{sec:numba}, as funções implementadas com a 
 Por este motivo, são feitas as declarações de duas variáveis importantes: \textit{\pythoninline{n}} na linha 2, armazenando a quantidade de instâncias do dataset, e \textit{\pythoninline{d}} na linha 3, armazenando a quantidade de variáveis que compõe cada datapoint. Ambas informações são inferidas a partir do dataframe passado à função. Além disso, são feitas também as conversões de objetos dataframe para arrays do \textit{Numpy} nas linhas 13--15.
 
 O processo de seleção arbitrária dos centroides iniciais também foi modificada em relação ao Algoritmo \ref{code:kMeansCPU}. Ao invés de usar uma cadeia de funções e métodos do \textit{Pandas}, é usada a biblioteca integrada \textit{Random} e um laço de repetição simples para escolher $k$ datapoints aleatórios do dataset, que servirão de centroides iniciais. Esse processo é iniciado na linha 5, com o uso da função \textit{\pythoninline{random.sample}} para selecionar $k$ números inteiros aleatórios, mas diferentes entre si, de dentro da faixa $[0, n-1]$. Tais números são armazenados num vetor de tamanho $k$ chamado \textit{\pythoninline{randomDPIdxs}}, e são usados como índices para acessar diretamente os datapoints aleatórios. Na linha 6, usando a função \textit{\pythoninline{np.zeros}}, é inicializado o vetor de centroides, \textit{\pythoninline{centroids__np}}, na forma de um array do \textit{Numpy} de tamanho $k \cdot d$. Todos os valores são inicializados como zero. Então, no laço de repetição das linhas 7--9, é realizado o acesso e armazenamento dos datapoints aleatórios na variável \textit{\pythoninline{centroids__np}}, usando o método \textit{\pythoninline{iloc}} do \textit{Pandas} para acesso direto e performático a estes elementos no dataset.
+
+% TODO
+% TODO
+% TODO: Se sobrar tempo, tentar implementar um método de seleção de centroides iniciais igual a este usado aqui, mas usando o Pandas, no kMeansCPU, para remover essa discrepância de implementação em relação ao kMeansGPU. Isso vai requerer re-execução de todos os experimentos de velocidade (e precisão/corretude também?), então muito provavelmente não vai dar tempo, mas ainda assim... está registrada aqui a vontade de fazer isto...
+% TODO
+% TODO
 
 Note que a natureza dos centroides iniciais gerados por esse método se difere bastante da natureza dos gerados pelo método usado no Algoritmo \ref{code:kMeansCPU}. Lá, os centroides são uma mistura de valores retirados de vários datapoints, enquanto aqui os centroides são, cada um, um datapoint aleatório apenas. Essa diferença, no entanto, não tem efeito estatisticamente significativo na precisão dos resultados gerados pelas implementações, como evidenciado no Capítulo \ref{sec:testesDePrecisao}.
 
