@@ -1009,7 +1009,13 @@ O terceiro e último trecho custoso e paralelizável abaixo é o da linha 11, on
   % caption={K-Means serial: busca das menores distâncias},
 ]{code-snippets/kMeansCPU.py}
 
-A operação realizada aqui é uma busca feita no vetor de centroides, de tamanho $k$, para cada datapoint do dataset. Assim, como a linha 10 explicada anteriormente, essa também está dentro do laço de repetição das iterações do k-means. Logo, a operação inteira também possui complexidade $O(nki)$. Uma simples busca pelo menor valor no vetor de centroides é menos custosa computacionalmente que o cálculo das disâncias euclidianas, porém ainda assim há um bom potencial em se paralelizar essa busca na GPU, visto que $n$ cresce muito ao se trabalhar com big data e ciência de dados.
+A operação realizada aqui é uma busca feita no vetor de centroides, de tamanho $k$, para cada datapoint do dataset. Assim, como a linha 10 explicada anteriormente, essa também está dentro do laço de repetição das iterações do k-means. Logo, a operação inteira também possui complexidade $O(nki)$. Uma simples busca pelo menor valor no vetor de centroides é menos custosa computacionalmente que o cálculo das distâncias euclidianas, porém ainda assim há um bom potencial em se paralelizar essa busca na GPU, visto que $n$ cresce muito ao se trabalhar com big data e ciência de dados.
+
+Há também um quarto trecho de código que poderia ser paralelizado para obter mais performance, o da linha 15 do K-means versão serial, onde é feito o cálculo dos novos centróides através da média das coordenadas dos datapoints presentes em cada cluster.
+
+No entanto a dificuldade de implementação de uma versão vetorial paralela dessa parte do código é bem maior que as demais. O motivo de tal complexidade é o fato da operação de cálculo da média das coordenadas de um vetor bidimensional, como é o caso da gigantesca maioria dos datasets, ser uma operação de redução. Isto é, a operação tem como entrada um vetor de tamanho $n \cdot d$ e retorna vetor de tamanho $d$ --- a média de todos elementos para cada variável $\{var_1, var_2, \dots, var_d\}$, onde $d$ é o número de dimensões, ou \textit{features} do dataset.
+
+Esse tipo de operação de redução de vetores com mais de uma dimensão infelizmente não possui uma implementação simples correspondente na biblioteca \textit{Numba} e implementá-la de maneira performática envolveria manipulação mais minuciosa da memória, threads e blocos da GPU, o que acabou fora do escopo deste trabalho. Porém, como exibido no capítulo \ref{sec:testesDeSpeedup}, mesmo sem essa implementação, grandes ganhos de velocidade ainda puderam ser obtidos com sucesso.
 
 Tendo em vista os supracitados trechos de código mais computacionalmente custosos e com grande potencial para paralelização, foi implementada outra versão do k-means, utilizando o alto poder de processamento vetorial da GPU.
 
@@ -1152,6 +1158,7 @@ Nas linhas 1--4 temos, como sempre, a definição de dimensionalidade e tipo das
 % * ############################################################################
 
 \chapter{Resultados}
+\label{chp:resultados}
 
 Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realizadas diversas rodadas de execuções em ambas versões dos algoritmos aqui analisados.
 
@@ -1162,6 +1169,7 @@ Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que
 % * ####################################
 
 \section{K-Means}
+\label{sec:testesDeSpeedup}
 
 [Descrever melhor os resultados das execuções do k-means CPU e k-means GPU.]
 
