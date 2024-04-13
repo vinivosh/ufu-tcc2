@@ -1134,13 +1134,25 @@ Nas linhas 1--4 temos, como sempre, a definição de dimensionalidade e tipo das
 \chapter{Experimentos e Datasets}
 \label{chp:exp}
 
-% TODO
-% TODO
-% TODO: Vide abaixo
-% TODO
-% TODO
+Nesse trabalho, experimentos foram realizados para averiguar os ganhos de velocidade de execução da implementação paralela em relação à implementação serial do k-means, além de testes de corretude para checar se houveram mudanças quanto à precisão do k-means ao se paralelizá-lo.
 
-\textbf{TODO: Escrever intro do capítulo sobre os experimentos realizados e conjuntos de dados utilizados nestes.}
+Neste capítulo são explicados os procedimentos e metodologia de todos os experimentos, além de descrições a respeito dos conjutos de dados utilizados nestes. No capítulo seguinte (Capítulo \ref{chp:resultados}) são exibidos e discutidos os resultados dos experimentos.
+
+
+
+% * ####################################
+
+\section{Ambiente de Execução}
+
+\textbf{TODO: Escrever sobre minha máquina onde realizei os testes.}
+
+
+
+% * ####################################
+
+\section{Testes de Desempenho e Precisão}
+
+\textbf{TODO: Escrever brevemente sobre como foram feitos os testes de desempenho e precisão (a.k.a. corretude). Não imagino que eu vá ter que mostrar código aqui... certo?}
 
 
 
@@ -1150,6 +1162,16 @@ Nas linhas 1--4 temos, como sempre, a definição de dimensionalidade e tipo das
 \label{sec:datasets}
 
 \textbf{TODO: Escrever uma intro a respeito do processo de escolha dos datasets. Incluir aqui uma boa explicação do passo de pré-processamento comum feito para todos os datasets (normalização min-max), que incluirá com certeza essa citação: \cite{standardizOfVars1988}.}
+
+\textbf{TODO: Escrever sobre o dataset 1, Rice.}
+
+\textbf{TODO: Escrever sobre o dataset 2, HTRU2.}
+
+\textbf{TODO: Escrever sobre o dataset 3, MiniBooNE.}
+
+\textbf{TODO: Escrever sobre o dataset 4, WESAD.}
+
+\textbf{TODO: Escrever sobre o dataset 5, HHAR.}
 
 
 
@@ -1171,7 +1193,9 @@ Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que
 \section{K-Means}
 \label{sec:testesDeSpeedup}
 
-[Descrever melhor os resultados das execuções do k-means CPU e k-means GPU.]
+\textbf{TODO: Descrever melhor os resultados das execuções do k-means CPU e k-means GPU.}
+
+\textbf{TODO: Atualizar a figura, usando os novos resultados e um gráfico de barras dessa vez.}
 
 \begin{figure}[h]
   \caption{Tempos de execução média do K-Means}
@@ -1180,12 +1204,14 @@ Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que
   \label{fig:kMeansAvg}
 \end{figure}
 
-\begin{figure}[h]
-  \caption{Figura \ref{fig:kMeansAvg}, com zoom nos primeiros três menores datasets}
-  \centering
-  \includegraphics[width=0.95\textwidth]{kMeansResultsAvgZoomed.png}
-  \label{fig:kMeansAvgZoomed}
-\end{figure}
+\textbf{TODO: Adicionar as informações em forma de tabela também.}
+
+% \begin{figure}[h]
+%   \caption{Figura \ref{fig:kMeansAvg}, com zoom nos primeiros três menores datasets}
+%   \centering
+%   \includegraphics[width=0.95\textwidth]{kMeansResultsAvgZoomed.png}
+%   \label{fig:kMeansAvgZoomed}
+% \end{figure}
 
 
 
