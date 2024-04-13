@@ -129,7 +129,7 @@ if __name__ == '__main__':
 
     sum = np.zeros(D)
     for dimIdx in range(D):
-        sum[dimIdx] = sumGPUv2(arr[:,dimIdx].copy())
+        sum[dimIdx] = sumGPUv2(np.ascontiguousarray(arr[:,dimIdx]))
 
     elapsedTimeS = (time.perf_counter_ns() - startTimeNS) * 1e-9
 
