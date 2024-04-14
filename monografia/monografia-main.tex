@@ -346,12 +346,6 @@ A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. 
 
 Um grande avanço na quantidade de poder de processamento dos computadores e, portanto, diminuição do tempo de execução de algoritmos, foi a criação dos processadores multinúcleo, permitindo a paralelização de processos. A habilidade de poder executar duas ou mais ações simultaneamente possibilitou muitos ganhos palpáveis na velocidade de execução de algoritmos e procedimentos, porém introduziu uma necessidade de mudança na forma de se pensar em resoluções de problemas computacionalmente: paralelizar um algoritmo serial (não-paralelo) não é uma tarefa trivial, e requer cuidados especiais com concorrência no acesso a recursos da máquina, interdependência de dados e cálculos, sincronização, entre outros dilemas.
 
-% TODO
-% TODO
-% ? TODO: Seria mais adequado o uso do termo "sequencial" ao invés de "serial", ao descrever algoritmos não-paralelos? Pesquisar isso!
-% TODO
-% TODO
-
 Um dos componentes que mais utilizam da paralelização num computador moderno são as GPUs --- unidades de processamento gráfico, ou placas de vídeo --- que são basicamente processadores especializados em operações vetoriais, altamente paralelizadas, usualmente utilizadas para computação gráfica, e com sua própria memória dedicada, a VRAM. Enquanto processadores de uso geral, CPUs, costumam ter no máximo dezenas de núcleos para processamento paralelo, GPUs possuem dezenas, milhares, de núcleos para operações vetoriais.
 
 No entanto, cada vez mais está sendo descoberto e aproveitado o potencial de uso das GPUs em atividades não apenas voltadas para renderização, interfaces e outras operações gráficas, mas sim para a computação de propósito geral. Diversos algoritmos modernos e antigos beneficiam-se imensamente do poder de alta paralelização proporcionado pelas GPUs, e com ferramentas como a biblioteca e linguagem CUDA criada pela NVIDIA, está cada vez mais fácil implementar o uso de placas de vídeo em conjunto com processadores convencionais nos mais variados algoritmos.
@@ -361,12 +355,6 @@ Nem todo algoritmo pode ser paralelizado, no entanto. Existem procedimentos e al
 É importante entender também que nenhum algoritmo é paralelizável por completo. Sempre existirão partes de algoritmos que necessariametne devem ser executadas serialmente para seu funcionamento correto. Há um limite teórico de ganho máximo que pode ser obtido ao se paralelizar um algoritmo qualquer. Esse limite é definido pela Lei de Amdahl \cite{Amdahl-Law}: $\frac{1}{1-p}$, onde $p$ é a razão entre tempo de execução gasto rodando código paralelizável e tempo de execução gasto no total.
 
 E é a paralelização de uma classe de algoritmos em particular que é o foco desta pesquisa: os algoritmos de agrupamento de dados, também chamados de clusterização de dados, ou de \textit{clustering}. Tais algoritmos, de forma sucinta, agrupam objetos de maneira que os objetos no mesmo grupo, ou \textit{cluster}, sejam mais parecidos entre si, de acordo com alguma métrica, do que com objetos de outros grupos. A análise de clusters é essencial em diversas áreas da computação e estatística, como mineração de dados, aprendizado de máquina, compressão de dados, entre outras.
-
-% TODO
-% TODO
-% ! TODO: Checar se essa citação abaixo, do site da NVIDIA, está correta! Esse bagulho no Bib usou o modelo "misc", não sei se está correto. O Mendeley gerou assim, então talvez esteja...
-% TODO
-% TODO
 
 A hipótese principal deste trabalho é a de que algoritmos de clustering, em geral, são altamente paralelizáveis e apresentam um ganho considerável de desempenho (menor tempo de execução) quando implementados para utilizar o poder de paralelismo vetorial de placas de vídeo NVIDIA, através da linguagem CUDA \cite{CUDAZone}. Mais que isso, através de uma análise sistemática de estudos prévios e implementações de tais algoritmos em CUDA, visa-se generalizar o processo de paralelização destes. Isto é, identificar quais partes são necessariamente seriais, quais são paralelizáveis, e que sequência de passos gerais deve ser seguida para se conseguir paralelizar com sucesso um algoritmo de clustering qualquer e obter ganhos significativos de desempenho.
 
@@ -379,13 +367,16 @@ A hipótese principal deste trabalho é a de que algoritmos de clustering, em ge
 % TODO
 % TODO
 % ! TODO: Tenho que substituir essas referências abaixo por referências de versões seriais de cada algoritmo. Usar as referências das versões aceleradas em GPUs mais adiante, ao invés de aqui parece fazer bem mais sentido
-% ! TODO: Adicionar referência para o algoritmo hierárquico
 % TODO
 % TODO
 
-O foco de pesquisa são \qntAlgrtm{} algoritmos de agrupamento especialmente notórios: o \textit{K-means} \cite{GPU-accelerated-K-Means} e o \textit{Agrupamento Hierárquico}. Implementações e estudos realizados sobre estes foram analisados, e implementações paralelas em GPU tiveram seu desempenho comparado com as seriais em CPU.
+O foco de pesquisa é o notório algoritmo de agrupamento \textit{K-means} \cite{GPU-accelerated-K-Means}. Implementações e estudos realizados sobre ele foram analisados, e uma implementação paralela em GPU teve seu desempenho comparado com a serial em CPU.
 
 % * Texto antigo do parágrafo acima:
+% O foco de pesquisa são \qntAlgrtm{} algoritmos de agrupamento especialmente notórios: o \textit{K-means} \cite{GPU-accelerated-K-Means} e o \textit{Agrupamento Hierárquico}. Implementações e estudos realizados sobre estes foram analisados, e implementações paralelas em GPU tiveram seu desempenho comparado com as seriais em CPU.
+
+
+% * Texto ainda mais antigo do parágrafo acima:
 % , \textit{DBSCAN} \cite{G-DBSCAN}, ou \textit{Clusterização Espacial Baseada em Densidade de Aplicações com Ruído}, e \textit{Random Forests} --- que mesmo não sendo exclusivamente um algoritmo de clusterização, pode ser utilizado justamente para tal.
 
 
@@ -524,7 +515,7 @@ A ideia por trás da programação vetorial é aproveitar ao máximo o poder de 
 
 Ao longo do tempo, a programação vetorial evoluiu significativamente, impulsionada pelo avanço das arquiteturas de processadores e pela demanda por computação paralela cada vez mais poderosa. Um dos marcos importantes nessa evolução foi a introdução do tipo de processamento SIMD (Single Instruction, Multiple Data) nos supercomputadores na década de 1970 (FLYNN, 1972). Essa abordagem permitiu que uma única instrução fosse executada em múltiplos dados simultaneamente, proporcionando um aumento significativo no desempenho computacional para uma ampla gama de aplicações.
 
-Com o surgimento das GPUs, inicialmente desenvolvidas para renderização gráfica em jogos e aplicações de multimídia, surgiu uma nova oportunidade para a programação vetorial. As GPUs são compostas por centenas ou até milhares de núcleos de processamento, o que as torna altamente paralelizáveis e adequadas para executar operações vetoriais em larga escala. Isso possibilitou a utilização das GPUs não apenas para gráficos, mas também para tarefas de computação de propósito geral (GPGPU), incluindo processamento de grandes conjuntos de dados e algoritmos de aprendizado de máquina.
+Com o surgimento das GPUs, inicialmente desenvolvidas para renderização gráfica em jogos e aplicações de multimídia, surgiu uma nova oportunidade para a programação vetorial. As GPUs são compostas por centenas ou até milhares de núcleos de processamento, o que as torna altamente paralelizáveis e adequadas para executar operações vetoriais em larga escala. Isso possibilitou a utilização das GPUs não apenas para gráficos, mas também para tarefas de computação de propósito geral (área chamada também de \textit{GPGPU}), incluindo processamento de grandes conjuntos de dados e algoritmos de aprendizado de máquina.
 
 Um exemplo emblemático da aplicação da programação vetorial em GPUs NVIDIA é o algoritmo de agrupamento de dados conhecido como k-means. O k-means é amplamente utilizado em análise de dados e mineração de dados para agrupar pontos de dados em clusters com base em características semelhantes. A paralelização deste algoritmo em GPUs NVIDIA pode resultar em um significativo aumento de desempenho, permitindo o processamento rápido de grandes conjuntos de dados (Shane, 2012).
 
@@ -556,33 +547,15 @@ Há também os \textbf{processadores DSP} (\textit{Digital Signal Processors}), 
 
 Este segmento aborda uma variedade de processadores especializados em diferentes domínios, como processamento de imagens, áudio e vídeo. Destaca-se sua arquitetura --- muitas vezes utilizando um conjunto de instruções VLIW --- otimizada para operações específicas do domínio e a incorporação de operações vetoriais para melhorar o desempenho em aplicações especializadas.
 
-% TODO
-% TODO
-% TODO: Usar essa referência para o parágrafo acima? (Eliane, 2013) Eliane, 2013 — https://ifpr.edu.br/pronatec/wp-content/uploads/sites/46/2012/07/Montador_e_Reparador_de_computadores.pdf
-% TODO
-% TODO
-
 As \textbf{TPUs} (\textit{Tensor Processing Units}) são unidades de processamento especializadas desenvolvidas pela Google para otimizar operações relacionadas a tensores --- abstrações geométricas que podem ser representadas como vetores multidimensionais, usadas largamente em algoritmos de aprendizado de máquina e servindo de base para a biblioteca \textbf{TensorFlow}, também desenvolvida pela Google. Esses processadores Possuem uma arquitetura voltada para operações matriciais e vetoriais, e contribuem para acelerar o treinamento e a inferência de modelos de inteligência artificial.
 
 O estudo dos processadores que suportam operações vetoriais revela a diversidade de arquiteturas e tecnologias disponíveis para acelerar o processamento paralelo em uma variedade de domínios. Esses processadores desempenham um papel crucial no desenvolvimento de algoritmos eficientes e na melhoria do desempenho computacional em aplicações exigentes. O contínuo avanço dessas tecnologias promete impulsionar ainda mais a inovação na computação e expandir os limites do que é possível realizar com eficiência computacional.
-
-% TODO
-% TODO
-% TODO: Usar essa referência para os últimos parágrafos? https://razor.com.br/blog/post-6/entenda-os-diferentes-tipos-de-processadores
-% TODO
-% TODO
 
 
 
 \subsection{Mudança do Paradigma Serial para o Vetorial}
 
-A mudança de paradigma da programação serial para a programação vetorial representa uma verdadeira revolução na eficiência computacional. Antes da adoção generalizada da programação vetorial, os algoritmos eram projetados para serem executados de maneira sequencial, o que limitava significativamente o desempenho e a capacidade de lidar com conjuntos de dados massivos. Com a programação vetorial, no entanto, os desenvolvedores podem realizar operações em grandes conjuntos de dados de forma paralela, aproveitando ao máximo o poder de processamento disponível.
-
-% TODO
-% TODO
-% TODO: Usar essa referência para o parágrafo acima? (Hennessy, 2019) Hennessy, J. L., & Patterson, D. A. (2019). Computer Architecture: A Quantitative Approach. Morgan Kaufmann.
-% TODO
-% TODO
+A mudança de paradigma da programação serial para a programação vetorial representa uma verdadeira revolução na eficiência computacional. Antes da adoção generalizada da programação vetorial, os algoritmos eram projetados para serem executados de maneira sequencial, o que limitava significativamente o desempenho e a capacidade de lidar com conjuntos de dados massivos. Com a programação vetorial, no entanto, os desenvolvedores podem realizar operações em grandes conjuntos de dados de forma paralela, aproveitando ao máximo o poder de processamento disponível \cite{hennessy2011}.
 
 % Exemplo na Computação Gráfica:
 
@@ -601,37 +574,37 @@ No contexto deste trabalho, serão abordadas técnicas avançadas de agrupamento
 \section{NVIDIA CUDA}
 \label{sec:cuda}
 
-O CUDA (\textit{Compute Unified Device Architecture}) teve sua origem na virada do século, quando a NVIDIA percebeu o potencial das GPUs para além do processamento gráfico e começou a explorar sua capacidade para tarefas de propósito geral. A história do CUDA remonta ao início dos anos 2000, quando a NVIDIA lançou suas primeiras GPUs com arquiteturas capazes de executar operações paralelas de forma eficiente.
+O CUDA (\textit{Compute Unified Device Architecture}) é uma API que permite a utilização de uma placa de vídeo com chiptset da NVIDIA para fins de computação de uso geral (\textit{GPGPU}), permitindo o acesso ao conjunto de instruções da placa e a utilização de seus diversos núcleos de processamento para a computação paralela. Foi projetada para trabalhar com linguagens de programação como \textit{Fortran}, \textit{C} e \textit{C++} e possibilita, de dentro da sintaxe delas, o acesso à memória dedicada da placa (VRAM), memória cache, o gerenciamento dos núcleos e \textit{threads} --- seu formato e quantidade ---, o escalonamento de tarefas para a CPU e GPU, bem como a transferência de dados de um para o outro.
 
-% TODO
-% TODO
-% TODO: usar essa fonte pro parágrafo acima? (Frank, 2002) https://dsp-book.narod.ru/ESDUA.pdf - Frank Vahid and Tony Givargis, John Wiley and Sons, 2002
-% TODO
-% TODO
+Embora a computação de propósito geral com GPUs fosse possível antes do lançamento de APIs como CUDA, usando outras APIs mais antigas como \textit{OpenGL} ou \textit{DirectX}, o desenvolvimento era bem dificultado, necessitando a conversão de instruções de código serial e escalar para instruções de código paralelo e vetorial, basicamente obrigando desenvolvedores a \enquote{traduzir} as aplicações em análogos gráficos para serem processados como texturas ou shaders na GPU, para depois ter os resultados convertidos de volta para um formato de dados menos abstrato. O CUDA facilitou imensamente esse processo permitindo o uso do poder da GPU sem a necessidade de utilização de técnicas e APIs específicas para operações gráficas.
 
-Com o aumento da demanda por poder computacional e a necessidade de lidar com conjuntos massivos de dados em aplicações não relacionadas a gráficos, surgiu a ideia de utilizar as GPUs para computação paralela. Assim, em 2006, a NVIDIA lançou o CUDA como parte da arquitetura Tesla, usada primeiro na série G80 de GPUs, marcando o início de uma nova era na computação paralela.
+% * ##########################
 
-O lançamento do CUDA permitiu que os desenvolvedores aproveitassem o poder de processamento massivo das GPUs para uma ampla gama de aplicações computacionais. Ao fornecer uma plataforma de programação acessível e eficiente, o CUDA abriu as portas para a aceleração de algoritmos complexos em áreas como aprendizado de máquina, simulação científica, processamento de imagens e muito mais.
+\subsection{História}
+\label{ssc:históriaCUDA}
+
+Na virada do século, quando percebeu que desenvolvedores viam potencial nas GPUs para além do processamento gráfico, a NVIDIA começou a explorar sua capacidade para tarefas de propósito geral. Com o aumento da demanda por poder computacional e a necessidade de lidar com conjuntos massivos de dados em aplicações não relacionadas a gráficos, surgiu a ideia de utilizar as GPUs para computação paralela. Assim, em 2006, a NVIDIA lançou o CUDA como parte da arquitetura \textit{Tesla}, usada primeiro na série \textit{G80} de GPUs, marcando o início de uma nova era na computação paralela.
+
+O lançamento do CUDA permitiu que os desenvolvedores aproveitassem o poder de processamento massivo das GPUs para uma ampla gama de aplicações computacionais \cite{cudaByExampleSanders2010}. Ao fornecer uma plataforma de programação acessível e eficiente, o CUDA abriu as portas para a aceleração de algoritmos complexos em áreas como aprendizado de máquina, simulação científica, processamento de imagens e muito mais.
 
 Desde então, o CUDA tem passado por várias iterações e atualizações, incorporando novas tecnologias e recursos para tornar a programação em GPUs mais acessível e eficiente. Uma das principais inovações foi a introdução da arquitetura Fermi em 2010, que trouxe melhorias significativas na eficiência energética e na capacidade de processamento das GPUs NVIDIA. Com a Fermi, o CUDA ganhou suporte para novos recursos, como cálculos de precisão dupla de ponto flutuante, o que o tornou ainda mais adequado para aplicações científicas e de computação de alta precisão.
 
-Além disso, o lançamento da arquitetura Kepler em 2012 marcou outro marco importante para o CUDA. Trouxe melhorias significativas na eficiência de computação e na capacidade de execução de instruções paralelas, permitindo o desenvolvimento de algoritmos mais complexos e a execução de tarefas de computação intensiva com maior eficiência.
+Além disso, o lançamento da arquitetura Kepler em 2012 marcou outro marco importante para o CUDA. Trouxe consideráveis melhorias na eficiência de computação e na capacidade de execução de instruções paralelas, permitindo o desenvolvimento de algoritmos mais complexos e a execução de tarefas de computação intensiva com maior eficiência.
 
 Ao longo dos anos, o ecossistema em torno do CUDA cresceu significativamente, com uma vasta gama de ferramentas, bibliotecas e frameworks disponíveis para desenvolvedores. O lançamento do CUDA Toolkit proporcionou aos desenvolvedores um conjunto abrangente de ferramentas para desenvolver, otimizar e depurar aplicativos CUDA. Além disso, bibliotecas como cuDNN (\textit{CUDA Deep Neural Network Library}) e cuBLAS (\textit{CUDA Basic Linear Algebra Subprograms}) tornaram-se fundamentais para o desenvolvimento de aplicativos de aprendizado de máquina e processamento de dados em larga escala.
-
-% TODO
-% TODO
-% TODO: usar essa fonte pro parágrafo acima? (Thomas, 2020) https://medium.com/luisfredgs/computação-paralela-com-cuda-c-a1cf6dbc4db2
-% TODO
-% TODO
 
 Outro aspecto importante do ecossistema CUDA é a comunidade de desenvolvedores, que continua a crescer e contribuir com uma variedade de projetos e recursos. Plataformas como o NVIDIA Developer Forums e eventos como a Conferência de Desenvolvedores NVIDIA (\textit{NVIDIA GPU Technology Conference}) desempenham um papel crucial na promoção da colaboração e na troca de conhecimentos entre os desenvolvedores CUDA em todo o mundo.
 
 O CUDA encontrou aplicação em uma ampla variedade de setores, incluindo ciências, engenharia, medicina, finanças e entretenimento. Empresas e instituições de pesquisa em todo o mundo têm utilizado o CUDA para acelerar suas pesquisas e desenvolver soluções inovadoras para problemas complexos.
 
-Por exemplo, na área da medicina, o CUDA é usado para acelerar simulações de dinâmica molecular e processamento de imagens médicas. No setor financeiro, ele é utilizado para análise de dados em tempo real e modelagem financeira avançada. Na indústria de entretenimento, o CUDA é fundamental para a renderização de gráficos em filmes, jogos e animações em 3D.
+Por exemplo, na área da medicina, o CUDA é usado para acelerar simulações de dinâmica molecular e processamento de imagens médicas. No setor financeiro, ele é utilizado para análise de dados em tempo real, modelagem financeira avançada, além de possibilitar diversas implementações na área das criptomoedas e \textit{blockchains}. Na indústria de entretenimento, o CUDA é fundamental para a renderização de gráficos em filmes, jogos e animações em 3D.
 
 Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade de domínios, demonstrando seu papel como uma plataforma essencial para a computação paralela e o desenvolvimento de soluções de alto desempenho em todo o mundo.
+
+% * ##########################
+
+\subsection{Exemplo de Implementação}
+\label{ssc:implementaçãoCUDA}
 
 % TODO
 % TODO
@@ -639,7 +612,7 @@ Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade
 % TODO
 % TODO
 
-\textbf{TODO: Escrever mais parágrafos (sub-seções?) exemplificando o uso básico do CUDA.}
+\textbf{TODO: Escrever essa sub-seção exemplificando o uso básico do CUDA.}
 
 \begin{itemize}
   \item \textbf{Como criar um projeto cuda, onde vai cada parte (sequencial, vetorial, etc)}
@@ -694,13 +667,7 @@ Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade
 
 % \section{Algoritmo 2: Hierarchical Clustering}
 
-% % TODO
-% % TODO
-% % TODO: Vide abaixo
-% % TODO
-% % TODO
-
-% \textbf{TODO: Escrever uma sub-seção sobre o Hierarchical Clustering, no mesmo estilo da seção do K-Means. Seção opcional, só fazer depois de concluir TODO o resto do K-means + seus experimentos + resultados + código.}
+% \textbf{Escrever uma sub-seção sobre o Hierarchical Clustering, no mesmo estilo da seção do K-Means. Seção opcional, só fazer depois de concluir TODO o resto do K-means + seus experimentos + resultados + código.}
 
 
 
