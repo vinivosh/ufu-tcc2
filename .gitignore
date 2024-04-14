@@ -526,6 +526,9 @@ pyrightconfig.json
 Template-TCC-BCC*/
 /template_tcc_bcc.zip
 
+# compiled C++ binaries
+monografia/code-snippets/*.bin
+
 ########################################
 # Dataset files
 ########################################
