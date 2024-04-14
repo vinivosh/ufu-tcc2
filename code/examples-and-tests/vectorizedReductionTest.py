@@ -138,15 +138,18 @@ def sum2DArrays(arr1:list[list[np.float64]], arr2:list[list[np.float64]], result
     # result = np.sum(arr1) + np.sum(arr2)
 
 
-def sumGPUv3(arr:np.ndarray, n_:int=-1, d_:int=-1, dataType=np.float64, vramPerCCfree:int=-1, vramPercent:int=0.90):
+def sumGPUv3(arr:np.ndarray, n_:int=-1, d_:int=-1, dataType=np.float64, vramPerCC:int=-1, vramPercent:int=0.90):
     if n_ <= 0: n_ = len(arr)
     if d_ <= 0: d_ = len(arr[0])
 
     # print(f'n_ = {n_}; d_ = {d_}')
 
-    if vramPerCCfree <= 0: _, _, _, _, vramPerCCfree = getCudaHWinfo()
+    if n_ == 0: return np.zeros(d_, dataType)
+
+    if vramPerCC <= 0: _, _, _, _, vramPerCC = getCudaHWinfo()
     sizeOfRow = d_ * np.dtype(dataType).itemsize
-    b_ = math.floor((vramPerCCfree * vramPercent) / (sizeOfRow * 2) + 1)
+    b_ = math.floor((vramPerCC * vramPercent) / (sizeOfRow * 2) + 1)
+    if b_ <= 0: b_ = 1
 
     if n_ % (b_* 2) == 0:
         totalRowsToPad = 0
@@ -197,7 +200,7 @@ if __name__ == '__main__':
     N = 13_932_632
     D = 3
     K = 7
-    I = 10
+    I = 5
 
     TIMES_EXECUTED = K * I
 
@@ -230,7 +233,7 @@ if __name__ == '__main__':
     # GPU sum v3
     startTimeNS = time.perf_counter_ns()
     # sum = np.zeros(D)
-    for _ in range(TIMES_EXECUTED): sum = sumGPUv3(arr, N, D, vramPerCCfree=VRAM_PER_CUDA_CORE_TOTAL, vramPercent=0.9)
+    for _ in range(TIMES_EXECUTED): sum = sumGPUv3(arr, N, D, vramPerCC=VRAM_PER_CUDA_CORE_TOTAL, vramPercent=0.9)
     elapsedTimeS = (time.perf_counter_ns() - startTimeNS) * 1e-9
 
     print(f'sumGPUv3 | Sum = {sum}\n(len={len(sum)})\nDone in {elapsedTimeS:.8f} s')
