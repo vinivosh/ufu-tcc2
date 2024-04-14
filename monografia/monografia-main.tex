@@ -660,7 +660,7 @@ Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade
 \subsection{Exemplo de Implementação}
 \label{ssc:implementaçãoCUDA}
 
-Para exemplificar bem o processo de paralelização de um algoritmo utilizando CUDA, é apresentada aqui uma implementação simples, na linguagem C++, de um programa que soma dois vetores unidimensionais com mais de cem milhões de elementos cada, do tipo ponto flutuante (\textit{float}).
+Para exemplificar bem o processo de paralelização de um algoritmo utilizando CUDA, é apresentada aqui uma implementação simples, na linguagem C++, de um programa que soma dois vetores unidimensionais com mais de quinhentos milhões de elementos cada, do tipo ponto flutuante (\textit{float}) --- o que ocupa cerca de 4 GB de memória no total. É importante que a máquina onde o algoritmo é executado possuir essa quantidade de memória RAM disponível, assim como VRAM na GPU. Mais detalhes sobre a máquina utilizada para testes no Capítulo \ref{sec:máquinaUtilizada}.
 
 O Algoritmo ??? abaixo contém o programa supracitado, que soma os dois vetores, salvando no lugar dos valores do segundo vetor a soma dos valores respectivos de ambos vetores.
 
@@ -668,7 +668,7 @@ O Algoritmo ??? abaixo contém o programa supracitado, que soma os dois vetores,
 
 \textbf{TODO: Escrever um parágrafozinho explicando por cima o que mais é feito.}
 
-Rodando a função \textit{add()} e medindo seu tempo de execução, encontramos que o tempo médio em dez execuções é de 164,4 milisegundos.
+Rodando a função \textit{add()} e medindo seu tempo de execução, encontramos que o tempo médio em dez execuções é de 709,8 milisegundos.
 
 
 
