@@ -240,7 +240,7 @@ rulecolor=\color{black},              % if not set, the frame-color may be chang
 % TODO
 % TODO
 
-Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
+\textbf{TODO: Escrever o resumo após terminar a monografia}. Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
 objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão
 destes itens dependem do tipo de resumo (informativo ou indicativo) e do
 tratamento que cada item recebe no documento original. O resumo deve ser
@@ -359,14 +359,6 @@ No entanto, cada vez mais está sendo descoberto e aproveitado o potencial de us
 Nem todo algoritmo pode ser paralelizado, no entanto. Existem procedimentos e algoritmos que são inerentemente seriais (também chamados de sequenciais), como o cálculo do $n$-ésimo número da sequência de \textit{Fibonacci}, que requer que dois números prévios da sequência tenham sido calculados para obtermos o atual --- salvo, é claro, alguma descoberta teórica matemática do comportamento da sequência que nos permitisse uma nova maneira de calcular o $n$-ésimo elemento sem essa necessidade.
 
 É importante entender também que nenhum algoritmo é paralelizável por completo. Sempre existirão partes de algoritmos que necessariametne devem ser executadas serialmente para seu funcionamento correto. Há um limite teórico de ganho máximo que pode ser obtido ao se paralelizar um algoritmo qualquer. Esse limite é definido pela Lei de Amdahl \cite{Amdahl-Law}: $\frac{1}{1-p}$, onde $p$ é a razão entre tempo de execução gasto rodando código paralelizável e tempo de execução gasto no total.
-
-% TODO
-% TODO
-% ? TODO: Falar aqui também da Lei de Gustafson? Apresentada no artigo de 1988: Reevaluating Amdahl's Law. Pode ser bem importante! É uma estimativa menos pessimista que a Lei de Amdahl, que leva em conta o fato de que, ao se aumentar os recursos computacionais, geralmente os algoritmos passam a ser utilizados em datasets cada vez maiores, aumentando muito a parcela de tempo de execução gasta em código paralelo, enquanto a gasta em código serial se mantém praticamente constante
-
-% ? não
-% TODO
-% TODO
 
 E é a paralelização de uma classe de algoritmos em particular que é o foco desta pesquisa: os algoritmos de agrupamento de dados, também chamados de clusterização de dados, ou de \textit{clustering}. Tais algoritmos, de forma sucinta, agrupam objetos de maneira que os objetos no mesmo grupo, ou \textit{cluster}, sejam mais parecidos entre si, de acordo com alguma métrica, do que com objetos de outros grupos. A análise de clusters é essencial em diversas áreas da computação e estatística, como mineração de dados, aprendizado de máquina, compressão de dados, entre outras.
 
@@ -491,14 +483,7 @@ O significado de um cluster não pode ser bem definido e vai depender do conjunt
 
 % TODO
 % TODO
-% TODO adicionar citações, figuras de agrumento de dados
-% TODO
-% TODO
-
-% TODO
-% TODO
-% ? TODO: Talvez seria melhor colocar esse parágrafo num formato de lista? Não sei...
-% ? TODO: Também não sei se meu uso do negrito aqui é permitido formalmente.
+% TODO adicionar citações, figuras de agrupamento de dados
 % TODO
 % TODO
 
@@ -561,15 +546,11 @@ Em suma, a programação vetorial desempenha um papel fundamental no avanço da 
 
 Os \textbf{processadores} com suporte de processamento paralelo \textbf{SIMD} desempenham um papel crucial na execução de operações vetoriais, permitindo a aplicação de uma única instrução em múltiplos conjuntos de dados simultaneamente. Esse tipo de processamento paralelo foi o foco de extensões como as SSE (\textit{Streaming SIMD Extensions}), que permitiram um grande aumento de performance na execução de aplicações como processamento de sinal digital e processamento gráfico. Essas extensões são encontradas na gigantesca maioria das CPUs x86 atuais, a família de arquiteturas de processadores mais usada até hoje em computadores pessoais.
 
-% TODO
-% TODO
-% TODO: Vide abaixo!
-% TODO
-% TODO
-
-\textbf{TODO: Inserir aqui parágrafo(s) sobre GPUs, o foco do trabalho}
-
 Os \textbf{processadores VLIW} (\textit{Very Long Instruction Word}) são definidos pela sua capacidade de executar múltiplas operações em paralelo por meio de instruções muito longas. Destaca-se sua presença em sistemas embarcados e a eficiência proporcionada pela execução simultânea de operações vetoriais, especialmente em aplicações de processamento de sinal e comunicações digitais. Arquiteturas deste tipo já foram amplamente utilizadas em GPUs, porém houve uma mudança para arquiteturas RISC (\textit{Reduced Instruction Set Computer}), mais simples, para acelerar também a execução de tarefas não-gráficas.
+
+As \textbf{Unidades de Processamento Gráfico} (\textit{Graphical Processing Units}), ou GPUs, são processadores especializados em operações úteis para aplicações gráficas, como cálculos geométricos para renderização 3D, mapeamento de texturas, rotação ou translação de vértices, aplicação de \textit{shaders}, aceleração de decodificação de vídeo, entre muitas outras. Tais operações na grande maioria dos casos envolvem vetores ou matrizes sendo manipuladas, com cálculos sendo aplicados a todos seus elementos. Logo, para lidar eficientemente com essas operações, esses processadores possuem uma unidade de memória dedicada (VRAM, \textit{Video RAM}) e empregam milhares de núcleos para processamento paralelo.
+
+As GPUs, sendo processadores intrinsecamente vetoriais, são o foco deste trabalho. Com o advento de ferramentas como a arquitetura CUDA para GPUs produzidas pela NVIDIA, se tornou cada vez mais fácil utilizar esses processadores para aplicações gerais, não apenas gráficas, como é o caso estudado aqui, de se utilizar tais processadores para acelerar algoritmos de agrupamento de dados.
 
 Há também os \textbf{processadores DSP} (\textit{Digital Signal Processors}), caracterizados pela sua eficiência na execução de operações vetoriais em tempo real, com foco em aplicações de processamento de sinais digitais. Possuem alta capacidade de lidar com operações complexas de forma rápida e precisa, contribuindo para o desenvolvimento de sistemas de comunicação e multimídia.
 
@@ -690,7 +671,7 @@ Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade
 
 % * ####################################
 
-\section{Algoritmo 1: K-Means}
+\section{K-Means}
 \label{sec:kmeans}
 
 % TODO
@@ -711,15 +692,15 @@ Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade
 
 % * ####################################
 
-\section{Algoritmo 2: Hierarchical Clustering}
+% \section{Algoritmo 2: Hierarchical Clustering}
 
-% TODO
-% TODO
-% TODO: Vide abaixo
-% TODO
-% TODO
+% % TODO
+% % TODO
+% % TODO: Vide abaixo
+% % TODO
+% % TODO
 
-\textbf{TODO: Escrever uma sub-seção sobre o Hierarchical Clustering, no mesmo estilo da seção do K-Means. Seção opcional, só fazer depois de concluir TODO o resto do K-means + seus experimentos + resultados + código.}
+% \textbf{TODO: Escrever uma sub-seção sobre o Hierarchical Clustering, no mesmo estilo da seção do K-Means. Seção opcional, só fazer depois de concluir TODO o resto do K-means + seus experimentos + resultados + código.}
 
 
 
