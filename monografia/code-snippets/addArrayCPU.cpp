@@ -8,7 +8,7 @@ void add(int n, float *x, float *y){
 }
 
 int main(void){
-  int N = 1<<29; // 536.870.912 elementos
+  int N = 1<<28; // 268.435.456 elementos
 
   float *x = new float[N];
   float *y = new float[N];
