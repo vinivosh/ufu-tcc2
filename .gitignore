@@ -533,6 +533,8 @@ monografia/code-snippets/*.bin
 monografia/code-snippets/*.nsys-rep
 monografia/code-snippets/*.sqlite
 
+~~*
+
 ########################################
 # Dataset files
 ########################################
