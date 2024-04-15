@@ -711,6 +711,10 @@ Para clarificar, num exemplo mais simples onde $N = 128$ e há $2$ blocos com $3
 
 Rodando o algoritmo e medindo o tempo cada execução, obtem-se o tempo médio de cerca de \textbf{11 milissegundos}. O erro máximo continua em zero. Houve agora um \textit{speed-up} de cerca de 8,45 vezes em relação à versão vetorial anterior (Algoritmo \ref{code:addArrayGPUv2.cpp}) e de exatamente 28 vezes em relação à versão serial rodando em CPU (Algoritmo \ref{code:addArrayCPU.cpp}).
 
+Como é possível perceber, as implementações em CUDA requerem um conhecimento em uma das linguagens a que dá suporte nativo, como C, C++ e Fortran, além de uma manipulação mais direta da memória da CPU e GPU. Seu uso também prescinde de um gerenciamento avançado da aritmética usada para gerenciar execuções paralelas, gerando um código que pode ser confuso e de difícil manutenção.
+
+Tais dificuldades impulsionaram uma das maiores motivações desta pesquisa: a busca por soluções que simplificassem ainda mais o uso do poder de paralelização das GPUs NVIDIA, o que é explorado na seção seguinte.
+
 
 
 % * ####################################
