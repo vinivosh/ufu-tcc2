@@ -614,7 +614,7 @@ Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade
 
 % * ##########################
 
-\subsection{Exemplo de Implementação}
+\subsection{Exemplo de Implementação CUDA}
 \label{ssc:implementaçãoCUDA}
 
 Para exemplificar bem o processo de paralelização de um algoritmo utilizando CUDA, é apresentada aqui uma implementação simples, na linguagem C++, de um programa que soma dois vetores unidimensionais com mais de 250 milhões de elementos cada, do tipo ponto flutuante de precisão simples (\textit{float}). Esse algoritmo então é paralelizado utilizando a API CUDA para rodá-lo em uma GPU.
@@ -726,19 +726,29 @@ Tais dificuldades impulsionaram uma das maiores motivações desta pesquisa: a b
 \section{Biblioteca Numba}
 \label{sec:numba}
 
-% TODO
-% TODO
-% TODO: Vide abaixo
-% TODO
-% TODO
+Como visto no capítulo anterior, a utilização da biblioteca CUDA requer conhecimentos nas linguagens onde ela foi implementada (C, C++, Fortran), além de técnicas de programação paralela que podem envolver uma aritmética complexa, principalmente para problemas com alta dimensionalidade, como é o caso de muitos datasets utilizados na área de \textit{big data}, \textit{data mining} e ciência de dados.
 
-\textbf{TODO: Escrever uma seção sobre a biblioteca Python Numba.}
+Como uma tentativa de unir o melhor dos dois mundos --- a velocidade de uma linguagem compilada para rodar em diversas CPUs e GPUs, utilizando o poder do paralelismo, e o desenvolvimento rápido e fácil em uma linguagem mais \enquote{amigável} e alto nível --- a desenvolvedora da distribuição Anaconda criou a biblioteca e compilador \textit{open-source} \textbf{\textit{Numba}} \cite{numbaHomePage}, trazendo para a linguagem Python a possibilidade de ganhos de performance da área de \textit{GPGPU}. Usando um mínimo de sintaxe nova, é possível acelerar de maneira quase automática códigos Python, rodando tanto em CPUs quanto em GPUs.
 
-\begin{itemize}
-  \item \textbf{Explicar motivação para o uso;}
-  \item \textbf{Explicar brevemente seu funcionamento;}
-  \item \textbf{Mostrar códigos "toy" para exemplificar como usá-lo (soma de dois vetores novamente? Plot do conjunto de Mandelbrot?). Talvez uns diagramas até?}
-\end{itemize}
+% * ##########################
+
+\subsection{Exemplo de Implementação Numba}
+\label{ssc:implementaçãoNumba}
+
+Seguindo o foco desse trabalho, a biblioteca foi utilizada para tornar mais performáticas as partes mais custosas computacionalmente do algoritmo K-means, através da vetorização de funções anteriormente seriais.
+
+Para exemplificar como foi feito o processo, um algoritmo simples, extremamente semelhante ao usado para demonstrar o uso da API CUDA em C++ no Capítulo \ref{ssc:implementaçãoCUDA}, foi implementado, primeiro serialmente, e depois paralelamente, utilizando a GPU.
+
+O Algoritmo \ref{code:addArrayCPU.py} abaixo executa a adição de dois vetores, retornando o resultado num terceiro vetor novo. No entanto, os vetores aqui, diferentemente dos exemplos em C++ anteriores, são bidimensionais. Note que foram usadas, em ambas versões do algoritmo, as bibliotecas \textit{Numba} e \textit{Numpy}, importada com o nome \textit{np}. Os comandos de \textit{\codeinline{import}} foram todos omitidos por brevidade. Foram utilizados vetores e funções do \textit{Numpy} pois são mais performáticos do que seus equivalentes em Python puro.
+
+\codeexternal[
+  firstline=3,
+  lastline=26,
+  label=code:addArrayCPU.py,
+  caption={Implementação serial de adição de vetores 2D em Python},
+]{code-snippets/addArrayCPU.py}
+
+O código acima é bem auto-explicativo e está comentado para melhor compreensão. Se assemelha bastante com o Algoritmo \ref{code:addArrayCPU.cpp} exibido no Capítulo \ref{ssc:implementaçãoCUDA}. As diferenças práticas são o tamanho dos vetores. Aqui, eles possuem a dimensões $N \cdot D$, onde $N = 100.663.296$ e $D = 4$, totalizando $402.653.184$ elementos. Isso são exatamente 50\% a mais elementos do que havia no exemplo em C++.
 
 % RESULTADOS
 % 
