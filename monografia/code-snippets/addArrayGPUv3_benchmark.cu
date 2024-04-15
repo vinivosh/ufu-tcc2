@@ -25,9 +25,9 @@ int main(void){
   }
 
   int blockSize = 1024;
-  int numBlocks = ceil((N + blockSize - 1) / blockSize);
+  int numBlocks = ceil(N / blockSize);
 
-  int runs = 10;
+  int runs = 100;
   auto startTime = high_resolution_clock::now();
 
   for (int i = 0; i < runs; i++) {

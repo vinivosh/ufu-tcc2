@@ -25,7 +25,7 @@ int main(void){
     x[i] = 3.77f; y[i] = 3.23f;
   }
 
-  int runs = 10;
+  int runs = 100;
   auto startTime = high_resolution_clock::now();
 
   for (int i = 0; i < runs; i++) {

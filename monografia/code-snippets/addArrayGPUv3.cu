@@ -21,7 +21,7 @@ int main(void){
   }
 
   int blockSize = 1024;
-  int numBlocks = ceil((N + blockSize - 1) / blockSize);
+  int numBlocks = ceil(N / blockSize);
 
   add<<<numBlocks, blockSize>>>(N, x, y);
   cudaDeviceSynchronize();
