@@ -28,7 +28,7 @@ checkMaxErr(c)
 
 
 if __name__ == '__main__':
-    RUNS = 15
+    RUNS = 100
     execTimes = np.zeros(RUNS, np.float64)
 
     print(f'Realizando benchmark de addArrayCPU (rodando {RUNS}x)...')

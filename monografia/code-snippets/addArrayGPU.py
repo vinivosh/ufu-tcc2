@@ -29,7 +29,7 @@ b = np.full((N, D), 14.8, np.float32)
 # Inicializando vetor de retorno
 c = np.zeros((N, D), np.float32)
 
-# # Realizando adição
+# Realizando adição
 addArrayGPU(a, b, c)
 
 checkMaxErr(c)
@@ -37,7 +37,7 @@ checkMaxErr(c)
 
 
 if __name__ == '__main__':
-    RUNS = 15
+    RUNS = 100
     execTimes = np.zeros(RUNS, np.float64)
 
     print(f'Realizando benchmark de addArrayGPU (rodando {RUNS}x)...')

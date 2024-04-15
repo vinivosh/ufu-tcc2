@@ -752,7 +752,39 @@ O código acima é auto-explicativo e está comentado para melhor compreensão. 
 
 Rodando o código e realizando a medição da velocidade de execução da função \textit{addArrayCPU}, encontra-se o tempo médio em 15 execuções seguidas de cerca de 1769,42 milissegundos. O erro máximo (calculado pela função \textit{checkMaxErr} na última linha) é de zero.
 
-\textbf{TODO: Inserir código da versão GPU aqui.}
+Adaptar esse algoritmo para rodar paralelamente na GPU é extremamente simples usando a biblioteca Numba. O trecho de código abaixo mostra a única modificação a ser feita ao chamar a função que soma os vetores.
+
+\codeexternal[
+  numbers=none,
+  firstline=29,
+  lastline=33,
+  label=code:addArrayGPU.snippet1.py,
+  % caption={Implementação vetorial de adição de vetores 2D em Python},
+]{code-snippets/addArrayGPU.py}
+
+A função, chamada dessa vez de \textit{addArrayGPU}, agora precisa de um vetor de retorno, inicializado aqui logo antes de sua chamada. Isso é necessário pois o recurso do Numba utilizado na implementação da função não permite o retorno direto de uma variável.
+
+Esse recurso do Numba é o decorador \textit{\textbf{guvectorize}}, inserido antes da declaração da função \textit{addArrayGPU}. O \textit{guvectorize} (abreviação de \textit{\textbf{Generalized Universal Functions}}, ou \textbf{Funções Generalizadas Universais}) informa ao compilador que a função deve ser compilada para rodar na placa de vídeo, e não na CPU como o resto do código. No trecho de código abaixo temos a declaração da função \textit{addArrayGPU} que faz uso desse decorador.
+
+\codeexternal[
+  numbers=none,
+  firstline=3,
+  lastline=10,
+  label=code:addArrayGPU.snippet2.py,
+  % caption={Implementação vetorial de adição de vetores 2D em Python},
+]{code-snippets/addArrayGPU.py}
+
+Com apenas essa modificação a mais o código está pronto para ser executado paralelamente pela GPU.
+
+Porém, o funcionamento da função não é tão intuitivo. Como é possível ver nas três linhas do corpo da função, ela trabalha com apenas um elemento do vetor --- uma linha, se imaginando o vetor bidimensional inteiro como uma tabela. Contudo, diferente de como era feito em C++ com a API CUDA diretamente, não é necessário que seja feita nenhuma aritmética interna para diferenciar as execuções da milhares de instâncias da função.
+
+De fato, tudo o que o corpo da função faz é iterar sobre as $D$ variáveis de um elemento dos vetores \enquote{externos} (com $N$ elementos), somando os valores do elemento $a$ ao $b$ e armazenando o resultado no $c$. Mas quando a função é chamada, o que é passado de argumento não são os elementos dos vetores, mas sim os vetores inteiros. O que parece ser um erro na verdade é exatamente como a implementação do paralelismo funciona ao se utilizar tal recurso do Numba.
+
+Essa abstração só é possível pois a biblioteca Numba se encarrega de traduzir esse código para seu equivalente em CUDA, gerenciando sozinha toda aritmética necessária para garantir que realmente cada instância da função acesse apenas sua porção definida dos dados dos vetores inteiros passados como argumentos, e o processamento seja de fato dividido entre milhares de \textit{threads}. Além disso, a biblioteca e seu compilador se encarregam de automatizar qualquer alocação e transferência de estrutura de dados entre CPU e GPU ou vice-versa.
+
+Tudo que é necessário para tal funcionamento extremamente automatizado de paralelização é, primeiro, implementar a função vetorial em Python como uma que recebe apenas um elemento da estrutura de dados maior que de fato é que está sendo processada, como foi feito aqui, e, segundo, informar ao decorador \textit{guvectorize} alguns argumentos a respeito dos dados que a função irá receber e também sobre seu modo de compilação e execução.
+
+\textbf{TODO: Continuar explicação aqui.}
 
 Rodando o algoritmo e medindo, como anteriormente, a velocidade de execução da função \textit{addArrayGPU}, se constata o tempo médio de aproximadamente de 398,35 milissegundos. O erro máximo também é zero, como esperado. Foi obtido um \textit{speed-up} de cerca de 4,44 vezes em relação à versão serial implementada usando apenas funções do \textit{Numpy}.
 
