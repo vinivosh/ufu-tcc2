@@ -633,22 +633,7 @@ O Algoritmo \ref{code:addArrayCPU.cpp} abaixo contém o programa supracitado, qu
 
 O código é bem auto-explicativo com comentários incluídos em diversas linhas. Um trecho notável é o contido nas linhas 25--28, que confere o resultado da soma para encontrar o maior erro --- definido pelo valor absoluto da subtração entre o valor encontrado no vetor e o valor esperado. Assim é possível perceber qualquer imprecisão que possa ser introduzida ao se modificar o algoritmo.
 
-% TODO
-% TODO
-% TODO: Atualizar com novos resultados:
-% ↪ ./addArrayCPU.bin && sleep 3 && ./addArrayGPUv1.bin && sleep 3 && ./addArrayGPUv2.bin && sleep 3 && ./addArrayGPUv3.bin
-% Avg exec time: 304 ms
-% Max error: 3.8147e-06
-% Avg exec time: 27964 ms
-% Max error: 3.8147e-06
-% Avg exec time: 121 ms
-% Max error: 3.8147e-06
-% Avg exec time: 42 ms
-% Max error: 3.8147e-06
-% TODO
-% TODO
-
-Rodando o programa e medindo o tempo de execução da função \textit{add}, é encontrado que o tempo médio entre dez execuções é de cerca de \textbf{313 milissegundos} e o erro máximo é zero.
+Rodando o programa e medindo o tempo de execução da função \textit{add}, é encontrado que o tempo médio entre dez execuções é de cerca de \textbf{304 milissegundos} e o erro máximo é zero.
 
 % ? Realmente vale a pena mostrar essa versão coitada que nem paralela na verdade é? Acho que não…
 
@@ -669,7 +654,7 @@ Para paralelizar o algoritmo e rodá-lo na GPU, é preciso fazer algumas modific
   % firstline=42,
   % lastline=,
   label=code:addArrayGPUv2.cpp,
-  caption={Implementação veteorial ingênua de soma de vetores usando CUDA},
+  caption={Implementação vetorial (ingênua) de soma de vetores usando CUDA},
 ]{code-snippets/addArrayGPUv2.cu}
 
 As mudanças em relação ao algoritmo \ref{code:addArrayCPU.cpp} começam na linha 4, onde acima da função \textit{add} é declarado um \textit{kernel} CUDA usando a palavra reservada \textit{\_\_global\_\_}. Ao se inserir esse especificador imediatamente antes da declaração de uma função, ela é marcada como função que pode rodar na placa de vídeo, sendo chamada de \textit{kernel} na documentação.
@@ -682,17 +667,27 @@ Os valores dessas variáveis são salvos nas variáveis \textit{index} e \textit
 
 Ou seja, se $N = 64$ e houver $16$ \textit{threads} por bloco, com apenas um bloco no total, a \textit{thread} de índice $0$ somaria os valores \textit{x[i] + y[i]} para $i = \{0, 16, 32, 48\}$, a \textit{thread} de índice $1$ para $i = \{1, 17, 33, 49\}$, e assim por diante, até a última \textit{thread}, a de índice $15$, trabalhando com $i = \{15, 31, 47, 63\}$. O processamento, então, seria efetivamente dividido em $16$ partes iguais, cada uma realizada por uma \textit{thread}.
 
-Rodando o programa e medindo novamente o tempo de execução como feito no algoritmo serial, o tempo médio de execução é de cerca de \textbf{410 milissegundos}. O erro máximo também é zero.
+Nas linhas 17 e 18 pode-se perceber que a alocação de memória também muda em relação à versão serial do algoritmo. Ao invés de ser usada a sintaxe \textit{new float[N]}, é necessário usar uma função da API CUDA, a \textit{cudaMallocManaged}. Ela recebe no primeiro argmento o endereço do ponteiro para a estrutura de dados que será alocada, e no segundo argumento a quantidade de memória a ser alocada.
+
+Na linha 24 também há uma mudança crucial na maneira em que é chamada a função que realiza a adição dos vetores. É necessário adicionar a sintaxe \textit{<<<a, b>>>} enter o nome da função e o parêntesis que contém seus argumentos. Essa sintaxe informa ao compilador CUDA que a função deve ser executada na GPU, dividindo o processamento em $a$ blocos, com $b$ \textit{threads} cada.
+
+No caso desta implementação, foram utilizadas 1024 threads por bloco e apenas um bloco. Como em GPUs NVIDIA modernas existem dezenas de SMs (\textit{Streaming Processors}) que, cada um, conseguem rodar centenas a milhares de \textit{threads} simultaneamente, conclui-se que não está sendo utilizado aqui nada próximo do poder total de processamento do hardware. Este é o motivo pelo qual o Algoritmo \ref{code:addArrayGPUv2.cpp} é considerado uma implementação ingênua.
+
+Na linha 25 há uma chamada à função \textit{cudaDeviceSynchronize}. Isso é necessário pois a chamada de um \textit{kernel} CUDA não bloqueia a execução do código serial na CPU. É preciso esperar que as \textit{threads} da GPU todas terminem de executar para ler com segurança os vetores que foram manipulados, para evitar problemas de concorrência e garantir a conclusão da lógica do algoritmo. Logo, se torna imprescindível chamar essa função neste ponto do código.
+
+As últimas modificações feitas são nas linhas 32 e 33, onde a memória alocada para os vetores é liberada. Assim como a alocação, o processo agora é feito de maneira diferente: chamando a função \textit{cudaFree}, que administra a memória acessível pela CPU e GPU.
+
+Finalmente, rodando o programa e medindo novamente o tempo de execução como feito no algoritmo serial, o tempo médio de execução dessa versão é de cerca de \textbf{121 milissegundos}. O erro máximo também é zero. Houve uma melhora de velocidade de execução (\textit{speed-up}) de cerca de 2,51 vezes, em relação à versão serial rodando em CPU.
 
 \codeexternal[
   language=C++,
   % firstline=42,
   % lastline=,
   label=code:addArrayGPUv3.cpp,
-  caption={Implementação veteorial de soma de vetores usando CUDA},
+  caption={Implementação vetorial de soma de vetores usando CUDA},
 ]{code-snippets/addArrayGPUv3.cu}
 
-\textbf{TODO: Explicar o código do addArrayGPUv3. Tempo de execução média em 10 execuções do: ~44 ms.}
+\textbf{TODO: Explicar o código do addArrayGPUv3. Tempo de execução média em 10 execuções do: ~42 ms.}
 
 
 
