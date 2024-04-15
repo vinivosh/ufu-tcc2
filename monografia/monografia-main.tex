@@ -857,7 +857,7 @@ A necessidade de processamento mais rápido de grandes conjuntos de dados é evi
 
 Portanto, surge a necessidade de paralelizar esses algoritmos, aproveitando o poder computacional de sistemas distribuídos, clusters de computadores ou arquiteturas de hardware com múltiplos núcleos. A paralelização não apenas acelera o processo de agrupamento, mas também permite lidar com conjuntos de dados cada vez maiores, garantindo que as análises permaneçam viáveis e eficientes em um cenário de big data.
 
-As pesquisas aqui resumidas buscam explorar a história da paralelização de algoritmos de agrupamento, destacando os avanços significativos nesta área e sua importância contínua na era da análise de enormes volumes de dados.
+As pesquisas aqui resumidas buscam explorar a história da paralelização de algoritmos de agrupamento, destacando os avanços significativos nesta área e sua importância contínua na era da análise de enormes volumes de dados. Este segmento do trabalho serve como uma ponte entre o passado e o presente, ilustrando não apenas estudos mais antigos que formaram uma base teórica e prática na áreal, mas também como a introdução das (GPUs) transformou fundamentalmente este campo. Ao revisitar os marcos históricos, é possível delinear o caminho de inovações e aprimoramentos que permitiram a jornada até a era atual, onde a paralelização possibilita o processamento de conjuntos de dados de magnitude anteriormente inimaginável com eficiência e rapidez sem precedentes.
 
 % ?
 % ? Concluindo...
@@ -885,13 +885,7 @@ A exploração de técnicas híbridas, que combinem métodos de agrupamento clá
 
 \section{Primeiras Implementações Paralelas}
 
-% TODO
-% TODO
-% TODO: Vide abaixo
-% TODO
-% TODO
-
-\textbf{TODO: Parágrafo(s) introdutório(s) básicos aqui.}
+A ideia de acelerar a execução de algoritmos de agrupamento de dados utilizando a computação paralela não é nova. Desde o advento desses processos e do aumento cada vez mais rápido de volume de dados disponíveis para análise, vem-se fazendo evidente a necessidade de otimizar ao máximo esses algoritmos.
 
 % TODO
 % TODO
@@ -904,7 +898,7 @@ A exploração de técnicas híbridas, que combinem métodos de agrupamento clá
 \begin{itemize}
   \item \textbf{Um dos trabalhos mais antigos que tentaram paralelizar um algoritmo de agrupamento de dados (seja por CPU, GPU, TPU, etc. até paralelização em nível de instrução da CPU tá valendo). Imagino que seria no máximo de 2005 esse trabalho.} 
 
-  \textbf{Candidato: \enquote{Parallel K-means Clustering Algorithm on NOWs}, de 2000. \href{https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6197ce32309824420aac79f975e028e440c2be96}{Link}.}
+  % \textbf{Candidato: \enquote{Parallel K-means Clustering Algorithm on NOWs}, de 2000. \href{https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6197ce32309824420aac79f975e028e440c2be96}{Link}.}
 
   \textbf{Candidato: \enquote{Parallel K - Means Algorithm on Distributed Memory Multiprocessors}, de 2003. \href{https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=5598bf67cef4f2727da0b0b94ba085349c7c45e7}{Link}.}
 
@@ -917,6 +911,15 @@ A exploração de técnicas híbridas, que combinem métodos de agrupamento clá
   \textbf{Candidato: Vide segundo item.}
 \end{itemize}
 
+Um dos estudos mais antigos encontrados que tenta paralelizar um algoritmo desse tipo é o \enquote{\textit{Parallel K-means Clustering Algorithm on NOWs}} \cite{kMeansParallelkantabutra2000}.
+
+Nesse artigo, é apresentada uma abordagem para melhorar a eficiência do algoritmo K-means através da paralelização. O objetivo principal é reduzir a complexidade temporal do algoritmo K-means serial aplicando teorias de computação paralela, alcançando uma melhoria de um fator de $O(K/2)$, onde $K$ é o número de clusters desejados. Além disso, visa permitir que o algoritmo seja executado em uma memória coletiva maior, composta por várias máquinas, superando a limitação de memória de uma apenas uma, o que permite escalar o tamanho do problema em até $O(K)$ vezes o tamanho que poderia ser processado em uma única máquina.
+
+A pesquisa foi realizada utilizando uma rede de estações de trabalho homogêneas com uma rede Ethernet e a comunicação entre processos foi feita por meio da Interface de Passagem de Mensagens (MPI). O método proposto usa uma abordagem mestre-escravo (\textit{master-slave}) onde um processo mestre distribui subconjuntos de dados para processos escravos, que calculam médias locais e participam de um processo iterativo de realocação de pontos de dados para minimizar uma função de erro quadrático. A análise de complexidade de tempo e espaço foi detalhadamente realizada, destacando a eficiência do algoritmo paralelizado em comparação com sua versão serial.
+
+Os resultados experimentais mostraram que, para conjuntos de dados grandes (mais de 700.000 datapoints), a versão paralela do algoritmo conseguiu obter uma melhoria significativa na velocidade de execução, evidenciada por um "speedup" de até O(K/2) conforme o tamanho do problema aumenta. Isto foi particularmente notável quando o tamanho do problema excedeu a capacidade de memória de uma única máquina, um cenário onde a versão serial do algoritmo não pôde sequer ser executada.
+
+No fim, a pesquisa demonstra que a paralelização do algoritmo K-means em uma rede de estações de trabalho oferece uma melhoria significativa tanto em termos de complexidade temporal quanto de escalabilidade do tamanho do problema, alcançando uma eficiência de 50\% na redução do tempo de complexidade. Esta eficiência é considerada alta para a época e dada a natureza global do algoritmo K-means e o uso de um sistema baseado em passagem de mensagens Ethernet. O trabalho sugere que futuras pesquisas poderiam focar na redução do tempo de comunicação ou na adaptação do algoritmo para funcionar com um número flexível de máquinas, visando melhorias ainda maiores na eficiência e escalabilidade.
 
 
 % * ####################################
