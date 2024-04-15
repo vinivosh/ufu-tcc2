@@ -633,6 +633,21 @@ O Algoritmo \ref{code:addArrayCPU.cpp} abaixo contém o programa supracitado, qu
 
 O código é bem auto-explicativo com comentários incluídos em diversas linhas. Um trecho notável é o contido nas linhas 25--28, que confere o resultado da soma para encontrar o maior erro --- definido pelo valor absoluto da subtração entre o valor encontrado no vetor e o valor esperado. Assim é possível perceber qualquer imprecisão que possa ser introduzida ao se modificar o algoritmo.
 
+% TODO
+% TODO
+% TODO: Atualizar com novos resultados:
+% ↪ ./addArrayCPU.bin && sleep 3 && ./addArrayGPUv1.bin && sleep 3 && ./addArrayGPUv2.bin && sleep 3 && ./addArrayGPUv3.bin
+% Avg exec time: 304 ms
+% Max error: 3.8147e-06
+% Avg exec time: 27964 ms
+% Max error: 3.8147e-06
+% Avg exec time: 121 ms
+% Max error: 3.8147e-06
+% Avg exec time: 42 ms
+% Max error: 3.8147e-06
+% TODO
+% TODO
+
 Rodando o programa e medindo o tempo de execução da função \textit{add}, é encontrado que o tempo médio entre dez execuções é de cerca de \textbf{313 milissegundos} e o erro máximo é zero.
 
 % ? Realmente vale a pena mostrar essa versão coitada que nem paralela na verdade é? Acho que não…
@@ -657,7 +672,17 @@ Para paralelizar o algoritmo e rodá-lo na GPU, é preciso fazer algumas modific
   caption={Implementação veteorial ingênua de soma de vetores usando CUDA},
 ]{code-snippets/addArrayGPUv2.cu}
 
-\textbf{TODO: Explicar o código do addArrayGPUv2. Tempo de execução média em 10 execuções do: ~410 ms.}
+As mudanças em relação ao algoritmo \ref{code:addArrayCPU.cpp} começam na linha 4, onde acima da função \textit{add} é declarado um \textit{kernel} CUDA usando a palavra reservada \textit{\_\_global\_\_}. Ao se inserir esse especificador imediatamente antes da declaração de uma função, ela é marcada como função que pode rodar na placa de vídeo, sendo chamada de \textit{kernel} na documentação.
+
+Nas linhas 5--11, há outra modifcação na função \textit{add} em si. Agora que ela será executada na GPU, é necessário que ela esteja preparada para \enquote{dividir} o trabalho igualmente entre as várias instâncias que serão subidas para execução. Cada \textit{thread} da GPU rodará uma cópia da função, paralelamente.
+
+Essa divisão de processamento é realizada usando palavras reservadas providas pela API do CUDA no C++. Elas permitem que o \textit{kernel} saiba sua posição na divisão de blocos e \textit{threads} de processamento que existe na GPU. A variável \textbf{\textit{threadIdx.x}} contém o índice, dentro do seu bloco, da \textit{thread} onde está rodando a instância do \textit{kernel}, enquanto a variável \textbf{\textit{blockDim.x}} contém a quantidade de \textit{threads} por bloco.
+
+Os valores dessas variáveis são salvos nas variáveis \textit{index} e \textit{stride} (linhas 6 e 7) e passam a ser utilizadas dentro do laço de repetição (linhas 9 e 10). O contador (variável $i$) é inicializado com o valor do índice da \textit{thread} atual. O laço continua sendo repetido até $i$ chegar ao valor $n - 1$, como na versão serial do algoritmo, mas desta vez ele é incrementado com o valor de \textit{stride}, o número de threads por bloco, a cada iteração. Na prática, isso significa que cada instância da função calcula apenas as somas dos elementos dos vetores com índices de valor \textit{$index + a * stride$}, onde $a$ varia na faixa $[0, (N \div \textit{stride}) - 1]$. 
+
+Ou seja, se $N = 64$ e houver $16$ \textit{threads} por bloco, com apenas um bloco no total, a \textit{thread} de índice $0$ somaria os valores \textit{x[i] + y[i]} para $i = \{0, 16, 32, 48\}$, a \textit{thread} de índice $1$ para $i = \{1, 17, 33, 49\}$, e assim por diante, até a última \textit{thread}, a de índice $15$, trabalhando com $i = \{15, 31, 47, 63\}$. O processamento, então, seria efetivamente dividido em $16$ partes iguais, cada uma realizada por uma \textit{thread}.
+
+Rodando o programa e medindo novamente o tempo de execução como feito no algoritmo serial, o tempo médio de execução é de cerca de \textbf{410 milissegundos}. O erro máximo também é zero.
 
 \codeexternal[
   language=C++,
