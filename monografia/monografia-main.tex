@@ -748,9 +748,15 @@ O Algoritmo \ref{code:addArrayCPU.py} abaixo executa a adição de dois vetores,
   caption={Implementação serial de adição de vetores 2D em Python},
 ]{code-snippets/addArrayCPU.py}
 
-O código acima é bem auto-explicativo e está comentado para melhor compreensão. Se assemelha bastante com o Algoritmo \ref{code:addArrayCPU.cpp} exibido no Capítulo \ref{ssc:implementaçãoCUDA}. As diferenças práticas são o tamanho dos vetores. Aqui, eles possuem a dimensões $N \cdot D$, onde $N = 100.663.296$ e $D = 4$, totalizando $402.653.184$ elementos. Isso são exatamente 50\% a mais elementos do que havia no exemplo em C++.
+O código acima é auto-explicativo e está comentado para melhor compreensão. Se assemelha bastante com o Algoritmo \ref{code:addArrayCPU.cpp} exibido no Capítulo \ref{ssc:implementaçãoCUDA}. As diferenças práticas são o tamanho dos vetores. Aqui, eles possuem a dimensões $N \cdot D$, onde $N = 100.663.296$ e $D = 4$, totalizando $402.653.184$ elementos. Isso são exatamente 50\% a mais elementos do que havia no exemplo em C++.
 
-% RESULTADOS
+Rodando o código e realizando a medição da velocidade de execução da função \textit{addArrayCPU}, encontra-se o tempo médio em 15 execuções seguidas de cerca de 1769,42 milissegundos. O erro máximo (calculado pela função \textit{checkMaxErr} na última linha) é de zero.
+
+\textbf{TODO: Inserir código da versão GPU aqui.}
+
+Rodando o algoritmo e medindo, como anteriormente, a velocidade de execução da função \textit{addArrayGPU}, se constata o tempo médio de aproximadamente de 398,35 milissegundos. O erro máximo também é zero, como esperado. Foi obtido um \textit{speed-up} de cerca de 4,44 vezes em relação à versão serial implementada usando apenas funções do \textit{Numpy}.
+
+% RESULTADOS MAIS COMPLETOS
 % 
 % (.venv) ↪ python3 ./addArrayCPU.py
 % Realizando benchmark de addArrayCPU (rodando 15x)...
