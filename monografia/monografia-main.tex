@@ -635,11 +635,37 @@ Rodando a função \textit{add()} e medindo seu tempo de execução, encontramos
 
 \textbf{TODO: Escrever parágrafos sobre os outros códigos!}
 
-\begin{itemize}
-  \item \textbf{Tempo de execução média em 10 execuções do addArrayGPUv1: ~28,345 s.}
-  \item \textbf{Tempo de execução média em 10 execuções do addArrayGPUv2: ~410 ms.}
-  \item \textbf{Tempo de execução média em 10 execuções do addArrayGPUv3: ~44 ms.}
-\end{itemize}
+% ? Realmente vale a pena mostrar essa versão coitada que nem paralela na verdade é? Acho que não…
+
+% \codeexternal[
+%   language=C++,
+%   % firstline=42,
+%   % lastline=,
+%   label=code:addArrayGPUv1.cpp,
+%   caption={Implementação serial (CUDA) de soma de vetores em C++},
+% ]{code-snippets/addArrayGPUv1.cu}
+
+% \textbf{Explicar o código do addArrayGPUv1. Tempo de execução média em 10 execuções do: ~28,345 s.}
+
+\codeexternal[
+  language=C++,
+  % firstline=42,
+  % lastline=,
+  label=code:addArrayGPUv2.cpp,
+  caption={Implementação paralela ingênua de soma de vetores usando CUDA},
+]{code-snippets/addArrayGPUv2.cu}
+
+\textbf{TODO: Explicar o código do addArrayGPUv2. Tempo de execução média em 10 execuções do: ~410 ms.}
+
+\codeexternal[
+  language=C++,
+  % firstline=42,
+  % lastline=,
+  label=code:addArrayGPUv3.cpp,
+  caption={Implementação paralela de soma de vetores usando CUDA},
+]{code-snippets/addArrayGPUv3.cu}
+
+\textbf{TODO: Explicar o código do addArrayGPUv3. Tempo de execução média em 10 execuções do: ~44 ms.}
 
 
 
