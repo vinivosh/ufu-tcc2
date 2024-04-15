@@ -1,7 +1,6 @@
 #include <iostream>
 #include <math.h>
 
-// Kernel que adiciona os elementos de dois vetores
 __global__
 void add(int n, float *x, float *y) {
   int index = threadIdx.x;
@@ -22,14 +21,12 @@ int main(void){
     x[i] = 3.77f; y[i] = 3.23f;
   }
 
-  for (int i = 0; i < 10; i++) {
-    add<<<1, 256>>>(N, x, y);
-    cudaDeviceSynchronize();
-  }
+  add<<<1, 256>>>(N, x, y);
+  cudaDeviceSynchronize();
 
   float maxError = 0.0f;
   for (int i = 0; i < N; i++)
-    maxError = fmax(maxError, fabs(y[i]-7.0f));
+    maxError = fmax(maxError, fabs(y[i] - 7.0f));
   std::cout << "Max error: " << maxError << "\n";
 
   cudaFree(x);

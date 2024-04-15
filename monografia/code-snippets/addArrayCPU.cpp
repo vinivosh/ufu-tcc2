@@ -24,7 +24,7 @@ int main(void){
   // Checar se há erros (todos valores devem ser  7.0f)
   float maxError = 0.0f;
   for (int i = 0; i < N; i++)
-    maxError = fmax(maxError, fabs(y[i]-7.0f));
+    maxError = fmax(maxError, fabs(y[i] - 7.0f));
   std::cout << "Max error: " << maxError << "\n";
 
   // Liberar memória
