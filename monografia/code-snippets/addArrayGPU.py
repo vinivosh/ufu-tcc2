@@ -17,7 +17,7 @@ def checkMaxErr(c):
     for dIdx in range(D):
         maxErr = max(maxErr, abs(42.0 - minRow[dIdx]))
         maxErr = max(maxErr, abs(42.0 - maxRow[dIdx]))
-    print(f'Max error = {maxErr}')
+    print(f'Max error: {maxErr}')
 
 D = 2**2
 N = int(2**28 * 1.5) // D # N * D = 268.435.456 elementos
