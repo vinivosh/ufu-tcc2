@@ -21,7 +21,7 @@ int main(void){
     x[i] = 3.77f; y[i] = 3.23f;
   }
 
-  add<<<1, 256>>>(N, x, y);
+  add<<<1, 1024>>>(N, x, y);
   cudaDeviceSynchronize();
 
   float maxError = 0.0f;

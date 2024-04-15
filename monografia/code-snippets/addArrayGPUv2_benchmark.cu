@@ -29,7 +29,7 @@ int main(void){
   auto startTime = high_resolution_clock::now();
 
   for (int i = 0; i < runs; i++) {
-    add<<<1, 256>>>(N, x, y);
+    add<<<1, 1024>>>(N, x, y);
     cudaDeviceSynchronize();
   }
 

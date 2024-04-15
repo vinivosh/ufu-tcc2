@@ -24,7 +24,7 @@ int main(void){
     x[i] = 3.77f; y[i] = 3.23f;
   }
 
-  int blockSize = 256;
+  int blockSize = 1024;
   int numBlocks = ceil((N + blockSize - 1) / blockSize);
 
   int runs = 10;
