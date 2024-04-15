@@ -784,9 +784,15 @@ Essa abstração só é possível pois a biblioteca Numba se encarrega de traduz
 
 Tudo que é necessário para tal funcionamento extremamente automatizado de paralelização é, primeiro, implementar a função vetorial em Python como uma que recebe apenas um elemento da estrutura de dados maior que de fato é que está sendo processada, como foi feito aqui, e, segundo, informar ao decorador \textit{guvectorize} alguns argumentos a respeito dos dados que a função irá receber e também sobre seu modo de compilação e execução.
 
-\textbf{TODO: Continuar explicação aqui.}
+São passados quatro argumentos aqui para o decorador. O primeiro é uma lista de um elemento do tipo \textit{string} que define os tipos de variáveis que cada instância da função vai receber, em sua \textit{thread}. Nesse caso, como há três argumentos em \textit{addArrayGPU}, são definidos três tipos dentro dos parênteses após a palavra \textit{void}. Todos os tipos são \textit{float32[:]}, o que indica que são vetores unidimensionas contendo números de ponto flutuante (\textit{float}) de precisão simples.
 
-Rodando o algoritmo e medindo, como anteriormente, a velocidade de execução da função \textit{addArrayGPU}, se constata o tempo médio de aproximadamente de 398,35 milissegundos. O erro máximo também é zero, como esperado. Foi obtido um \textit{speed-up} de cerca de 4,44 vezes em relação à versão serial implementada usando apenas funções do \textit{Numpy}.
+O segundo argumento do decorador é uma \textit{string} que denota a dimensionalidade dos argumentos que cada instância da função vai receber e processar, em sua \textit{thread}. A sintaxe aqui usada, \textit{(d),(d)->(d)} indica que há dois vetores de entrada, ambos de tamanho $d$, e um de saída, também de tamanho $d$.
+
+Note que ambos o primeiro e segundo argumento do decorador definem o formato de dado que cada instância da função recebe, e não o formato da estrutura de dado inteira a ser processada. Como a função foi definida para receber um vetor unidimensional de tamanho $d$, quando ela é de fato chamada e um vetor bidimensional de tamanho $n \cdot d$ é passado, o compilador do Numba infere que devem ser criadas $n$ instâncias da função, e cada uma delas processará apenas um vetor de tamanho $d$ diferente, paralelizando automaticamente o processo.
+
+O terceiro argumento, de nome \textit{nopython}, deve ser definida como \textit{True} para garantir que o código gerado seja todo executado na GPU. Sem essa definição, recursos não implementados pela biblioteca que fossem utilizados dentro da função iriam causar uma execução na CPU --- um modo chamado de \textit{object mode}.
+
+O quarto e último argumento, de nome \textit{target}, recebe uma \textit{string} que define onde a função irá rodar. Nessa pesquisa, sempre foi utilizado o valor \textit{cuda} aqui, para que todas as funções paralelizadas rodem na GPU NVIDIA. Outras opções existem, como \textit{cpu} para execução \textit{single-thread} na CPU ou \textit{paralell} para execução \textit{multi-thread} na CPU, mas elas fogem do escopo desse trabalho.
 
 % RESULTADOS MAIS COMPLETOS
 % 
@@ -799,6 +805,12 @@ Rodando o algoritmo e medindo, como anteriormente, a velocidade de execução da
 % Realizando benchmark de addArrayGPU (rodando 15x)...
 % Max error = 0.0
 % Benchmark concluído! Tempo médio: 398.349615 ± 19.305945 ms
+
+Rodando o algoritmo e medindo, como anteriormente, a velocidade de execução da função \textit{addArrayGPU}, se constata o tempo médio de aproximadamente de 398,35 milissegundos. O erro máximo também é zero, como esperado. Foi obtido um \textit{speed-up} de cerca de 4,44 vezes em relação à versão serial implementada usando apenas funções do \textit{Numpy}.
+
+Fica evidente a facilidade muito maior em se implementar o poder do paralelismo proporcionado pela API CUDA ao se usar a linguagem Python em conjunto com a biblioteca Numba.
+
+É possível adentrar na área de GPGPU sem abrir mão de abstrações de mais alto-nível proporcionadas pela linguagem, além de usufruir, simultaneamente, da imensa gama de bibliotecas de ciência de dados implementadas em Python, como \textit{Numpy} e \textit{Pandas}, que foram também amplamente utilizadas nas implementações do algoritmo K-means, exploradas no Capítulo \ref{sec:kMeansImplementações}.
 
 
 
@@ -1027,6 +1039,7 @@ A \textbf{quinta etapa}, por fim, consistiu em diversos experimentos de ganho de
 % * ####################################
 
 \section{Implementação do K-Means}
+\label{sec:kMeansImplementações}
 
 Como detalhado no capítulo \ref{sec:kmeans}, o \textbf{K-Means} é um dos mais importantes e amplamente utilizados algoritmos de agrupamento, mesmo com suas diversas limitações. Ele foi selecionado nessa pesquisa como exemplo inicial de paralelização de algoritmo por ser de fácil entendimento e possuir uma implementação relativamente simples.
 
