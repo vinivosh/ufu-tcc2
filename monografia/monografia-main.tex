@@ -617,7 +617,9 @@ Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade
 \subsection{Exemplo de Implementação}
 \label{ssc:implementaçãoCUDA}
 
-Para exemplificar bem o processo de paralelização de um algoritmo utilizando CUDA, é apresentada aqui uma implementação simples, na linguagem C++, de um programa que soma dois vetores unidimensionais com mais de 250 milhões de elementos cada, do tipo ponto flutuante de precisão simples (\textit{float}) --- o que ocupa cerca de 2 GB de memória no total. É importante que a máquina onde o algoritmo é executado possuir essa quantidade de memória RAM disponível, assim como VRAM na GPU. Mais detalhes sobre a máquina utilizada para testes no Capítulo \ref{sec:máquinaUtilizada}.
+Para exemplificar bem o processo de paralelização de um algoritmo utilizando CUDA, é apresentada aqui uma implementação simples, na linguagem C++, de um programa que soma dois vetores unidimensionais com mais de 250 milhões de elementos cada, do tipo ponto flutuante de precisão simples (\textit{float}). Esse algoritmo então é paralelizado utilizando a API CUDA para rodá-lo em uma GPU.
+
+Note que os dois grandes vetores inicialziados ocupam cerca de 2 GB de memória no total. É importante que a máquina onde o algoritmo é executado possua essa quantidade de memória RAM disponível, assim como de VRAM na GPU. Mais detalhes sobre a máquina utilizada para testes no Capítulo \ref{sec:máquinaUtilizada}.
 
 O Algoritmo \ref{code:addArrayCPU.cpp} abaixo contém o programa supracitado, que soma os dois vetores, salvando no lugar dos valores do segundo vetor a soma dos valores respectivos de ambos.
 
@@ -629,11 +631,9 @@ O Algoritmo \ref{code:addArrayCPU.cpp} abaixo contém o programa supracitado, qu
   caption={Implementação serial de soma de vetores em C++},
 ]{code-snippets/addArrayCPU.cpp}
 
-\textbf{TODO: Escrever um parágrafozinho explicando por cima o que mais é feito.}
+O código é bem auto-explicativo com comentários incluídos em diversas linhas. Um trecho notável é o contido nas linhas 25--28, que confere o resultado da soma para encontrar o maior erro --- definido pelo valor absoluto da subtração entre o valor encontrado no vetor e o valor esperado. Assim é possível perceber qualquer imprecisão que possa ser introduzida ao se modificar o algoritmo.
 
-Rodando a função \textit{add()} e medindo seu tempo de execução, encontramos que o tempo médio entre dez execuções é de cerca de 313 milisegundos.
-
-\textbf{TODO: Escrever parágrafos sobre os outros códigos!}
+Rodando o programa e medindo o tempo de execução da função \textit{add}, é encontrado que o tempo médio entre dez execuções é de cerca de \textbf{313 milissegundos} e o erro máximo é zero.
 
 % ? Realmente vale a pena mostrar essa versão coitada que nem paralela na verdade é? Acho que não…
 
@@ -647,12 +647,14 @@ Rodando a função \textit{add()} e medindo seu tempo de execução, encontramos
 
 % \textbf{Explicar o código do addArrayGPUv1. Tempo de execução média em 10 execuções do: ~28,345 s.}
 
+Para paralelizar o algoritmo e rodá-lo na GPU, é preciso fazer algumas modificações no código. O Algoritmo \ref{code:addArrayGPUv2.cpp} abaixo apresenta o programa inteiro, em sua versão vetorial na GPU. Essa implementação, no entanto, é consideravelmente ingênua por motivos explicitados a seguir.
+
 \codeexternal[
   language=C++,
   % firstline=42,
   % lastline=,
   label=code:addArrayGPUv2.cpp,
-  caption={Implementação paralela ingênua de soma de vetores usando CUDA},
+  caption={Implementação veteorial ingênua de soma de vetores usando CUDA},
 ]{code-snippets/addArrayGPUv2.cu}
 
 \textbf{TODO: Explicar o código do addArrayGPUv2. Tempo de execução média em 10 execuções do: ~410 ms.}
@@ -662,7 +664,7 @@ Rodando a função \textit{add()} e medindo seu tempo de execução, encontramos
   % firstline=42,
   % lastline=,
   label=code:addArrayGPUv3.cpp,
-  caption={Implementação paralela de soma de vetores usando CUDA},
+  caption={Implementação veteorial de soma de vetores usando CUDA},
 ]{code-snippets/addArrayGPUv3.cu}
 
 \textbf{TODO: Explicar o código do addArrayGPUv3. Tempo de execução média em 10 execuções do: ~44 ms.}

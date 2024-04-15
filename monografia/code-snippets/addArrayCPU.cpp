@@ -21,7 +21,7 @@ int main(void){
   // Rodar na CPU
   add(N, x, y);
 
-  // Checar se há erros (todos valores devem ser  7.0f)
+  // Checar se há erros (todos os valores devem ser 7.0)
   float maxError = 0.0f;
   for (int i = 0; i < N; i++)
     maxError = fmax(maxError, fabs(y[i] - 7.0f));
