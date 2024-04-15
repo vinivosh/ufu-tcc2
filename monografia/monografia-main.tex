@@ -619,7 +619,11 @@ Esses exemplos ilustram o impacto significativo que o CUDA teve em uma variedade
 
 Para exemplificar bem o processo de paralelização de um algoritmo utilizando CUDA, é apresentada aqui uma implementação simples, na linguagem C++, de um programa que soma dois vetores unidimensionais com mais de 250 milhões de elementos cada, do tipo ponto flutuante de precisão simples (\textit{float}). Esse algoritmo então é paralelizado utilizando a API CUDA para rodá-lo em uma GPU.
 
-Note que os dois grandes vetores inicialziados ocupam cerca de 2 GB de memória no total. É importante que a máquina onde o algoritmo é executado possua essa quantidade de memória RAM disponível, assim como de VRAM na GPU. Mais detalhes sobre a máquina utilizada para testes no Capítulo \ref{sec:máquinaUtilizada}.
+Note que os dois grandes vetores inicializados ocupam cerca de 2 GB de memória no total. É importante que a máquina onde o algoritmo é executado possua essa quantidade de memória RAM disponível, assim como de VRAM na GPU. Mais detalhes sobre a máquina utilizada para testes no Capítulo \ref{sec:máquinaUtilizada}.
+
+As implementações, assim como suas explicações contidas nesse capítulo, foram adaptadas de tutoriais disponibilizados no site \textit{NVIDIA Developer} \cite{CUDAanEvenEasierIntro}.
+
+Os códigos de programas CUDA são salvos como arquivos com a extensão \textit{.cu}, e compilados utilizando a ferramenta \textit{nvcc}, disponível através do CUDA Toolkit \cite{CUDAtoolkit}. Existe também uma ferramenta que permite a administração, benchmark e monitoramento facilitados de programas CUDA, o \textit{Nsight Systems} disponível em \cite{NVIDIAnsightSystems}. Usando seu comando \textit{nsys nvprof} para rodar um executável CUDA, é possível realizar testes automatizados de velocidade.
 
 O Algoritmo \ref{code:addArrayCPU.cpp} abaixo contém o programa supracitado, que soma os dois vetores, salvando no lugar dos valores do segundo vetor a soma dos valores respectivos de ambos.
 
