@@ -832,6 +832,12 @@ Fica evidente a facilidade muito maior em se implementar o poder do paralelismo 
 \section{K-means}
 \label{sec:kMeans}
 
+O algoritmo k-means, notório por sua aplicação em tarefas de agrupamento de dados, tem raízes históricas que remontam à metade do século XX \cite{kMeansHistoryBock2007}. A ideia fundamental por trás do k-means, conhecida como quantização vetorial, foi introduzida inicialmente em um contexto de processamento de sinal. Esse algoritmo visa particionar, iterativamente, $N$ observações em $K$ grupos, de maneira que cada observação pertença ao agrupamento com o \enquote{centro} mais próximo, resultando na minimização das variações dentro dos agrupamentos.
+
+A aplicação original desse conceito foi documentada por Hugo Steinhaus em 1957 \cite{kMeansFirstIdeaSteinhaus1957}, mas o algoritmo padrão como é conhecido foi proposto por Stuart Lloyd enquanto trabalhava na Bell Labs em 1957 e publicado formalmente somente em 1982 \cite{kMeansFirstAlgoLloyd1982}, solidificando a base para o moderno entendimento e aplicação do k-means em análise multivariada e outras áreas de processamento de dados.
+
+O termo \enquote{k-means} em si só foi ser cunhado em 1967 por James MacQueen \cite{kMeansCoinedMacQueen1967}, sendo conhecido também como \textbf{Algoritmo de Lloyd}, ou até de \textbf{Lloyd--Forgy}, pois sua ideia chegou também a ser publicada antes, em 1965, por Edward W. Forgy \cite{kMeansFirst2AlgoForgy1965}, nomes que ainda são usados atualmente, embora não tão populares quanto o termo k-means.
+
 % TODO
 % TODO
 % TODO: Vide abaixo
@@ -841,7 +847,7 @@ Fica evidente a facilidade muito maior em se implementar o poder do paralelismo 
 \textbf{TODO: Escrever uma sub-seção sobre o k-means.}
 
 \begin{itemize}
-  \item \textbf{Um dos algoritmos mais tradicionais, explicar a história dele. Citar os primeiros trabalhos introduzindo o algoritmo;}
+  % \item \textbf{Um dos algoritmos mais tradicionais, explicar a história dele. Citar os primeiros trabalhos introduzindo o algoritmo;}
   \item \textbf{Explicar brevemente seu funcionamento (talvez com um pseudo-código bem alto nível? Diagramas??);}
   \item \textbf{Explicar como ele é usado (aplicações reais).}
 \end{itemize}
