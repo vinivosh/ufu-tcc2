@@ -898,31 +898,7 @@ A exploração de técnicas híbridas, que combinem métodos de agrupamento clá
 
 \section{Primeiras Implementações Paralelas}
 
-A ideia de acelerar a execução de algoritmos de agrupamento de dados utilizando a computação paralela não é nova. Desde o advento desses processos e do aumento cada vez mais rápido de volume de dados disponíveis para análise, vem-se fazendo evidente a necessidade de otimizar ao máximo esses algoritmos.
-
-% TODO
-% TODO
-% TODO: Vide abaixo
-% TODO
-% TODO
-
-\textbf{TODO: Citar aqui os trabalhos mais antigos que encontrar! Citar, necessariamente:}
-
-\begin{itemize}
-  % \item \textbf{Um dos trabalhos mais antigos que tentaram paralelizar um algoritmo de agrupamento de dados (seja por CPU, GPU, TPU, etc. até paralelização em nível de instrução da CPU tá valendo). Imagino que seria no máximo de 2005 esse trabalho.} 
-
-  % \textbf{Candidato: \enquote{Parallel K-means Clustering Algorithm on NOWs}, de 2000. \href{https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6197ce32309824420aac79f975e028e440c2be96}{Link}.}
-
-  % \textbf{Candidato: \enquote{Parallel K - Means Algorithm on Distributed Memory Multiprocessors}, de 2003. \href{https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=5598bf67cef4f2727da0b0b94ba085349c7c45e7}{Link}.}
-
-  \item \textbf{Um dos trabalhos mais antigos que tenha parelelizado especificamente em GPU um algoritmo de agrupamento de dados. Esse muito provavelmente vai ser de 2007 a 2011, com o lançamento e melhoramento do CUDA da NVIDIA}
-
-  \textbf{Candidato: \enquote{GPU Acceleration of Iterative Clustering}, de 2004. \href{https://www.researchgate.net/profile/John-Hart-17/publication/250176198_GPU_Acceleration_of_Iterative_Clustering/links/5447f8160cf2d62c30529d02/GPU-Acceleration-of-Iterative-Clustering.pdf}{Link}.}
-
-  \item \textbf{Um dos primeiros trabalhos que tentaram paralelizar especificamente o k-means, seja por CPU, GPU, etc. Se esse for, ao mesmo tempo, algum dos anteriores, tá ótimo também}
-
-  \textbf{Candidato: Vide segundo item.}
-\end{itemize}
+A ideia de acelerar a execução de algoritmos de agrupamento de dados utilizando a computação paralela não é nova. Desde o advento das pesquisas envolvendo tais processos e do aumento cada vez mais rápido de volume de dados disponíveis para análise, vem-se fazendo evidente a necessidade de otimizar ao máximo esses algoritmos.
 
 Um dos estudos mais antigos encontrados que tenta paralelizar um algoritmo desse tipo é o \enquote{\textit{Parallel K-means Clustering Algorithm on NOWs}} \cite{kMeansParallelkantabutra2000}.
 
@@ -948,14 +924,20 @@ Ambos dos últimos dois estudos comentados predatam implementações em GPU de a
 
 Para explorar as primeiras implementações de algoritmos de agrupamento que utilizaram especificamente placas de vídeo para paralelização é preciso avançar ao menos um ano na linha do tempo.
 
-O estudo mais antigo encontrado a utilizar essa técnica é o \enquote{\textit{GPU Acceleration of Iterative Clustering}} \cite{iterativeClusteringGPU2004}.
+O estudo mais antigo encontrado a utilizar essa técnica é o \enquote{\textit{GPU Acceleration of Iterative Clustering}} \cite{iterativeClusteringGPU2004}. Esse estudo apresenta uma abordagem inovadora para \textbf{acelerar algoritmos iterativos de agrupamento}, como o \textbf{K-means} e a \textbf{Análise de Componentes Principais Agrupada (CPCA)}, utilizando o poder computacional das unidades de processamento gráfico. A pesquisa destaca o potencial das GPUs não apenas para gráficos e renderização, mas também para acelerar algoritmos amplamente utilizados em campos como visão computacional, processamento de sinais, compressão de dados e geometria computacional. O foco é na utilização da arquitetura de streaming de alta performance das GPUs para executar a parte mais custosa computacionalmente desses algoritmos, resultando em acelerações significativas.
+
+O método proposto utiliza a arquitetura das GPUs para realizar as avaliações métricas, que são a parte mais intensiva em termos de cálculos dos algoritmos de agrupamento. Os autores desenvolveram uma versão hierárquica do algoritmo K-means, projetada para aumentar o paralelismo SIMD, resultando em um desempenho melhorado em comparação com abordagens hierárquicas tradicionais do K-means, que podem não aproveitar totalmente o hardware das GPUs. A GPU lida com a tarefa de particonamento dos dados, enquanto a CPU é responsável por atualizar os modelos de cada cluster, otimizando o uso dos recursos computacionais disponíveis.
+
+Nos resultados apresentados, a aceleração obtida varia entre 1,5 a 3 vezes em comparação com a execução apenas na CPU, dependendo do tamanho do conjunto de dados. Este aumento de desempenho é particularmente relevante para datasets grandes e métricas complexas, onde a aceleração permite soluções mais rápidas e viáveis para problemas que antes eram proibitivamente lentos para resolver. O estudo também discute as limitações atuais e potenciais futuras melhorias, incluindo a implementação de etapas de atualização do modelo diretamente nas GPUs, o que poderia reduzir ainda mais o tempo de computação.
+
+No fim, esse trabalho demonstra o potencial das GPUs para acelerar significativamente algoritmos de agrupamento iterativos, abrindo caminho para aplicações interativas e em tempo real que antes não eram possíveis. As futuras direções de pesquisa sugeridas incluem a exploração de métodos para minimizar a comunicação entre a GPU e a CPU e expandir a aplicabilidade dessa abordagem para métricas de agrupamento que não podem ser avaliadas independentemente para cada ponto. Este estudo não apenas destaca a utilidade das GPUs além da área gráfica, mas também promove a investigação contínua para explorar plenamente suas capacidades para acelerar uma gama ainda mais ampla de algoritmos computacionais.
 
 
 % * ####################################
 
 \section{K-Means e Variantes}
 
-No estudo \enquote{\textit{Parallelization of Partitioning Around Medoids} [\dots]} \cite{pamKMedoids2020}, os autores propuseram uma implementação paralela do \textbf{algoritmo de agrupamento K-Medoids}, especificamente da sua versão conhecida como \textbf{PAM (\textit{Partitioning Around Medoids})}, que é utilizada para dividir conjuntos de dados em clusters de forma que minimizem as distâncias internas. Esta versão paralela foi desenvolvida para ser executada em Unidades de Processamento Gráfico (GPUs) utilizando a arquitetura CUDA da NVIDIA.
+Partindo para estudos mais recentes, representando o estado da arte da área, e focando mais no K-means e suas diversas variantes, é de destaque o estudo \enquote{\textit{Parallelization of Partitioning Around Medoids} [\dots]} \cite{pamKMedoids2020}, onde os autores propuseram uma implementação paralela do \textbf{algoritmo de agrupamento K-Medoids}, especificamente da sua versão conhecida como \textbf{PAM (\textit{Partitioning Around Medoids})}, que é utilizada para dividir conjuntos de dados em clusters de forma que minimizem as distâncias internas. Esta versão paralela foi desenvolvida para ser executada em Unidades de Processamento Gráfico (GPUs) utilizando a arquitetura CUDA da NVIDIA.
 
 O principal desafio do K-Medoids reside em seu alto custo em tempo de execução e em uso de espaço de memória, especialmente para grandes conjuntos de dados, o que pode tornar sua aplicação inviável em contextos práticos. Para superar esses empecilhos, os autores optaram por uma abordagem paralela, implementada em CUDA, e que não necessita do pré-cálculo de uma tabela completa de distâncias, algo quase onipresente em implementações anteriores do K-Medoids, reduzindo assim o consumo de memória e acelerando muito o processo de execução.
 
