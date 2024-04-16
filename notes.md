@@ -43,6 +43,22 @@
 - Discutir no capítulo 4 como foram identificadas quais partes podiam ser paralelizáveis, e como seria feito isso em outros algoritmos
   - Dá pra citar brevemente um exemplo do Algoritmo Hierárquico mostrando por similaridade como seria feita essa identificação nele
 
+## Professores que estou considerando para formar a banca
+
+- Júlia Tannús de Souza (julia.tannus@ufu.br)
+- Anderson Rodrigues dos Santos (santosardr@ufu.br)
+- Marcelo de Almeida Maia (marcelo.maia@ufu.br)
+- Wendel Alexandre Xavier de Melo (wendelmelo@ufu.br)
+- Luiz Gustavo Almeida Martins (lgamartins@ufu.br)
+- Rivalino Matias Júnior (rivalino@ufu.br)
+- Pedro Frosi Rosa (pfrosi@ufu.br)
+
+
+## Reunião com Professor (15/04/24)
+
+- Explicar na conclusão os fatores que impactaram mais as dificuldades de alcançar os speed-ups
+  - Um **ótimo** exemplo seria a última otimização que foi feita ao implementar o K-means GPU v3.0, onde parar de usar uma list comprehension de Python e passar a usar uma sintaxe do Numpy para filtrar elementos de um array causou um speed-up de mais de 20 vezes ao rodar o algoritmo no dataset 5!
+
 
 
 ## Links úteis
