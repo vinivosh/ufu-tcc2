@@ -381,10 +381,10 @@ A hipótese principal deste trabalho é a de que algoritmos de clustering, em ge
 % TODO
 % TODO
 
-O foco de pesquisa é o notório algoritmo de agrupamento \textit{K-means} \cite{GPU-accelerated-K-Means}. Implementações e estudos realizados sobre ele foram analisados, e uma implementação paralela em GPU teve seu desempenho comparado com a serial em CPU.
+O foco de pesquisa é o notório algoritmo de agrupamento \textit{k-means} \cite{GPU-accelerated-K-Means}. Implementações e estudos realizados sobre ele foram analisados, e uma implementação paralela em GPU teve seu desempenho comparado com a serial em CPU.
 
 % * Texto antigo do parágrafo acima:
-% O foco de pesquisa são \qntAlgrtm{} algoritmos de agrupamento especialmente notórios: o \textit{K-means} \cite{GPU-accelerated-K-Means} e o \textit{Agrupamento Hierárquico}. Implementações e estudos realizados sobre estes foram analisados, e implementações paralelas em GPU tiveram seu desempenho comparado com as seriais em CPU.
+% O foco de pesquisa são \qntAlgrtm{} algoritmos de agrupamento especialmente notórios: o \textit{k-means} \cite{GPU-accelerated-K-Means} e o \textit{Agrupamento Hierárquico}. Implementações e estudos realizados sobre estes foram analisados, e implementações paralelas em GPU tiveram seu desempenho comparado com as seriais em CPU.
 
 
 % * Texto ainda mais antigo do parágrafo acima:
@@ -404,7 +404,7 @@ O foco de pesquisa é o notório algoritmo de agrupamento \textit{K-means} \cite
 
 Este trabalho tem como objetivo principal testar a validez de sua hipótese (discutida mais à fundo na seção 1.2) de que algoritmos de clusterização são intrinsecamente paralelizáveis, e que o ganho de velocidade ao serem paralelizados é altamente significativo.
 
-Além disso, deseja-se compilar aqui um vasto conhecimento de como paralelizar esses algoritmos em geral, analisando principalmente os \qntAlgrtm{} aqui estudados a fundo (K-Means e Agrupamento Hierárquico) e usando este aprendizado para criar um passo-a-passo genérico de como realizar tal modificação de código em um algoritmo de agrupamento qualquer.
+Além disso, deseja-se compilar aqui um vasto conhecimento de como paralelizar esses algoritmos em geral, analisando principalmente os \qntAlgrtm{} aqui estudados a fundo (k-means e agrupamento hierárquico) e usando este aprendizado para criar um passo-a-passo genérico de como realizar tal modificação de código em um algoritmo de agrupamento qualquer.
 
 
 
@@ -733,7 +733,7 @@ Como uma tentativa de unir o melhor dos dois mundos --- a velocidade de uma ling
 \subsection{Exemplo de Implementação Numba}
 \label{ssc:implementaçãoNumba}
 
-Seguindo o foco desse trabalho, a biblioteca foi utilizada para tornar mais performáticas as partes mais custosas computacionalmente do algoritmo K-means, através da vetorização de funções anteriormente seriais.
+Seguindo o foco desse trabalho, a biblioteca foi utilizada para tornar mais performáticas as partes mais custosas computacionalmente do algoritmo k-means, através da vetorização de funções anteriormente seriais.
 
 Para exemplificar como foi feito o processo, um algoritmo simples, extremamente semelhante ao usado para demonstrar o uso da API CUDA em C++ no Capítulo \ref{ssc:implementaçãoCUDA}, foi implementado, primeiro serialmente, e depois paralelamente, utilizando a GPU.
 
@@ -821,16 +821,16 @@ Rodando o algoritmo e medindo, como anteriormente, a velocidade de execução da
 
 Fica evidente a facilidade muito maior em se implementar o poder do paralelismo proporcionado pela API CUDA ao se usar a linguagem Python em conjunto com a biblioteca Numba.
 
-É possível adentrar na área de GPGPU sem abrir mão de abstrações de mais alto-nível proporcionadas pela linguagem, além de usufruir, simultaneamente, da imensa gama de bibliotecas de ciência de dados implementadas em Python, como \textit{Numpy} e \textit{Pandas}, que foram também amplamente utilizadas nas implementações do algoritmo K-means, exploradas no Capítulo \ref{sec:kMeansImplementações}.
+É possível adentrar na área de GPGPU sem abrir mão de abstrações de mais alto-nível proporcionadas pela linguagem, além de usufruir, simultaneamente, da imensa gama de bibliotecas de ciência de dados implementadas em Python, como \textit{Numpy} e \textit{Pandas}, que foram também amplamente utilizadas nas implementações do algoritmo k-means, exploradas no Capítulo \ref{sec:kMeansImplementações}.
 
-É importante notar também que ainda há uma penalidade considerável no potencial de ganho de performance, se comparando implementações usando CUDA em C++ e as usando Numba em Python. O ganho de velocidade foi de 28 vezes em C++, enquanto em Python foi de apenas 6,29 vezes. Ainda assim, o \textit{speed-up} obtido nas execuções do K-means acelerado usando o Numba foram de magnitudes ainda maiores que o apresentado neste exemplo simples, como explicitado no capítulo \ref{chp:resultados}.
+É importante notar também que ainda há uma penalidade considerável no potencial de ganho de performance, se comparando implementações usando CUDA em C++ e as usando Numba em Python. O ganho de velocidade foi de 28 vezes em C++, enquanto em Python foi de apenas 6,29 vezes. Ainda assim, o \textit{speed-up} obtido nas execuções do k-means acelerado usando o Numba foram de magnitudes ainda maiores que o apresentado neste exemplo simples, como explicitado no capítulo \ref{chp:resultados}.
 
 
 
 % * ####################################
 
-\section{K-Means}
-\label{sec:kmeans}
+\section{K-means}
+\label{sec:kMeans}
 
 % TODO
 % TODO
@@ -838,7 +838,7 @@ Fica evidente a facilidade muito maior em se implementar o poder do paralelismo 
 % TODO
 % TODO
 
-\textbf{TODO: Escrever uma sub-seção sobre o K-Means.}
+\textbf{TODO: Escrever uma sub-seção sobre o k-means.}
 
 \begin{itemize}
   \item \textbf{Um dos algoritmos mais tradicionais, explicar a história dele. Citar os primeiros trabalhos introduzindo o algoritmo;}
@@ -852,7 +852,7 @@ Fica evidente a facilidade muito maior em se implementar o poder do paralelismo 
 
 % \section{Algoritmo 2: Hierarchical Clustering}
 
-% \textbf{Escrever uma sub-seção sobre o Hierarchical Clustering, no mesmo estilo da seção do K-Means. Seção opcional, só fazer depois de concluir TODO o resto do K-means + seus experimentos + resultados + código.}
+% \textbf{Escrever uma sub-seção sobre o Hierarchical Clustering, no mesmo estilo da seção do k-means. Seção opcional, só fazer depois de concluir TODO o resto do k-means + seus experimentos + resultados + código.}
 
 
 
@@ -902,42 +902,42 @@ A ideia de acelerar a execução de algoritmos de agrupamento de dados utilizand
 
 Um dos estudos mais antigos encontrados que tenta paralelizar um algoritmo desse tipo é o \enquote{\textit{Parallel K-means Clustering Algorithm on NOWs}} \cite{kMeansParallelkantabutra2000}.
 
-Nesse artigo, é apresentada uma abordagem para melhorar a eficiência do \textbf{algoritmo K-means} através da paralelização. O objetivo principal é reduzir a complexidade temporal do algoritmo K-means serial aplicando teorias de computação paralela, alcançando uma melhoria de um fator de $O(K/2)$, onde $K$ é o número de clusters desejados. Além disso, visa permitir que o algoritmo seja executado em uma memória coletiva maior, composta por várias máquinas, superando a limitação de memória de uma apenas uma, o que permite escalar o tamanho do problema em até $O(K)$ vezes o tamanho que poderia ser processado em uma única máquina.
+Nesse artigo, é apresentada uma abordagem para melhorar a eficiência do \textbf{algoritmo k-means} através da paralelização. O objetivo principal é reduzir a complexidade temporal do algoritmo k-means serial aplicando teorias de computação paralela, alcançando uma melhoria de um fator de $O(K/2)$, onde $K$ é o número de clusters desejados. Além disso, visa permitir que o algoritmo seja executado em uma memória coletiva maior, composta por várias máquinas, superando a limitação de memória de uma apenas uma, o que permite escalar o tamanho do problema em até $O(K)$ vezes o tamanho que poderia ser processado em uma única máquina.
 
 A pesquisa foi realizada utilizando uma rede de estações de trabalho homogêneas com uma rede Ethernet e a comunicação entre processos foi feita por meio da Interface de Passagem de Mensagens (MPI). O método proposto usa uma abordagem mestre-escravo (\textit{master-slave}) onde um processo mestre distribui subconjuntos de dados para processos escravos, que calculam médias locais e participam de um processo iterativo de realocação de pontos de dados para minimizar uma função de erro quadrático. A análise de complexidade de tempo e espaço foi detalhadamente realizada, destacando a eficiência do algoritmo paralelizado em comparação com sua versão serial.
 
 Os resultados experimentais mostraram que, para conjuntos de dados grandes (mais de 700.000 datapoints), a versão paralela do algoritmo conseguiu obter uma melhoria significativa na velocidade de execução, evidenciada por um "speedup" de até O(K/2) conforme o tamanho do problema aumenta. Isto foi particularmente notável quando o tamanho do problema excedeu a capacidade de memória de uma única máquina, um cenário onde a versão serial do algoritmo não pôde sequer ser executada.
 
-No fim, a pesquisa demonstra que a paralelização do algoritmo K-means em uma rede de estações de trabalho oferece uma melhoria significativa tanto em termos de complexidade temporal quanto de escalabilidade do tamanho do problema, alcançando uma eficiência de 50\% na redução do tempo de complexidade. Esta eficiência é considerada alta para a época e dada a natureza global do algoritmo K-means e o uso de um sistema baseado em passagem de mensagens Ethernet. O trabalho sugere que futuras pesquisas poderiam focar na redução do tempo de comunicação ou na adaptação do algoritmo para funcionar com um número flexível de máquinas, visando melhorias ainda maiores na eficiência e escalabilidade.
+No fim, a pesquisa demonstra que a paralelização do algoritmo k-means em uma rede de estações de trabalho oferece uma melhoria significativa tanto em termos de complexidade temporal quanto de escalabilidade do tamanho do problema, alcançando uma eficiência de 50\% na redução do tempo de complexidade. Esta eficiência é considerada alta para a época e dada a natureza global do algoritmo k-means e o uso de um sistema baseado em passagem de mensagens Ethernet. O trabalho sugere que futuras pesquisas poderiam focar na redução do tempo de comunicação ou na adaptação do algoritmo para funcionar com um número flexível de máquinas, visando melhorias ainda maiores na eficiência e escalabilidade.
 
-Outro estudo antigo que mostra o início das tentativas de paralelizção de algoritmos de agrupamento é o \enquote{\textit{Parallel K-Means Algorithm on Distributed Memory Multiprocessors}} \cite{parallelKMeansJoshi2003}. Aqui, é explorada uma \textbf{implementação paralela do K-means}, visando acelerar o agrupamento de grandes conjuntos de dados em um cluster de \textit{workstations} da Sun Microsystems. A pesquisa objetiva explorar o paralelismo de dados inerente ao K-means, utilizando o modelo de passagem de mensagens para dividir o conjunto de dados entre processos, buscando reduzir o tempo total de computação.
+Outro estudo antigo que mostra o início das tentativas de paralelizção de algoritmos de agrupamento é o \enquote{\textit{Parallel K-Means Algorithm on Distributed Memory Multiprocessors}} \cite{parallelKMeansJoshi2003}. Aqui, é explorada uma \textbf{implementação paralela do k-means}, visando acelerar o agrupamento de grandes conjuntos de dados em um cluster de \textit{workstations} da Sun Microsystems. A pesquisa objetiva explorar o paralelismo de dados inerente ao k-means, utilizando o modelo de passagem de mensagens para dividir o conjunto de dados entre processos, buscando reduzir o tempo total de computação.
 
 O algoritmo implementado no estudo divide o conjunto de dados entre os processos de um sistema de memória distribuída, onde cada processo é responsável por uma parte dos dados. Esta abordagem visa calcular a associação datapoint-cluster para cada partição de forma mais rápida. A comunicação entre os processos, embora necessária para a recomputação dos centróides e a avaliação da qualidade dos clusters, representa um custo significativo, especialmente para conjuntos de dados menores, onde o tempo de comunicação domina em relação ao tempo de processamento dos dados. A pesquisa destaca a importância de minimizar essa comunicação para melhorar a eficiência do algoritmo paralelo.
 
 A implementação utiliza o modelo de Programa Único Múltiplos Dados (SPMD) e a Interface de Passagem de Mensagens (MPI) para a comunicação entre processadores. Inicialmente, o processo raiz calcula os centróides iniciais e os transmite a todos os outros processos. Cada processo então computa distâncias, atribui pontos ao centróide mais próximo, e calcula erros quadráticos médios locais. Essas operações são repetidas até a convergência, com processos recomputando centróides e avaliando a qualidade global do agrupamento.
 
-Embora a paralelização tenha mostrado benefícios, como a distribuição eficiente do processamento e a possibilidade de lidar com conjuntos de dados maiores, o ganho de velocidade ótimo não foi alcançado devido ao custo sequencial associado à escolha dos centróides iniciais e à influência de outliers na formação dos clusters. A pesquisa sugere que futuros trabalhos podem explorar a paralelização em multiprocessadores de memória compartilhada, abordar questões de valores ausentes e outliers, e testar variantes probabilísticas do K-means ou o algoritmo K-modes para conjuntos de dados categóricos de grande escala.
+Embora a paralelização tenha mostrado benefícios, como a distribuição eficiente do processamento e a possibilidade de lidar com conjuntos de dados maiores, o ganho de velocidade ótimo não foi alcançado devido ao custo sequencial associado à escolha dos centróides iniciais e à influência de outliers na formação dos clusters. A pesquisa sugere que futuros trabalhos podem explorar a paralelização em multiprocessadores de memória compartilhada, abordar questões de valores ausentes e outliers, e testar variantes probabilísticas do k-means ou o algoritmo K-modes para conjuntos de dados categóricos de grande escala.
 
-Este estudo demonstra o potencial e os desafios da paralelização do K-means para o agrupamento de dados em grandes escalas, tendo aberto caminho para pesquisas futuras voltadas à otimização da eficiência e da capacidade de processamento desses algoritmos em ambientes de computação de alta performance, para a época.
+Esse estudo demonstra o potencial e os desafios da paralelização do k-means para o agrupamento de dados em grandes escalas, tendo aberto caminho para pesquisas futuras voltadas à otimização da eficiência e da capacidade de processamento desses algoritmos em ambientes de computação de alta performance, para a época.
 
 Ambos dos últimos dois estudos comentados predatam implementações em GPU de algoritmos de agrupamento de dados, demonstrando tentativas de paralelização com outras técnicas além da área de GPGPU, usando técnica como a computação distribuída, processamento paralelo SIMD, entre outras.
 
 Para explorar as primeiras implementações de algoritmos de agrupamento que utilizaram especificamente placas de vídeo para paralelização é preciso avançar ao menos um ano na linha do tempo.
 
-O estudo mais antigo encontrado a utilizar essa técnica é o \enquote{\textit{GPU Acceleration of Iterative Clustering}} \cite{iterativeClusteringGPU2004}. Esse estudo apresenta uma abordagem inovadora para \textbf{acelerar algoritmos iterativos de agrupamento}, como o \textbf{K-means} e a \textbf{Análise de Componentes Principais Agrupada (CPCA)}, utilizando o poder computacional das unidades de processamento gráfico. A pesquisa destaca o potencial das GPUs não apenas para gráficos e renderização, mas também para acelerar algoritmos amplamente utilizados em campos como visão computacional, processamento de sinais, compressão de dados e geometria computacional. O foco é na utilização da arquitetura de streaming de alta performance das GPUs para executar a parte mais custosa computacionalmente desses algoritmos, resultando em acelerações significativas.
+O estudo mais antigo encontrado a utilizar essa técnica é o \enquote{\textit{GPU Acceleration of Iterative Clustering}} \cite{iterativeClusteringGPU2004}. Esse estudo apresenta uma abordagem inovadora para \textbf{acelerar algoritmos iterativos de agrupamento}, como o \textbf{k-means} e a \textbf{Análise de Componentes Principais Agrupada (CPCA)}, utilizando o poder computacional das unidades de processamento gráfico. A pesquisa destaca o potencial das GPUs não apenas para gráficos e renderização, mas também para acelerar algoritmos amplamente utilizados em campos como visão computacional, processamento de sinais, compressão de dados e geometria computacional. O foco é na utilização da arquitetura de streaming de alta performance das GPUs para executar a parte mais custosa computacionalmente desses algoritmos, resultando em acelerações significativas.
 
-O método proposto utiliza a arquitetura das GPUs para realizar as avaliações métricas, que são a parte mais intensiva em termos de cálculos dos algoritmos de agrupamento. Os autores desenvolveram uma versão hierárquica do algoritmo K-means, projetada para aumentar o paralelismo SIMD, resultando em um desempenho melhorado em comparação com abordagens hierárquicas tradicionais do K-means, que podem não aproveitar totalmente o hardware das GPUs. A GPU lida com a tarefa de particonamento dos dados, enquanto a CPU é responsável por atualizar os modelos de cada cluster, otimizando o uso dos recursos computacionais disponíveis.
+O método proposto utiliza a arquitetura das GPUs para realizar as avaliações métricas, que são a parte mais intensiva em termos de cálculos dos algoritmos de agrupamento. Os autores desenvolveram uma versão hierárquica do algoritmo k-means, projetada para aumentar o paralelismo SIMD, resultando em um desempenho melhorado em comparação com abordagens hierárquicas tradicionais do k-means, que podem não aproveitar totalmente o hardware das GPUs. A GPU lida com a tarefa de particonamento dos dados, enquanto a CPU é responsável por atualizar os modelos de cada cluster, otimizando o uso dos recursos computacionais disponíveis.
 
 Nos resultados apresentados, a aceleração obtida varia entre 1,5 a 3 vezes em comparação com a execução apenas na CPU, dependendo do tamanho do conjunto de dados. Este aumento de desempenho é particularmente relevante para datasets grandes e métricas complexas, onde a aceleração permite soluções mais rápidas e viáveis para problemas que antes eram proibitivamente lentos para resolver. O estudo também discute as limitações atuais e potenciais futuras melhorias, incluindo a implementação de etapas de atualização do modelo diretamente nas GPUs, o que poderia reduzir ainda mais o tempo de computação.
 
-No fim, esse trabalho demonstra o potencial das GPUs para acelerar significativamente algoritmos de agrupamento iterativos, abrindo caminho para aplicações interativas e em tempo real que antes não eram possíveis. As futuras direções de pesquisa sugeridas incluem a exploração de métodos para minimizar a comunicação entre a GPU e a CPU e expandir a aplicabilidade dessa abordagem para métricas de agrupamento que não podem ser avaliadas independentemente para cada ponto. Este estudo não apenas destaca a utilidade das GPUs além da área gráfica, mas também promove a investigação contínua para explorar plenamente suas capacidades para acelerar uma gama ainda mais ampla de algoritmos computacionais.
+No fim, o trabalho demonstra o potencial das GPUs para acelerar significativamente algoritmos de agrupamento iterativos, abrindo caminho para aplicações interativas e em tempo real que antes não eram possíveis. As futuras direções de pesquisa sugeridas incluem a exploração de métodos para minimizar a comunicação entre a GPU e a CPU e expandir a aplicabilidade dessa abordagem para métricas de agrupamento que não podem ser avaliadas independentemente para cada ponto. Este estudo não apenas destaca a utilidade das GPUs além da área gráfica, mas também promove a investigação contínua para explorar plenamente suas capacidades para acelerar uma gama ainda mais ampla de algoritmos computacionais.
 
 
 % * ####################################
 
-\section{K-Means e Variantes}
+\section{K-means e Variantes}
 
-Partindo para estudos mais recentes, representando o estado da arte da área, e focando mais no K-means e suas diversas variantes, é de destaque o estudo \enquote{\textit{Parallelization of Partitioning Around Medoids} [\dots]} \cite{pamKMedoids2020}, onde os autores propuseram uma implementação paralela do \textbf{algoritmo de agrupamento K-Medoids}, especificamente da sua versão conhecida como \textbf{PAM (\textit{Partitioning Around Medoids})}, que é utilizada para dividir conjuntos de dados em clusters de forma que minimizem as distâncias internas. Esta versão paralela foi desenvolvida para ser executada em Unidades de Processamento Gráfico (GPUs) utilizando a arquitetura CUDA da NVIDIA.
+Partindo para estudos mais recentes, representando o estado da arte da área, e focando mais no k-means e suas diversas variantes, é de destaque o estudo \enquote{\textit{Parallelization of Partitioning Around Medoids} [\dots]} \cite{pamKMedoids2020}, onde os autores propuseram uma implementação paralela do \textbf{algoritmo de agrupamento K-Medoids}, especificamente da sua versão conhecida como \textbf{PAM (\textit{Partitioning Around Medoids})}, que é utilizada para dividir conjuntos de dados em clusters de forma que minimizem as distâncias internas. Esta versão paralela foi desenvolvida para ser executada em Unidades de Processamento Gráfico (GPUs) utilizando a arquitetura CUDA da NVIDIA.
 
 O principal desafio do K-Medoids reside em seu alto custo em tempo de execução e em uso de espaço de memória, especialmente para grandes conjuntos de dados, o que pode tornar sua aplicação inviável em contextos práticos. Para superar esses empecilhos, os autores optaram por uma abordagem paralela, implementada em CUDA, e que não necessita do pré-cálculo de uma tabela completa de distâncias, algo quase onipresente em implementações anteriores do K-Medoids, reduzindo assim o consumo de memória e acelerando muito o processo de execução.
 
@@ -953,7 +953,7 @@ Este avanço indica que o algoritmo K-Medoids, adaptado para uso altamente paral
 
 O \textbf{Agrupamento Aglomerativo Paralelo} é uma técnica fundamental no campo da mineração de dados e aprendizado de máquina, especialmente quando lidamos com grandes conjuntos de dados. Tradicionalmente, os \textbf{algoritmos de agrupamento aglomerativo} (\textbf{HAC}, em inglês), conhecidos por sua abordagem hierárquica, eram limitados pela capacidade computacional e de memória das máquinas. Com a evolução da computação paralela, surgiu a necessidade de adaptar estes algoritmos para ambientes onde múltiplos processos podem ser executados simultaneamente, melhorando significativamente a eficiência e a escalabilidade do agrupamento de grandes quantidades de instâncias.
 
-Antes do desenvolvimento do algoritmo K-Means, um dos métodos de agrupamento mais populares, havia um forte interesse no agrupamento aglomerativo devido à sua capacidade de revelar a estrutura hierárquica dos dados. No entanto, sua aplicação era bastante limitada devido ao alto custo computacional e à demanda por grandes quantidades de memória. A paralelização do agrupamento aglomerativo surgiu como uma solução para essas limitações, permitindo o processamento de dados em grande escala de uma maneira mais viável.
+Antes do desenvolvimento do algoritmo k-means, um dos métodos de agrupamento mais populares, havia um forte interesse no agrupamento aglomerativo devido à sua capacidade de revelar a estrutura hierárquica dos dados. No entanto, sua aplicação era bastante limitada devido ao alto custo computacional e à demanda por grandes quantidades de memória. A paralelização do agrupamento aglomerativo surgiu como uma solução para essas limitações, permitindo o processamento de dados em grande escala de uma maneira mais viável.
 
 Um avanço significativo no Agrupamento Aglomerativo Paralelo foi realizado através do desenvolvimento do \textbf{framework ParChain}, discutido no artigo \enquote{\textit{ParChain: A Framework for Parallel Hierarchical} [\dots]} \cite{parChainHAC2021}. O ParChain propõe uma estrutura para projetar algoritmos paralelos de agrupamento hierárquico aglomerativo que utilizam memória linear, em contraste com a memória quadrática requerida pelos algoritmos paralelos anteriores. Baseado na paralelização do algoritmo de cadeias de vizinhos mais próximos, o ParChain permite que múltiplos clusters sejam mesclados em cada rodada, melhorando a eficiência e a escalabilidade do processo de agrupamento.
 
@@ -985,7 +985,7 @@ O estudo confirmou que o algoritmo CLUE é altamente escalável, mantendo um des
 
 Este desenvolvimento representa um avanço significativo na análise de dados em física de alta energia, permitindo um processamento de dados mais rápido e eficiente, o que é essencial para explorar o potencial completo de futuros experimentos de física de partículas.
 
-Outro estudo muito relevante é o \enquote{\textit{Evaluation of Clustering Algorithms on GPU-Based Edge Computing Platforms}} \cite{edgeComputingGPUsIOT2020}, que analisou a viabilidade de executar algoritmos de agrupamento de dados, computacionalmente exigentes, em \textbf{plataformas de computação de borda} (\textbf{\textit{Edge Computing}}, uma abordagem que permite computação distribuída de baixo custo computacional nas bordas de uma rede, o mais próximo possível do cliente) equipadas com GPUs de baixo consumo. Foram testados três algoritmos de agrupamento diferentes: \textbf{K-Means}, \textbf{Fuzzy Minimals (FM)} e \textbf{Fuzzy C-Means (FCM)}, em dois contextos: \textbf{computação de alto desempenho (HPC)} e computação de borda.
+Outro estudo muito relevante é o \enquote{\textit{Evaluation of Clustering Algorithms on GPU-Based Edge Computing Platforms}} \cite{edgeComputingGPUsIOT2020}, que analisou a viabilidade de executar algoritmos de agrupamento de dados, computacionalmente exigentes, em \textbf{plataformas de computação de borda} (\textbf{\textit{Edge Computing}}, uma abordagem que permite computação distribuída de baixo custo computacional nas bordas de uma rede, o mais próximo possível do cliente) equipadas com GPUs de baixo consumo. Foram testados três algoritmos de agrupamento diferentes: \textbf{K-means}, \textbf{Fuzzy Minimals (FM)} e \textbf{Fuzzy C-means (FCM)}, em dois contextos: \textbf{computação de alto desempenho (HPC)} e computação de borda.
 
 Os resultados mostraram que, ao usar as GPUs em plataformas de borda como a NVIDIA AGX Xavier, foi possível obter uma aceleração significativa em comparação com as versões sequenciais dos algoritmos rodando nas próprias plataformas de borda. Especificamente, observou-se um aumento de velocidade de até 11 vezes para os códigos GPU em relação às versões sequenciais. Além disso, comparando as plataformas de computação de borda com as plataformas HPC, houve economias de energia de até 150\% ao usar a computação de borda em vez da versão HPC.
 
@@ -1011,7 +1011,7 @@ Além disto, é destacado no estudo que essas melhoras de desempenho possivelmen
 
 A pesquisa realizada neste trabalho consistiu de estudos e análises de trabalhos prévios, desenvolvimento de versões paralelizadas de \qntAlgrtm{} algoritmos de clustering e experimentos sobre essas implementações. Pode-se dividir tal metodologia em um conjunto de etapas que foram realizadas.
 
-\textbf{TODO: Re-escrever grande parte dessa descrição de etapas do trabalho para condizer com a pesquisa feita somente a respeito do K-Means...}
+\textbf{TODO: Re-escrever grande parte dessa descrição de etapas do trabalho para condizer com a pesquisa feita somente a respeito do k-means...}
 
 % TODO
 % TODO
@@ -1021,7 +1021,7 @@ A pesquisa realizada neste trabalho consistiu de estudos e análises de trabalho
 
 A \textbf{primeira etapa} consistiu em uma extensa pesquisa bibliográfica. O intuito é levantar o estado da arte na área de algoritmos de agrupamento acelerados em GPU usando a linguagem e biblioteca CUDA da NVIDIA. O foco foi entender quais algoritmos já foram implementados com sucesso em CUDA, e como foram feitas tais implementações, além dos ganhos em desempenho destas. Essa etapa permitiu agregar conhecimento sobre como utilizar a biblioteca CUDA para acelerar algoritmos de agrupamento, além de mostrar uma prévia da magnitude de ganho de desempenho esperado de uma paralelização média desse tipo de algoritmo.
 
-A \textbf{segunda etapa} consistiu na implementação de duas versões, uma serial e uma paralela, de um dos mais antigos e conhecidos algoritmos de agrupamento de dados: o \textbf{K-Means}. A função dessa etapa da pesquisa foi aprender como programar, na prática, um algoritmo de agrupamento e, depois, como paralelizá-lo utilizando a biblioteca Python \textit{Numba} --- que utiliza a plataforma CUDA, internamente. Por ser um algoritmo mais antigo, o k-means já foi muito estudado anteriormente, tanto em versões seriais quanto paralelas, com grande presença na bibliografia da área. Assim, a implementação aqui realizada foi feita puramente para fins de aprendizado. Os ganhos de velocidade da versão paralela foi então comparada também com os ganhos obtidos nos trabalhos analisados na primeira etapa. Isso serviu como uma validação da corretude da implementação feita.
+A \textbf{segunda etapa} consistiu na implementação de duas versões, uma serial e uma paralela, de um dos mais antigos e conhecidos algoritmos de agrupamento de dados: o \textbf{k-means}. A função dessa etapa da pesquisa foi aprender como programar, na prática, um algoritmo de agrupamento e, depois, como paralelizá-lo utilizando a biblioteca Python \textit{Numba} --- que utiliza a plataforma CUDA, internamente. Por ser um algoritmo mais antigo, o k-means já foi muito estudado anteriormente, tanto em versões seriais quanto paralelas, com grande presença na bibliografia da área. Assim, a implementação aqui realizada foi feita puramente para fins de aprendizado. Os ganhos de velocidade da versão paralela foi então comparada também com os ganhos obtidos nos trabalhos analisados na primeira etapa. Isso serviu como uma validação da corretude da implementação feita.
 
 A \textbf{terceira etapa} consistiu na implementação de uma versão paralela um pouco mais \enquote{inédita} de algum algoritmo de agrupamento, ou seja, um algoritmo cuja implementação paralela foi raramente estudada à fundo em pesquisas. O algoritmo escolhido para essa etapa foi o de \textbf{Agrupamento Hierárquico}. Usando o aprendizado adquirido nas etapas anteriores, este algoritmo foi paralelizado em Python, utilizando novamente a biblioteca \textit{Numba}, e seus resultados comparados com a versão serial (rodando somente em uma thread, na CPU) para garantir corretude.
 
@@ -1043,7 +1043,7 @@ A \textbf{quinta etapa}, por fim, consistiu em diversos experimentos de ganho de
 
   \item \textbf{Exemplo de identificação num algoritmo toy (não-clustering);}
 
-  \item \textbf{Exemplo de identificação no pseudocódigo do K-Means;}
+  \item \textbf{Exemplo de identificação no pseudocódigo do k-means;}
 
   \item \textbf{Exemplo de identificação no pseudocódigo do Hierarquichal Clustering.}
 \end{itemize}
@@ -1052,10 +1052,10 @@ A \textbf{quinta etapa}, por fim, consistiu em diversos experimentos de ganho de
 
 % * ####################################
 
-\section{Implementação do K-Means}
+\section{Implementação do K-means}
 \label{sec:kMeansImplementações}
 
-Como detalhado no capítulo \ref{sec:kmeans}, o \textbf{K-Means} é um dos mais importantes e amplamente utilizados algoritmos de agrupamento, mesmo com suas diversas limitações. Ele foi selecionado nessa pesquisa como exemplo inicial de paralelização de algoritmo por ser de fácil entendimento e possuir uma implementação relativamente simples.
+Como detalhado no capítulo \ref{sec:kMeans}, o \textbf{k-means} é um dos mais importantes e amplamente utilizados algoritmos de agrupamento, mesmo com suas diversas limitações. Ele foi selecionado nessa pesquisa como exemplo inicial de paralelização de algoritmo por ser de fácil entendimento e possuir uma implementação relativamente simples.
 
 Foram utilizadas bibliotecas Python renomadas na área de ciência de dados, como \textit{Numpy} e \textit{Pandas}, para facilitar a implementação e garantir uma execução altamente otimizada, visto que essas bibliotecas implementam chamadas em C/C++ para executar suas partes mais computacionalmente custosas, garantindo uma performance superior à chamadas de alto nível \cite{sciPyAndNumpy2012}.
 
@@ -1071,10 +1071,10 @@ O \textbf{Algoritmo \ref{code:kMeansCPU}} abaixo é a implementação da versão
   firstline=3,
   % lastline=,
   label=code:kMeansCPU,
-  caption={Implementação serial do K-Means},
+  caption={Implementação serial do k-means},
 ]{code-snippets/kMeansCPU.py}
 
-A função \textit{\codeinline{kMeansCPU}} declarada na linha 1 é uma implementação \enquote{concreta} do pseudocódigo apresentado no capítulo \ref{sec:kmeans}. Ela recebe o dataset com os dados a serem agrupados através de um dataframe do Pandas (variável \textit{\codeinline{dataset}}), além dos outros dois argumentos essenciais do k-means: o número de clusters \textit{\codeinline{k}} e o número de iterações máximas \textit{\codeinline{maxIter}}.
+A função \textit{\codeinline{kMeansCPU}} declarada na linha 1 é uma implementação \enquote{concreta} do pseudocódigo apresentado no capítulo \ref{sec:kMeans}. Ela recebe o dataset com os dados a serem agrupados através de um dataframe do Pandas (variável \textit{\codeinline{dataset}}), além dos outros dois argumentos essenciais do k-means: o número de clusters \textit{\codeinline{k}} e o número de iterações máximas \textit{\codeinline{maxIter}}.
 
 A primeira instrução a ser executada no algoritmo é a da linha 2, que inicializa os centroides usando valores aleatoriamente selecionados de dentro do conjunto de dados. Note que os centroides gerados não correspondem necessariamente a algum datapoint específico do dataset. Valores de qualquer datapoint podem ser selecionados e misturados para formar um centroide inicial. Isto é, pode existir um centroide inicial $C1 = (1.3, 2.3, 4.4, 3.7)$ mesmo não existindo nenhum datapoint com estes exatos valores no dataset. Em tal cenário, o valor da primeira variável poderia ter sido selecionado de um datapoint $d1 = (1.3, y1, z1, w1)$, enquanto o valor da terceira variável poderia ter originado de um datapoint $d2 = (x2, y2, 4.4, w2)$.
 
@@ -1082,7 +1082,7 @@ Após a inicialização dos centroides, são inicializadas outras variáveis imp
 
 Além disso, na linha 5 temos um pré-cálculo do logarítimo natural ($\ln{x}$) de todos os datapoints do dataset. Esses valores são usados mais adiante para facilitar o cálculo da média das variáveis de todos os datapoints de um certo cluster, isto é, na etapa de cálculo dos novos centroides a cada iteração.
 
-Entramos então num laço de repetição (\textit{while loop}) na linha 9, onde o agrupamento dos dados é de fato realizado, iterativamente. Todo o restante do algoritmo é realizado dentro deste loop, exceto o retorno do resultado de classificação no final. A condição de parada é testada aqui, sendo ela (1) a iteração atual, ainda a ser realizada, ser maior que o número de iterações máximas (\textit{\codeinline{maxIter}}) ou (2) os centroides recém calculados serem exatamente iguais aos centroides calculados na iteração anterior --- o que significa que o agrupamento atual é o melhor que o algoritmo pode atingir nessa execução, ou seja, um máximo local. Como explicado no capítulo \ref{sec:kmeans}, o k-means não garante que os agrupamentos convirjam para um máximo global, apenas um máximo local.
+Entramos então num laço de repetição (\textit{while loop}) na linha 9, onde o agrupamento dos dados é de fato realizado, iterativamente. Todo o restante do algoritmo é realizado dentro deste loop, exceto o retorno do resultado de classificação no final. A condição de parada é testada aqui, sendo ela (1) a iteração atual, ainda a ser realizada, ser maior que o número de iterações máximas (\textit{\codeinline{maxIter}}) ou (2) os centroides recém calculados serem exatamente iguais aos centroides calculados na iteração anterior --- o que significa que o agrupamento atual é o melhor que o algoritmo pode atingir nessa execução, ou seja, um máximo local. Como explicado no capítulo \ref{sec:kMeans}, o k-means não garante que os agrupamentos convirjam para um máximo global, apenas um máximo local.
 
 Dentro do loop, a primeira instrução a ser executada é a de cálculo das distâncias. Isso é feito em uma só linha de código, a linha 10, utilizando largamente o poder de brevidade de código proporcionado pela biblioteca Pandas. O cálculo é realizado utilizando a distância euclidiana, aplicando a todos os centroides uma função lambda que, dado um centroide, calcula o quadrado das diferenças de todos os datapoints do dataset para este centroide. Ainda nessa função lambda, é calculada a raiz quadrada de cada resultado da operação anterior (usando a função \textit{\codeinline{sqrt}} da biblioteca Numpy) e, enfim, são somados os valores obtidos para cada variável de cada datapoint, gerando um valor final de distância para cada datapoint. No final, o resultado desse cálculo é um dataframe Pandas de dimensão $n \cdot k$, que é armazenado na variável \textit{\codeinline{distances}}. Assim, a linha $i$ desse dataframe possui $k$ valores $(dC1, dC2, \dots, dCk)$, onde $dCj$ é a distância do datapoint $i$ para o centroide de índice $j$ na lista de centroides.
 
@@ -1092,7 +1092,7 @@ Na linha 12 um passo opcional de exclusão explícita da variável \textit{\code
 
 Na linha 14, os centroides usados para os cálculos de distância na iteração atual são salvos na variável \textit{\codeinline{centroids_OLD}}. Essa ação é imprescindível, pois é sempre necessário comparar os centroides gerados entre a iteração atual e a anterior a cada repetição do loop.
 
-Na linha 15 finalmente é feito o cálculo dos novos centroides, após armazenar os centroides anteriores na variável \textit{\codeinline{centroids_OLD}} na linha 14. Novamente, assim como a operação da linha 10, temos uma cadeia de operações do Pandas. Utilizando o método \textit{\codeinline{groupby}} do objeto dataframe, agrupamos os logarítimos do dataset de acordo com a lista de centroides mais próximos. Isso gera $k$ sub-conjuntos de \textit{\codeinline{datasetLogs}}, cada um deles contendo apenas os logarítimos dos datapoints mais próximos a um certo centroide. Para cada um destes sub-conjuntos, é aplicada uma função lambda que, dado um sub-conjunto, calcula a média geométrica --- que, como discutido em mais detalhes no capítulo \ref{sec:kmeans}, é o único método correto para encontrar a média de valores normalizados \cite{geoMeanIsBetter1986} --- de todos os logarítimos dos datapoints do sub-conjunto. Essa cadeia de operações resulta em um dataframe de dimensão $d \cdot k$, onde $d$ é o número de variáveis que descrevem cada datapoint do dataset (\textit{features}). Esse dataframe é então transposto, acessando a propriedade \textit{\codeinline{T}} do dataframe, resultando em um novo dataframe final de dimensão $k \cdot d$, seguindo o mesmo formato usado na geração dos centroides iniciais e garantindo uma comparação correta entre os centroides de iterações consecutivas.
+Na linha 15 finalmente é feito o cálculo dos novos centroides, após armazenar os centroides anteriores na variável \textit{\codeinline{centroids_OLD}} na linha 14. Novamente, assim como a operação da linha 10, temos uma cadeia de operações do Pandas. Utilizando o método \textit{\codeinline{groupby}} do objeto dataframe, agrupamos os logarítimos do dataset de acordo com a lista de centroides mais próximos. Isso gera $k$ sub-conjuntos de \textit{\codeinline{datasetLogs}}, cada um deles contendo apenas os logarítimos dos datapoints mais próximos a um certo centroide. Para cada um destes sub-conjuntos, é aplicada uma função lambda que, dado um sub-conjunto, calcula a média geométrica --- que, como discutido em mais detalhes no capítulo \ref{sec:kMeans}, é o único método correto para encontrar a média de valores normalizados \cite{geoMeanIsBetter1986} --- de todos os logarítimos dos datapoints do sub-conjunto. Essa cadeia de operações resulta em um dataframe de dimensão $d \cdot k$, onde $d$ é o número de variáveis que descrevem cada datapoint do dataset (\textit{features}). Esse dataframe é então transposto, acessando a propriedade \textit{\codeinline{T}} do dataframe, resultando em um novo dataframe final de dimensão $k \cdot d$, seguindo o mesmo formato usado na geração dos centroides iniciais e garantindo uma comparação correta entre os centroides de iterações consecutivas.
 
 É importante notar que a operação supracitada do cálculo da média geométrica é realizada aqui utilizando uma operação alternativa, mas equivalente, à sua definição:
 
@@ -1117,7 +1117,7 @@ Há três trechos de código onde tal potencial de ganho de velocidade é imenso
   firstline=7,
   lastline=7,
   label=codeSnippet:kMeansCPU.logs,
-  % caption={K-Means serial: cálculo de logarítimos dos datapoints},
+  % caption={K-means serial: cálculo de logarítimos dos datapoints},
 ]{code-snippets/kMeansCPU.py}
 
 Essa linha de código é executada apenas uma vez no algoritmo. Porém, o cálculo realizado por ela é feito em todos os elementos do dataset. Logo, é uma operação de complexidade de tempo $O(n)$, podendo ser bem custosa para datasets com um alto número de instâncias. Como o cálculo é uma simples função matemática aplicada à cada datapoint, sem nenhum outro valor de entrada para computar o resultado, conclui-se então que cada operação é independente das outras.
@@ -1129,7 +1129,7 @@ O trecho abaixo é o segundo que é promissor para ganhos com a paralelização.
   firstline=12,
   lastline=12,
   label=codeSnippet:kMeansCPU.distances,
-  % caption={K-Means serial: cálculo de disâncias},
+  % caption={K-means serial: cálculo de disâncias},
 ]{code-snippets/kMeansCPU.py}
 
 Aqui é feita uma operação de cálculo de distância euclidiana entre todas as $n$ instâncias do dataset e todos os $k$ centroides. Essa operação é realizada dentro de um laço de repetição que será executado $i$ vezes, onde $i$ é o número de iterações necessárias para convergir nos centroides finais. Logo, é uma operação de complexidade $O(nki)$, ainda mais custosa que a anterior. Novamente, o cálculo não depende de nenhuma informação a não ser as coordenadas de um datapoint e um centroide em particular, logo são independentes entre si e podem ser paralelizadas.
@@ -1141,12 +1141,12 @@ O terceiro e último trecho custoso e paralelizável abaixo é o da linha 11, on
   firstline=13,
   lastline=13,
   label=codeSnippet:kMeansCPU.closestCentroids,
-  % caption={K-Means serial: busca das menores distâncias},
+  % caption={K-means serial: busca das menores distâncias},
 ]{code-snippets/kMeansCPU.py}
 
 A operação realizada aqui é uma busca feita no vetor de centroides, de tamanho $k$, para cada datapoint do dataset. Assim, como a linha 10 explicada anteriormente, essa também está dentro do laço de repetição das iterações do k-means. Logo, a operação inteira também possui complexidade $O(nki)$. Uma simples busca pelo menor valor no vetor de centroides é menos custosa computacionalmente que o cálculo das distâncias euclidianas, porém ainda assim há um bom potencial em se paralelizar essa busca na GPU, visto que $n$ cresce muito ao se trabalhar com big data e ciência de dados.
 
-Há também um quarto trecho de código que poderia ser paralelizado para obter mais performance, o da linha 15 do K-means versão serial, onde é feito o cálculo dos novos centróides através da média das coordenadas dos datapoints presentes em cada cluster.
+Há também um quarto trecho de código que poderia ser paralelizado para obter mais performance, o da linha 15 do k-means versão serial, onde é feito o cálculo dos novos centróides através da média das coordenadas dos datapoints presentes em cada cluster.
 
 No entanto a dificuldade de implementação de uma versão vetorial paralela dessa parte do código é bem maior que as demais. O motivo de tal complexidade é o fato da operação de cálculo da média das coordenadas de um vetor bidimensional, como é o caso da gigantesca maioria dos datasets, ser uma operação de redução. Isto é, a operação tem como entrada um vetor de tamanho $n \cdot d$ e retorna vetor de tamanho $d$ --- a média de todos elementos para cada variável $\{var_1, var_2, \dots, var_d\}$, onde $d$ é o número de dimensões, ou \textit{features} do dataset.
 
@@ -1160,7 +1160,7 @@ O \textbf{Algoritmo \ref{code:kMeansGPU}} abaixo é a implementação da versão
   firstline=42,
   % lastline=,
   label=code:kMeansGPU,
-  caption={Implementação paralela do K-Means (Função Principal)},
+  caption={Implementação paralela do k-means (função principal)},
 ]{code-snippets/kMeansGPU.py}
   
 A função \textit{\codeinline{kMeansGPU}} acima é a função principal dessa implementação do k-means, que por sua vez chama outras três onde o processamento mais intenso é realizado paralelamente pela GPU. Essas outras funções são discutidas mais adiante (algoritmos \ref{code:kMeansGPU.calcLogs}, \ref{code:kMeansGPU.calcDistances} e \ref{code:kMeansGPU.calcClosestCentroids}). A estrutura do código não muda muito em relação ao Algoritmo \ref{code:kMeansCPU}, então apenas as partes mais modificadas serão explicadas aqui.
@@ -1326,7 +1326,7 @@ Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que
 
 % * ####################################
 
-\section{K-Means}
+\section{K-means}
 \label{sec:testesDeSpeedup}
 
 \textbf{TODO: Descrever melhor os resultados das execuções do k-means CPU e k-means GPU.}
@@ -1334,7 +1334,7 @@ Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que
 % \textbf{TODO: Atualizar a figura, usando os novos resultados e um gráfico de barras dessa vez.}
 
 \begin{figure}[h]
-  \caption{Tempo médio de execução do K-means}
+  \caption{Tempo médio de execução do k-means}
   \centering
   \includegraphics[width=0.95\textwidth]{kMeansAvgTime.png}
   \label{fig:kMeansAvgTime}
@@ -1343,7 +1343,7 @@ Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que
 \textbf{TODO: Adicionar as informações em forma de tabela também.}
 
 \begin{figure}[h]
-  \caption{Ganho médio de velocidade do K-means}
+  \caption{Ganho médio de velocidade do k-means}
   \centering
   \includegraphics[width=0.95\textwidth]{kMeansAvgSpeedup.png}
   \label{fig:kMeansAvgSpeedup}
@@ -1369,7 +1369,7 @@ Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que
 % TODO
 % TODO
 
-\textbf{TODO: Escrever uma seção apresentando e discutindo os resultados dos testes de precisão e corretude rodados com cada dataset e implementação do K-Means.}
+\textbf{TODO: Escrever uma seção apresentando e discutindo os resultados dos testes de precisão e corretude rodados com cada dataset e implementação do k-means.}
 
 
 
