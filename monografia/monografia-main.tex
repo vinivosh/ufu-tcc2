@@ -748,7 +748,7 @@ O Algoritmo \ref{code:addArrayCPU.py} abaixo executa a adição de dois vetores,
 
 O código acima é auto-explicativo e está comentado para melhor compreensão. Se assemelha bastante com o Algoritmo \ref{code:addArrayCPU.cpp} exibido no Capítulo \ref{ssc:implementaçãoCUDA}. As diferenças práticas são o tamanho dos vetores. Aqui, eles possuem a dimensões $N \cdot D$, onde $N = 100.663.296$ e $D = 4$, totalizando $402.653.184$ elementos. Isso são exatamente 50\% a mais elementos do que havia no exemplo em C++.
 
-Rodando o código e realizando a medição da velocidade de execução da função \textit{addArrayCPU}, encontra-se o tempo médio em 15 execuções seguidas de cerca de 1769,42 milissegundos. O erro máximo (calculado pela função \textit{checkMaxErr} na última linha) é de zero.
+Rodando o código e realizando a medição da velocidade de execução da função \textit{addArrayCPU}, encontra-se o tempo médio (de cem execuções) de cerca de 2.501,24 milissegundos. O erro máximo (calculado pela função \textit{checkMaxErr} na última linha) é de zero.
 
 Adaptar esse algoritmo para rodar paralelamente na GPU é extremamente simples usando a biblioteca Numba. O trecho de código abaixo mostra a única modificação a ser feita ao chamar a função que soma os vetores.
 
@@ -803,12 +803,27 @@ O quarto e último argumento, de nome \textit{target}, recebe uma \textit{string
 % Realizando benchmark de addArrayGPU (rodando 15x)...
 % Max error = 0.0
 % Benchmark concluído! Tempo médio: 398.349615 ± 19.305945 ms
+% 
+% 
+% 
+% Resultados ainda mais completos aqui, agora com mais RUNS
+% 
+% (.venv) ↪ python3 ./addArrayCPU.py && sleep 5 && echo -------------------------------------------------------- && python3 ./addArrayGPU.py
+% Realizando benchmark de addArrayCPU (rodando 100x)...
+% Max error: 0.0
+% Benchmark concluído! Tempo médio: 2501.242067 ± 818.957387 ms
+% --------------------------------------------------------
+% Realizando benchmark de addArrayGPU (rodando 100x)...
+% Max error: 0.0
+% Benchmark concluído! Tempo médio: 397.501782 ± 43.113490 ms
 
-Rodando o algoritmo e medindo, como anteriormente, a velocidade de execução da função \textit{addArrayGPU}, se constata o tempo médio de aproximadamente de 398,35 milissegundos. O erro máximo também é zero, como esperado. Foi obtido um \textit{speed-up} de cerca de 4,44 vezes em relação à versão serial implementada usando apenas funções do \textit{Numpy}.
+Rodando o algoritmo e medindo, como anteriormente, a velocidade de execução da função \textit{addArrayGPU}, se constata o tempo médio de aproximadamente de 397,50 milissegundos. O erro máximo também é zero, como esperado. Foi obtido um \textit{speed-up} de cerca de 6,29 vezes em relação à versão serial implementada usando apenas funções do \textit{Numpy}.
 
 Fica evidente a facilidade muito maior em se implementar o poder do paralelismo proporcionado pela API CUDA ao se usar a linguagem Python em conjunto com a biblioteca Numba.
 
 É possível adentrar na área de GPGPU sem abrir mão de abstrações de mais alto-nível proporcionadas pela linguagem, além de usufruir, simultaneamente, da imensa gama de bibliotecas de ciência de dados implementadas em Python, como \textit{Numpy} e \textit{Pandas}, que foram também amplamente utilizadas nas implementações do algoritmo K-means, exploradas no Capítulo \ref{sec:kMeansImplementações}.
+
+É importante notar também que ainda há uma penalidade considerável no potencial de ganho de performance, se comparando implementações usando CUDA em C++ e as usando Numba em Python. O ganho de velocidade foi de 28 vezes em C++, enquanto em Python foi de apenas 6,29 vezes. Ainda assim, o \textit{speed-up} obtido nas execuções do K-means acelerado usando o Numba foram de magnitudes ainda maiores que o apresentado neste exemplo simples, como explicitado no capítulo \ref{chp:resultados}.
 
 
 
