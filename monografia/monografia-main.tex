@@ -568,8 +568,6 @@ O estudo dos processadores que suportam operações vetoriais revela a diversida
 
 A mudança de paradigma da programação serial para a programação vetorial representa uma verdadeira revolução na eficiência computacional. Antes da adoção generalizada da programação vetorial, os algoritmos eram projetados para serem executados de maneira sequencial, o que limitava significativamente o desempenho e a capacidade de lidar com conjuntos de dados massivos. Com a programação vetorial, no entanto, os desenvolvedores podem realizar operações em grandes conjuntos de dados de forma paralela, aproveitando ao máximo o poder de processamento disponível \cite{hennessy2011}.
 
-% Exemplo na Computação Gráfica:
-
 Um exemplo clássico da mudança de paradigma da programação serial para a programação vetorial pode ser observado na computação gráfica. Antes da adoção da programação vetorial, o processo de renderização de imagens em 3D exigia a aplicação de algoritmos sequenciais para calcular cada pixel individualmente. Com a introdução da programação vetorial através do CUDA, por exemplo, os desenvolvedores podem aproveitar a capacidade das GPUs para realizar cálculos em paralelo, acelerando significativamente o processo de renderização e permitindo a criação de gráficos mais realistas e complexos em tempo real.
 
 Outro exemplo impactante da mudança é encontrado no campo do aprendizado de máquina. Antes da adoção da programação vetorial, os algoritmos de aprendizado de máquina muitas vezes enfrentavam limitações de desempenho devido à necessidade de processar grandes conjuntos de dados de forma sequencial. Com a programação vetorial e o uso de frameworks como TensorFlow e PyTorch, os desenvolvedores podem aproveitar o paralelismo das GPUs para treinar modelos complexos em um tempo significativamente menor, abrindo novas possibilidades para aplicações de inteligência artificial em tempo real e análise de big data.
@@ -896,11 +894,11 @@ A ideia de acelerar a execução de algoritmos de agrupamento de dados utilizand
 \textbf{TODO: Citar aqui os trabalhos mais antigos que encontrar! Citar, necessariamente:}
 
 \begin{itemize}
-  \item \textbf{Um dos trabalhos mais antigos que tentaram paralelizar um algoritmo de agrupamento de dados (seja por CPU, GPU, TPU, etc. até paralelização em nível de instrução da CPU tá valendo). Imagino que seria no máximo de 2005 esse trabalho.} 
+  % \item \textbf{Um dos trabalhos mais antigos que tentaram paralelizar um algoritmo de agrupamento de dados (seja por CPU, GPU, TPU, etc. até paralelização em nível de instrução da CPU tá valendo). Imagino que seria no máximo de 2005 esse trabalho.} 
 
   % \textbf{Candidato: \enquote{Parallel K-means Clustering Algorithm on NOWs}, de 2000. \href{https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6197ce32309824420aac79f975e028e440c2be96}{Link}.}
 
-  \textbf{Candidato: \enquote{Parallel K - Means Algorithm on Distributed Memory Multiprocessors}, de 2003. \href{https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=5598bf67cef4f2727da0b0b94ba085349c7c45e7}{Link}.}
+  % \textbf{Candidato: \enquote{Parallel K - Means Algorithm on Distributed Memory Multiprocessors}, de 2003. \href{https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=5598bf67cef4f2727da0b0b94ba085349c7c45e7}{Link}.}
 
   \item \textbf{Um dos trabalhos mais antigos que tenha parelelizado especificamente em GPU um algoritmo de agrupamento de dados. Esse muito provavelmente vai ser de 2007 a 2011, com o lançamento e melhoramento do CUDA da NVIDIA}
 
@@ -913,13 +911,23 @@ A ideia de acelerar a execução de algoritmos de agrupamento de dados utilizand
 
 Um dos estudos mais antigos encontrados que tenta paralelizar um algoritmo desse tipo é o \enquote{\textit{Parallel K-means Clustering Algorithm on NOWs}} \cite{kMeansParallelkantabutra2000}.
 
-Nesse artigo, é apresentada uma abordagem para melhorar a eficiência do algoritmo K-means através da paralelização. O objetivo principal é reduzir a complexidade temporal do algoritmo K-means serial aplicando teorias de computação paralela, alcançando uma melhoria de um fator de $O(K/2)$, onde $K$ é o número de clusters desejados. Além disso, visa permitir que o algoritmo seja executado em uma memória coletiva maior, composta por várias máquinas, superando a limitação de memória de uma apenas uma, o que permite escalar o tamanho do problema em até $O(K)$ vezes o tamanho que poderia ser processado em uma única máquina.
+Nesse artigo, é apresentada uma abordagem para melhorar a eficiência do \textbf{algoritmo K-means} através da paralelização. O objetivo principal é reduzir a complexidade temporal do algoritmo K-means serial aplicando teorias de computação paralela, alcançando uma melhoria de um fator de $O(K/2)$, onde $K$ é o número de clusters desejados. Além disso, visa permitir que o algoritmo seja executado em uma memória coletiva maior, composta por várias máquinas, superando a limitação de memória de uma apenas uma, o que permite escalar o tamanho do problema em até $O(K)$ vezes o tamanho que poderia ser processado em uma única máquina.
 
 A pesquisa foi realizada utilizando uma rede de estações de trabalho homogêneas com uma rede Ethernet e a comunicação entre processos foi feita por meio da Interface de Passagem de Mensagens (MPI). O método proposto usa uma abordagem mestre-escravo (\textit{master-slave}) onde um processo mestre distribui subconjuntos de dados para processos escravos, que calculam médias locais e participam de um processo iterativo de realocação de pontos de dados para minimizar uma função de erro quadrático. A análise de complexidade de tempo e espaço foi detalhadamente realizada, destacando a eficiência do algoritmo paralelizado em comparação com sua versão serial.
 
 Os resultados experimentais mostraram que, para conjuntos de dados grandes (mais de 700.000 datapoints), a versão paralela do algoritmo conseguiu obter uma melhoria significativa na velocidade de execução, evidenciada por um "speedup" de até O(K/2) conforme o tamanho do problema aumenta. Isto foi particularmente notável quando o tamanho do problema excedeu a capacidade de memória de uma única máquina, um cenário onde a versão serial do algoritmo não pôde sequer ser executada.
 
 No fim, a pesquisa demonstra que a paralelização do algoritmo K-means em uma rede de estações de trabalho oferece uma melhoria significativa tanto em termos de complexidade temporal quanto de escalabilidade do tamanho do problema, alcançando uma eficiência de 50\% na redução do tempo de complexidade. Esta eficiência é considerada alta para a época e dada a natureza global do algoritmo K-means e o uso de um sistema baseado em passagem de mensagens Ethernet. O trabalho sugere que futuras pesquisas poderiam focar na redução do tempo de comunicação ou na adaptação do algoritmo para funcionar com um número flexível de máquinas, visando melhorias ainda maiores na eficiência e escalabilidade.
+
+Outro estudo antigo que mostra o início das tentativas de paralelizção de algoritmos de agrupamento é o \enquote{\textit{Parallel K-Means Algorithm on Distributed Memory Multiprocessors}} \cite{parallelKMeansJoshi2003}. Aqui, é explorada uma \textbf{implementação paralela do K-means}, visando acelerar o agrupamento de grandes conjuntos de dados em um cluster de \textit{workstations} da Sun Microsystems. A pesquisa objetiva explorar o paralelismo de dados inerente ao K-means, utilizando o modelo de passagem de mensagens para dividir o conjunto de dados entre processos, buscando reduzir o tempo total de computação.
+
+O algoritmo implementado no estudo divide o conjunto de dados entre os processos de um sistema de memória distribuída, onde cada processo é responsável por uma parte dos dados. Esta abordagem visa calcular a associação datapoint-cluster para cada partição de forma mais rápida. A comunicação entre os processos, embora necessária para a recomputação dos centróides e a avaliação da qualidade dos clusters, representa um custo significativo, especialmente para conjuntos de dados menores, onde o tempo de comunicação domina em relação ao tempo de processamento dos dados. A pesquisa destaca a importância de minimizar essa comunicação para melhorar a eficiência do algoritmo paralelo.
+
+A implementação utiliza o modelo de Programa Único Múltiplos Dados (SPMD) e a Interface de Passagem de Mensagens (MPI) para a comunicação entre processadores. Inicialmente, o processo raiz calcula os centróides iniciais e os transmite a todos os outros processos. Cada processo então computa distâncias, atribui pontos ao centróide mais próximo, e calcula erros quadráticos médios locais. Essas operações são repetidas até a convergência, com processos recomputando centróides e avaliando a qualidade global do agrupamento.
+
+Embora a paralelização tenha mostrado benefícios, como a distribuição eficiente do processamento e a possibilidade de lidar com conjuntos de dados maiores, o ganho de velocidade ótimo não foi alcançado devido ao custo sequencial associado à escolha dos centróides iniciais e à influência de outliers na formação dos clusters. A pesquisa sugere que futuros trabalhos podem explorar a paralelização em multiprocessadores de memória compartilhada, abordar questões de valores ausentes e outliers, e testar variantes probabilísticas do K-means ou o algoritmo K-modes para conjuntos de dados categóricos de grande escala.
+
+Este estudo demonstra o potencial e os desafios da paralelização do K-means para o agrupamento de dados em grandes escalas, tendo aberto caminho para pesquisas futuras voltadas à otimização da eficiência e da capacidade de processamento desses algoritmos em ambientes de computação de alta performance, para a época.
 
 
 % * ####################################
@@ -1323,7 +1331,7 @@ Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que
 % \textbf{TODO: Atualizar a figura, usando os novos resultados e um gráfico de barras dessa vez.}
 
 \begin{figure}[h]
-  \caption{Tempos de execução média do K-Means}
+  \caption{Tempo médio de execução do K-means}
   \centering
   \includegraphics[width=0.95\textwidth]{kMeansAvgTime.png}
   \label{fig:kMeansAvgTime}
@@ -1332,7 +1340,7 @@ Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que
 \textbf{TODO: Adicionar as informações em forma de tabela também.}
 
 \begin{figure}[h]
-  \caption{Tempos de execução média do K-Means}
+  \caption{Ganho médio de velocidade do K-means}
   \centering
   \includegraphics[width=0.95\textwidth]{kMeansAvgSpeedup.png}
   \label{fig:kMeansAvgSpeedup}
