@@ -38,7 +38,7 @@ checkMaxErr(c)
 
 if __name__ == '__main__':
     RUNS = 100
-    execTimes = np.zeros(RUNS, np.float64)
+    execTimes = np.zeros(RUNS, np.int64)
 
     print(f'Realizando benchmark de addArrayGPU (rodando {RUNS}x)...')
 
@@ -50,6 +50,11 @@ if __name__ == '__main__':
 
     checkMaxErr(c)
 
-    execTimes *= 1e-9 * 1e3 # Convertendo tempos para ms
+    # Calculando média e desvio padrão (e convertendo ns -> ms)
+    execTimesMean = execTimes.mean() * 1e-9 * 1e3
+    execTimesStd = execTimes.std() * 1e-9 * 1e3
 
-    print(f'Benchmark concluído! Tempo médio: {execTimes.mean():.6f} ± {execTimes.std():.6f} ms')
+    print(' \nexecTimes:')
+    for i in range(RUNS): print(execTimes[i])
+    print('\n')
+    print(f'Benchmark concluído! Tempo médio: {execTimesMean:.6f} ± {execTimesStd:.6f} ms')
