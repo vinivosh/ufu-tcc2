@@ -1,0 +1,6 @@
+Dataset,N,D,K,N*D*K,Modificação?
+Rice,3.810,7,2,53.340,Não
+HTRU2,17.898,8,2,286.368,Não
+MiniBooNE,129.596,50,2,12.959.600,Remoção de Outliers
+WESAD,4.588.552,8,3,110.125.248,Sub-conjunto
+HHAR,13.932.632,3,7,292.585.272,Sub-conjunto

@@ -23,6 +23,8 @@ brazil]{facom-ufu-abntex2}
 % \usepackage{tcolorbox}
 % Pacote usado para exibição de código
 \usepackage{listings}
+% Pacotes para tabelas
+\usepackage[table,xcdraw]{xcolor}
 
 % ##################
 % Configurando estilos de código para o pacote listings. A linguagem padrão é Python, mas pode ser modificada em cada listing com a config "language=<linguagem>,"
@@ -1384,6 +1386,8 @@ Além dos testes de ganho de velocidade, foram realizados testes de corretude, p
 
 Ao final de cada execução do k-means, na rodada de testes de corretude, era executada uma função de contagem de acertos de classificação sobre o resultado gerado. Como o nome indica, essa função checava a classificação esperada, contida no dataset, em relação à classificação resultante da execução do k-means, contando o número de acertos de classificação. A precisão do resultado era contabilizada como a razão $H \div N$, onde $H$ é o número de acertos totais, em todas as classes, e $N$ o número de instâncias no dataset. As porcentagens de acertos foram então comparadas entre as execuções do k-means CPU e GPU, assim como as velocidades de execução.
 
+Todos os notebooks Jupyter com os testes, os dados crus dos resultados, além de muito mais material complementar, estão disponíveis no repositório do GitHub em: \href{https://github.com/vinivosh/ufu-tcc2}{https://github.com/vinivosh/ufu-tcc2}.
+
 
 
 % * ####################################
@@ -1391,17 +1395,47 @@ Ao final de cada execução do k-means, na rodada de testes de corretude, era ex
 \section{Datasets Utilizados}
 \label{sec:datasets}
 
-\textbf{TODO: Escrever uma intro a respeito do processo de escolha dos datasets. Incluir aqui uma boa explicação do passo de pré-processamento comum feito para todos os datasets (normalização min-max), que incluirá com certeza essa citação: \cite{standardizOfVars1988}.}
+Foram escolhidos seis conjuntos de dados para serem utilizados nos experimentos realizados nesse trabalho. O principal critério de escolha foi o tamanho de cada dataset (número de instâncias ($N$), variáveis ($D$) e classses ($K$)), além de algumas preferências como não existirem valores ausentes nos dados e nem outliers, ambos empecilhos que necessitariam de mais pré-tratamento antes de poder utilizar tais datasets no k-means.
 
-\textbf{TODO: Escrever sobre o dataset 1, Rice.}
+Os datasets foram escolhidos também para representar várias ordens de magnitude de tamanhos e dimensionalidades, para que os experimentos pudessem mostrar como os ganhos de velocidade se comportam com o crescimento do volume de dados. Serão explicados aqui em ordem crescente de tamanho ($N \cdot D \cdot K$).
 
-\textbf{TODO: Escrever sobre o dataset 2, HTRU2.}
+Uma espécie de dataset \enquote{zero} foi selecionado também aqui para realizar as primeiras versões das implementações do k-means, tanto serial quanto paralelo. Era necessário um dataset extremamente pequeno para realizar testes simples de corretude da implementação. Esse dataset não foi usado nos experimentos finais de \textit{speed-up} e precisão, mas foi essencial para ajudar numa implementação bem sucedida desde o início. Esse é o dataset \textbf{Iris} \cite{irisDataset}.
 
-\textbf{TODO: Escrever sobre o dataset 3, MiniBooNE.}
+% \textbf{TODO: Escrever sobre o dataset 1, Rice.}
 
-\textbf{TODO: Escrever sobre o dataset 4, WESAD.}
+% \textbf{TODO: Escrever sobre o dataset 2, HTRU2.}
 
-\textbf{TODO: Escrever sobre o dataset 5, HHAR.}
+% \textbf{TODO: Escrever sobre o dataset 3, MiniBooNE.}
+
+% \textbf{TODO: Escrever sobre o dataset 4, WESAD.}
+
+% \textbf{TODO: Escrever sobre o dataset 5, HHAR.}
+
+\begin{table}[h]
+  \centering
+  \caption{Datasets escolhidos}
+  \label{tab:datasetsEscolhidos}
+  \begin{tabular}{|l|l|l|l|l|l|}
+  \hline
+  \rowcolor[HTML]{9B9B9B} 
+  \textbf{Dataset} & \textbf{N} & \textbf{D} & \textbf{K} & \textbf{N*D*K} & \textbf{Modificação?} \\ \hline
+  Rice             & 3.810      & 7          & 2          & 53.340         & Não                   \\ \hline
+  HTRU2            & 17.898     & 8          & 2          & 286.368        & Não                   \\ \hline
+  MiniBooNE        & 129.596    & 50         & 2          & 12.959.600     & Remoção de outliers   \\ \hline
+  WESAD            & 4.588.552  & 8          & 3          & 110.125.248    & Sub-conjunto          \\ \hline
+  HHAR             & 13.932.632 & 3          & 7          & 292.585.272    & Sub-conjunto          \\ \hline
+  \end{tabular}
+\end{table}
+
+Na Tabela \ref{tab:datasetsEscolhidos} acima, se encontra a relação de todos os cinco datasets utilizados nos experimentos, assim como seus tamanhos e especificações sobre modificações feitas aos dados (pré-processamento).
+
+Todos datasets foram obtidos do repositório de Machine Learning da \textbf{Universidade da Califórnia em Irvine}. São eles o Rice \cite{riceDataset}, HTRU2 \cite{htru2Dataset}, MiniBooNE \cite{minibooneDataset}, WESAD \cite{wesadDataset} e HHAR \cite{htru2Dataset}.
+
+Houve também um passo de pré-processamento em comum para todos os datasets utilizados aqui. Foi o de normalização dos dados. Esse processo é necessário para que nenhuma das variáveis que descrevem os dados de cada dataset pudesse contribuir mais que outras dependendo de sua faixa de valores.
+
+Se a normalização não fosse feita, uma variável que possuísse valores na faixa $[1.1, 2.3]$, por exemplo, iria contribuir muito menos para os cálculos de distância do k-means do que uma outra variável que possuísse valores na faixa $[4.1, 95.3]$, o que poderia gerar classificações muito piores.
+
+O processo feito aqui em cada dataset foi o de \textbf{normalização min-max}, o processo de normalização mais recomendado \cite{standardizOfVars1988} para aplicações onde a distância euclidiana é importante, como é o caso do k-means.
 
 
 
@@ -1412,13 +1446,13 @@ Ao final de cada execução do k-means, na rodada de testes de corretude, era ex
 \chapter{Resultados}
 \label{chp:resultados}
 
-Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realizadas diversas rodadas de execuções em ambas versões dos algoritmos aqui analisados.
+Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realizadas diversas rodadas de execuções em ambas versões dos algoritmos aqui analisados. Seus tempos de execução e precisão na classificação foram comparados.
 
 
 
 % * ####################################
 
-\section{K-means}
+\section{Ganhos de Velocidade}
 \label{sec:testesDeSpeedup}
 
 \textbf{TODO: Descrever melhor os resultados das execuções do k-means CPU e k-means GPU.}
