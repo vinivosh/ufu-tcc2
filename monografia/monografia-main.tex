@@ -50,7 +50,7 @@ brazil]{facom-ufu-abntex2}
 % Code style for highlighting
 \newcommand\codestyle{\lstset{
 language=Python,
-basicstyle=\ttm\small,
+basicstyle=\ttm\smaller,
 morekeywords={self},                  % Add keywords here
 keywordstyle=\ttb\color{deepblue},
 % emph={MyClass,__init__},            % Custom highlighting
@@ -788,7 +788,7 @@ O segundo argumento do decorador é uma \textit{string} que denota a dimensional
 
 Note que ambos o primeiro e segundo argumento do decorador definem o formato de dado que cada instância da função recebe, e não o formato da estrutura de dado inteira a ser processada. Como a função foi definida para receber um vetor unidimensional de tamanho $d$, quando ela é de fato chamada e um vetor bidimensional de tamanho $n \cdot d$ é passado, o compilador do Numba infere que devem ser criadas $n$ instâncias da função, e cada uma delas processará apenas um vetor de tamanho $d$ diferente, paralelizando automaticamente o processo.
 
-O terceiro argumento, de nome \textit{nopython}, deve ser definida como \textit{True} para garantir que o código gerado seja todo executado na GPU. Sem essa definição, recursos não implementados pela biblioteca que fossem utilizados dentro da função iriam causar uma execução na CPU --- um modo chamado de \textit{object mode}.
+O terceiro argumento, de nome \textit{nopython}, deve ser definido como \textit{True} para garantir que o código gerado seja todo executado na GPU. Sem essa definição, recursos não implementados pela biblioteca que fossem utilizados dentro da função iriam causar uma execução na CPU --- um modo chamado de \textit{object mode}.
 
 O quarto e último argumento, de nome \textit{target}, recebe uma \textit{string} que define onde a função irá rodar. Nessa pesquisa, sempre foi utilizado o valor \textit{cuda} aqui, para que todas as funções paralelizadas rodem na GPU NVIDIA. Outras opções existem, como \textit{cpu} para execução \textit{single-thread} na CPU ou \textit{paralell} para execução \textit{multi-thread} na CPU, mas elas fogem do escopo desse trabalho.
 
@@ -832,12 +832,6 @@ Fica evidente a facilidade muito maior em se implementar o poder do paralelismo 
 \section{K-means}
 \label{sec:kMeans}
 
-O algoritmo k-means, notório por sua aplicação em tarefas de agrupamento de dados, tem raízes históricas que remontam à metade do século XX \cite{kMeansHistoryBock2007}. A ideia fundamental por trás do k-means, conhecida como quantização vetorial, foi introduzida inicialmente em um contexto de processamento de sinal. Esse algoritmo visa particionar, iterativamente, $N$ observações em $K$ grupos, de maneira que cada observação pertença ao agrupamento com o \enquote{centro} mais próximo, resultando na minimização das variações dentro dos agrupamentos.
-
-A aplicação original desse conceito foi documentada por Hugo Steinhaus em 1957 \cite{kMeansFirstIdeaSteinhaus1957}, mas o algoritmo padrão como é conhecido foi proposto por Stuart Lloyd enquanto trabalhava na Bell Labs em 1957 e publicado formalmente somente em 1982 \cite{kMeansFirstAlgoLloyd1982}, solidificando a base para o moderno entendimento e aplicação do k-means em análise multivariada e outras áreas de processamento de dados.
-
-O termo \enquote{k-means} em si só foi ser cunhado em 1967 por James MacQueen \cite{kMeansCoinedMacQueen1967}, sendo conhecido também como \textbf{Algoritmo de Lloyd}, ou até de \textbf{Lloyd--Forgy}, pois sua ideia chegou também a ser publicada antes, em 1965, por Edward W. Forgy \cite{kMeansFirst2AlgoForgy1965}, nomes que ainda são usados atualmente, embora não tão populares quanto o termo k-means.
-
 % TODO
 % TODO
 % TODO: Vide abaixo
@@ -848,9 +842,40 @@ O termo \enquote{k-means} em si só foi ser cunhado em 1967 por James MacQueen \
 
 \begin{itemize}
   % \item \textbf{Um dos algoritmos mais tradicionais, explicar a história dele. Citar os primeiros trabalhos introduzindo o algoritmo;}
-  \item \textbf{Explicar brevemente seu funcionamento (talvez com um pseudo-código bem alto nível? Diagramas??);}
+  % \item \textbf{Explicar brevemente seu funcionamento (talvez com um pseudo-código bem alto nível? Diagramas??);}
   \item \textbf{Explicar como ele é usado (aplicações reais).}
 \end{itemize}
+
+O algoritmo \textbf{K-means}, também chamado de \textbf{K-médias} em português, é notório por sua aplicação em tarefas de agrupamento de dados, e possui raízes históricas que remontam à metade do século XX \cite{kMeansHistoryBock2007}. A ideia fundamental por trás do k-means, conhecida como quantização vetorial, foi introduzida inicialmente em um contexto de processamento de sinal. Esse algoritmo visa particionar, iterativamente, $N$ observações em $K$ grupos, de maneira que cada observação pertença ao agrupamento com o \enquote{centro} mais próximo, resultando na minimização das variações dentro dos agrupamentos (variação \textit{intra-grupo}) e na maximização das variações entre observações em grupos diferenets (variação \textit{inter-grupo}).
+
+A aplicação original desse conceito foi documentada por Hugo Steinhaus em 1957 \cite{kMeansFirstIdeaSteinhaus1957}, mas o algoritmo padrão como é conhecido foi proposto por Stuart Lloyd enquanto trabalhava na Bell Labs em 1957 e publicado formalmente somente em 1982 \cite{kMeansFirstAlgoLloyd1982}, solidificando a base para o moderno entendimento e aplicação do k-means em análise multivariada e outras áreas de processamento de dados.
+
+O termo \enquote{k-means} em si só foi ser cunhado em 1967 por James MacQueen \cite{kMeansCoinedMacQueen1967}, sendo conhecido também como \textbf{Algoritmo de Lloyd}, ou até de \textbf{Lloyd--Forgy}, pois sua ideia chegou também a ser publicada antes, em 1965, por Edward W. Forgy \cite{kMeansFirst2AlgoForgy1965}, nomes que ainda são usados atualmente, embora não tão populares quanto o termo k-means.
+
+O desenvolvimento do algoritmo k-means não parou com essas contribuições iniciais. Ao longo dos anos, várias melhorias e variantes foram propostas, como em 2007 com o \textbf{K-means++} \cite{kMeansPlusPlus2007}, que aprimora significativamente a eficiência e a precisão do algoritmo ao escolher centros iniciais para os agrupamentos de maneira mais cuidadosa. Além disso, a adaptação do k-means para lidar com fluxos de dados e a introdução de variações como \textbf{K-Medoids}, \textbf{K-Medians}, \textbf{K-Center} e \textbf{K-Box} ampliaram sua aplicabilidade e desempenho em uma gama ainda maior de contextos de dados.
+
+A importância histórica e a evolução contínua do k-means mostram seu valor duradouro na análise de dados e machine learning. Desde sua concepção, o algoritmo não só inspirou avanços na teoria matemática, mas também provou ser uma ferramenta indispensável na era moderna da computação, especialmente em aplicações de 
+agrupamento de dados em larga escala.
+
+% * ##########################
+
+\subsection{Algoritmo e Limitações}
+
+Um dos motivos da fama do k-means é a simplicidade de sua implementação original. Ela pode ser descrita com um pseudocódigo extremamente sucinto, como o exibido abaixo.
+
+\codeexternal[
+  language=,
+  % firstline=,
+  % lastline=,
+  mathescape,
+  numbers=none,
+  label=code:kMeans.pseudo,
+  caption={Implementação padrão em pseudocódigo do k-means},
+]{code-snippets/kMeans.pseudo}
+
+O Algoritmo \ref{code:kMeans.pseudo} acima descreve a implementação, como originalmente proposta, do algoritmo k-means. Não há garantia de que o processo convirja para um máximo global, apenas para um máximo local que, dependendo dos centróides iniciais escolhidos, pode ser arbitrariamente pior que o máximo global.
+
+A complexidade de tempo do k-means é de $O(N K D I)$ \cite{surveyClustAlgoXuWunsch2005}, onde $I$ é o número de iterações necessárias para ele converger em um resultado, estando na faixa de $[1, I_{max}]$ e dependendo dos centróides iniciais escolhidos.
 
 
 
