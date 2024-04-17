@@ -369,7 +369,7 @@ Nem todo algoritmo pode ser paralelizado, no entanto. Existem procedimentos e al
 
 E é a paralelização de uma classe de algoritmos em particular que é o foco desta pesquisa: os algoritmos de agrupamento de dados, também chamados de clusterização de dados, ou de \textit{clustering}. Tais algoritmos, de forma sucinta, agrupam objetos de maneira que os objetos no mesmo grupo, ou \textit{cluster}, sejam mais parecidos entre si, de acordo com alguma métrica, do que com objetos de outros grupos. A análise de clusters é essencial em diversas áreas da computação e estatística, como mineração de dados, aprendizado de máquina, compressão de dados, entre outras.
 
-A hipótese principal deste trabalho é a de que algoritmos de clustering, em geral, são altamente paralelizáveis e apresentam um ganho considerável de desempenho (menor tempo de execução) quando implementados para utilizar o poder de paralelismo vetorial de placas de vídeo NVIDIA, através da linguagem CUDA \cite{CUDAZone}. Mais que isso, através de uma análise sistemática de estudos prévios e implementações de tais algoritmos em CUDA, visa-se generalizar o processo de paralelização destes. Isto é, identificar quais partes são necessariamente seriais, quais são paralelizáveis, e que sequência de passos gerais deve ser seguida para se conseguir paralelizar com sucesso um algoritmo de clustering qualquer e obter ganhos significativos de desempenho.
+A hipótese principal deste trabalho é a de que algoritmos de clustering, em geral, são altamente paralelizáveis e apresentam um ganho considerável de desempenho (menor tempo de execução) quando implementados para utilizar o poder de paralelismo vetorial de placas de vídeo NVIDIA, através da plataforma CUDA \cite{CUDAZone}. Mais que isso, através de uma análise sistemática de estudos prévios e implementações de tais algoritmos em CUDA, visa-se generalizar o processo de paralelização destes. Isto é, identificar quais partes são necessariamente seriais, quais são paralelizáveis, e que sequência de passos gerais deve ser seguida para se conseguir paralelizar com sucesso um algoritmo de clustering qualquer e obter ganhos significativos de desempenho.
 
 % TODO
 % TODO
@@ -377,7 +377,7 @@ A hipótese principal deste trabalho é a de que algoritmos de clustering, em ge
 % TODO
 % TODO
 
-O foco de pesquisa é o notório algoritmo de agrupamento \textit{k-means} \cite{kMeansCoinedMacQueen1967} \cite{kMeansFirstAlgoLloyd1982} \cite{GPU-accelerated-K-Means}. Implementações e estudos realizados sobre ele foram analisados, e uma implementação paralela em GPU teve seu desempenho comparado com a serial em CPU.
+O foco principal dessa pesquisa é o notório algoritmo de agrupamento \textit{k-means} \cite{kMeansCoinedMacQueen1967} \cite{kMeansFirstAlgoLloyd1982} \cite{GPU-accelerated-K-Means}. Implementações e estudos realizados sobre ele foram analisados, e uma implementação paralela em GPU teve seu desempenho comparado com a serial em CPU.
 
 % * Texto antigo do parágrafo acima:
 % O foco de pesquisa são \qntAlgrtm{} algoritmos de agrupamento especialmente notórios: o \textit{k-means} \cite{GPU-accelerated-K-Means} e o \textit{Agrupamento Hierárquico}. Implementações e estudos realizados sobre estes foram analisados, e implementações paralelas em GPU tiveram seu desempenho comparado com as seriais em CPU.
@@ -400,7 +400,7 @@ O foco de pesquisa é o notório algoritmo de agrupamento \textit{k-means} \cite
 
 Este trabalho tem como objetivo principal testar a validez de sua hipótese (discutida mais à fundo na seção 1.2) de que algoritmos de clusterização são intrinsecamente paralelizáveis, e que o ganho de velocidade ao serem paralelizados é altamente significativo.
 
-Além disso, deseja-se compilar aqui um vasto conhecimento de como paralelizar esses algoritmos em geral, analisando principalmente o algoritmo aqui estudado a fundo, o k-means, e usando este aprendizado para criar um passo-a-passo genérico de como realizar tal modificação de código em um algoritmo de agrupamento qualquer.
+Além disso, deseja-se compilar aqui um bom conhecimento introdutório de como paralelizar esses algoritmos em geral, analisando principalmente o algoritmo aqui estudado a fundo, o k-means, e usando este aprendizado para criar um passo-a-passo mais geral de como realizar tal modificação de código em um algoritmo de agrupamento qualquer.
 
 
 
@@ -415,7 +415,7 @@ Para atingir o objetivo geral, é necessário completar diversos objetivos menor
   
   \item Estudar implementações já realizadas do k-means, a fim de adquirir conhecimento de como a paralelização em CUDA deve ser realizada;
   
-  \item Quantificar o ganho de desempenho das implementações paralelas, realizando diversos experimentos de \textit{speedup}, usando diversos datasets de tamanhos e dimensionalidades variadas;
+  \item Quantificar o ganho de desempenho das implementações paralelas, realizando diversos experimentos de \textit{speed-up}, usando diversos datasets de tamanhos e dimensionalidades variadas;
   
   \item Comparar o código serial (sem paralelização) com o código paralelo do k-means, extraindo assim um conhecimento mais generalizado de como paralelizar um algoritmo de clusterização genéico;
 \end{itemize}
@@ -446,7 +446,7 @@ A pesquisa feita aqui pode ser de grande utilidade para a área da computação 
 
 Com a compilação de conhecimento realizada aqui a intenção é facilitar pesquisas posteriores na área de paralelização de algoritmos de agrupamento e motivar com os experimentos de ganho de desempenho novas implementações paralelas de outros algoritmos desta classe, ilustrando o quão importante é o uso de processadores vetoriais como GPUs para tornar o uso de algumas destas abordagens de agrupamento realmente práticas.
 
-Além disso, a apresentação nesse estudo de um procedimento genérico para paralelizar qualquer algoritmo de agrupamento será de extrema utilidade para qualquer desenvolvedor ou pesquisador que desejar implementar uma versão acelerada em GPU de um algoritmo do tipo, mesmo este sendo totalmente novo. No mínimo, a pesquisa servirá de ponto de partida para o entendimento e aprendizado de como realizar tal modificação no código do algoritmo, e renderá uma implementação real que serve de base para estudos e otimizações, até se obter eventualmente uma implementação digna para uso prático.
+Além disso, a apresentação nesse estudo de um procedimento mais geral para paralelizar qualquer algoritmo de agrupamento será de grande utilidade para qualquer desenvolvedor ou pesquisador que desejar implementar uma versão acelerada em GPU de um algoritmo do tipo, mesmo este sendo totalmente novo. No mínimo, a pesquisa servirá de ponto de partida para o entendimento e aprendizado de como realizar tal modificação no código do algoritmo, e renderá uma implementação real que serve de base para estudos e otimizações, até se obter eventualmente uma implementação digna para uso prático.
 
 
 
@@ -963,7 +963,7 @@ Nesse artigo, é apresentada uma abordagem para melhorar a eficiência do \textb
 
 A pesquisa foi realizada utilizando uma rede de estações de trabalho homogêneas com uma rede Ethernet e a comunicação entre processos foi feita por meio da Interface de Passagem de Mensagens (MPI). O método proposto usa uma abordagem mestre-escravo (\textit{master-slave}) onde um processo mestre distribui subconjuntos de dados para processos escravos, que calculam médias locais e participam de um processo iterativo de realocação de pontos de dados para minimizar uma função de erro quadrático. A análise de complexidade de tempo e espaço foi detalhadamente realizada, destacando a eficiência do algoritmo paralelizado em comparação com sua versão serial.
 
-Os resultados experimentais mostraram que, para conjuntos de dados grandes (mais de 700.000 datapoints), a versão paralela do algoritmo conseguiu obter uma melhoria significativa na velocidade de execução, evidenciada por um "speedup" de até O(K/2) conforme o tamanho do problema aumenta. Isto foi particularmente notável quando o tamanho do problema excedeu a capacidade de memória de uma única máquina, um cenário onde a versão serial do algoritmo não pôde sequer ser executada.
+Os resultados experimentais mostraram que, para conjuntos de dados grandes (mais de 700.000 datapoints), a versão paralela do algoritmo conseguiu obter uma melhoria significativa na velocidade de execução, evidenciada por um \enquote{speed-up} de até O(K/2) conforme o tamanho do problema aumenta. Isto foi particularmente notável quando o tamanho do problema excedeu a capacidade de memória de uma única máquina, um cenário onde a versão serial do algoritmo não pôde sequer ser executada.
 
 No fim, a pesquisa demonstra que a paralelização do algoritmo k-means em uma rede de estações de trabalho oferece uma melhoria significativa tanto em termos de complexidade temporal quanto de escalabilidade do tamanho do problema, alcançando uma eficiência de 50\% na redução do tempo de complexidade. Esta eficiência é considerada alta para a época e dada a natureza global do algoritmo k-means e o uso de um sistema baseado em passagem de mensagens Ethernet. O trabalho sugere que futuras pesquisas poderiam focar na redução do tempo de comunicação ou na adaptação do algoritmo para funcionar com um número flexível de máquinas, visando melhorias ainda maiores na eficiência e escalabilidade.
 
@@ -1076,7 +1076,7 @@ A \textbf{segunda etapa} consistiu na implementação de duas versões, uma seri
 
 A \textbf{terceira etapa} consistiu na busca de um procedimento geral para paralelizar um algoritmo de agrupamento genérico. Ou seja, o foco foi encontrar um passo-a-passo de identificação de possíveis modificações no código de um algoritmo serial que, ao fim, pudesse transformá-lo numa versão acelerada, usando CUDA, ainda mantendo sua corretude e proporcionando algum ganho significativo de desempenho.
 
-A \textbf{quarta etapa}, por fim, consistiu em diversos experimentos de ganho de velocidade, ou \textit{speedup}, do k-means, que teve aqui sua versão acelerada em GPU implementada e apresentada. Os resultados desses experimentos proporcionaram uma boa visão da magnitude do ganho de desempenho ao paralelizar algoritmos de agrupamento usando CUDA, além de outros conhecimentos, como saber se há um teto ou chão para tais ganhos, como o \textit{speedup} aumenta ou diminui com o crescimento do número de datapoints ou variáveis no conjunto de dados a ser analisado, e também como outros parâmetros importantes que não sejam velocidade são afetados, como a precisão dos resultados gerados pelo k-means, pois não há serventia em ganhar grande velocidade enquanto se perde o propósito de se agrupar dados em primeiro lugar, que é a capacidade de encontrar informações reais úteis em grandes datasets.
+A \textbf{quarta etapa}, por fim, consistiu em diversos experimentos de ganho de velocidade, ou \textit{speed-up}, do k-means, que teve aqui sua versão acelerada em GPU implementada e apresentada. Os resultados desses experimentos proporcionaram uma boa visão da magnitude do ganho de desempenho ao paralelizar algoritmos de agrupamento usando CUDA, além de outros conhecimentos, como saber se há um teto ou chão para tais ganhos, como o \textit{speed-up} aumenta ou diminui com o crescimento do número de datapoints ou variáveis no conjunto de dados a ser analisado, e também como outros parâmetros importantes que não sejam velocidade são afetados, como a precisão dos resultados gerados pelo k-means, pois não há serventia em ganhar grande velocidade enquanto se perde o propósito de se agrupar dados em primeiro lugar, que é a capacidade de encontrar informações reais úteis em grandes datasets.
 
 
 
