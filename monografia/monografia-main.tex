@@ -924,6 +924,7 @@ O k-means também tem aplicações significativas no processamento de imagens, c
 
 % * ############################################################################
 \chapter{Levantamento do Estado da Arte}
+\label{chp:levantamentoEstadoDaArte}
 % * ############################################################################
 
 No contexto histórico, o aumento exponencial no volume de dados gerados e armazenados digitalmente tornou-se uma realidade desde as últimas décadas do século XX. Com o advento da internet, mídias sociais, dispositivos inteligentes e sensores, a quantidade de dados disponíveis cresceu exponencialmente. Esses dados não estruturados, em sua maioria, requerem técnicas avançadas para extrair informações valiosas e úteis \cite{dataMining2012-preface}.
@@ -1455,10 +1456,6 @@ Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realiz
 \section{Ganhos de Velocidade}
 \label{sec:testesDeSpeedup}
 
-\textbf{TODO: Descrever melhor os resultados das execuções do k-means CPU e k-means GPU.}
-
-% \textbf{TODO: Atualizar a figura, usando os novos resultados e um gráfico de barras dessa vez.}
-
 \begin{figure}[h]
   \caption{Tempo médio de execução do k-means}
   \centering
@@ -1466,7 +1463,25 @@ Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realiz
   \label{fig:kMeansAvgTime}
 \end{figure}
 
-\textbf{TODO: Adicionar as informações em forma de tabela também.}
+Na Figura \ref{fig:kMeansAvgTime} e na Tabela \ref{tab:avgTimeResults} é visível como o tempo de execução cresce muito mais rapidamente com o aumento dos tamanhos dos datasets nas execuções do k-means versão CPU em relação às execuções da versão paralela rodando em GPU. Enquanto no maior dataset, HHAR, com mais de 13 milhões de instâncias, o tempo de execução do k-means CPU beira algo probitivo, na casa dos 23 minutos para uma execução média, a versão paralela do k-means ainda não chega a demorar mais de 40 segundos para ser executada.
+
+\begin{table}[]
+  \centering
+  \caption{Velocidade Média de Execução do K-means}
+  \label{tab:avgTimeResults}
+  \begin{tabular}{|l|l|l|l|}
+  \hline
+  \rowcolor[HTML]{9B9B9B} 
+  \textbf{Dataset} & \textbf{Execuções} & \textbf{Tempo Médio CPU (S)} & \textbf{Tempo Médio GPU (S)} \\ \hline
+  Rice             & 100                & 0.0800                       & 0.0087                       \\ \hline
+  HTRU2            & 100                & 0.3327                       & 0.0192                       \\ \hline
+  MiniBooNE        & 100                & 9.6021                       & 0.6988                       \\ \hline
+  WESAD            & 20                 & 141.7909                     & 3.3438                       \\ \hline
+  HHAR             & 10                 & 1500.6155                    & 36.8901                      \\ \hline
+  \end{tabular}
+\end{table}
+
+Os fatores de \textit{speed-up} são mais claros ainda no gráfico de barras da Figura \ref{fig:kMeansAvgSpeedup} abaixo. O padrão esperado foi de fato experimentalmente encontrado. O ganho de velocidade fica cada vez melhor com datasets cada vez maiores.
 
 \begin{figure}[h]
   \caption{Ganho médio de velocidade do k-means}
@@ -1475,12 +1490,9 @@ Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realiz
   \label{fig:kMeansAvgSpeedup}
 \end{figure}
 
-% \begin{figure}[h]
-%   \caption{Figura \ref{fig:kMeansAvg}, com zoom nos primeiros três menores datasets}
-%   \centering
-%   \includegraphics[width=0.95\textwidth]{kMeansResultsAvgZoomed.png}
-%   \label{fig:kMeansAvgZoomed}
-% \end{figure}
+Esse resultado corrobora a análise de que, para datasets menores, o esforço de se paralelizar um algoritmo de agrupamento vale muito menos a pena, pois o custo da parte inerentemente serial do algoritmo pode acabar dominando o custo total das execuções, fazendo com que sua melhora máxima (os ganhos nas partes paralelizáveis) se torne menos significativa. Isso remete também à \textbf{Lei de Amdahl} \cite{Amdahl-Law}, que postula sobre ganhos máximos possíveis com a paralelização.
+
+A magnitude dos ganhos de velocidade encontrados nos experimentos também condiz com a magnitude encontrada nos trabalhos estado da arte que, como exibidos no Capítulo \ref{chp:levantamentoEstadoDaArte}, estavam na faixa de 2 a 80 vezes de ganho de velocidade no caso específico do k-means.
 
 
 
@@ -1565,59 +1577,59 @@ Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realiz
 % \end{apendicesenv}
 
 
-% * ############################################################################
-% * Anexos (so mantenha se pertinente)
-% * ############################################################################
+% % * ############################################################################
+% % * Anexos (so mantenha se pertinente)
+% % * ############################################################################
 
-% ##################
-% Inicia os anexos
-% ##################
+% % ##################
+% % Inicia os anexos
+% % ##################
 
-\begin{anexosenv}
+% \begin{anexosenv}
 
-% Imprime uma página indicando o início dos anexos
+% % Imprime uma página indicando o início dos anexos
 
-\part[anexos]{Anexos}
-
-
-
-
-
-% * ############################################################################
-\chapter{Eu sempre quis aprender latim}
-% * ############################################################################
-
-\lipsum[30]
+% \part[anexos]{Anexos}
 
 
 
 
 
-% * ############################################################################
-\chapter{Coisas que eu não fiz mas que achei interessante o suficiente para colocar aqui}
-% * ############################################################################
+% % * ############################################################################
+% \chapter{Eu sempre quis aprender latim}
+% % * ############################################################################
 
-\lipsum[31]
-
-
-
-
-
-% * ############################################################################
-\chapter{Fusce facilisis lacinia dui}
-% * ############################################################################
-
-\lipsum[32]
+% \lipsum[30]
 
 
 
 
 
-% ##################
-% Finalizando anexos
-% ##################
+% % * ############################################################################
+% \chapter{Coisas que eu não fiz mas que achei interessante o suficiente para colocar aqui}
+% % * ############################################################################
 
-\end{anexosenv}
+% \lipsum[31]
+
+
+
+
+
+% % * ############################################################################
+% \chapter{Fusce facilisis lacinia dui}
+% % * ############################################################################
+
+% \lipsum[32]
+
+
+
+
+
+% % ##################
+% % Finalizando anexos
+% % ##################
+
+% \end{anexosenv}
 
 
 
