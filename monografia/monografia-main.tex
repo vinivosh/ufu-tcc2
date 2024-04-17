@@ -1093,7 +1093,7 @@ A \textbf{quarta etapa}, por fim, consistiu em diversos experimentos de ganho de
 \textbf{TODO: Escrever uma seção aqui explicando bem como é feita a identificação das partes paralelizáveis de um algoritmo, especialmente um de clustering. Incluir:}
 
 \begin{itemize}
-  \item \textbf{Parágrafos introdutórios;}
+  % \item \textbf{Parágrafos introdutórios;}
 
   % \item \textbf{Exemplo de identificação num algoritmo toy (não-clustering);}
 
@@ -1109,6 +1109,28 @@ Evidentemente, nem todo processo pode ser paralelizado. Há requisitos important
 Um exemplo de tarefa facilmente paralelizável, como exibido nos Capítulos \ref*{ssc:implementaçãoCUDA} e \ref*{ssc:implementaçãoNumba}, é a soma de dois vetores. Para dois vetores de tamanho $N$, é possível calcular a soma deles paralelamente, calculando a soma de cada par de elementos, um de cada vetor, simultaneamente. Isso é possível pois, para dois vetores $x$ e $y$, a soma dos elementos $x[i]$ e $y[i]$ não depende da soma dos elementos $x[i+1]$ e $y[i+1]$.
 
 Já um exemplo de uma tarefa inerentemente serial seria o hashing consecutivo de um dado, uma operação onde é calculado o hash de uma mensagem $N$ vezes, cada vez aplicando a operação de hashing novamente sobre o valor gerado pela operação anterior. Para calcular a terceira operação de hash do dado, é estritamente necessário que o hash da segunda operação tenha sido calculado, que por sua vez necessita que a primeira operação de hashinh tenha sido concluída. A paralelização num cenário desses é impossível, pois o resultado de uma sub-tarefa depende de outra, impedindo que sejam executadas simultaneamente.
+
+A identificação de trechos altamente paralelizáveis do algotimo k-means é simples. Abaixo, há um excerto do pseudocódigo que descreve seu processo, exibido por completo no Capítulo \ref{sec:kMeans} (Algoritmo \ref{code:kMeans.pseudo}).
+
+\codeexternal[
+  language=,
+  firstline=8,
+  lastline=12,
+  mathescape,
+  numbers=none,
+  label=code:kMeans.snippet1.pseudo,
+  % caption={Implementação padrão em pseudocódigo do k-means},
+]{code-snippets/kMeans.pseudo}
+
+É simples perceber que os trechos com maiores potenciais de paralelização são o passo 2.1 e o 2.2.
+
+No passo 2.1, temos o cálculo de todas as distâncias euclidianas entre cada um dos $N$ elementos do dataset e os $K$ centroides de cada grupo. Ou seja, um mesmo cálculo é realizado um total de $N \cdot K$ vezes a cada iteração do algoritmo. Cada um dos cálculos das distâncias independe dos outros, então essa grande operação pode ser altamente paralelizada.
+
+No passo 2.2, o cálculo dos novos centroides é realizado. Essa operação requer a redução de um vetor bidimensional de dimensões $N \cdot D$ em um vetor unidimensional de tamanho $D$. Essa redução é feita com a soma de todas as coordenadas dos datapoints mais próximos do centroide atualmente sendo recalculado e depois a divisão do valor final pelo número de datapoints que foram somados, realizando efetivamente uma média das coordenadas dos pontos de um grupo, para encontrar o novo centroide do grupo. Novamente, é uma operação de $(N_c - 1) \cdot D$ somas, onde $N_c$ é o número de pontos de dados no grupo cujo centroide está sendo recalculado, com $D$ divisões no final para encontrar a média. Por ser uma operação de redução, onde a saída tem dimensionalidade menor que a entrada, há um grau de dificuldade maior na implementação de uma versão paralela, mas é perfeitamente possível, com subdivisões iterativas dos vetores.
+
+Na verdade, até o passo 1 no pseudocódigo acima é paralelizável, já que a geração dos centroides aleatórios pode ser feita simultaneamente para os $K$ centróides. Porém, como $K$ quase sempre é muito menor que $N$ nos datasets, essa implementação costuma não valera a pena.
+
+Uma parte do k-means que nunca poderia ser paralelizada são as operações entre cada itearação. Isto é, o passo 2.1 da teceira iteração nunca pode ser executado ao mesmo tempo que o mesmo passo 2.1 da segunda iteração do algoritmo. Isso pois a relação datapoint--centroide é passível de mudanças a cada iteração, e o cálculo das distâncias dos centroides numa iteração $i$ depende do cálculo das distâncias da iteração $i-1$, para qualquer $i > 1$.
 
 
 
