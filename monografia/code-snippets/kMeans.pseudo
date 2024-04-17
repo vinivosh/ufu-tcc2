@@ -1,0 +1,17 @@
+Input
+    $P = \{P1, P2, \dots, Pn\}$, um conjunto de $N$ objetos de dados (pontos em um espaço $D$-dimensional);
+    $K$, o número de agrupamentos desejado;
+    $I_{max}$
+Output
+    Um conjunto de $K$ agrupamentos, onde cada um dos $N$ objetos em $P$ está associado a exatamente um conjunto.
+
+Passos
+1. Escolha arbitrariamente $K$ pontos em $P$ para servirem de centroides iniciais dos agrupamentos;
+2. Repita (até que os critérios de convergência sejam atingidos):
+    2.1 Atribua cada ponto de $P$ ao agrupamento que possui o centroide mais próximo, calculado pela distância euclidiana;
+    2.2 Calcule novos centroides para cada agrupamento através da média das coordenadas de todos os pontos do grupo.
+
+Critérios de convergência
+    Não há mudança entre os centroides da iteração atual e o da anterior;
+    OU...
+    O número de iterações realizadas ultrapassa um máximo $I_{max}$.
