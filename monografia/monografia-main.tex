@@ -1063,7 +1063,7 @@ Além disto, é destacado no estudo que essas melhoras de desempenho possivelmen
 \chapter{Metodologia de Desenvolvimento e Pesquisa}
 % * ############################################################################
 
-\textbf{TODO: Adicionar em algum lugar desse capítulo uma figura, um diagrama, explicativo sobre a metodologia usada para parelelizar um algoritmo de agrupamento genérico. Vide arquivo \enquote{..\textbackslash Notes\_230922\_171133.pdf}.}
+% \textbf{TODO: Adicionar em algum lugar desse capítulo uma figura, um diagrama, explicativo sobre a metodologia usada para parelelizar um algoritmo de agrupamento genérico. Vide arquivo \enquote{..\textbackslash Notes\_230922\_171133.pdf}.}
 
 % TODO
 % TODO
@@ -1071,39 +1071,31 @@ Além disto, é destacado no estudo que essas melhoras de desempenho possivelmen
 % TODO
 % TODO
 
-A pesquisa realizada neste trabalho consistiu de estudos e análises de trabalhos prévios, desenvolvimento de versões paralelizadas de \qntAlgrtm{} algoritmos de clustering e experimentos sobre essas implementações. Pode-se dividir tal metodologia em um conjunto de etapas que foram realizadas.
+A pesquisa realizada neste trabalho consistiu de estudos e análises de trabalhos prévios, desenvolvimento de uma versão paralelizada do algoritmo de clustering k-means e experimentos sobre essa implementação. Pode-se dividir tal metodologia em um conjunto de etapas que foram realizadas.
 
-\textbf{TODO: Re-escrever grande parte dessa descrição de etapas do trabalho para condizer com a pesquisa feita somente a respeito do k-means...}
+A \textbf{primeira etapa} consistiu em uma extensa pesquisa bibliográfica. O intuito é levantar o estado da arte na área de algoritmos de agrupamento acelerados com técnicas de paralelismo, como implementações em GPU. O foco foi entender quais algoritmos já foram implementados paralelamente com sucesso, e como foram feitas tais implementações, além dos ganhos em desempenho destas. Essa etapa permitiu agregar conhecimento sobre como utilizar ferramentas como a biblioteca CUDA para acelerar algoritmos de agrupamento, além de mostrar uma prévia da magnitude de ganho de desempenho esperado de uma paralelização média desse tipo de algoritmo.
 
-% TODO
-% TODO
-% TODO Vide acima
-% TODO
-% TODO
+A \textbf{segunda etapa} consistiu na implementação de duas versões, uma serial e uma paralela, de um dos mais antigos e conhecidos algoritmos de agrupamento de dados: o \textbf{k-means}. A função dessa etapa da pesquisa foi aprender como programar, na prática, um algoritmo de agrupamento e, depois, como paralelizá-lo utilizando a biblioteca Python \textit{Numba} --- que utiliza a plataforma CUDA, internamente. Por ser um algoritmo mais antigo, o k-means já foi muito estudado anteriormente, tanto em versões seriais quanto paralelas, com grande presença na bibliografia da área. Assim, a implementação aqui foi facilitada pelo grande acúmulo de conhecimento bibliográfico. % Os ganhos de velocidade da versão paralela foi então comparada também com os ganhos obtidos nos trabalhos analisados na primeira etapa. Isso serviu como uma validação da corretude da implementação feita.
 
-A \textbf{primeira etapa} consistiu em uma extensa pesquisa bibliográfica. O intuito é levantar o estado da arte na área de algoritmos de agrupamento acelerados em GPU usando a linguagem e biblioteca CUDA da NVIDIA. O foco foi entender quais algoritmos já foram implementados com sucesso em CUDA, e como foram feitas tais implementações, além dos ganhos em desempenho destas. Essa etapa permitiu agregar conhecimento sobre como utilizar a biblioteca CUDA para acelerar algoritmos de agrupamento, além de mostrar uma prévia da magnitude de ganho de desempenho esperado de uma paralelização média desse tipo de algoritmo.
+% A \textbf{terceira etapa} consistiu na implementação de uma versão paralela um pouco mais \enquote{inédita} de algum algoritmo de agrupamento, ou seja, um algoritmo cuja implementação paralela foi raramente estudada à fundo em pesquisas. O algoritmo escolhido para essa etapa foi o de \textbf{Agrupamento Hierárquico}. Usando o aprendizado adquirido nas etapas anteriores, este algoritmo foi paralelizado em Python, utilizando novamente a biblioteca \textit{Numba}, e seus resultados comparados com a versão serial (rodando somente em uma thread, na CPU) para garantir corretude.
 
-A \textbf{segunda etapa} consistiu na implementação de duas versões, uma serial e uma paralela, de um dos mais antigos e conhecidos algoritmos de agrupamento de dados: o \textbf{k-means}. A função dessa etapa da pesquisa foi aprender como programar, na prática, um algoritmo de agrupamento e, depois, como paralelizá-lo utilizando a biblioteca Python \textit{Numba} --- que utiliza a plataforma CUDA, internamente. Por ser um algoritmo mais antigo, o k-means já foi muito estudado anteriormente, tanto em versões seriais quanto paralelas, com grande presença na bibliografia da área. Assim, a implementação aqui realizada foi feita puramente para fins de aprendizado. Os ganhos de velocidade da versão paralela foi então comparada também com os ganhos obtidos nos trabalhos analisados na primeira etapa. Isso serviu como uma validação da corretude da implementação feita.
+A \textbf{terceira etapa} consistiu na busca de um procedimento geral para paralelizar um algoritmo de agrupamento genérico. Ou seja, o foco foi encontrar um passo-a-passo de identificação de possíveis modificações no código de um algoritmo serial que, ao fim, pudesse transformá-lo numa versão acelerada, usando CUDA, ainda mantendo sua corretude e proporcionando algum ganho significativo de desempenho.
 
-A \textbf{terceira etapa} consistiu na implementação de uma versão paralela um pouco mais \enquote{inédita} de algum algoritmo de agrupamento, ou seja, um algoritmo cuja implementação paralela foi raramente estudada à fundo em pesquisas. O algoritmo escolhido para essa etapa foi o de \textbf{Agrupamento Hierárquico}. Usando o aprendizado adquirido nas etapas anteriores, este algoritmo foi paralelizado em Python, utilizando novamente a biblioteca \textit{Numba}, e seus resultados comparados com a versão serial (rodando somente em uma thread, na CPU) para garantir corretude.
-
-A \textbf{quarta etapa} consistiu na busca de um procedimento geral para paralelizar um algoritmo de agrupamento genérico. Ou seja, o foco foi encontrar um passo-a-passo de modificações no código de um algoritmo serial que, ao fim, o transforme numa versão acelerada usando CUDA desse mesmo algoritmo, ainda mantendo sua corretude e proporcionando algum ganho significativo de desempenho.
-
-A \textbf{quinta etapa}, por fim, consistiu em diversos experimentos de ganho de velocidade, ou \textit{speedup}, dos \qntAlgrtm{} algoritmos que tiveram aqui sua versões aceleradas em GPU implementadas e apresentadas. Os resultados desses experimentos proporcionaram uma boa visão da magnitude do ganho de desempenho ao paralelizar algoritmos de agrupamento usando CUDA, além de outros conhecimentos, como saber se há um teto ou chão para tais ganhos, como o \textit{speedup} aumenta ou diminui com o crescimento do número de datapoints ou variáveis no conjunto de dados a ser analisado, e também como outros parâmetros importantes que não sejam velocidade são afetados, como o uso de memória --- afinal, a VRAM das GPUs são comumente mais limitadas em capacidade do que a RAM utilizada pelas CPUs.
+A \textbf{quarta etapa}, por fim, consistiu em diversos experimentos de ganho de velocidade, ou \textit{speedup}, do k-means, que teve aqui sua versão acelerada em GPU implementada e apresentada. Os resultados desses experimentos proporcionaram uma boa visão da magnitude do ganho de desempenho ao paralelizar algoritmos de agrupamento usando CUDA, além de outros conhecimentos, como saber se há um teto ou chão para tais ganhos, como o \textit{speedup} aumenta ou diminui com o crescimento do número de datapoints ou variáveis no conjunto de dados a ser analisado, e também como outros parâmetros importantes que não sejam velocidade são afetados, como a precisão dos resultados gerados pelo k-means, pois não há serventia em ganhar grande velocidade enquanto se perde o propósito de se agrupar dados em primeiro lugar, que é a capacidade de encontrar informações reais úteis em grandes datasets.
 
 
 
 % * ####################################
 
-\section{Análise de Potencial de Paralelização}
-\label{chp:analisePotencParalel}
+\section{Identificando o Potencial de Paralelismo}
+\label{chp:identifPotencParalel}
 
 \textbf{TODO: Escrever uma seção aqui explicando bem como é feita a identificação das partes paralelizáveis de um algoritmo, especialmente um de clustering. Incluir:}
 
 \begin{itemize}
   \item \textbf{Parágrafos introdutórios;}
 
-  \item \textbf{Exemplo de identificação num algoritmo toy (não-clustering);}
+  % \item \textbf{Exemplo de identificação num algoritmo toy (não-clustering);}
 
   \item \textbf{Exemplo de identificação no pseudocódigo do k-means;}
 
@@ -1170,7 +1162,7 @@ Por fim, na linha 17 do algoritmo \ref{code:kMeansCPU}, finalizamos o loop com s
 
 Saindo do laço de repetição, o algoritmo k-means é finalizado com uma última instrução, a de retorno do resultado, armazenado em \textit{\codeinline{closestCent}}, na linha 19. Como explicado anteriormente, esse resultado é um dataframe do Pandas onde cada datapoint $i$ possui apenas um valor $(j)$, o índice do centroide $Cj$ mais próximo a este datapoint, o que define a qual grupo ele pertence.
 
-Analisando o código explicado acima, é fácil identificar os trechos onde são realizadas as operações mais custosas e com enorme potencial para paralelização. Para isso, basta encontrar as partes onde uma mesma operação é realizada uma quantidade imensa de vezes a cada execução e cujas operações são independentes entre si. Isso significa que a paralelização na GPU é, em tese, plausível e possivelmente acarretaria num ganho de performance. Esse processo é explicado em mais detalhes no Capítulo \ref{chp:analisePotencParalel}.
+Analisando o código explicado acima, é fácil identificar os trechos onde são realizadas as operações mais custosas e com enorme potencial para paralelização. Para isso, basta encontrar as partes onde uma mesma operação é realizada uma quantidade imensa de vezes a cada execução e cujas operações são independentes entre si. Isso significa que a paralelização na GPU é, em tese, plausível e possivelmente acarretaria num ganho de performance. Esse processo é explicado em mais detalhes no Capítulo \ref{chp:identifPotencParalel}.
 
 Há três trechos de código onde tal potencial de ganho de velocidade é imenso. O primeiro é onde calculamos os logarítimos naturais das coordenadas de todos os datapoints, na linha 5, replicada também àbaixo.
 
