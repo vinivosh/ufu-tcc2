@@ -1465,7 +1465,7 @@ Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realiz
 
 Na Figura \ref{fig:kMeansAvgTime} e na Tabela \ref{tab:avgTimeResults} é visível como o tempo de execução cresce muito mais rapidamente com o aumento dos tamanhos dos datasets nas execuções do k-means versão CPU em relação às execuções da versão paralela rodando em GPU. Enquanto no maior dataset, HHAR, com mais de 13 milhões de instâncias, o tempo de execução do k-means CPU beira algo probitivo, na casa dos 23 minutos para uma execução média, a versão paralela do k-means ainda não chega a demorar mais de 40 segundos para ser executada.
 
-\begin{table}[]
+\begin{table}[h]
   \centering
   \caption{Velocidade Média de Execução do K-means}
   \label{tab:avgTimeResults}
@@ -1501,13 +1501,35 @@ A magnitude dos ganhos de velocidade encontrados nos experimentos também condiz
 \section{Precisão}
 \label{sec:testesDePrecisao}
 
-% TODO
-% TODO
-% TODO: Vide abaixo
-% TODO
-% TODO
+Além dos resultados positivos de ganhos de velocidade, foram obtidos resultados igualmente positivos quanto à precisão dos resultados gerados pelo k-means versão paralela, em relação ao k-means versão serial.
 
-\textbf{TODO: Escrever uma seção apresentando e discutindo os resultados dos testes de precisão e corretude rodados com cada dataset e implementação do k-means.}
+Manter a precisão média num nível extremamente parecido entre as duas implementações era de suma importância para a hipótese desse trabalho. Isso pois não haveria sentido em acelerar drasticamente um algoritmo de agrupamento de dados se esse processo piorasse a precisão dos resultados, indo contra o propósito da utilidade prática do algoritmo.
+
+\begin{table}[h]
+  \centering
+  \caption{Comparação de Precisão}
+  \label{tab:avgPrecisionResults}
+  \begin{tabular}{|l|l|l|l|l|}
+  \hline
+  \rowcolor[HTML]{9B9B9B}
+  \textbf{Dataset} & \textbf{Execuções} & \textbf{P. Média (CPU)} & \textbf{P. Média (GPU)} & \textbf{Melhora} \\ \hline
+  Rice             & 100                & 91.0433\%                     & 91.3821\%                     & +0.372180        \\ \hline
+  HTRU2            & 100                & 91.7588\%                     & 91.7589\%                     & +0.000061        \\ \hline
+  MiniBooNE        & 50                 & 50.8039\%                     & 50.8288\%                     & +0.048967        \\ \hline
+  WESAD            & 5                  & 63.5576\%                     & 65.0151\%                     & +2.293257        \\ \hline
+  HHAR             & 2                  & 28.3104\%                     & 28.3097\%                     & -0.002485        \\ \hline
+  \end{tabular}
+\end{table}
+
+A Tabela \ref{tab:avgPrecisionResults} acima mostra detalhadamente a precisão de cada versão do k-means implementada, além da melhora de precisão obtida ao se subtrair a precisão da versão GPU pela a da versão CPU.
+
+Como é possível perceber, em todos os casos menos o último houve uma melhora de precisão. Todas as diferenças de precisão foram de magnitude bem pequena, de menos de 0,37 unidades de diferença nas porcentagens em todos os casos, exceto no databse WESAD, onde houve uma diferença de 2,29 unidades na porcentagem, porém melhorando a precisão, e não piorando. A única piora de precisão foi no maior dataaset, o HHAR, e foi de apenas 0,002485 unidades na porcentagem de acerto.
+
+Diferenças de acertos de classificação tão pequenas como essa indicam que a paralelização do algoritmo não afetou significativamente a precisão do k-means, um resultado positivo que reforça a viabilidade desse tipo de implementação. Não só o ganho de velocidade pode ser grande, como mostrado na capítulo anterior, como a precisão do algoritmo não é prejudicada por isto.
+
+As poucas variações de corretude são tão pequenas que podem ser explicadas pelas diferenças entre os centroides selecionados inicialmente no algoritmo, ao invés de alguma diferença causada pela paralelização em si.
+
+É importante notar também que o valor absoluto da precisão do k-means caiu bastante nos três maiores datasets (MiniBooNE, WESAD e HHAR), saindo da casa dos 90\% para a faixa dos 28 à 65\%. Isso ocorre pelo motivo da natureza dos dados desses datasets. Todos eles incluem dados temporais (\textit{time series data}), que não costumam ser bem classificados por algoritmos como esse de qualquer maneira. Eles ainda foram usados para a pesquisa simplesmente pela grande dimensionalidade deles.
 
 
 
