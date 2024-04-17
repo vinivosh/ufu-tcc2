@@ -1090,18 +1090,6 @@ A \textbf{quarta etapa}, por fim, consistiu em diversos experimentos de ganho de
 \section{Identificando o Potencial de Paralelismo}
 \label{chp:identifPotencParalel}
 
-\textbf{TODO: Escrever uma seção aqui explicando bem como é feita a identificação das partes paralelizáveis de um algoritmo, especialmente um de clustering. Incluir:}
-
-\begin{itemize}
-  % \item \textbf{Parágrafos introdutórios;}
-
-  % \item \textbf{Exemplo de identificação num algoritmo toy (não-clustering);}
-
-  \item \textbf{Exemplo de identificação no pseudocódigo do k-means;}
-
-  \item \textbf{Exemplo de identificação no pseudocódigo do Hierarquichal Clustering.}
-\end{itemize}
-
 Antes de se iniciar qualquer implementação que busque ganhar desempenho com o paralelismo, é crucial realisar uma análise para encontrar quais partes de um processo sequer podem ser paralelizadas e quais são necessariamente seriais --- isto é, precisam ser realizadas sequencialmente, sem processamentos simultâneos para aceleração.
 
 Evidentemente, nem todo processo pode ser paralelizado. Há requisitos importantes para que uma tarefa possa ser executada de maneira paralela. Primeiro, é necessário que a tarefa possa ser subdivida em diversas outras tarefas menores. Segundo, é necessário que essas tarefas sejam independentes entre si, isto é, que a execução de uma não dependa diretamente do resultado de outra.
@@ -1131,6 +1119,12 @@ No passo 2.2, o cálculo dos novos centroides é realizado. Essa operação requ
 Na verdade, até o passo 1 no pseudocódigo acima é paralelizável, já que a geração dos centroides aleatórios pode ser feita simultaneamente para os $K$ centróides. Porém, como $K$ quase sempre é muito menor que $N$ nos datasets, essa implementação costuma não valera a pena.
 
 Uma parte do k-means que nunca poderia ser paralelizada são as operações entre cada itearação. Isto é, o passo 2.1 da teceira iteração nunca pode ser executado ao mesmo tempo que o mesmo passo 2.1 da segunda iteração do algoritmo. Isso pois a relação datapoint--centroide é passível de mudanças a cada iteração, e o cálculo das distâncias dos centroides numa iteração $i$ depende do cálculo das distâncias da iteração $i-1$, para qualquer $i > 1$.
+
+% TODO
+% TODO
+% TODO: Se der tempo, apresentar a mesma ideia mas para o algoritmo do agrupamento hierárquico aqui!
+% TODO
+% TODO
 
 
 
@@ -1353,7 +1347,7 @@ Nas linhas 1--4 temos, como sempre, a definição de dimensionalidade e tipo das
 \chapter{Experimentos e Datasets}
 \label{chp:exp}
 
-Nesse trabalho, experimentos foram realizados para averiguar os ganhos de velocidade de execução da implementação paralela em relação à implementação serial do k-means, além de testes de corretude para checar se houveram mudanças quanto à precisão do k-means ao se paralelizá-lo.
+Nesse trabalho, experimentos foram realizados para averiguar os ganhos de velocidade de execução da implementação paralela em relação à implementação serial do k-means, além de testes de precisão para checar se houveram mudanças quanto à qualidade do resultado do k-means ao se paralelizá-lo.
 
 Neste capítulo são explicados os procedimentos e metodologia de todos os experimentos, além de descrições a respeito dos conjutos de dados utilizados nestes. No capítulo seguinte (Capítulo \ref{chp:resultados}) são exibidos e discutidos os resultados dos experimentos.
 
@@ -1364,7 +1358,11 @@ Neste capítulo são explicados os procedimentos e metodologia de todos os exper
 \section{Ambiente de Execução}
 \label{sec:máquinaUtilizada}
 
-\textbf{TODO: Escrever sobre minha máquina onde realizei os testes.}
+A máquina utilizada para realização de todos os experimentos foi um computador pessoal desktop de última geração rodando o sistema operacional \textbf{Linux} (com a distro Endeavour OS, baseada em Arch). O kernel utilizado é o \textit{6.8.4-zen1-1-zen}, com o driver NVIDIA versão 550.67 e CUDA versão 12.4.
+
+Portando um processador \textbf{Ryzen 7 7700X} de 8 núcleos e 16 threads, com velocidade de clock máxima de 5400mHz. A placa de vídeo NVIDIA utilizada, essencial para as implementações em CUDA, foi a \textbf{GeForce RTX 3070}, versão Lite Hash Rate, produzida pela Galax, com 8 GB de VRAM GDDR6, 5888 CUDA Cores e um clock máximo de 1730mHz.
+
+A máquina estava equipada também com \textbf{16 GB de memória RAM DDR5}, rodando a 5200mHz. Todos os componentes estando instalados numa placa mãe \textbf{MAG MSI B650M Mortar Wi-Fi}.
 
 
 
