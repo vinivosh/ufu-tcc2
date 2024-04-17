@@ -832,20 +832,6 @@ Fica evidente a facilidade muito maior em se implementar o poder do paralelismo 
 \section{K-means}
 \label{sec:kMeans}
 
-% TODO
-% TODO
-% TODO: Vide abaixo
-% TODO
-% TODO
-
-\textbf{TODO: Escrever uma sub-seção sobre o k-means.}
-
-\begin{itemize}
-  % \item \textbf{Um dos algoritmos mais tradicionais, explicar a história dele. Citar os primeiros trabalhos introduzindo o algoritmo;}
-  % \item \textbf{Explicar brevemente seu funcionamento (talvez com um pseudo-código bem alto nível? Diagramas??);}
-  \item \textbf{Explicar como ele é usado (aplicações reais).}
-\end{itemize}
-
 O algoritmo \textbf{K-means}, também chamado de \textbf{K-médias} em português, é notório por sua aplicação em tarefas de agrupamento de dados, e possui raízes históricas que remontam à metade do século XX \cite{kMeansHistoryBock2007}. A ideia fundamental por trás do k-means, conhecida como quantização vetorial, foi introduzida inicialmente em um contexto de processamento de sinal. Esse algoritmo visa particionar, iterativamente, $N$ observações em $K$ grupos, de maneira que cada observação pertença ao agrupamento com o \enquote{centro} mais próximo, resultando na minimização das variações dentro dos agrupamentos (variação \textit{intra-grupo}) e na maximização das variações entre observações em grupos diferenets (variação \textit{inter-grupo}).
 
 A aplicação original desse conceito foi documentada por Hugo Steinhaus em 1957 \cite{kMeansFirstIdeaSteinhaus1957}, mas o algoritmo padrão como é conhecido foi proposto por Stuart Lloyd enquanto trabalhava na Bell Labs em 1957 e publicado formalmente somente em 1982 \cite{kMeansFirstAlgoLloyd1982}, solidificando a base para o moderno entendimento e aplicação do k-means em análise multivariada e outras áreas de processamento de dados.
@@ -857,11 +843,13 @@ O desenvolvimento do algoritmo k-means não parou com essas contribuições inic
 A importância histórica e a evolução contínua do k-means mostram seu valor duradouro na análise de dados e machine learning. Desde sua concepção, o algoritmo não só inspirou avanços na teoria matemática, mas também provou ser uma ferramenta indispensável na era moderna da computação, especialmente em aplicações de 
 agrupamento de dados em larga escala.
 
+O k-means foi o escolhido como foco desse trabalho por ser, até na modernidade, um algoritmo extremamente utilizado na prática, mesmo com suas limitações, além de ter uma implementação inicialmente simples e de possuir uma estrutura mais amigável para a paralelização.
+
 % * ##########################
 
 \subsection{Algoritmo e Limitações}
 
-Um dos motivos da fama do k-means é a simplicidade de se explicar sua lógica e funcionamento. Diferentemente de muitos outros algoritmos de agrupamento de dados, ela pode ser descrita com um pseudocódigo extremamente sucinto, como o Algoritmo \ref{code:kMeans.pseudo} exibido abaixo, que descreve a implementação, como originalmente proposta, do processo do k-means.
+Um dos motivos da fama do k-means é a simplicidade de se entender sua lógica e funcionamento. Diferentemente de muitos outros algoritmos de agrupamento de dados, ele pode ser descrito com um pseudocódigo extremamente sucinto, como o Algoritmo \ref{code:kMeans.pseudo} exibido abaixo, que descreve a implementação, como originalmente proposta, do processo do k-means.
 
 \codeexternal[
   language=,
@@ -879,9 +867,9 @@ A complexidade de tempo do k-means é de $O(N K D I)$ \cite{surveyClustAlgoXuWun
 
 Na Figura \ref{fig:kMeansDemoIris} mais abaixo há um exemplo de uma execução do k-means, utilizando o dataset Iris, explicado em mais detalhes no Capítulo \ref{sec:datasets}.
 
-Tanto as primeiras três quanto a última iteração são exibidas graficamente, com cada datapoint tendo sua cor definida pelo grupo ao qual pertence. É importante notar que, como há quatro variáveis em cada instância ($D = 4$) nesse dataset, os eixos $X$ e $Y$ exibidos nos gráfico representam, cada um, duas dimensões, ao invés de apenas uma. O processo de redução de dimensionalidade para exibição gráfica é importante para possibilitar algum tipo de visualização de espaços de mais de três dimensões. Esse processo foi feito apenas na renderização, e não na entrada de dados.
+Tanto as primeiras três quanto a última iteração são exibidas graficamente, com cada um dos 150 datapoints ($N = 150$) tendo sua cor definida por qual dos três grupos ($K = 3$) ele pertence. É importante notar que, como há quatro variáveis em cada instância ($D = 4$) nesse dataset, os eixos $X$ e $Y$ exibidos nos gráfico representam, cada um, duas dimensões, ao invés de apenas uma. O processo de redução de dimensionalidade para exibição gráfica é importante para possibilitar algum tipo de visualização de espaços de mais de três dimensões. Esse processo foi feito apenas na renderização, e não na entrada de dados.
 
-É possível perceber o \enquote{movimento} dos centroides ao longo das iterações, representados aqui por uma pequena cruz vermelha, até convergirem para o máximo local, atingido em nove iterações. Nota-se também que, para esse dataset, o algoritmo consegue realizar uma boa separação de um dos grupos em relação ao resto (mais à esquerda no gráfico), mas não os outros dois grupos (mais à direita), que não possuem uma separação tão grande no espaço das variáveis. Esse é um resultado esperado nesse dataset, pois duas das classificações das instâncias não são linearmente diferenciáveis.
+É possível perceber o \enquote{movimento} dos centroides ao longo das iterações, representados aqui por uma pequena cruz vermelha, até convergirem para o máximo local, atingido nessa execução em nove iterações ($I = 9$). Nota-se também que, para esse dataset, o algoritmo consegue realizar uma boa separação de um dos grupos em relação ao resto (mais à esquerda no gráfico), mas não os outros dois grupos (mais à direita), que não possuem uma separação tão grande no espaço das variáveis. Esse é um resultado esperado nesse dataset, pois duas das classificações das instâncias não são linearmente diferenciáveis a partir das informações disponíveis nos dados.
 
 \begin{figure}[h]
   \caption{Demonstração do k-means rodando no dataset Iris}
@@ -890,13 +878,35 @@ Tanto as primeiras três quanto a última iteração são exibidas graficamente,
   \label{fig:kMeansDemoIris}
 \end{figure}
 
-É importante entender também as limitações do algoritmo k-means. Como explicitado anteriormente, não há garantias de que o processo encontre o melhor agrupamento possível para o conjunto de dados, apenas o melhor possível a partir dos centroides iniciais. O algoritmo também é sensível a \textit{outliers}, isto é, pontos de dados que se diferem muito da distribuição geral dos dados. A presença destes pode causar grandes deformações dos clusters --- basicamente \enquote{puxando} os centroides para mais perto dos \enquote{outliers}.
+É importante entender também as limitações do algoritmo k-means. Como explicitado anteriormente, não há garantias de que o processo encontre o melhor agrupamento possível para o conjunto de dados, apenas o melhor possível a partir dos centroides iniciais.
 
-Um dos argumentos necessários na chamada do algoritmo é considerado também uma limitação: o parâmetro $K$. Como é necessário que o k-means seja informado da quantidade de agrupamentos a serem feitos, isso implica que o usuário já saiba algo do conjunto de dados a ser agrupado, o que nem sempre é possível, ainda mais para datasets de alta dimensionalidade, onde uma visualização útil para se interpretar os dados se torna extremamente difícil.
+O algoritmo também é sensível a \textit{outliers}, isto é, pontos de dados que se diferem muito da distribuição geral dos dados. A presença destes pode causar grandes deformações dos clusters --- basicamente \enquote{puxando} os centroides para mais perto dos \textit{outliers}.
+
+Um dos argumentos necessários na chamada do algoritmo é considerado também uma limitação: o parâmetro $K$. Como é necessário que o k-means seja informado da quantidade de agrupamentos a serem feitos, isso implica que já se saiba algo a respeito da natureza ou geometria do conjunto de dados a ser agrupado, o que nem sempre é possível, ainda mais para datasets de alta dimensionalidade, onde uma visualização útil para se interpretar os dados se torna extremamente difícil.
+
+Mesmo com todas essas limitações, o k-means continua um algoritmo ubíquo em diversas áreas da computação, como discutido a seguir, e segue sendo amplamente estudado e aprimorado na literatura.
 
 % * ##########################
 
 \subsection{Aplicações Reais}
+
+O k-means, reconhecido por sua simplicidade e eficácia, é empregado em uma variedade de aplicações práticas em diversos campos. Sua capacidade de efetivamente segmentar dados em grupos com características similares o torna uma ferramenta versátil para diversos usos, desde análises de mercado até sistemas de recomendação.
+
+Uma das aplicações mais comuns do k-means é a segmentação de clientes. Nesse contexto, empresas de diversos setores, como bancos, telecomunicações, e-commerce e publicidade, utilizam o k-means para agrupar clientes com base em comportamentos de compra, preferências ou demografia, permitindo o desenvolvimento de estratégias de marketing direcionadas e personalizadas. Esta aplicação não apenas ajuda as empresas a entender melhor seus clientes, mas também a otimizar suas ofertas e serviços de acordo com as necessidades de cada segmento.
+
+Um exemplo concreto dessa aplicação é a realizada em um estudo de caso de 2018 \cite{kMeansSupplierRiskAss2018}, que utilizou o k-means para avaliar não clientes, mas sim realizar a análise de risco de fornecedores comerciais.
+
+Neste estudo, o método k-means foi aplicado para \textbf{avaliar e segmentar fornecedores} de uma empresa de maquinário pesado com base em seus perfis de risco. A metodologia incluiu a utilização do Best-Worst Method (BWM) para determinar os pesos de 17 critérios de risco, seguido pela aplicação de Análise de Fatores para redução de dimensionalidade dos dados de risco, resultando em quatro fatores principais. Utilizando esses fatores, o k-means foi empregado para dividir os fornecedores em três clusters, representando diferentes níveis de exposição ao risco, o que permitiu uma análise detalhada das características de risco de cada grupo.
+
+Os resultados do estudo demonstraram que a abordagem baseada em k-means é eficaz para a categorização dos fornecedores em grupos homogêneos quanto aos riscos enfrentados, fornecendo insights significativos para a gestão e o avaliação de fornecedores. Este agrupamento facilitou decisões estratégicas na gestão de riscos, destacando a importância e utilidade de métodos analíticos avançados em ambientes empresariais competitivos. O estudo sugere que a aplicação de técnicas de agrupamento de dados, como o k-means, pode melhorar significativamente as práticas de compra e a gestão de riscos em setores industriais.
+
+Outra aplicação notável do k-means é na organização e classificação de documentos. Por exemplo, em grandes conjuntos de dados de texto, como coleções de artigos ou relatórios de pesquisa, o k-means pode agrupar documentos com temas ou conteúdos semelhantes, facilitando a gestão e a recuperação de informações. Este uso é particularmente valioso em campos como pesquisa acadêmica, onde a capacidade de navegar rapidamente por vastas quantidades de literatura é crucial.
+
+Um exemplo específico dessa aplicação é explorado na documentação da biblioteca Python \textbf{Scikit Learn} \cite{kMeansDocClustering2024}. Nesse exemplo de implementação, é explorado o \textbf{agrupamento de documentos de texto} utilizando o método k-means com a biblioteca scikit-learn, focando em agrupar textos por tópicos de maneira eficaz. Ele emprega duas variantes do algoritmo k-means implementadas na biblioteca, o \textit{KMeans} e \textit{MiniBatchKMeans}, e utiliza a Análise Semântica Latente (LSA) para a redução de dimensionalidade e a identificação de padrões \enquote{escondidos} nos dados. Além disso, são utilizados dois métodos de vetorização de texto: \textit{TfidfVectorizer} e \textit{HashingVectorizer}, que ajudam na transformação do texto em uma representação numérica que pode ser usada pelo algoritmo de agrupamento.
+
+Para a análise, o dataset \textit{20 newsgroups} é utilizado, selecionando quatro tópicos para manter o custo computacional acessível e melhorar a clareza do problema de agrupamento, removendo metadados desnecessários como cabeçalhos e citações. A eficácia do agrupamento é avaliada através de várias métricas, incluindo homogeneidade, completude, medida-V, índice Rand ajustado e coeficiente de silhueta, destacando que a aplicação da técnica de LSA antes do agrupamento melhora significativamente tanto a estabilidade quanto a qualidade dos clusters. Esses resultados ilustram o potencial dessas técnicas para categorizar e entender grandes conjuntos de dados de texto, proporcionando insights valiosos sobre a organização dos tópicos dentro dos documentos.
+
+O k-means também tem aplicações significativas no processamento de imagens, como na segmentação de imagens, onde o algoritmo agrupa pixels semelhantes para identificar e separar diferentes objetos ou regiões dentro de uma imagem. Esta técnica é amplamente utilizada em tarefas como reconhecimento de padrões, visão computacional e até mesmo na melhoria de algoritmos de compressão de imagem, tornando-a uma ferramenta fundamental na era digital.
 
 
 
