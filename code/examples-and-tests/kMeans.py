@@ -133,9 +133,9 @@ def calcClosestCentroids(rowDistances:list[np.float64], closestCent:np.int64):
 # * K-means GPU
 # * ############################################################################
 
-def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResults=False, debug=False):
-    if plotResults:
-        # Inicializando variáveis para exibição gráfica
+def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResults=False, debug=False, savePlotsToPath:str=None):
+    if plotResults or savePlotsToPath:
+        # Inicializando variáveis e realizando transformações para exibição gráfica
         pca = PCA(n_components=2) # dois eixos no gráfico
         dataset_2D = pca.fit_transform(dataset.values)
 
@@ -186,7 +186,7 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
     # totalTimeCalcClosestCentroidsNS = 0
     # totalTimeCalcNewCentroidsNS = 0
 
-    iteration = 1
+    iteration:int = 1
 
     while iteration <= maxIter and not np.array_equal(centroids_OLD__np ,centroids__np):
         strToPrint = ''
@@ -243,13 +243,14 @@ def kMeansGPU(dataset:pd.DataFrame, k=3, maxIter=100, printIter=True, plotResult
 
         del meansByClosestCent
 
-        if plotResults:
+        if plotResults or savePlotsToPath:
             # Plotando clusters
             centroids_2D = pca.transform(centroids__np)
             plt.title(f'Iteration {iteration}')
             plt.scatter(x=dataset_2D[:,0], y=dataset_2D[:,1], c=closestCent)
             plt.scatter(x=centroids_2D[:,0], y=centroids_2D[:,1], marker='+', linewidths=2, color='red')
-            plt.show()
+            if savePlotsToPath: plt.savefig(f'{savePlotsToPath}_{iteration:03}.png', bbox_inches='tight')
+            if plotResults: plt.show()
 
         if debug or printIter: print(strToPrint)
 
