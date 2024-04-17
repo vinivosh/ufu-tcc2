@@ -1102,6 +1102,14 @@ A \textbf{quarta etapa}, por fim, consistiu em diversos experimentos de ganho de
   \item \textbf{Exemplo de identificação no pseudocódigo do Hierarquichal Clustering.}
 \end{itemize}
 
+Antes de se iniciar qualquer implementação que busque ganhar desempenho com o paralelismo, é crucial realisar uma análise para encontrar quais partes de um processo sequer podem ser paralelizadas e quais são necessariamente seriais --- isto é, precisam ser realizadas sequencialmente, sem processamentos simultâneos para aceleração.
+
+Evidentemente, nem todo processo pode ser paralelizado. Há requisitos importantes para que uma tarefa possa ser executada de maneira paralela. Primeiro, é necessário que a tarefa possa ser subdivida em diversas outras tarefas menores. Segundo, é necessário que essas tarefas sejam independentes entre si, isto é, que a execução de uma não dependa diretamente do resultado de outra.
+
+Um exemplo de tarefa facilmente paralelizável, como exibido nos Capítulos \ref*{ssc:implementaçãoCUDA} e \ref*{ssc:implementaçãoNumba}, é a soma de dois vetores. Para dois vetores de tamanho $N$, é possível calcular a soma deles paralelamente, calculando a soma de cada par de elementos, um de cada vetor, simultaneamente. Isso é possível pois, para dois vetores $x$ e $y$, a soma dos elementos $x[i]$ e $y[i]$ não depende da soma dos elementos $x[i+1]$ e $y[i+1]$.
+
+Já um exemplo de uma tarefa inerentemente serial seria o hashing consecutivo de um dado, uma operação onde é calculado o hash de uma mensagem $N$ vezes, cada vez aplicando a operação de hashing novamente sobre o valor gerado pela operação anterior. Para calcular a terceira operação de hash do dado, é estritamente necessário que o hash da segunda operação tenha sido calculado, que por sua vez necessita que a primeira operação de hashinh tenha sido concluída. A paralelização num cenário desses é impossível, pois o resultado de uma sub-tarefa depende de outra, impedindo que sejam executadas simultaneamente.
+
 
 
 % * ####################################
