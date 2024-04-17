@@ -1,8 +1,8 @@
-Input
+Entrada
     $P = \{P1, P2, \dots, Pn\}$, um conjunto de $N$ objetos de dados (pontos em um espaço $D$-dimensional);
     $K$, o número de agrupamentos desejado;
-    $I_{max}$
-Output
+    $I_{max}$, o número de iterações máximas do algoritmo
+Saída
     Um conjunto de $K$ agrupamentos, onde cada um dos $N$ objetos em $P$ está associado a exatamente um conjunto.
 
 Passos
