@@ -1370,7 +1370,19 @@ A máquina estava equipada também com \textbf{16 GB de memória RAM DDR5}, roda
 
 \section{Testes de Desempenho e Precisão}
 
-\textbf{TODO: Escrever brevemente sobre como foram feitos os testes de desempenho e precisão (a.k.a. corretude). Não imagino que eu vá ter que mostrar código aqui... certo?}
+Os testes de desempenho e precisão foram realizados usando notebooks Jupyter para fácil visualização e manipulação dos dados e resultados. Nesses notebooks, foi realizado o carregamento dos datasets, além de quaisquer pré-tratamentos de dados necessários antes de utilizá-los como entrada nas execuções do k-means.
+
+As execuções do k-means foram realizadas também dentro de notebooks Jupyter, usando os datasets carregados anteriormente no mesmo. Cada versão do algoritmo (CPU vs. GPU) foi executado diversas vezes no mesmo dataset para que diferenças entre execuções também pudesse ser levada em consideração nos resultados — o \textit{k-means}, especialmente, está suscetível a mudanças significativas na eficiência de cada uma de suas execuções, pelo fato dos centroides iniciais serem selecionados aleatoriamente na implementação aqui testada. Uma execução pode ter centroides iniciais mais próximos dos centroides finais, executando mais rapidamente, enquanto outra pode ter centroides iniciais muito distantes dos centroides finais, demorando mais para atingir a condição de parada.
+
+Cada execução teve seu tempo medido utilizando a função \textit{perf\_counter} do pacote integrado \textit{time} do Python. Tal função permite obter um período de tempo extremamente preciso, até a resolução de nanosegundos ($10^{-9}$ segundos), ao se subtrair o resultado de duas de suas chamadas feitas em linhas de código diferentes.
+
+Os tempos de cada execução foram sendo exibidos ao longo dos testes, para exportação posterior dos resultados, e salvos em um acumulador, para que fosse possível calcular médias ao final de cada rodada de execuções. Os tempos mínimos e máximos de cada rodada de execuções também foi salvo para comparações.
+
+Assim, cada dataset teve uma rodada de testes de tempo de execução feitas, uma vez usando o k-means versão serial, rodando em CPU, e outra com o k-means versão paralela, rodando em GPU. Os resultados foram salvos e são apresentados no Capítulo \ref{chp:resultados}.
+
+Além dos testes de ganho de velocidade, foram realizados testes de corretude, para checar por qualquer mudança na precisão dos resultados gerados pelo k-means. Esses testes funcionam através da conferência da classificação dos resultados, checados contra uma fonte de verdade existente em cada dataset.
+
+Ao final de cada execução do k-means, na rodada de testes de corretude, era executada uma função de contagem de acertos de classificação sobre o resultado gerado. Como o nome indica, essa função checava a classificação esperada, contida no dataset, em relação à classificação resultante da execução do k-means, contando o número de acertos de classificação. A precisão do resultado era contabilizada como a razão $H \div N$, onde $H$ é o número de acertos totais, em todas as classes, e $N$ o número de instâncias no dataset. As porcentagens de acertos foram então comparadas entre as execuções do k-means CPU e GPU, assim como as velocidades de execução.
 
 
 
@@ -1401,8 +1413,6 @@ A máquina estava equipada também com \textbf{16 GB de memória RAM DDR5}, roda
 \label{chp:resultados}
 
 Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realizadas diversas rodadas de execuções em ambas versões dos algoritmos aqui analisados.
-
-Cada versão do algoritmo foi executado diversas vezes no mesmo dataset para que diferenças entre execuções também pudesse ser levada em consideração nos resultados — o \textit{k-means}, especialmente, está suscetível a mudanças significativas na eficiência de cada uma de suas execuções, pelo fato dos centroides iniciais serem selecionados aleatoriamente na implementação aqui testada. Uma execução pode ter centroides iniciais mais próximos dos centroides finais, executando mais rapidamente, enquanto outra pode ter centroides iniciais muito distantes dos centroides finais, demorando mais para atingir a condição de parada.
 
 
 
