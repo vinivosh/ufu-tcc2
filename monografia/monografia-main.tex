@@ -143,8 +143,8 @@ rulecolor=\color{black},              % if not set, the frame-color may be chang
 % * Variáveis e macros
 % * ############################################################################
 
-\def\qntAlgrtm{dois}
-\def\qntAlgrtmNaoExtenso{2}
+% \def\qntAlgrtm{dois}
+% \def\qntAlgrtmNaoExtenso{2}
 
 
 
@@ -253,7 +253,7 @@ rulecolor=\color{black},              % if not set, the frame-color may be chang
 % TODO
 % TODO
 
-\textbf{TODO: Escrever o resumo após terminar a monografia}. Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
+\textbf{TODO: Escrever o resumo após terminar a monografia}. Segundo a, o resumo deve ressaltar o
 objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão
 destes itens dependem do tipo de resumo (informativo ou indicativo) e do
 tratamento que cada item recebe no documento original. O resumo deve ser
@@ -377,13 +377,7 @@ A hipótese principal deste trabalho é a de que algoritmos de clustering, em ge
 % TODO
 % TODO
 
-% TODO
-% TODO
-% ! TODO: Tenho que substituir essas referências abaixo por referências de versões seriais de cada algoritmo. Usar as referências das versões aceleradas em GPUs mais adiante, ao invés de aqui parece fazer bem mais sentido
-% TODO
-% TODO
-
-O foco de pesquisa é o notório algoritmo de agrupamento \textit{k-means} \cite{GPU-accelerated-K-Means}. Implementações e estudos realizados sobre ele foram analisados, e uma implementação paralela em GPU teve seu desempenho comparado com a serial em CPU.
+O foco de pesquisa é o notório algoritmo de agrupamento \textit{k-means} \cite{kMeansCoinedMacQueen1967} \cite{kMeansFirstAlgoLloyd1982} \cite{GPU-accelerated-K-Means}. Implementações e estudos realizados sobre ele foram analisados, e uma implementação paralela em GPU teve seu desempenho comparado com a serial em CPU.
 
 % * Texto antigo do parágrafo acima:
 % O foco de pesquisa são \qntAlgrtm{} algoritmos de agrupamento especialmente notórios: o \textit{k-means} \cite{GPU-accelerated-K-Means} e o \textit{Agrupamento Hierárquico}. Implementações e estudos realizados sobre estes foram analisados, e implementações paralelas em GPU tiveram seu desempenho comparado com as seriais em CPU.
@@ -406,7 +400,7 @@ O foco de pesquisa é o notório algoritmo de agrupamento \textit{k-means} \cite
 
 Este trabalho tem como objetivo principal testar a validez de sua hipótese (discutida mais à fundo na seção 1.2) de que algoritmos de clusterização são intrinsecamente paralelizáveis, e que o ganho de velocidade ao serem paralelizados é altamente significativo.
 
-Além disso, deseja-se compilar aqui um vasto conhecimento de como paralelizar esses algoritmos em geral, analisando principalmente os \qntAlgrtm{} aqui estudados a fundo (k-means e agrupamento hierárquico) e usando este aprendizado para criar um passo-a-passo genérico de como realizar tal modificação de código em um algoritmo de agrupamento qualquer.
+Além disso, deseja-se compilar aqui um vasto conhecimento de como paralelizar esses algoritmos em geral, analisando principalmente o algoritmo aqui estudado a fundo, o k-means, e usando este aprendizado para criar um passo-a-passo genérico de como realizar tal modificação de código em um algoritmo de agrupamento qualquer.
 
 
 
@@ -419,13 +413,11 @@ Para atingir o objetivo geral, é necessário completar diversos objetivos menor
 \begin{itemize}
   \item Pesquisar extensamente a bibliografia da área, realizando assim um levantamento do estado da arte de algoritmos paralelos de agrupamento;
   
-  \item Estudar implementações já realizadas dos \qntAlgrtm{} algoritmos aqui estudados, a fim de adquirir conhecimento de como a paralelização em CUDA deve ser realizada;
-  
-  \item Paralelizar um algoritmo de clustering \enquote{novo}, isto é, nunca antes paralelizado e exibido em trabalho científico, a fim de solidificar o conhecimento e prática de programação em CUDA. Foi escolhido o algoritmo de Agrupamento Hierárquico para tal;
+  \item Estudar implementações já realizadas do k-means, a fim de adquirir conhecimento de como a paralelização em CUDA deve ser realizada;
   
   \item Quantificar o ganho de desempenho das implementações paralelas, realizando diversos experimentos de \textit{speedup}, usando diversos datasets de tamanhos e dimensionalidades variadas;
   
-  \item Comparar o código serial (sem paralelização) com o código paralelo dos \qntAlgrtm{} algoritmos analisados, extraindo assim um conhecimento de como paralelizar um algoritmo de clusterização genérico;
+  \item Comparar o código serial (sem paralelização) com o código paralelo do k-means, extraindo assim um conhecimento mais generalizado de como paralelizar um algoritmo de clusterização genéico;
 \end{itemize}
 
 
@@ -464,7 +456,7 @@ Além disso, a apresentação nesse estudo de um procedimento genérico para par
 \chapter{Fundamentação Teórica}
 % * ############################################################################
 
-Para compreender a pesquisa científica aqui realizada, é necessário primeiro entender o que são algoritmos de agrupamento, tanto de maneira geral quanto específica, explorando os fundamentos e funcionamento dos \qntAlgrtm{} algoritmos pesquisados. Veremos que a complexidade de tempo desses algoritmos tendem a ser inconvenientemente altas ($O(n\cdot\log{n})$, $O(n^2)$ ou até $O(n^3)$ sendo complexidades comuns) e por isso qualquer ganho de velocidade significativo obtido será de imensa relevância para a usabilidade prática do algoritmo.
+Para compreender a pesquisa científica aqui realizada, é necessário primeiro entender o que são algoritmos de agrupamento, tanto de maneira geral quanto específica, explorando os fundamentos e funcionamento principalmente do k-means, o algoritmo aqui estudado. Veremos que a complexidade de tempo desses algoritmos de agrupamento tendem a ser inconvenientemente altas ($O(n\cdot\log{n})$, $O(n^2)$ ou até $O(n^3)$ sendo complexidades comuns) e por isso qualquer ganho de velocidade significativo obtido será de imensa relevância para a usabilidade prática do algoritmo.
 
 Também é imprescindível explorar o funcionamento dos processadores vetoriais --- sendo as \textit{Unidades de Processamento Gráfico} (GPUs) o principal exemplo destes e exatamente no qual essa pesquisa irá focar --- e entender por que usá-los para paralelizar algoritmos de agrupamento proporcionará, em tese, um ganho de velocidade expressivo na execução destes, abrandando o peso de suas complexidades de tempo. Além de tudo isso, será apresentada brevemente a arquitetura utilizada para paralelizar os algoritmos estudados: a plataforma e modelo de programação CUDA, da NVIDIA, que permitirá extrair o poder de paralelização das placas de vídeo NVIDIA além de bibliotecas como a \textit{Numba}, que permite a programação vetorial facilitada na linguagem Python.
 
@@ -1531,6 +1523,12 @@ As poucas variações de corretude são tão pequenas que podem ser explicadas p
 
 É importante notar também que o valor absoluto da precisão do k-means caiu bastante nos três maiores datasets (MiniBooNE, WESAD e HHAR), saindo da casa dos 90\% para a faixa dos 28 à 65\%. Isso ocorre pelo motivo da natureza dos dados desses datasets. Todos eles incluem dados temporais (\textit{time series data}), que não costumam ser bem classificados por algoritmos como esse de qualquer maneira. Eles ainda foram usados para a pesquisa simplesmente pela grande dimensionalidade deles.
 
+% TODO
+% TODO
+% TODO: Descrever a dificuldade de algumas partes da implementação aqui? Como aquela list comprehension que causou o speedup de 2,67x ao invés de 40x no HHAR
+% TODO
+% TODO
+
 
 
 
@@ -1539,13 +1537,23 @@ As poucas variações de corretude são tão pequenas que podem ser explicadas p
 
 \chapter{Conclusões e Trabalhos Futuros}
 
-% TODO
-% TODO
-% TODO: Vide abaixo
-% TODO
-% TODO
+Após as implementações e os resultados obtidos dos diversos experimentos feitos em cima delas, pode-se dizer com veemência que o objetivo desse estudo foi alcançado com sucesso. Não apenas foram obtidos ganhos de velocidade de mesma magnitude que as observadas no estado da arte da bibliografia a respeito da otimização do k-means através do paralelismo, mas também foi possível alcançar tudo isso utilizando de ferramentas de mais alto-nível: a linguagem Python juntamente com a biblioteca \textit{Numba}.
 
-\textbf{TODO: Escrever capítulo com conclusões do trabalho + sugestões do que prosseguir para trabalhos futuros.}
+Como exemplificado nos Capítulos \ref{sec:cuda} e \ref{sec:numba}, implementações com ferramentas como essa facilitam muito o desenvolvimento de algoritmos paralelos a serem executados na GPU, aumentando o poder de toda a comunidade científica, principalmente em áreas como  aprendizado de máquina e a ciência de dados, onde o uso da linguagem Python e as diversas ferramentas desenvolvidas para ela já é bem estabelecido.
+
+O acesso facilitado ao poder do parelelismo das GPUs NVIDIA proporcionado pela bibliteca e compilador \textit{Numba} se torna, assim, mais uma grande adição ao arsenal de ferramentas do cientista de dados e pesquisador, além de ser uma ótima porta de entrada para o aprendizado de técnicas de computação paralela em geral.
+
+Também foi constatado que a paralelização do k-means como implementada nessa pesquisa não cauas pioras mensuráveis na qualidade dos resultados devolvidos pelo processo, apresentando assim apenas vantagens para o uso das GPUs na aceleração desse notório e onipresente algoritmo de agrupamento de dados.
+
+Além disso, foi possível extrair grande conhecimento das implementações e experimentos realizados na pesquisa e sintetizadas nessa monografia. Acredita-se que o trabalho vá ser de grande utilidade para pesquisadores futuros, como uma introdução às implementações paralelas usando ferramentas de programação de alto-nível, auxiliando no desenvolvimento de versões paralelizadas de novas variações de algoritmos de agrupamento de dados, ou até mesmo de algoritmos completamente novos que possam vir a existir no futuro.
+
+Ainda no assunto do futuro, há diversas recomendações a serem feitas para expandir o trabalho dessa pesquisa futuramente. Como comentado no capítulo \ref{sec:kMeansImplementações} (após o Algoritmo \ref{code:kMeansCPU}), o trecho específico do k-means que recalcula os centroides a cada iteração, através da média dos pontos de dados pertencentes a cada grupo, não pode ser paralelizado utilizando o decorador \textit{guvectorize} da biblioteca \textit{Numba}, como foi feito com os outros trechos paralelizáveis do algoritmo.
+
+Uma implementação paralela bem sucedida desse trecho, quer requerirá ferramentas mais avançadas do \textit{Numba}, acarretaria em ganhos de velocidade de execução ainda maiores que os atingidos nessa pesquisa.
+
+Além disso, há uma gama de outras ferramentas implementadas na biblioteca que podem servir para impulsionar ainda mais a velocidade do k-means, ou qualquer outro algoritmo de agrupamento de dados, como gerenciamento mais explícito da memória da GPU, controle direto da geometria de blocos e threads CUDA, entra outras. Todas essas são avenidas de melhorias que outras pesquisas futuras podem explorar em implementações mais avançadas.
+
+No fim, o trabalho aqui pode ser imensamente expandido, também, com estudos e implementações de outros algoritmos notórios de agrupamento de dados, como abordagens hierárquicas ou baseadas em densidade, utilizando de ferramentas de alto nível como as usadas aqui para unir o melhor da performance com a facilidade de implementação, e sintaxes mais concisas e elegantes.
 
 
 
