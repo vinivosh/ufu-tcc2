@@ -861,7 +861,7 @@ agrupamento de dados em larga escala.
 
 \subsection{Algoritmo e Limitações}
 
-Um dos motivos da fama do k-means é a simplicidade de sua implementação original. Ela pode ser descrita com um pseudocódigo extremamente sucinto, como o exibido abaixo.
+Um dos motivos da fama do k-means é a simplicidade de se explicar sua lógica e funcionamento. Diferentemente de muitos outros algoritmos de agrupamento de dados, ela pode ser descrita com um pseudocódigo extremamente sucinto, como o Algoritmo \ref{code:kMeans.pseudo} exibido abaixo, que descreve a implementação, como originalmente proposta, do processo do k-means.
 
 \codeexternal[
   language=,
@@ -873,9 +873,30 @@ Um dos motivos da fama do k-means é a simplicidade de sua implementação origi
   caption={Implementação padrão em pseudocódigo do k-means},
 ]{code-snippets/kMeans.pseudo}
 
-O Algoritmo \ref{code:kMeans.pseudo} acima descreve a implementação, como originalmente proposta, do algoritmo k-means. Não há garantia de que o processo convirja para um máximo global, apenas para um máximo local que, dependendo dos centróides iniciais escolhidos, pode ser arbitrariamente pior que o máximo global.
+ Não há garantia de que o processo convirja para um máximo global, apenas para um máximo local que, dependendo dos centróides iniciais escolhidos, pode ser arbitrariamente pior que o máximo global.
 
-A complexidade de tempo do k-means é de $O(N K D I)$ \cite{surveyClustAlgoXuWunsch2005}, onde $I$ é o número de iterações necessárias para ele converger em um resultado, estando na faixa de $[1, I_{max}]$ e dependendo dos centróides iniciais escolhidos.
+A complexidade de tempo do k-means é de $O(N K D I)$ \cite{surveyClustAlgoXuWunsch2005}, onde $I$ é o número de iterações necessárias para convergir em um resultado, estando na faixa de $[1, I_{max}]$ e dependendo dos centroides iniciais escolhidos.
+
+Na Figura \ref{fig:kMeansDemoIris} mais abaixo há um exemplo de uma execução do k-means, utilizando o dataset Iris, explicado em mais detalhes no Capítulo \ref{sec:datasets}.
+
+Tanto as primeiras três quanto a última iteração são exibidas graficamente, com cada datapoint tendo sua cor definida pelo grupo ao qual pertence. É importante notar que, como há quatro variáveis em cada instância ($D = 4$) nesse dataset, os eixos $X$ e $Y$ exibidos nos gráfico representam, cada um, duas dimensões, ao invés de apenas uma. O processo de redução de dimensionalidade para exibição gráfica é importante para possibilitar algum tipo de visualização de espaços de mais de três dimensões. Esse processo foi feito apenas na renderização, e não na entrada de dados.
+
+É possível perceber o \enquote{movimento} dos centroides ao longo das iterações, representados aqui por uma pequena cruz vermelha, até convergirem para o máximo local, atingido em nove iterações. Nota-se também que, para esse dataset, o algoritmo consegue realizar uma boa separação de um dos grupos em relação ao resto (mais à esquerda no gráfico), mas não os outros dois grupos (mais à direita), que não possuem uma separação tão grande no espaço das variáveis. Esse é um resultado esperado nesse dataset, pois duas das classificações das instâncias não são linearmente diferenciáveis.
+
+\begin{figure}[h]
+  \caption{Demonstração do k-means rodando no dataset Iris}
+  \centering
+  \includegraphics[width=0.7\textwidth]{demo_kmeans_iris.png}
+  \label{fig:kMeansDemoIris}
+\end{figure}
+
+É importante entender também as limitações do algoritmo k-means. Como explicitado anteriormente, não há garantias de que o processo encontre o melhor agrupamento possível para o conjunto de dados, apenas o melhor possível a partir dos centroides iniciais. O algoritmo também é sensível a \textit{outliers}, isto é, pontos de dados que se diferem muito da distribuição geral dos dados. A presença destes pode causar grandes deformações dos clusters --- basicamente \enquote{puxando} os centroides para mais perto dos \enquote{outliers}.
+
+Um dos argumentos necessários na chamada do algoritmo é considerado também uma limitação: o parâmetro $K$. Como é necessário que o k-means seja informado da quantidade de agrupamentos a serem feitos, isso implica que o usuário já saiba algo do conjunto de dados a ser agrupado, o que nem sempre é possível, ainda mais para datasets de alta dimensionalidade, onde uma visualização útil para se interpretar os dados se torna extremamente difícil.
+
+% * ##########################
+
+\subsection{Aplicações Reais}
 
 
 
