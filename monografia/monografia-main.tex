@@ -456,13 +456,15 @@ Com a compilação de conhecimento realizada aqui a intenção é facilitar pesq
 
 Além disso, a apresentação nesse estudo de um procedimento mais geral para paralelizar qualquer algoritmo de agrupamento será de grande utilidade para qualquer desenvolvedor ou pesquisador que desejar implementar uma versão acelerada em GPU de um algoritmo do tipo, mesmo este sendo totalmente novo. No mínimo, a pesquisa servirá de ponto de partida para o entendimento e aprendizado de como realizar tal modificação no código do algoritmo, e renderá uma implementação real que serve de base para estudos e otimizações, até se obter eventualmente uma implementação digna para uso prático.
 
-% TODO
-% TODO
-% TODO: Vide abaixo
-% TODO
-% TODO
+O restante da monografia está organizado da seguinte maneira: o \textbf{Capítulo \ref{chp:fundamentaçãoTeórica}} apresenta a fundamentação teórica do trabalho, abordando os tópicos de agrupamento de dados, programação vetorial, a API CUDA da NVIDIA e a biblioteca Python \textit{Numba}. Nesse capítulo é explorado e resumido o conhecimento teórico necessário para o entendimento das implementações e experimentos realizados nessa pesquisa.
 
-\textbf{TODO: Inserir um mini sumário explicando a estrutura do trabalho aqui. Cap. 2: foi feito isso, cap. 3: feito aquilo, cap. 4: aquilo outro, etc.}
+O \textbf{Capítulo \ref{chp:levantamentoEstadoDaArte}} contém um panorama da bibliografia da área de agrupamento de dados, principalmente no que diz respeito a implementações paralelas de algoritmos desse tipo. A função do capítulo é apresentar o que há de melhor e mais avançado dentre as implementações já realizadas por diversos pesquisadores e desenvolvedores, para que seja possível criar uma expectativa realista dos níveis de ganho de desempenho que pode-se esperar da implementação paralela do k-means realizada nesse trabalho.
+
+No \textbf{Capítulo \ref{chp:metodologia}}, é apresentada toda a metodologia utilizada para realização da pesquisa, desde a lógica e procedimento de identificação de partes de código com alto potencial para paralelização, até as minúscias das implementações do k-means versão serial e versão paralela, incluindo os códigos em Python utilizados.
+
+Já no \textbf{Capítulo \ref{chp:datasetsEexperimentos}}, são apresentados os resultados e metodologias dos experimentos realizados, além dos conjuntos de dados utilizados para os testes e quaisquer tratamentos realizados nesses datasets para processamento.
+
+Finalmente, as conclusões finais são apresentadas no \textbf{Capítulo \ref{chp:conclusões}}, além de incluir considerações relevantes para trabalhos futuros.
 
 
 
@@ -470,6 +472,7 @@ Além disso, a apresentação nesse estudo de um procedimento mais geral para pa
 
 % * ############################################################################
 \chapter{Fundamentação Teórica}
+\label{chp:fundamentaçãoTeórica}
 % * ############################################################################
 
 Para compreender a pesquisa científica aqui realizada, é necessário primeiro entender o que são algoritmos de agrupamento, tanto de maneira geral quanto específica, explorando os fundamentos e funcionamento principalmente do k-means, o algoritmo aqui estudado. Veremos que a complexidade de tempo desses algoritmos de agrupamento tendem a ser inconvenientemente altas ($O(n\cdot\log{n})$, $O(n^2)$ ou até $O(n^3)$ sendo complexidades comuns) e por isso qualquer ganho de velocidade significativo obtido será de imensa relevância para a usabilidade prática do algoritmo.
@@ -1072,6 +1075,7 @@ Além disto, é destacado no estudo que essas melhoras de desempenho possivelmen
 
 % * ############################################################################
 \chapter{Metodologia de Desenvolvimento e Pesquisa}
+\label{chp:metodologia}
 % * ############################################################################
 
 % \textbf{TODO: Adicionar em algum lugar desse capítulo uma figura, um diagrama, explicativo sobre a metodologia usada para parelelizar um algoritmo de agrupamento genérico. Vide arquivo \enquote{..\textbackslash Notes\_230922\_171133.pdf}.}
@@ -1566,8 +1570,9 @@ As poucas variações de corretude são tão pequenas que podem ser explicadas p
 
 
 % * ############################################################################
-
 \chapter{Conclusões e Trabalhos Futuros}
+\label{chp:conclusões}
+% * ############################################################################
 
 Após as implementações e os resultados obtidos dos diversos experimentos feitos em cima delas, pode-se inferir que o objetivo desse estudo foi alcançado com sucesso. Não apenas foram obtidos ganhos de velocidade de mesma magnitude que as observadas no estado da arte da bibliografia a respeito da otimização do k-means através do paralelismo, mas também foi possível alcançar tudo isso utilizando ferramentas de mais alto-nível de abstração: a linguagem Python juntamente com a biblioteca \textit{Numba}.
 
