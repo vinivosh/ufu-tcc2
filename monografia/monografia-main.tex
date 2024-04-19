@@ -122,6 +122,27 @@ rulecolor=\color{black},              % if not set, the frame-color may be chang
 
 % ##################
 
+% Definindo float environment para posicionar equações com legendas no documento
+
+\usepackage{float}
+\usepackage{aliascnt}
+\newaliascnt{eqfloat}{equation}
+\newfloat{eqfloat}{h}{eqflts}
+\floatname{eqfloat}{Equação}
+
+\newcommand*{\ORGeqfloat}{}
+\let\ORGeqfloat\eqfloat
+\def\eqfloat{%
+  \let\ORIGINALcaption\caption
+  \def\caption{%
+    \addtocounter{equation}{-1}%
+    \ORIGINALcaption
+  }%
+  \ORGeqfloat
+}
+
+% ##################
+
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
@@ -247,7 +268,7 @@ rulecolor=\color{black},              % if not set, the frame-color may be chang
 \begin{resumo}
 % * ############################################################################
 
-O K-means é um notório algoritmo de agrupamento de dados que vem sendo usado massivamente desde sua concepção no meio do século XX. Utilizando-o como exemplo de implementação, essa pesquisa visou implementar uma versão paralelizada, usando o processamento vetorial de uma GPU NVIDIA, para obter um ganho de performance significativo, sem afetar a precisão dos resultados. Essa implementação foi feita utilizando ferramentas de programação de mais alto-nível, especificamente a linguagem Python e bibliotecas como \textit{Numpy} e \textit{Numba}, explorando a possibilidade de se tingir grandes aumentos de velocidade de execução sem abrir mão da facilidade de desenvolvimento proporcionada pelo Python. Ganhos médios de peformance entre 9x a 42x foram atingidos com sucesso sem prejudicar mensuravelmente a qualidade dos resultados, ao se comparar uma implementação serial usando \textit{Pandas} e \textit{Numpy} e uma paralela usando, além dessas, a biblioteca \textit{Numba} para rodar \textit{kernels} CUDA na GPU.
+O K-means é um algoritmo notório de agrupamento de dados que vem sendo usado extensivamente desde sua concepção no meio do século XX. Utilizando-o como exemplo de implementação, essa pesquisa visou implementar uma versão paralelizada, usando o processamento vetorial de uma GPU NVIDIA, para obter um ganho de performance significativo, sem afetar a precisão dos resultados. Essa implementação foi feita utilizando ferramentas de programação de mais alto-nível, especificamente a linguagem Python e bibliotecas como \textit{Numpy} e \textit{Numba}, explorando a possibilidade de se tingir grandes aumentos de velocidade de execução sem abrir mão da facilidade de desenvolvimento proporcionada pelo Python. Ganhos médios de peformance entre 9x a 42x foram atingidos com sucesso sem prejudicar mensuravelmente a qualidade dos resultados, ao se comparar uma implementação serial usando \textit{Pandas} e \textit{Numpy} e uma paralela usando, além dessas, a biblioteca \textit{Numba} para rodar \textit{kernels} CUDA na GPU.
 
 \vspace{\onelineskip}
   
@@ -291,9 +312,9 @@ O K-means é um notório algoritmo de agrupamento de dados que vem sendo usado m
   % \item[456] Isto é um número
   % \item[123] Isto é outro número
   % \item[Zézão] este é o meu nome
-  \item[CPU] \textit{Central Processing Unit} --- Unidade de Processamento Central. O principal e mais importante processador num computador. CPUs modernas possuem capacidade razoável de processamento paralelo, com dezenas de núcleos
-  \item[GPU] \textit{Graphics Processing Unit} --- Unidade de Processamento de Gráficos. Um coprocessador especializado para operações vetoriais, comumente usado para operações da computação gráfica, como renderização de imagens. GPUs modernas possuem capacidade altíssima de processamento paralelo, com centenas a milhares de núcleos
-  \item[VRAM] \textit{Video Random Access Memory} --- Memória de Vídeo de Acesso Randômico. Um componente das GPUs que equivale à RAM das CPUs. Uma memória volátil de alta velocidade, usada para armazenamento de dados necessários às operações gráficas realizadas pela GPU
+  \item[CPU] \textit{Central Processing Unit} --- Unidade de Processamento Central. O principal e mais importante processador num computador. CPUs modernas possuem capacidade razoável de processamento paralelo, com dezenas de núcleos;
+  \item[GPU] \textit{Graphics Processing Unit} --- Unidade de Processamento Gráfico. Um coprocessador especializado para operações vetoriais, comumente usado para operações da computação gráfica, como renderização de imagens. GPUs modernas possuem capacidade altíssima de processamento paralelo, com centenas a milhares de núcleos;
+  \item[VRAM] \textit{Video Random Access Memory} --- Memória de Vídeo de Acesso Randômico. Um componente das GPUs que equivale à RAM das CPUs. Uma memória volátil de alta velocidade, usada para armazenamento de dados necessários às operações gráficas realizadas pela GPU.
   % \item[CUDA] [inserir informação]
 \end{siglas}
 
@@ -336,7 +357,7 @@ O K-means é um notório algoritmo de agrupamento de dados que vem sendo usado m
 \chapter{Introdução}
 % * ############################################################################
 
-A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. Desde os primórdios da área buscamos algoritmos e procedimentos que, dados os mesmos parâmetros de entrada, executem a mesma tarefa na menor quantidade de tempo possível. Outros recursos como espaço de memória utilizado, eficiência energética ou uso da rede em muitos cenários são mais importantes que o tempo de execução, mas ainda assim ela continua sendo um dos mais estudados parâmetros para categorização e avaliação de algoritmos e procedimentos na computação. De fato o tempo de execução --- em ciclos, ou passos, de processamento --- é a métrica utilizada na análise de uma das maiores incógnitas da computação, o problema P versus NP.
+A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. Desde os primórdios da área busca-se algoritmos e procedimentos que, dados os mesmos parâmetros de entrada, executem a mesma tarefa na menor parcela de tempo possível. Outros recursos como espaço de memória utilizado, eficiência energética ou uso da rede em muitos cenários são mais importantes que o tempo de execução, mas ainda assim ela continua sendo um dos mais estudados parâmetros para categorização e avaliação de algoritmos e procedimentos na computação. De fato o tempo de execução --- em ciclos, ou passos, de processamento --- é a métrica utilizada na análise de uma das maiores incógnitas da computação, o problema P versus NP.
 
 % TODO
 % TODO
@@ -346,7 +367,7 @@ A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. 
 
 Um grande avanço na quantidade de poder de processamento dos computadores e, portanto, diminuição do tempo de execução de algoritmos, foi a criação dos processadores multinúcleo, permitindo a paralelização de processos. A habilidade de poder executar duas ou mais ações simultaneamente possibilitou muitos ganhos palpáveis na velocidade de execução de algoritmos e procedimentos, porém introduziu uma necessidade de mudança na forma de se pensar em resoluções de problemas computacionalmente: paralelizar um algoritmo serial (não-paralelo) não é uma tarefa trivial, e requer cuidados especiais com concorrência no acesso a recursos da máquina, interdependência de dados e cálculos, sincronização, entre outros dilemas.
 
-Um dos componentes que mais utilizam da paralelização num computador moderno são as GPUs --- unidades de processamento gráfico, ou placas de vídeo --- que são basicamente processadores especializados em operações vetoriais, altamente paralelizadas, usualmente utilizadas para computação gráfica, e com sua própria memória dedicada, a VRAM. Enquanto processadores de uso geral, CPUs, costumam ter no máximo dezenas de núcleos para processamento paralelo, GPUs possuem dezenas, milhares, de núcleos para operações vetoriais.
+Um dos componentes que mais utilizam da paralelização num computador moderno são as GPUs --- unidades de processamento gráfico, ou placas de vídeo --- que são basicamente processadores especializados em operações vetoriais, altamente paralelizadas, usualmente utilizadas para computação gráfica, e com sua própria memória dedicada, a VRAM. Enquanto processadores de uso geral, CPUs, costumam ter no máximo dezenas de núcleos para processamento paralelo, comparativamente, as GPUs possuem dezenas de milhares  de núcleos para operações vetoriais.
 
 No entanto, cada vez mais está sendo descoberto e aproveitado o potencial de uso das GPUs em atividades não apenas voltadas para renderização, interfaces e outras operações gráficas, mas sim para a computação de propósito geral. Diversos algoritmos modernos e antigos beneficiam-se imensamente do poder de alta paralelização proporcionado pelas GPUs, e com ferramentas como a biblioteca e linguagem CUDA criada pela NVIDIA, está cada vez mais fácil implementar o uso de placas de vídeo em conjunto com processadores convencionais nos mais variados algoritmos.
 
@@ -354,7 +375,7 @@ Nem todo algoritmo pode ser paralelizado, no entanto. Existem procedimentos e al
 
 É importante entender também que nenhum algoritmo é paralelizável por completo. Sempre existirão partes de algoritmos que necessariametne devem ser executadas serialmente para seu funcionamento correto. Há um limite teórico de ganho máximo que pode ser obtido ao se paralelizar um algoritmo qualquer. Esse limite é definido pela Lei de Amdahl \cite{Amdahl-Law}: $\frac{1}{1-p}$, onde $p$ é a razão entre tempo de execução gasto rodando código paralelizável e tempo de execução gasto no total.
 
-E é a paralelização de uma classe de algoritmos em particular que é o foco desta pesquisa: os algoritmos de agrupamento de dados, também chamados de clusterização de dados, ou de \textit{clustering}. Tais algoritmos, de forma sucinta, agrupam objetos de maneira que os objetos no mesmo grupo, ou \textit{cluster}, sejam mais parecidos entre si, de acordo com alguma métrica, do que com objetos de outros grupos. A análise de clusters é essencial em diversas áreas da computação e estatística, como mineração de dados, aprendizado de máquina, compressão de dados, entre outras.
+A paralelização de uma classe de algoritmos em particular é o foco desta pesquisa: os algoritmos de agrupamento de dados, também chamados de clusterização de dados, ou de \textit{clustering}. Tais algoritmos, de forma sucinta, agrupam objetos de maneira que objetos no mesmo grupo, ou \textit{cluster}, sejam mais parecidos entre si, de acordo com alguma métrica, do que com objetos de outros grupos. A análise de clusters é essencial em diversas áreas da computação e estatística, como mineração de dados, aprendizado de máquina, compressão de dados, entre outras.
 
 A hipótese principal deste trabalho é a de que algoritmos de clustering, em geral, são altamente paralelizáveis e apresentam um ganho considerável de desempenho (menor tempo de execução) quando implementados para utilizar o poder de paralelismo vetorial de placas de vídeo NVIDIA, através da plataforma CUDA \cite{CUDAZone}. Mais que isso, através de uma análise sistemática de estudos prévios e implementações de tais algoritmos em CUDA, visa-se generalizar o processo de paralelização destes. Isto é, identificar quais partes são necessariamente seriais, quais são paralelizáveis, e que sequência de passos gerais deve ser seguida para se conseguir paralelizar com sucesso um algoritmo de clustering qualquer e obter ganhos significativos de desempenho.
 
@@ -404,7 +425,7 @@ Para atingir o objetivo geral, é necessário completar diversos objetivos menor
   
   \item Quantificar o ganho de desempenho das implementações paralelas, realizando diversos experimentos de \textit{speed-up}, usando diversos datasets de tamanhos e dimensionalidades variadas;
   
-  \item Comparar o código serial (sem paralelização) com o código paralelo do k-means, extraindo assim um conhecimento mais generalizado de como paralelizar um algoritmo de clusterização genéico;
+  \item Comparar o código serial (sem paralelização) com o código paralelo do k-means, extraindo assim um conhecimento mais generalizado de como paralelizar um algoritmo de clusterização genérico.
 \end{itemize}
 
 
@@ -415,7 +436,7 @@ Para atingir o objetivo geral, é necessário completar diversos objetivos menor
 
 A hipótese que esta pesquisa procura testar é a de que algoritmos de clusterização em geral são inerentemente vetoriais e, consequentemente, se beneficiariam significativamente de arquiteturas de processamento vetoriais, como uma unidade de processamento gráfico, ou GPU.
 
-Um problema ser vetorial diz respeito ao escopo de tipos de dados relevantes ao problema. Grande parte dos problemas da computação são escalares, o que significa que eles lidam com dados unitários, como por exemplo \textit{integers} ou \textit{floats}, um de cada vez. Já um problema vetorial lida com dados que são conjuntos unidimensionais, chamados vetores, que são formados por vários itens unitários de dados agrupados.
+Um problema ser vetorial diz respeito ao escopo de tipos de dados relevantes ao problema. Grande parte dos problemas da computação são escalares, o que significa que eles lidam com dados unitários, como por exemplo \textit{integers} ou \textit{floats}, um de cada vez. Já um problema vetorial lida com dados que são conjuntos uni ou multidimensionais, chamados vetores, que são formados por vários itens unitários de dados agrupados.
 
 Um algoritmo que tente resolver um problema vetorial terá desempenho maior quando executado num processador vetorial, isto é, um processador que possui um conjunto de instruções capaz de manipular vetores. Apesar de um algoritmo de um problema vetorial ainda puder ser implementado e executado com sucesso num processador escalar, o desempenho será menor pois os dados vetoriais do problema terão que ter seus elementos processados um a um pelo processador, já que ele não trabalha com vetores propriamente ditos em seu conjunto de instruções.
 
@@ -434,6 +455,14 @@ A pesquisa feita aqui pode ser de grande utilidade para a área da computação 
 Com a compilação de conhecimento realizada aqui a intenção é facilitar pesquisas posteriores na área de paralelização de algoritmos de agrupamento e motivar com os experimentos de ganho de desempenho novas implementações paralelas de outros algoritmos desta classe, ilustrando o quão importante é o uso de processadores vetoriais como GPUs para tornar o uso de algumas destas abordagens de agrupamento realmente práticas.
 
 Além disso, a apresentação nesse estudo de um procedimento mais geral para paralelizar qualquer algoritmo de agrupamento será de grande utilidade para qualquer desenvolvedor ou pesquisador que desejar implementar uma versão acelerada em GPU de um algoritmo do tipo, mesmo este sendo totalmente novo. No mínimo, a pesquisa servirá de ponto de partida para o entendimento e aprendizado de como realizar tal modificação no código do algoritmo, e renderá uma implementação real que serve de base para estudos e otimizações, até se obter eventualmente uma implementação digna para uso prático.
+
+% TODO
+% TODO
+% TODO: Vide abaixo
+% TODO
+% TODO
+
+\textbf{TODO: Inserir um mini sumário explicando a estrutura do trabalho aqui. Cap. 2: foi feito isso, cap. 3: feito aquilo, cap. 4: aquilo outro, etc.}
 
 
 
@@ -470,11 +499,102 @@ O significado de um cluster não pode ser bem definido e vai depender do conjunt
 % TODO
 % TODO
 
-Diversos modelos de grupo podem ser usados para definir o que é um grupo: \textbf{modelos de centroide}, onde cada grupo possui um centro e cada datapoint pertencerá ao grupo com centro mais próximo dele, dada uma definição de distância no espaço geométrico dos dados; \textbf{modelos de densidade}, que definem grupos como regiões densas e conexas no espaço, contrastando com regiões menos densas que separam os grupos; \textbf{modelos de conectividade}, que constroem grupos a partir de conexões de datapoints definidas por um limiar de distância; \textbf{modelos de distribuição}, que utilizam de distribuições estatísticas, como a distribuição normal ou exponencial, para modelar o agrupamento dos datapoints; entre dezenas de outros modelos. Entender o modelo de grupo utilizado é essencial para compreender um algoritmo de agrupamento e as diferenças entre a multitude destes.
+Diversos modelos de grupo podem ser usados para definir o que é um grupo. Dentre os modelos mais comuns, destacam-se: \textbf{a) modelos de centroide}, onde cada grupo possui um centro e cada datapoint pertencerá ao grupo com centro mais próximo dele, dada uma definição de distância no espaço geométrico dos dados; \textbf{b) modelos de densidade}, que definem grupos como regiões densas e conexas no espaço, contrastando com regiões menos densas que separam os grupos; \textbf{c) modelos de conectividade}, que constroem grupos a partir de conexões de datapoints definidas por um limiar de distância; \textbf{d) modelos de distribuição}, que utilizam de distribuições estatísticas, como a distribuição normal ou exponencial, para modelar o agrupamento dos datapoints; entre dezenas de outros modelos. Entender o modelo de grupo utilizado é essencial para compreender um algoritmo de agrupamento e as diferenças entre a multitude destes.
 
 O resultado, ou saída, de um algoritmo de agrupamento é comumente um rotulamento dos datapoints passados na entrada, o que indicará a divisão em grupos feita por ele. Classificações podem ser feitas quanto à natureza do agrupamento obtido pelos algoritmos: \textbf{\textit{hard clustering}}, onde cada objeto pertence ou não a um grupo; \textbf{\textit{fuzzy clustering}}, onde cada objeto pertence uma certa porcentagem a cada grupo, o que pode representar, por exemplo, a chance do objeto pertencer àquele grupo, ou até o grau de semelhança do datapoint comparado aos outros datapoints de cada grupo \cite{FuzzyClusteringSurvey}. E subclassificações ainda mais granulares podem ser definidas, como: \textbf{clusterização de particionamento estrito}, onde cada objeto pertence a exatamente um cluster; \textbf{clusterização de particionamento estrito com \textit{outliers}}, onde objetos pertencem a exatamente um cluster, ou nenhum cluster, assim sendo considerados \textit{outliers}, entre outras classificações.
 
 Os algoritmos de agrupamento são essenciais na análise de dados, permitindo a identificação de padrões e estruturas em conjuntos de dados não rotulados. Eles pertencem à categoria de \textbf{algoritmos de aprendizado não supervisionado} e são amplamente utilizados em diversas áreas da computação, matemática, economia, estatística, dentre outras. A paralelização desses algoritmos visa melhorar a eficiência computacional, permitindo o processamento mais rápido de grandes volumes de dados.
+
+
+
+% * ####################################
+
+\section{K-means}
+\label{sec:kMeans}
+
+O algoritmo \textbf{K-means}, também chamado de \textbf{K-médias} em português, é notório por sua aplicação em tarefas de agrupamento de dados, e possui raízes históricas que remontam à metade do século XX \cite{kMeansHistoryBock2007}. A ideia fundamental por trás do k-means, conhecida como quantização vetorial, foi introduzida inicialmente em um contexto de processamento de sinal. Esse algoritmo visa particionar, iterativamente, $N$ observações em $K$ grupos, de maneira que cada observação pertença ao agrupamento com o \enquote{centro} mais próximo, resultando na minimização das variações dentro dos agrupamentos (variação \textit{intra-grupo}) e na maximização das variações entre observações em grupos diferenets (variação \textit{inter-grupo}).
+
+A aplicação original desse conceito foi documentada por Hugo Steinhaus em 1957 \cite{kMeansFirstIdeaSteinhaus1957}, mas o algoritmo padrão como é conhecido foi proposto por Stuart Lloyd enquanto trabalhava na Bell Labs em 1957 e publicado formalmente somente em 1982 \cite{kMeansFirstAlgoLloyd1982}, solidificando a base para o moderno entendimento e aplicação do k-means em análise multivariada e outras áreas de processamento de dados.
+
+O termo \enquote{k-means} em si só foi ser cunhado em 1967 por James MacQueen \cite{kMeansCoinedMacQueen1967}, sendo conhecido também como \textbf{Algoritmo de Lloyd}, ou até de \textbf{Lloyd--Forgy}, pois sua ideia chegou também a ser publicada antes, em 1965, por Edward W. Forgy \cite{kMeansFirst2AlgoForgy1965}, nomes que ainda são usados atualmente, embora não tão populares quanto o termo k-means.
+
+O desenvolvimento do algoritmo k-means não parou com essas contribuições iniciais. Ao longo dos anos, várias melhorias e variantes foram propostas, como em 2007 com o \textbf{K-means++} \cite{kMeansPlusPlus2007}, que aprimora significativamente a eficiência e a precisão do algoritmo ao escolher centros iniciais para os agrupamentos de maneira mais cuidadosa. Além disso, a adaptação do k-means para lidar com fluxos de dados e a introdução de variações como \textbf{K-Medoids}, \textbf{K-Medians}, \textbf{K-Center} e \textbf{K-Box} ampliaram sua aplicabilidade e desempenho em uma gama ainda maior de contextos de dados.
+
+A importância histórica e a evolução contínua do k-means mostram seu valor duradouro na análise de dados e machine learning. Desde sua concepção, o algoritmo não só inspirou avanços na teoria matemática, mas também provou ser uma ferramenta indispensável na era moderna da computação, especialmente em aplicações de 
+agrupamento de dados em larga escala.
+
+O k-means foi o escolhido como foco desse trabalho por ser, até na modernidade, um algoritmo extremamente utilizado na prática, mesmo com suas limitações, além de ter uma implementação inicialmente simples e de possuir uma estrutura mais amigável para a paralelização.
+
+% * ##########################
+
+\subsection{Algoritmo e Limitações}
+
+Um dos motivos da fama do k-means é a simplicidade de se entender sua lógica e funcionamento. Diferentemente de muitos outros algoritmos de agrupamento de dados, ele pode ser descrito com um pseudocódigo extremamente sucinto, como o Algoritmo \ref{code:kMeans.pseudo} exibido abaixo, que descreve a implementação, como originalmente proposta, do processo do k-means.
+
+\codeexternal[
+  language=,
+  % firstline=,
+  % lastline=,
+  mathescape,
+  numbers=none,
+  label=code:kMeans.pseudo,
+  caption={Implementação padrão em pseudocódigo do k-means},
+]{code-snippets/kMeans.pseudo}
+
+ Não há garantia de que o processo convirja para um máximo global, apenas para um máximo local que, dependendo dos centróides iniciais escolhidos, pode ser arbitrariamente pior que o máximo global.
+
+A complexidade de tempo do k-means é de $O(N K D I)$ \cite{surveyClustAlgoXuWunsch2005}, onde $I$ é o número de iterações necessárias para convergir em um resultado, estando na faixa de $[1, I_{max}]$ e dependendo dos centroides iniciais escolhidos.
+
+Na Figura \ref{fig:kMeansDemoIris} mais abaixo há um exemplo de uma execução do k-means, utilizando o dataset Iris, explicado em mais detalhes no Capítulo \ref{sec:datasets}.
+
+Tanto as primeiras três quanto a última iteração são exibidas graficamente, com cada um dos 150 datapoints ($N = 150$) tendo sua cor definida por qual dos três grupos ($K = 3$) ele pertence. É importante notar que, como há quatro variáveis em cada instância ($D = 4$) nesse dataset, os eixos $X$ e $Y$ exibidos nos gráfico representam, cada um, duas dimensões, ao invés de apenas uma. O processo de redução de dimensionalidade para exibição gráfica é importante para possibilitar algum tipo de visualização de espaços de mais de três dimensões. Esse processo foi feito apenas na renderização, e não na entrada de dados.
+
+É possível perceber o \enquote{movimento} dos centroides ao longo das iterações, representados aqui por uma pequena cruz vermelha, até convergirem para o máximo local, atingido nessa execução em nove iterações ($I = 9$). Nota-se também que, para esse dataset, o algoritmo consegue realizar uma boa separação de um dos grupos em relação ao resto (mais à esquerda no gráfico), mas não os outros dois grupos (mais à direita), que não possuem uma separação tão grande no espaço das variáveis. Esse é um resultado esperado nesse dataset, pois duas das classificações das instâncias não são linearmente diferenciáveis a partir das informações disponíveis nos dados.
+
+\begin{figure}[h]
+  \caption{Demonstração do k-means rodando no dataset Iris}
+  \centering
+  \includegraphics[width=0.7\textwidth]{demo_kmeans_iris.png}
+  \label{fig:kMeansDemoIris}
+\end{figure}
+
+É importante entender também as limitações do algoritmo k-means. Como explicitado anteriormente, não há garantias de que o processo encontre o melhor agrupamento possível para o conjunto de dados, apenas o melhor possível a partir dos centroides iniciais.
+
+O algoritmo também é sensível a \textit{outliers}, isto é, pontos de dados que se diferem muito da distribuição geral dos dados. A presença destes pode causar grandes deformações dos clusters --- basicamente \enquote{puxando} os centroides para mais perto dos \textit{outliers}.
+
+Um dos argumentos necessários na chamada do algoritmo é considerado também uma limitação: o parâmetro $K$. Como é necessário que o k-means seja informado da quantidade de agrupamentos a serem feitos, isso implica que já se saiba algo a respeito da natureza ou geometria do conjunto de dados a ser agrupado, o que nem sempre é possível, ainda mais para datasets de alta dimensionalidade, onde uma visualização útil para se interpretar os dados se torna extremamente difícil.
+
+Mesmo com todas essas limitações, o k-means continua um algoritmo ubíquo em diversas áreas da computação, como discutido a seguir, e segue sendo amplamente estudado e aprimorado na literatura.
+
+% * ##########################
+
+\subsection{Aplicações Reais}
+
+O k-means, reconhecido por sua simplicidade e eficácia, é empregado em uma variedade de aplicações práticas em diversos campos. Sua capacidade de efetivamente segmentar dados em grupos com características similares o torna uma ferramenta versátil para diversos usos, desde análises de mercado até sistemas de recomendação.
+
+Uma das aplicações mais comuns do k-means é a segmentação de clientes. Nesse contexto, empresas de diversos setores, como bancos, telecomunicações, e-commerce e publicidade, utilizam o k-means para agrupar clientes com base em comportamentos de compra, preferências ou demografia, permitindo o desenvolvimento de estratégias de marketing direcionadas e personalizadas. Esta aplicação não apenas ajuda as empresas a entender melhor seus clientes, mas também a otimizar suas ofertas e serviços de acordo com as necessidades de cada segmento.
+
+Um exemplo concreto dessa aplicação é a realizada em um estudo de caso de 2018 \cite{kMeansSupplierRiskAss2018}, que utilizou o k-means para avaliar não clientes, mas sim realizar a análise de risco de fornecedores comerciais.
+
+Neste estudo, o método k-means foi aplicado para \textbf{avaliar e segmentar fornecedores} de uma empresa de maquinário pesado com base em seus perfis de risco. A metodologia incluiu a utilização do Best-Worst Method (BWM) para determinar os pesos de 17 critérios de risco, seguido pela aplicação de Análise de Fatores para redução de dimensionalidade dos dados de risco, resultando em quatro fatores principais. Utilizando esses fatores, o k-means foi empregado para dividir os fornecedores em três clusters, representando diferentes níveis de exposição ao risco, o que permitiu uma análise detalhada das características de risco de cada grupo.
+
+Os resultados do estudo demonstraram que a abordagem baseada em k-means é eficaz para a categorização dos fornecedores em grupos homogêneos quanto aos riscos enfrentados, fornecendo insights significativos para a gestão e o avaliação de fornecedores. Este agrupamento facilitou decisões estratégicas na gestão de riscos, destacando a importância e utilidade de métodos analíticos avançados em ambientes empresariais competitivos. O estudo sugere que a aplicação de técnicas de agrupamento de dados, como o k-means, pode melhorar significativamente as práticas de compra e a gestão de riscos em setores industriais.
+
+Outra aplicação notável do k-means é na organização e classificação de documentos. Por exemplo, em grandes conjuntos de dados de texto, como coleções de artigos ou relatórios de pesquisa, o k-means pode agrupar documentos com temas ou conteúdos semelhantes, facilitando a gestão e a recuperação de informações. Este uso é particularmente valioso em campos como pesquisa acadêmica, onde a capacidade de navegar rapidamente por vastas quantidades de literatura é crucial.
+
+Um exemplo específico dessa aplicação é explorado na documentação da biblioteca Python \textbf{Scikit Learn} \cite{kMeansDocClustering2024}. Nesse exemplo de implementação, é explorado o \textbf{agrupamento de documentos de texto} utilizando o método k-means com a biblioteca scikit-learn, focando em agrupar textos por tópicos de maneira eficaz. Ele emprega duas variantes do algoritmo k-means implementadas na biblioteca, o \textit{KMeans} e \textit{MiniBatchKMeans}, e utiliza a Análise Semântica Latente (LSA) para a redução de dimensionalidade e a identificação de padrões \enquote{escondidos} nos dados. Além disso, são utilizados dois métodos de vetorização de texto: \textit{TfidfVectorizer} e \textit{HashingVectorizer}, que ajudam na transformação do texto em uma representação numérica que pode ser usada pelo algoritmo de agrupamento.
+
+Para a análise, o dataset \textit{20 newsgroups} é utilizado, selecionando quatro tópicos para manter o custo computacional acessível e melhorar a clareza do problema de agrupamento, removendo metadados desnecessários como cabeçalhos e citações. A eficácia do agrupamento é avaliada através de várias métricas, incluindo homogeneidade, completude, medida-V, índice Rand ajustado e coeficiente de silhueta, destacando que a aplicação da técnica de LSA antes do agrupamento melhora significativamente tanto a estabilidade quanto a qualidade dos clusters. Esses resultados ilustram o potencial dessas técnicas para categorizar e entender grandes conjuntos de dados de texto, proporcionando insights valiosos sobre a organização dos tópicos dentro dos documentos.
+
+O k-means também tem aplicações significativas no processamento de imagens, como na segmentação de imagens, onde o algoritmo agrupa pixels semelhantes para identificar e separar diferentes objetos ou regiões dentro de uma imagem. Esta técnica é amplamente utilizada em tarefas como reconhecimento de padrões, visão computacional e até mesmo na melhoria de algoritmos de compressão de imagem, tornando-a uma ferramenta fundamental na era digital.
+
+
+
+% * ####################################
+
+% \section{Algoritmo 2: Hierarchical Clustering}
+
+% \textbf{Escrever uma sub-seção sobre o Hierarchical Clustering, no mesmo estilo da seção do k-means. Seção opcional, só fazer depois de concluir TODO o resto do k-means + seus experimentos + resultados + código.}
 
 
 
@@ -503,13 +623,13 @@ A programação vetorial é uma abordagem computacional que visa aproveitar ao m
 
 A história da programação vetorial é intrinsecamente ligada ao avanço da computação e à necessidade de lidar com conjuntos massivos de dados de maneira eficiente. O conceito de processamento vetorial remonta ao desenvolvimento dos primeiros supercomputadores e ao surgimento das primeiras GPUs, com destaque para a evolução da arquitetura das GPUs NVIDIA.
 
-A ideia por trás da programação vetorial é aproveitar ao máximo o poder de processamento dos processadores, executando uma mesma instrução em múltiplos conjuntos de dados simultaneamente. Isso é especialmente útil em tarefas que envolvem operações repetitivas sobre grandes vetores ou matrizes de dados, como aquelas encontradas em algoritmos de processamento de imagem, simulações físicas e, mais recentemente, em algoritmos de agrupamento de dados.
+A ideia por trás da programação vetorial é aproveitar ao máximo o poder de processamento dos processadores, executando uma mesma instrução em múltiplos conjuntos de dados simultaneamente. Isso é especialmente útil em tarefas que envolvem operações repetitivas sobre grandes vetores ou matrizes de dados, como aquelas encontradas em algoritmos de processamento de imagem, simulações físicas e, mais recentemente, em algoritmos de agrupamento de dados e treinamento de DNNs --- \textit{Deep Neural Networks}.
 
 Ao longo do tempo, a programação vetorial evoluiu significativamente, impulsionada pelo avanço das arquiteturas de processadores e pela demanda por computação paralela cada vez mais poderosa. Um dos marcos importantes nessa evolução foi a introdução do tipo de processamento SIMD (Single Instruction, Multiple Data) nos supercomputadores na década de 1970 (FLYNN, 1972). Essa abordagem permitiu que uma única instrução fosse executada em múltiplos dados simultaneamente, proporcionando um aumento significativo no desempenho computacional para uma ampla gama de aplicações.
 
 Com o surgimento das GPUs, inicialmente desenvolvidas para renderização gráfica em jogos e aplicações de multimídia, surgiu uma nova oportunidade para a programação vetorial. As GPUs são compostas por centenas ou até milhares de núcleos de processamento, o que as torna altamente paralelizáveis e adequadas para executar operações vetoriais em larga escala. Isso possibilitou a utilização das GPUs não apenas para gráficos, mas também para tarefas de computação de propósito geral (área chamada também de \textit{GPGPU}), incluindo processamento de grandes conjuntos de dados e algoritmos de aprendizado de máquina.
 
-Um exemplo emblemático da aplicação da programação vetorial em GPUs NVIDIA é o algoritmo de agrupamento de dados conhecido como k-means. O k-means é amplamente utilizado em análise de dados e mineração de dados para agrupar pontos de dados em clusters com base em características semelhantes. A paralelização deste algoritmo em GPUs NVIDIA pode resultar em um significativo aumento de desempenho, permitindo o processamento rápido de grandes conjuntos de dados (Shane, 2012).
+Um exemplo emblemático da aplicação da programação vetorial em GPUs NVIDIA é o algoritmo de agrupamento de dados conhecido como k-means. O k-means é amplamente utilizado em análise de dados e mineração de dados para agrupar pontos de dados em clusters com base em características semelhantes. A paralelização deste algoritmo em GPUs NVIDIA pode resultar em um aumento significativo de desempenho, permitindo o processamento rápido de grandes conjuntos de dados (Shane, 2012).
 
 Em suma, a programação vetorial desempenha um papel fundamental no avanço da computação paralela e no desenvolvimento de algoritmos eficientes para lidar com conjuntos massivos de dados. Com a contínua evolução da arquitetura de processadores e o aumento da demanda por computação paralela, é esperado que a programação vetorial continue a desempenhar um papel crucial no desenvolvimento de soluções computacionais rápidas e escaláveis para uma variedade de aplicações, como processamento de sinais, computação gráfica, simulações físicas, aprendizado de máquina e muito mais. Ela permite acelerar algoritmos complexos, reduzindo o tempo de execução e aumentando a eficiência computacional.
 
@@ -547,7 +667,7 @@ O estudo dos processadores que suportam operações vetoriais revela a diversida
 
 \subsection{Mudança do Paradigma Serial para o Vetorial}
 
-A mudança de paradigma da programação serial para a programação vetorial representa uma verdadeira revolução na eficiência computacional. Antes da adoção generalizada da programação vetorial, os algoritmos eram projetados para serem executados de maneira sequencial, o que limitava significativamente o desempenho e a capacidade de lidar com conjuntos de dados massivos. Com a programação vetorial, no entanto, os desenvolvedores podem realizar operações em grandes conjuntos de dados de forma paralela, aproveitando ao máximo o poder de processamento disponível \cite{hennessy2011}.
+A mudança de paradigma da programação serial para a programação vetorial representa uma verdadeira revolução na eficiência computacional. Antes da adoção generalizada da programação vetorial, os algoritmos eram projetados para serem executados de maneira sequencial, o que limitava significativamente o desempenho e a capacidade de lidar com conjuntos de dados massivos e independentes. Com a programação vetorial, no entanto, os desenvolvedores podem realizar operações em grandes conjuntos de dados de forma paralela, aproveitando ao máximo o poder de processamento disponível \cite{hennessy2011}.
 
 Um exemplo clássico da mudança de paradigma da programação serial para a programação vetorial pode ser observado na computação gráfica. Antes da adoção da programação vetorial, o processo de renderização de imagens em 3D exigia a aplicação de algoritmos sequenciais para calcular cada pixel individualmente. Com a introdução da programação vetorial através do CUDA, por exemplo, os desenvolvedores podem aproveitar a capacidade das GPUs para realizar cálculos em paralelo, acelerando significativamente o processo de renderização e permitindo a criação de gráficos mais realistas e complexos em tempo real.
 
@@ -555,7 +675,7 @@ Outro exemplo impactante da mudança é encontrado no campo do aprendizado de m�
 
 Embora a programação vetorial ofereça inúmeras vantagens em termos de eficiência computacional e desempenho, ela também apresenta desafios significativos. A otimização de algoritmos para aproveitar ao máximo o paralelismo disponível e lidar com questões de sincronização e acesso concorrente aos recursos do sistema tornou-se uma prioridade para os desenvolvedores. No entanto, esses desafios também representam oportunidades de inovação e avanço na área de computação paralela, incentivando o desenvolvimento de técnicas e ferramentas cada vez mais sofisticadas para maximizar o potencial da programação vetorial.
 
-No contexto deste trabalho, serão abordadas técnicas avançadas de agrupamento de dados, incluindo o algoritmo \textit{k-means} e o \textit{Hierarchical Clustering}. A aplicação dessas técnicas em um ambiente de programação vetorial, como o CUDA, promete explorar todo o potencial de processamento paralelo das GPUs NVIDIA para acelerar significativamente a análise e o agrupamento de grandes conjuntos de dados. Ao incorporar essas técnicas em um contexto de programação vetorial, busca-se não apenas demonstrar a eficácia das abordagens de agrupamento de dados, mas também destacar o papel crucial da programação vetorial no desenvolvimento de soluções computacionais eficientes e escaláveis para problemas complexos de análise de dados.
+No contexto deste trabalho, serão abordadas técnicas avançadas de agrupamento de dados, incluindo o algoritmo \textit{k-means}. A aplicação dessas técnicas em um ambiente de programação vetorial, como o CUDA, promete explorar todo o potencial de processamento paralelo das GPUs NVIDIA para acelerar significativamente a análise e o agrupamento de grandes conjuntos de dados. Ao incorporar essas técnicas em um contexto de programação vetorial, busca-se não apenas demonstrar a eficácia das abordagens de agrupamento de dados, mas também destacar o papel crucial da programação vetorial no desenvolvimento de soluções computacionais eficientes e escaláveis para problemas complexos de análise de dados.
 
 
 
@@ -650,9 +770,9 @@ Os valores dessas variáveis são salvos nas variáveis \textit{index} e \textit
 
 Ou seja, se $N = 64$ e houver $16$ \textit{threads} por bloco, com apenas um bloco no total, a \textit{thread} de índice $0$ somaria os valores \textit{x[i] + y[i]} para $i = \{0, 16, 32, 48\}$, a \textit{thread} de índice $1$ para $i = \{1, 17, 33, 49\}$, e assim por diante, até a última \textit{thread}, a de índice $15$, trabalhando com $i = \{15, 31, 47, 63\}$. O processamento, então, seria efetivamente dividido em $16$ partes iguais, cada uma realizada por uma \textit{thread}.
 
-Nas linhas 17 e 18 pode-se perceber que a alocação de memória também muda em relação à versão serial do algoritmo. Ao invés de ser usada a sintaxe \textit{new float[N]}, é necessário usar uma função da API CUDA, a \textit{cudaMallocManaged}. Ela recebe no primeiro argmento o endereço do ponteiro para a estrutura de dados que será alocada, e no segundo argumento a quantidade de memória a ser alocada.
+Nas linhas 17 e 18 pode-se perceber que a alocação de memória também muda em relação à versão serial do algoritmo. Ao invés de ser usada a sintaxe \textit{new float[N]}, é necessário usar uma função da API CUDA, a \textit{cudaMallocManaged}. Ela recebe no primeiro argumento o endereço do ponteiro para a estrutura de dados que será alocada, e no segundo argumento a quantidade de memória a ser alocada.
 
-Na linha 24 também há uma mudança crucial na maneira em que é chamada a função que realiza a adição dos vetores. É necessário adicionar a sintaxe \textit{<<<a, b>>>} enter o nome da função e o parêntesis que contém seus argumentos. Essa sintaxe informa ao compilador CUDA que a função deve ser executada na GPU, dividindo o processamento em $a$ blocos, com $b$ \textit{threads} cada.
+Na linha 24 também há uma mudança crucial na maneira em que é chamada a função que realiza a adição dos vetores. É necessário adicionar a sintaxe \textit{$<<<$a, b$>>>$} entre o nome da função e o parênteses que contém seus argumentos. Essa sintaxe informa ao compilador CUDA que a função deve ser executada na GPU, dividindo o processamento em $a$ blocos, com $b$ \textit{threads} cada.
 
 No caso desta implementação, foram utilizadas 1.024 threads por bloco e apenas um bloco. Como em GPUs NVIDIA modernas existem dezenas de SMs (\textit{Streaming Processors}) que, cada um, conseguem rodar centenas a milhares de \textit{threads} simultaneamente, conclui-se que não está sendo utilizado aqui nada próximo do poder total de processamento do hardware. Este é o motivo pelo qual o Algoritmo \ref{code:addArrayGPUv2.cpp} é considerado uma implementação ingênua.
 
@@ -767,11 +887,11 @@ São passados quatro argumentos aqui para o decorador. O primeiro é uma lista d
 
 O segundo argumento do decorador é uma \textit{string} que denota a dimensionalidade dos argumentos que cada instância da função vai receber e processar, em sua \textit{thread}. A sintaxe aqui usada, \textit{(d),(d)->(d)} indica que há dois vetores de entrada, ambos de tamanho $d$, e um de saída, também de tamanho $d$.
 
-Note que ambos o primeiro e segundo argumento do decorador definem o formato de dado que cada instância da função recebe, e não o formato da estrutura de dado inteira a ser processada. Como a função foi definida para receber um vetor unidimensional de tamanho $d$, quando ela é de fato chamada e um vetor bidimensional de tamanho $n \cdot d$ é passado, o compilador do Numba infere que devem ser criadas $n$ instâncias da função, e cada uma delas processará apenas um vetor de tamanho $d$ diferente, paralelizando automaticamente o processo.
+Note que ambos o primeiro e segundo argumento do decorador definem o formato de dado que cada instância da função recebe, e não o formato da estrutura de dados inteira a ser processada. Como a função foi definida para receber um vetor unidimensional de tamanho $d$, quando ela é de fato chamada e um vetor bidimensional de tamanho $n \cdot d$ é passado, o compilador do Numba infere que devem ser criadas $n$ instâncias da função, e cada uma delas processará apenas um vetor de tamanho $d$ diferente, paralelizando automaticamente o processo.
 
 O terceiro argumento, de nome \textit{nopython}, deve ser definido como \textit{True} para garantir que o código gerado seja todo executado na GPU. Sem essa definição, recursos não implementados pela biblioteca que fossem utilizados dentro da função iriam causar uma execução na CPU --- um modo chamado de \textit{object mode}.
 
-O quarto e último argumento, de nome \textit{target}, recebe uma \textit{string} que define onde a função irá rodar. Nessa pesquisa, sempre foi utilizado o valor \textit{cuda} aqui, para que todas as funções paralelizadas rodem na GPU NVIDIA. Outras opções existem, como \textit{cpu} para execução \textit{single-thread} na CPU ou \textit{paralell} para execução \textit{multi-thread} na CPU, mas elas fogem do escopo desse trabalho.
+O quarto e último argumento, de nome \textit{target}, recebe uma \textit{string} que define onde a função irá rodar. Nessa pesquisa, sempre foi utilizado o valor \textit{'cuda'} aqui, para que todas as funções paralelizadas rodem na GPU NVIDIA. Outras opções existem, como \textit{cpu} para execução \textit{single-thread} na CPU ou \textit{paralell} para execução \textit{multi-thread} na CPU, mas elas fogem do escopo desse trabalho.
 
 % RESULTADOS MAIS COMPLETOS
 % 
@@ -804,98 +924,7 @@ Fica evidente a facilidade muito maior em se implementar o poder do paralelismo 
 
 É possível adentrar na área de GPGPU sem abrir mão de abstrações de mais alto-nível proporcionadas pela linguagem, além de usufruir, simultaneamente, da imensa gama de bibliotecas de ciência de dados implementadas em Python, como \textit{Numpy} e \textit{Pandas}, que foram também amplamente utilizadas nas implementações do algoritmo k-means, exploradas no Capítulo \ref{sec:kMeansImplementações}.
 
-É importante notar também que ainda há uma penalidade considerável no potencial de ganho de performance, se comparando implementações usando CUDA em C++ e as usando Numba em Python. O ganho de velocidade foi de 28 vezes em C++, enquanto em Python foi de apenas 6,29 vezes. Ainda assim, o \textit{speed-up} obtido nas execuções do k-means acelerado usando o Numba foram de magnitudes ainda maiores que o apresentado neste exemplo simples, como explicitado no capítulo \ref{chp:resultados}.
-
-
-
-% * ####################################
-
-\section{K-means}
-\label{sec:kMeans}
-
-O algoritmo \textbf{K-means}, também chamado de \textbf{K-médias} em português, é notório por sua aplicação em tarefas de agrupamento de dados, e possui raízes históricas que remontam à metade do século XX \cite{kMeansHistoryBock2007}. A ideia fundamental por trás do k-means, conhecida como quantização vetorial, foi introduzida inicialmente em um contexto de processamento de sinal. Esse algoritmo visa particionar, iterativamente, $N$ observações em $K$ grupos, de maneira que cada observação pertença ao agrupamento com o \enquote{centro} mais próximo, resultando na minimização das variações dentro dos agrupamentos (variação \textit{intra-grupo}) e na maximização das variações entre observações em grupos diferenets (variação \textit{inter-grupo}).
-
-A aplicação original desse conceito foi documentada por Hugo Steinhaus em 1957 \cite{kMeansFirstIdeaSteinhaus1957}, mas o algoritmo padrão como é conhecido foi proposto por Stuart Lloyd enquanto trabalhava na Bell Labs em 1957 e publicado formalmente somente em 1982 \cite{kMeansFirstAlgoLloyd1982}, solidificando a base para o moderno entendimento e aplicação do k-means em análise multivariada e outras áreas de processamento de dados.
-
-O termo \enquote{k-means} em si só foi ser cunhado em 1967 por James MacQueen \cite{kMeansCoinedMacQueen1967}, sendo conhecido também como \textbf{Algoritmo de Lloyd}, ou até de \textbf{Lloyd--Forgy}, pois sua ideia chegou também a ser publicada antes, em 1965, por Edward W. Forgy \cite{kMeansFirst2AlgoForgy1965}, nomes que ainda são usados atualmente, embora não tão populares quanto o termo k-means.
-
-O desenvolvimento do algoritmo k-means não parou com essas contribuições iniciais. Ao longo dos anos, várias melhorias e variantes foram propostas, como em 2007 com o \textbf{K-means++} \cite{kMeansPlusPlus2007}, que aprimora significativamente a eficiência e a precisão do algoritmo ao escolher centros iniciais para os agrupamentos de maneira mais cuidadosa. Além disso, a adaptação do k-means para lidar com fluxos de dados e a introdução de variações como \textbf{K-Medoids}, \textbf{K-Medians}, \textbf{K-Center} e \textbf{K-Box} ampliaram sua aplicabilidade e desempenho em uma gama ainda maior de contextos de dados.
-
-A importância histórica e a evolução contínua do k-means mostram seu valor duradouro na análise de dados e machine learning. Desde sua concepção, o algoritmo não só inspirou avanços na teoria matemática, mas também provou ser uma ferramenta indispensável na era moderna da computação, especialmente em aplicações de 
-agrupamento de dados em larga escala.
-
-O k-means foi o escolhido como foco desse trabalho por ser, até na modernidade, um algoritmo extremamente utilizado na prática, mesmo com suas limitações, além de ter uma implementação inicialmente simples e de possuir uma estrutura mais amigável para a paralelização.
-
-% * ##########################
-
-\subsection{Algoritmo e Limitações}
-
-Um dos motivos da fama do k-means é a simplicidade de se entender sua lógica e funcionamento. Diferentemente de muitos outros algoritmos de agrupamento de dados, ele pode ser descrito com um pseudocódigo extremamente sucinto, como o Algoritmo \ref{code:kMeans.pseudo} exibido abaixo, que descreve a implementação, como originalmente proposta, do processo do k-means.
-
-\codeexternal[
-  language=,
-  % firstline=,
-  % lastline=,
-  mathescape,
-  numbers=none,
-  label=code:kMeans.pseudo,
-  caption={Implementação padrão em pseudocódigo do k-means},
-]{code-snippets/kMeans.pseudo}
-
- Não há garantia de que o processo convirja para um máximo global, apenas para um máximo local que, dependendo dos centróides iniciais escolhidos, pode ser arbitrariamente pior que o máximo global.
-
-A complexidade de tempo do k-means é de $O(N K D I)$ \cite{surveyClustAlgoXuWunsch2005}, onde $I$ é o número de iterações necessárias para convergir em um resultado, estando na faixa de $[1, I_{max}]$ e dependendo dos centroides iniciais escolhidos.
-
-Na Figura \ref{fig:kMeansDemoIris} mais abaixo há um exemplo de uma execução do k-means, utilizando o dataset Iris, explicado em mais detalhes no Capítulo \ref{sec:datasets}.
-
-Tanto as primeiras três quanto a última iteração são exibidas graficamente, com cada um dos 150 datapoints ($N = 150$) tendo sua cor definida por qual dos três grupos ($K = 3$) ele pertence. É importante notar que, como há quatro variáveis em cada instância ($D = 4$) nesse dataset, os eixos $X$ e $Y$ exibidos nos gráfico representam, cada um, duas dimensões, ao invés de apenas uma. O processo de redução de dimensionalidade para exibição gráfica é importante para possibilitar algum tipo de visualização de espaços de mais de três dimensões. Esse processo foi feito apenas na renderização, e não na entrada de dados.
-
-É possível perceber o \enquote{movimento} dos centroides ao longo das iterações, representados aqui por uma pequena cruz vermelha, até convergirem para o máximo local, atingido nessa execução em nove iterações ($I = 9$). Nota-se também que, para esse dataset, o algoritmo consegue realizar uma boa separação de um dos grupos em relação ao resto (mais à esquerda no gráfico), mas não os outros dois grupos (mais à direita), que não possuem uma separação tão grande no espaço das variáveis. Esse é um resultado esperado nesse dataset, pois duas das classificações das instâncias não são linearmente diferenciáveis a partir das informações disponíveis nos dados.
-
-\begin{figure}[h]
-  \caption{Demonstração do k-means rodando no dataset Iris}
-  \centering
-  \includegraphics[width=0.7\textwidth]{demo_kmeans_iris.png}
-  \label{fig:kMeansDemoIris}
-\end{figure}
-
-É importante entender também as limitações do algoritmo k-means. Como explicitado anteriormente, não há garantias de que o processo encontre o melhor agrupamento possível para o conjunto de dados, apenas o melhor possível a partir dos centroides iniciais.
-
-O algoritmo também é sensível a \textit{outliers}, isto é, pontos de dados que se diferem muito da distribuição geral dos dados. A presença destes pode causar grandes deformações dos clusters --- basicamente \enquote{puxando} os centroides para mais perto dos \textit{outliers}.
-
-Um dos argumentos necessários na chamada do algoritmo é considerado também uma limitação: o parâmetro $K$. Como é necessário que o k-means seja informado da quantidade de agrupamentos a serem feitos, isso implica que já se saiba algo a respeito da natureza ou geometria do conjunto de dados a ser agrupado, o que nem sempre é possível, ainda mais para datasets de alta dimensionalidade, onde uma visualização útil para se interpretar os dados se torna extremamente difícil.
-
-Mesmo com todas essas limitações, o k-means continua um algoritmo ubíquo em diversas áreas da computação, como discutido a seguir, e segue sendo amplamente estudado e aprimorado na literatura.
-
-% * ##########################
-
-\subsection{Aplicações Reais}
-
-O k-means, reconhecido por sua simplicidade e eficácia, é empregado em uma variedade de aplicações práticas em diversos campos. Sua capacidade de efetivamente segmentar dados em grupos com características similares o torna uma ferramenta versátil para diversos usos, desde análises de mercado até sistemas de recomendação.
-
-Uma das aplicações mais comuns do k-means é a segmentação de clientes. Nesse contexto, empresas de diversos setores, como bancos, telecomunicações, e-commerce e publicidade, utilizam o k-means para agrupar clientes com base em comportamentos de compra, preferências ou demografia, permitindo o desenvolvimento de estratégias de marketing direcionadas e personalizadas. Esta aplicação não apenas ajuda as empresas a entender melhor seus clientes, mas também a otimizar suas ofertas e serviços de acordo com as necessidades de cada segmento.
-
-Um exemplo concreto dessa aplicação é a realizada em um estudo de caso de 2018 \cite{kMeansSupplierRiskAss2018}, que utilizou o k-means para avaliar não clientes, mas sim realizar a análise de risco de fornecedores comerciais.
-
-Neste estudo, o método k-means foi aplicado para \textbf{avaliar e segmentar fornecedores} de uma empresa de maquinário pesado com base em seus perfis de risco. A metodologia incluiu a utilização do Best-Worst Method (BWM) para determinar os pesos de 17 critérios de risco, seguido pela aplicação de Análise de Fatores para redução de dimensionalidade dos dados de risco, resultando em quatro fatores principais. Utilizando esses fatores, o k-means foi empregado para dividir os fornecedores em três clusters, representando diferentes níveis de exposição ao risco, o que permitiu uma análise detalhada das características de risco de cada grupo.
-
-Os resultados do estudo demonstraram que a abordagem baseada em k-means é eficaz para a categorização dos fornecedores em grupos homogêneos quanto aos riscos enfrentados, fornecendo insights significativos para a gestão e o avaliação de fornecedores. Este agrupamento facilitou decisões estratégicas na gestão de riscos, destacando a importância e utilidade de métodos analíticos avançados em ambientes empresariais competitivos. O estudo sugere que a aplicação de técnicas de agrupamento de dados, como o k-means, pode melhorar significativamente as práticas de compra e a gestão de riscos em setores industriais.
-
-Outra aplicação notável do k-means é na organização e classificação de documentos. Por exemplo, em grandes conjuntos de dados de texto, como coleções de artigos ou relatórios de pesquisa, o k-means pode agrupar documentos com temas ou conteúdos semelhantes, facilitando a gestão e a recuperação de informações. Este uso é particularmente valioso em campos como pesquisa acadêmica, onde a capacidade de navegar rapidamente por vastas quantidades de literatura é crucial.
-
-Um exemplo específico dessa aplicação é explorado na documentação da biblioteca Python \textbf{Scikit Learn} \cite{kMeansDocClustering2024}. Nesse exemplo de implementação, é explorado o \textbf{agrupamento de documentos de texto} utilizando o método k-means com a biblioteca scikit-learn, focando em agrupar textos por tópicos de maneira eficaz. Ele emprega duas variantes do algoritmo k-means implementadas na biblioteca, o \textit{KMeans} e \textit{MiniBatchKMeans}, e utiliza a Análise Semântica Latente (LSA) para a redução de dimensionalidade e a identificação de padrões \enquote{escondidos} nos dados. Além disso, são utilizados dois métodos de vetorização de texto: \textit{TfidfVectorizer} e \textit{HashingVectorizer}, que ajudam na transformação do texto em uma representação numérica que pode ser usada pelo algoritmo de agrupamento.
-
-Para a análise, o dataset \textit{20 newsgroups} é utilizado, selecionando quatro tópicos para manter o custo computacional acessível e melhorar a clareza do problema de agrupamento, removendo metadados desnecessários como cabeçalhos e citações. A eficácia do agrupamento é avaliada através de várias métricas, incluindo homogeneidade, completude, medida-V, índice Rand ajustado e coeficiente de silhueta, destacando que a aplicação da técnica de LSA antes do agrupamento melhora significativamente tanto a estabilidade quanto a qualidade dos clusters. Esses resultados ilustram o potencial dessas técnicas para categorizar e entender grandes conjuntos de dados de texto, proporcionando insights valiosos sobre a organização dos tópicos dentro dos documentos.
-
-O k-means também tem aplicações significativas no processamento de imagens, como na segmentação de imagens, onde o algoritmo agrupa pixels semelhantes para identificar e separar diferentes objetos ou regiões dentro de uma imagem. Esta técnica é amplamente utilizada em tarefas como reconhecimento de padrões, visão computacional e até mesmo na melhoria de algoritmos de compressão de imagem, tornando-a uma ferramenta fundamental na era digital.
-
-
-
-% * ####################################
-
-% \section{Algoritmo 2: Hierarchical Clustering}
-
-% \textbf{Escrever uma sub-seção sobre o Hierarchical Clustering, no mesmo estilo da seção do k-means. Seção opcional, só fazer depois de concluir TODO o resto do k-means + seus experimentos + resultados + código.}
+É importante notar também que ainda há uma penalidade considerável no potencial de ganho de performance, se comparando implementações usando CUDA em C++ e as usando Numba em Python. O ganho de velocidade foi de 28 vezes em C++, enquanto em Python foi de apenas 6,29 vezes. Ainda assim, o \textit{speed-up} obtido nas execuções do k-means acelerado usando o Numba foram de magnitudes ainda maiores que o apresentado neste exemplo simples, como explicitado no capítulo \ref{sec:resultados}.
 
 
 
@@ -1072,11 +1101,11 @@ A \textbf{quarta etapa}, por fim, consistiu em diversos experimentos de ganho de
 \section{Identificando o Potencial de Paralelismo}
 \label{chp:identifPotencParalel}
 
-Antes de se iniciar qualquer implementação que busque ganhar desempenho com o paralelismo, é crucial realisar uma análise para encontrar quais partes de um processo sequer podem ser paralelizadas e quais são necessariamente seriais --- isto é, precisam ser realizadas sequencialmente, sem processamentos simultâneos para aceleração.
+Antes de se iniciar qualquer implementação que busque ganhar desempenho com o paralelismo, é crucial realizar uma análise para encontrar quais partes de um processo podem ser paralelizadas e quais são necessariamente seriais --- isto é, precisam ser realizadas sequencialmente, sem processamentos simultâneos para aceleração.
 
 Evidentemente, nem todo processo pode ser paralelizado. Há requisitos importantes para que uma tarefa possa ser executada de maneira paralela. Primeiro, é necessário que a tarefa possa ser subdivida em diversas outras tarefas menores. Segundo, é necessário que essas tarefas sejam independentes entre si, isto é, que a execução de uma não dependa diretamente do resultado de outra.
 
-Um exemplo de tarefa facilmente paralelizável, como exibido nos Capítulos \ref*{ssc:implementaçãoCUDA} e \ref*{ssc:implementaçãoNumba}, é a soma de dois vetores. Para dois vetores de tamanho $N$, é possível calcular a soma deles paralelamente, calculando a soma de cada par de elementos, um de cada vetor, simultaneamente. Isso é possível pois, para dois vetores $x$ e $y$, a soma dos elementos $x[i]$ e $y[i]$ não depende da soma dos elementos $x[i+1]$ e $y[i+1]$.
+Um exemplo de tarefa facilmente paralelizável, como exibido nos Capítulos \ref*{ssc:implementaçãoCUDA} e \ref*{ssc:implementaçãoNumba}, é a soma de dois vetores. Para dois vetores de tamanho $N$, é possível calcular a soma deles paralelamente, calculando a soma de cada par de elementos, um de cada vetor, simultaneamente. Isso é possível pois, para dois vetores $x$ e $y$, a soma dos elementos $x[i]$ e $y[i]$ não depende da soma dos elementos $x[i+1]$ e $y[i+1]$, para qualquer $i$.
 
 Já um exemplo de uma tarefa inerentemente serial seria o hashing consecutivo de um dado, uma operação onde é calculado o hash de uma mensagem $N$ vezes, cada vez aplicando a operação de hashing novamente sobre o valor gerado pela operação anterior. Para calcular a terceira operação de hash do dado, é estritamente necessário que o hash da segunda operação tenha sido calculado, que por sua vez necessita que a primeira operação de hashinh tenha sido concluída. A paralelização num cenário desses é impossível, pois o resultado de uma sub-tarefa depende de outra, impedindo que sejam executadas simultaneamente.
 
@@ -1098,7 +1127,7 @@ No passo 2.1, temos o cálculo de todas as distâncias euclidianas entre cada um
 
 No passo 2.2, o cálculo dos novos centroides é realizado. Essa operação requer a redução de um vetor bidimensional de dimensões $N \cdot D$ em um vetor unidimensional de tamanho $D$. Essa redução é feita com a soma de todas as coordenadas dos datapoints mais próximos do centroide atualmente sendo recalculado e depois a divisão do valor final pelo número de datapoints que foram somados, realizando efetivamente uma média das coordenadas dos pontos de um grupo, para encontrar o novo centroide do grupo. Novamente, é uma operação de $(N_c - 1) \cdot D$ somas, onde $N_c$ é o número de pontos de dados no grupo cujo centroide está sendo recalculado, com $D$ divisões no final para encontrar a média. Por ser uma operação de redução, onde a saída tem dimensionalidade menor que a entrada, há um grau de dificuldade maior na implementação de uma versão paralela, mas é perfeitamente possível, com subdivisões iterativas dos vetores.
 
-Na verdade, até o passo 1 no pseudocódigo acima é paralelizável, já que a geração dos centroides aleatórios pode ser feita simultaneamente para os $K$ centróides. Porém, como $K$ quase sempre é muito menor que $N$ nos datasets, essa implementação costuma não valera a pena.
+Na verdade, até o passo 1 no pseudocódigo acima é paralelizável, já que a geração dos centroides aleatórios pode ser feita simultaneamente para os $K$ centróides. Porém, como $K$ quase sempre é muito menor que $N$ nos datasets, essa implementação costuma não valer a pena.
 
 Uma parte do k-means que nunca poderia ser paralelizada são as operações entre cada itearação. Isto é, o passo 2.1 da teceira iteração nunca pode ser executado ao mesmo tempo que o mesmo passo 2.1 da segunda iteração do algoritmo. Isso pois a relação datapoint--centroide é passível de mudanças a cada iteração, e o cálculo das distâncias dos centroides numa iteração $i$ depende do cálculo das distâncias da iteração $i-1$, para qualquer $i > 1$.
 
@@ -1125,7 +1154,7 @@ Há duas importações imprescindíveis omitidas nos códigos exibidos neste cap
 
 É recomendado, em geral, o método de \textit{normalização min-max} para algoritmos como o k-means, que utilizam a distância euclidiana para a construção de grupos \cite{standardizOfVars1988}. Este processo é explicado detalhadamente no capítulo \ref{sec:datasets}.
 
-O \textbf{Algoritmo \ref{code:kMeansCPU}} abaixo é a implementação da versão serial, \textit{single thread}, do algoritmo k-means, usada nos experimentos descritos no capítulo \ref{chp:exp}.
+O \textbf{Algoritmo \ref{code:kMeansCPU}} abaixo é a implementação da versão serial, \textit{single thread}, do algoritmo k-means, usada nos experimentos descritos no capítulo \ref{chp:datasetsEexperimentos}.
 
 \codeexternal[
   firstline=3,
@@ -1154,13 +1183,29 @@ Na linha 14, os centroides usados para os cálculos de distância na iteração 
 
 Na linha 15 finalmente é feito o cálculo dos novos centroides, após armazenar os centroides anteriores na variável \textit{\codeinline{centroids_OLD}} na linha 14. Novamente, assim como a operação da linha 10, temos uma cadeia de operações do Pandas. Utilizando o método \textit{\codeinline{groupby}} do objeto dataframe, agrupamos os logarítimos do dataset de acordo com a lista de centroides mais próximos. Isso gera $k$ sub-conjuntos de \textit{\codeinline{datasetLogs}}, cada um deles contendo apenas os logarítimos dos datapoints mais próximos a um certo centroide. Para cada um destes sub-conjuntos, é aplicada uma função lambda que, dado um sub-conjunto, calcula a média geométrica --- que, como discutido em mais detalhes no capítulo \ref{sec:kMeans}, é o único método correto para encontrar a média de valores normalizados \cite{geoMeanIsBetter1986} --- de todos os logarítimos dos datapoints do sub-conjunto. Essa cadeia de operações resulta em um dataframe de dimensão $d \cdot k$, onde $d$ é o número de variáveis que descrevem cada datapoint do dataset (\textit{features}). Esse dataframe é então transposto, acessando a propriedade \textit{\codeinline{T}} do dataframe, resultando em um novo dataframe final de dimensão $k \cdot d$, seguindo o mesmo formato usado na geração dos centroides iniciais e garantindo uma comparação correta entre os centroides de iterações consecutivas.
 
-É importante notar que a operação supracitada do cálculo da média geométrica é realizada aqui utilizando uma operação alternativa, mas equivalente, à sua definição:
+É importante notar que a operação supracitada do cálculo da média geométrica é realizada aqui utilizando uma operação alternativa (Equação \ref{eq:geoMeanAlt}), mas equivalente, à sua definição comum (Equação \ref{eq:geoMean}).
 
-\[ \sqrt[n]{\displaystyle \prod_{i=1}^{n} a_{i}} \]
+% \[ \sqrt[n]{\displaystyle \prod_{i=1}^{n} a_{i}} \]
 
-Sendo a operação equivalente:
+\begin{eqfloat}[h]
+  \begin{equation}
+    \sqrt[n]{\displaystyle \prod_{i=1}^{n} a_{i}}
+  \label{eq:geoMean}
+  \end{equation}
+  \caption{Definição da média geométrica}
+\end{eqfloat}
 
-\[ \exp{(\frac{1}{n} \cdot \displaystyle \sum_{i=1}^{n} \ln{a_{i}})} \]
+% Sendo a operação equivalente:
+
+% \[ \exp{(\frac{1}{n} \cdot \displaystyle \sum_{i=1}^{n} \ln{a_{i}})} \]
+
+\begin{eqfloat}[h]
+  \begin{equation}
+    \exp{(\frac{1}{n} \cdot \displaystyle \sum_{i=1}^{n} \ln{a_{i}})}
+  \label{eq:geoMeanAlt}
+  \end{equation}
+  \caption{Uma definição alternativa equivalente da média geométrica}
+\end{eqfloat}
 
 Essa escolha foi feita pois é computacionalmente muito mais eficiente utilizar o exponencial ($e^{x}$) da média aritmética das somas dos logaritmos naturais dos $n$ elementos ao invés de utilizar a raiz $n$-ésima da multiplicação dos $n$ elementos. De fato, para datasets grandes com milhões de instâncias por cluster, seria inviável multiplicar tantos números e depois calcular a raíz $n$-ésima destes. Uma operação desse tipo necessitaria de quantidades exorbitantes de memória para armazenar o gigantesco resultado da multiplicação dessa miríade de termos. Utilizando a operação equivalente, é possível efetivamente \enquote{trocar} essa multiplicação por uma adição, uma operação muito menos custosa em espaço de memória, tornando o cálculo inteiro viável. Além disso, como foram pré-calculados os logarítimos naturais de todos datapoints anteriormente, na linha 5, não é necessário realizar essa operação a cada iteração, economizando mais poder computacional.
 
@@ -1210,11 +1255,11 @@ Há também um quarto trecho de código que poderia ser paralelizado para obter 
 
 No entanto a dificuldade de implementação de uma versão vetorial paralela dessa parte do código é bem maior que as demais. O motivo de tal complexidade é o fato da operação de cálculo da média das coordenadas de um vetor bidimensional, como é o caso da gigantesca maioria dos datasets, ser uma operação de redução. Isto é, a operação tem como entrada um vetor de tamanho $n \cdot d$ e retorna vetor de tamanho $d$ --- a média de todos elementos para cada variável $\{var_1, var_2, \dots, var_d\}$, onde $d$ é o número de dimensões, ou \textit{features} do dataset.
 
-Esse tipo de operação de redução de vetores com mais de uma dimensão infelizmente não possui uma implementação simples correspondente na biblioteca \textit{Numba} e implementá-la de maneira performática envolveria manipulação mais minuciosa da memória, threads e blocos da GPU, o que acabou fora do escopo deste trabalho. Porém, como exibido no capítulo \ref{sec:testesDeSpeedup}, mesmo sem essa implementação, grandes ganhos de velocidade ainda puderam ser obtidos com sucesso.
+Esse tipo de operação de redução de vetores com mais de uma dimensão infelizmente não possui uma implementação simples correspondente na biblioteca \textit{Numba} e implementá-la de maneira performática envolveria manipulação mais minuciosa da memória, threads e blocos da GPU, o que acabou fora do escopo deste trabalho. Porém, como exibido no capítulo \ref{sec:resultados}, mesmo sem essa implementação, grandes ganhos de velocidade ainda puderam ser obtidos com sucesso.
 
 Tendo em vista os supracitados trechos de código mais computacionalmente custosos e com grande potencial para paralelização, foi implementada outra versão do k-means, utilizando o alto poder de processamento vetorial da GPU.
 
-O \textbf{Algoritmo \ref{code:kMeansGPU}} abaixo é a implementação da versão paralela, \textit{multithread}, do algoritmo k-means, usada nos experimentos (vide capítulo \ref{chp:exp}). Note que aqui há mais três novas importações omitidas: os módulos integrados \textit{\codeinline{math}} e \textit{\codeinline{random}}, além da biblioteca \textit{\codeinline{numba}}.
+O \textbf{Algoritmo \ref{code:kMeansGPU}} abaixo é a implementação da versão paralela, \textit{multithread}, do algoritmo k-means, usada nos experimentos (vide capítulo \ref{chp:datasetsEexperimentos}). Note que aqui há mais três novas importações omitidas: os módulos integrados \textit{\codeinline{math}} e \textit{\codeinline{random}}, além da biblioteca \textit{\codeinline{numba}}.
 
 \codeexternal[
   firstline=42,
@@ -1326,12 +1371,12 @@ Nas linhas 1--4 temos, como sempre, a definição de dimensionalidade e tipo das
 
 % * ############################################################################
 
-\chapter{Experimentos e Datasets}
-\label{chp:exp}
+\chapter{Datasets e Experimentos}
+\label{chp:datasetsEexperimentos}
 
-Nesse trabalho, experimentos foram realizados para averiguar os ganhos de velocidade de execução da implementação paralela em relação à implementação serial do k-means, além de testes de precisão para checar se houveram mudanças quanto à qualidade do resultado do k-means ao se paralelizá-lo.
+Experimentos foram realizados para averiguar os ganhos de velocidade de execução da implementação paralela em relação à implementação serial do k-means, além de testes de precisão para checar se houveram mudanças quanto à qualidade do resultado do k-means ao se paralelizá-lo.
 
-Neste capítulo são explicados os procedimentos e metodologia de todos os experimentos, além de descrições a respeito dos conjutos de dados utilizados nestes. No capítulo seguinte (Capítulo \ref{chp:resultados}) são exibidos e discutidos os resultados dos experimentos.
+Neste capítulo são explicados os procedimentos e metodologia de todos os experimentos, além de descrições a respeito dos conjutos de dados utilizados nestes. No capítulo seguinte (Capítulo \ref{sec:resultados}) são exibidos e discutidos os resultados dos experimentos.
 
 
 
@@ -1340,11 +1385,11 @@ Neste capítulo são explicados os procedimentos e metodologia de todos os exper
 \section{Ambiente de Execução}
 \label{sec:máquinaUtilizada}
 
-A máquina utilizada para realização de todos os experimentos foi um computador pessoal desktop de última geração rodando o sistema operacional \textbf{Linux} (com a distro Endeavour OS, baseada em Arch). O kernel utilizado é o \textit{6.8.4-zen1-1-zen}, com o driver NVIDIA versão 550.67 e CUDA versão 12.4.
+A máquina utilizada para realização de todos os experimentos foi um computador desktop de última geração rodando o sistema operacional \textbf{Linux} (com a distro \textit{Endeavour OS}, baseada em \textit{Arch}). O kernel utilizado é o \textit{6.8.4-zen1-1-zen}, com o driver NVIDIA versão 550.67 e CUDA versão 12.4.
 
-Portando um processador \textbf{Ryzen 7 7700X} de 8 núcleos e 16 threads, com velocidade de clock máxima de 5400mHz. A placa de vídeo NVIDIA utilizada, essencial para as implementações em CUDA, foi a \textbf{GeForce RTX 3070}, versão Lite Hash Rate, produzida pela Galax, com 8 GB de VRAM GDDR6, 5888 CUDA Cores e um clock máximo de 1730mHz.
+Portando um processador \textbf{Ryzen 7 7700X} de 8 núcleos e 16 threads, com velocidade de clock máxima de 5,4 GHz. A placa de vídeo NVIDIA utilizada, essencial para as implementações em CUDA, foi a \textbf{GeForce RTX 3070}, versão Lite Hash Rate, produzida pela Galax, com 8 GB de VRAM GDDR6, 5.888 CUDA Cores e um clock máximo de 1.730 MHz.
 
-A máquina estava equipada também com \textbf{16 GB de memória RAM DDR5}, rodando a 5200mHz. Todos os componentes estando instalados numa placa mãe \textbf{MAG MSI B650M Mortar Wi-Fi}.
+A máquina estava equipada também com \textbf{16 GB de memória RAM DDR5}, rodando a 5.200 MHz. Todos os componentes estando instalados numa placa mãe \textbf{MAG MSI B650M Mortar Wi-Fi}.
 
 
 
@@ -1360,26 +1405,26 @@ Cada execução teve seu tempo medido utilizando a função \textit{perf\_counte
 
 Os tempos de cada execução foram sendo exibidos ao longo dos testes, para exportação posterior dos resultados, e salvos em um acumulador, para que fosse possível calcular médias ao final de cada rodada de execuções. Os tempos mínimos e máximos de cada rodada de execuções também foi salvo para comparações.
 
-Assim, cada dataset teve uma rodada de testes de tempo de execução feitas, uma vez usando o k-means versão serial, rodando em CPU, e outra com o k-means versão paralela, rodando em GPU. Os resultados foram salvos e são apresentados no Capítulo \ref{chp:resultados}.
+Assim, cada dataset teve uma rodada de testes de tempo de execução feitas, uma vez usando o k-means versão serial, rodando em CPU, e outra com o k-means versão paralela, rodando em GPU. Os resultados foram salvos e são apresentados no Capítulo \ref{sec:resultados}.
 
 Além dos testes de ganho de velocidade, foram realizados testes de corretude, para checar por qualquer mudança na precisão dos resultados gerados pelo k-means. Esses testes funcionam através da conferência da classificação dos resultados, checados contra uma fonte de verdade existente em cada dataset.
 
 Ao final de cada execução do k-means, na rodada de testes de corretude, era executada uma função de contagem de acertos de classificação sobre o resultado gerado. Como o nome indica, essa função checava a classificação esperada, contida no dataset, em relação à classificação resultante da execução do k-means, contando o número de acertos de classificação. A precisão do resultado era contabilizada como a razão $H \div N$, onde $H$ é o número de acertos totais, em todas as classes, e $N$ o número de instâncias no dataset. As porcentagens de acertos foram então comparadas entre as execuções do k-means CPU e GPU, assim como as velocidades de execução.
 
-Todos os notebooks Jupyter com os testes, os dados crus dos resultados, além de muito mais material complementar, estão disponíveis no repositório do GitHub em: \href{https://github.com/vinivosh/ufu-tcc2}{https://github.com/vinivosh/ufu-tcc2}.
+Todos os notebooks Jupyter com os testes, os dados não-processados dos resultados, além de muito mais material complementar, estão disponíveis no repositório do GitHub em: \href{https://github.com/vinivosh/ufu-tcc2}{https://github.com/vinivosh/ufu-tcc2}.
 
 
 
 % * ####################################
 
-\section{Datasets Utilizados}
+\section{Datasets e Experimentos}
 \label{sec:datasets}
 
 Foram escolhidos seis conjuntos de dados para serem utilizados nos experimentos realizados nesse trabalho. O principal critério de escolha foi o tamanho de cada dataset (número de instâncias ($N$), variáveis ($D$) e classses ($K$)), além de algumas preferências como não existirem valores ausentes nos dados e nem outliers, ambos empecilhos que necessitariam de mais pré-tratamento antes de poder utilizar tais datasets no k-means.
 
-Os datasets foram escolhidos também para representar várias ordens de magnitude de tamanhos e dimensionalidades, para que os experimentos pudessem mostrar como os ganhos de velocidade se comportam com o crescimento do volume de dados. Serão explicados aqui em ordem crescente de tamanho ($N \cdot D \cdot K$).
+Os datasets foram escolhidos também para representar várias ordens de magnitude de tamanhos e dimensionalidades, para que os experimentos pudessem mostrar como os ganhos de velocidade se comportam com o crescimento do volume de dados, tendo sido testados nos experimentos em ordem crescente de tamanho ($N \cdot D \cdot K$).
 
-Uma espécie de dataset \enquote{zero} foi selecionado também aqui para realizar as primeiras versões das implementações do k-means, tanto serial quanto paralelo. Era necessário um dataset extremamente pequeno para realizar testes simples de corretude da implementação. Esse dataset não foi usado nos experimentos finais de \textit{speed-up} e precisão, mas foi essencial para ajudar numa implementação bem sucedida desde o início. Esse é o dataset \textbf{Iris} \cite{irisDataset}.
+Uma espécie de dataset \enquote{zero} foi selecionado també para realizar as primeiras versões das implementações do k-means, tanto serial quanto paralelo. Era necessário um dataset extremamente pequeno para realizar testes simples de corretude da implementação. Esse dataset não foi usado nos experimentos finais de \textit{speed-up} e precisão, mas foi essencial para ajudar numa implementação bem sucedida desde o início. Esse é o dataset \textbf{Iris} \cite{irisDataset}.
 
 % \textbf{TODO: Escrever sobre o dataset 1, Rice.}
 
@@ -1409,9 +1454,11 @@ Uma espécie de dataset \enquote{zero} foi selecionado também aqui para realiza
 
 Na Tabela \ref{tab:datasetsEscolhidos} acima, se encontra a relação de todos os cinco datasets utilizados nos experimentos, assim como seus tamanhos e especificações sobre modificações feitas aos dados (pré-processamento).
 
-Todos datasets foram obtidos do repositório de Machine Learning da \textbf{Universidade da Califórnia em Irvine}. São eles o Rice \cite{riceDataset}, HTRU2 \cite{htru2Dataset}, MiniBooNE \cite{minibooneDataset}, WESAD \cite{wesadDataset} e HHAR \cite{htru2Dataset}.
+Todos datasets foram obtidos do repositório de Machine Learning da \textbf{Universidade da Califórnia em Irvine (UCI)}. São eles o Rice \cite{riceDataset}, HTRU2 \cite{htru2Dataset}, MiniBooNE \cite{minibooneDataset}, WESAD \cite{wesadDataset} e HHAR \cite{htru2Dataset}.
 
-Houve também um passo de pré-processamento em comum para todos os datasets utilizados aqui. Foi o de normalização dos dados. Esse processo é necessário para que nenhuma das variáveis que descrevem os dados de cada dataset pudesse contribuir mais que outras dependendo de sua faixa de valores.
+Os dois maiores datasets, WESAD e HHAR, não foram utilizados por completo, mas sim sub-conjuntos dos dados disponíveis. O tamanho $N$ exibido na Tabela \ref{tab:datasetsEscolhidos} expressa o tamanho do sub-conjunto utilizado, e não dos datasets inteiros como disponibilizados no repositório da UCI. O mesmo se aplica para o dataset MiniBooNE, onde uma remoção de outliers foi realizada antes do processamento para evitar resultados espúrios de agrupamento.
+
+Houve também um passo de pré-processamento em comum para todos os datasets utilizados aqui, o de normalização dos dados. Esse processo é necessário para que nenhuma das variáveis que descrevem os dados de cada dataset pudesse contribuir mais que outras dependendo de sua faixa de valores.
 
 Se a normalização não fosse feita, uma variável que possuísse valores na faixa $[1.1, 2.3]$, por exemplo, iria contribuir muito menos para os cálculos de distância do k-means do que uma outra variável que possuísse valores na faixa $[4.1, 95.3]$, o que poderia gerar classificações muito piores.
 
@@ -1419,21 +1466,19 @@ O processo feito aqui em cada dataset foi o de \textbf{normalização min-max}, 
 
 
 
+% * ####################################
 
-
-% * ############################################################################
-
-\chapter{Resultados}
-\label{chp:resultados}
-
-Utilizando os cinco datasets detalhados no capítulo \ref{chp:exp}, foram realizadas diversas rodadas de execuções em ambas versões dos algoritmos aqui analisados. Seus tempos de execução e precisão na classificação foram comparados.
+% \section{Resultados}
+% \label{sec:resultados}
 
 
 
 % * ####################################
 
 \section{Ganhos de Velocidade}
-\label{sec:testesDeSpeedup}
+\label{sec:resultados}
+
+Utilizando os cinco datasets detalhados anteriormente, foram realizadas diversas rodadas de execuções em ambas versões dos algoritmos aqui analisados. Seus tempos de execução e precisão na classificação foram comparados.
 
 \begin{figure}[h]
   \caption{Tempo médio de execução do k-means}
@@ -1524,13 +1569,13 @@ As poucas variações de corretude são tão pequenas que podem ser explicadas p
 
 \chapter{Conclusões e Trabalhos Futuros}
 
-Após as implementações e os resultados obtidos dos diversos experimentos feitos em cima delas, pode-se dizer com veemência que o objetivo desse estudo foi alcançado com sucesso. Não apenas foram obtidos ganhos de velocidade de mesma magnitude que as observadas no estado da arte da bibliografia a respeito da otimização do k-means através do paralelismo, mas também foi possível alcançar tudo isso utilizando de ferramentas de mais alto-nível: a linguagem Python juntamente com a biblioteca \textit{Numba}.
+Após as implementações e os resultados obtidos dos diversos experimentos feitos em cima delas, pode-se inferir que o objetivo desse estudo foi alcançado com sucesso. Não apenas foram obtidos ganhos de velocidade de mesma magnitude que as observadas no estado da arte da bibliografia a respeito da otimização do k-means através do paralelismo, mas também foi possível alcançar tudo isso utilizando ferramentas de mais alto-nível de abstração: a linguagem Python juntamente com a biblioteca \textit{Numba}.
 
 Como exemplificado nos Capítulos \ref{sec:cuda} e \ref{sec:numba}, implementações com ferramentas como essa facilitam muito o desenvolvimento de algoritmos paralelos a serem executados na GPU, aumentando o poder de toda a comunidade científica, principalmente em áreas como  aprendizado de máquina e a ciência de dados, onde o uso da linguagem Python e as diversas ferramentas desenvolvidas para ela já é bem estabelecido.
 
 O acesso facilitado ao poder do parelelismo das GPUs NVIDIA proporcionado pela bibliteca e compilador \textit{Numba} se torna, assim, mais uma grande adição ao arsenal de ferramentas do cientista de dados e pesquisador, além de ser uma ótima porta de entrada para o aprendizado de técnicas de computação paralela em geral.
 
-Também foi constatado que a paralelização do k-means como implementada nessa pesquisa não cauas pioras mensuráveis na qualidade dos resultados devolvidos pelo processo, apresentando assim apenas vantagens para o uso das GPUs na aceleração desse notório e onipresente algoritmo de agrupamento de dados.
+Também foi constatado que a paralelização do k-means como implementada nessa pesquisa não causa pioras mensuráveis na qualidade dos resultados devolvidos pelo processo, apresentando assim apenas vantagens para o uso das GPUs na aceleração desse notório e onipresente algoritmo de agrupamento de dados.
 
 Além disso, foi possível extrair grande conhecimento das implementações e experimentos realizados na pesquisa e sintetizadas nessa monografia. Acredita-se que o trabalho vá ser de grande utilidade para pesquisadores futuros, como uma introdução às implementações paralelas usando ferramentas de programação de alto-nível, auxiliando no desenvolvimento de versões paralelizadas de novas variações de algoritmos de agrupamento de dados, ou até mesmo de algoritmos completamente novos que possam vir a existir no futuro.
 
@@ -1540,7 +1585,7 @@ Uma implementação paralela bem sucedida desse trecho, quer requerirá ferramen
 
 Além disso, há uma gama de outras ferramentas implementadas na biblioteca que podem servir para impulsionar ainda mais a velocidade do k-means, ou qualquer outro algoritmo de agrupamento de dados, como gerenciamento mais explícito da memória da GPU, controle direto da geometria de blocos e threads CUDA, entra outras. Todas essas são avenidas de melhorias que outras pesquisas futuras podem explorar em implementações mais avançadas.
 
-No fim, o trabalho aqui pode ser imensamente expandido, também, com estudos e implementações de outros algoritmos notórios de agrupamento de dados, como abordagens hierárquicas ou baseadas em densidade, utilizando de ferramentas de alto nível como as usadas aqui para unir o melhor da performance com a facilidade de implementação, e sintaxes mais concisas e elegantes.
+No fim, o trabalho aqui pode ser expandido, também, com estudos e implementações de outros algoritmos notórios de agrupamento de dados, como abordagens hierárquicas ou baseadas em densidade, utilizando de ferramentas de alto nível como as usadas aqui para unir o melhor da performance com a facilidade de implementação, e sintaxes mais concisas e elegantes.
 
 
 
