@@ -554,7 +554,7 @@ Um dos motivos da fama do k-means é a simplicidade de se entender sua lógica e
 
 A complexidade de tempo do k-means é de $O(N K D I)$ \cite{surveyClustAlgoXuWunsch2005}, onde $I$ é o número de iterações necessárias para convergir em um resultado, estando na faixa de $[1, I_{max}]$ e dependendo dos centroides iniciais escolhidos.
 
-Na Figura \ref{fig:kMeansDemoIris} mais abaixo há um exemplo de uma execução do k-means, utilizando o dataset Iris, explicado em mais detalhes no Capítulo \ref{sec:datasets}.
+Na Figura \ref{fig:kMeansDemoIris} mais abaixo há um exemplo de uma execução do k-means, utilizando o dataset Iris, explicado em mais detalhes no Capítulo \ref{sec:datasetsUtilizados}.
 
 Tanto as primeiras três quanto a última iteração são exibidas graficamente, com cada um dos 150 datapoints ($N = 150$) tendo sua cor definida por qual dos três grupos ($K = 3$) ele pertence. É importante notar que, como há quatro variáveis em cada instância ($D = 4$) nesse dataset, os eixos $X$ e $Y$ exibidos nos gráfico representam, cada um, duas dimensões, ao invés de apenas uma. O processo de redução de dimensionalidade para exibição gráfica é importante para possibilitar algum tipo de visualização de espaços de mais de três dimensões. Esse processo foi feito apenas na renderização, e não na entrada de dados.
 
@@ -1049,14 +1049,6 @@ A introdução do HAC paralelo, e particularmente do framework ParChain, marcou 
 
 \section{Outras Pesquisas Relevantes}
 
-\textbf{TODO: Escrever um parágrafo introdutorio básico aqui?}
-
-% TODO
-% TODO
-% TODO: Vide acima
-% TODO
-% TODO
-
 O estudo \enquote{\textit{CLUE: A Fast Parallel Clustering Algorithm for} [\dots]} \cite{clueParallelAlgo2020} expõe um \textbf{novo algoritmo de agrupamento} chamado \textbf{CLUstering of Energy (CLUE)}, destinado a otimizar o processo de agrupamento em calorímetros de alta granularidade utilizados em física de alta energia. O algoritmo foi projetado para ser totalmente paralelizável e eficiente, lidando com um grande número de \enquote{hits} ou detecções de depósitos de energia, que podem variar em número a cada detecção numa faixa entre milhares a milhões, dependendo da granularidade e do número de partículas que entram no detector.
 
 O CLUE utiliza uma abordagem baseada em densidade para o agrupamento, calculando duas variáveis-chave para cada ponto: a densidade local e a separação. Utiliza também um índice espacial de grade fixa para acelerar a consulta de vizinhos, atribuindo todos os pontos de dados a quadrantes de uma malha, tornando o processo de busca por vizinhos mais rápido e escalável. Além disso, o algoritmo pode efetivamente identificar e agrupar formatos de clusters não-esféricos e rejeitar ruídos, adaptando-se às necessidades específicas da análise de dados em calorímetros.
@@ -1162,7 +1154,7 @@ Há duas importações imprescindíveis omitidas nos códigos exibidos neste cap
 
 É importante entender que há também um requisito de pré-processamento do conjunto de dados para essas implementações do k-means. Todas as variáveis devem ter seus valores normalizados. Esse processo é necessário para evitar que variáveis com amplitudes de valores maiores influenciem mais significativamente a construção dos clusters do que variáveis com amplitudes menores.
 
-É recomendado, em geral, o método de \textit{normalização min-max} para algoritmos como o k-means, que utilizam a distância euclidiana para a construção de grupos \cite{standardizOfVars1988}. Este processo é explicado detalhadamente no capítulo \ref{sec:datasets}.
+É recomendado, em geral, o método de \textit{normalização min-max} para algoritmos como o k-means, que utilizam a distância euclidiana para a construção de grupos \cite{standardizOfVars1988}. Este processo é explicado detalhadamente no capítulo \ref{sec:datasetsUtilizados}.
 
 O \textbf{Algoritmo \ref{code:kMeansCPU}} abaixo é a implementação da versão serial, \textit{single thread}, do algoritmo k-means, usada nos experimentos descritos no capítulo \ref{chp:datasetsEexperimentos}.
 
@@ -1427,8 +1419,8 @@ Todos os notebooks Jupyter com os testes, os dados não-processados dos resultad
 
 % * ####################################
 
-\section{Datasets e Experimentos}
-\label{sec:datasets}
+\section{Datasets Utilizados}
+\label{sec:datasetsUtilizados}
 
 Foram escolhidos seis conjuntos de dados para serem utilizados nos experimentos realizados nesse trabalho. O principal critério de escolha foi o tamanho de cada dataset (número de instâncias ($N$), variáveis ($D$) e classses ($K$)), além de algumas preferências como não existirem valores ausentes nos dados e nem outliers, ambos empecilhos que necessitariam de mais pré-tratamento antes de poder utilizar tais datasets no k-means.
 
