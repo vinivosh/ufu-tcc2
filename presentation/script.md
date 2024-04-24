@@ -61,17 +61,17 @@ Trabalho surgiu da curiosidade de como utilizar GPUs para solucionar problemas m
 
 GPGPU → para resolver problemas lineares (descrito através de A.L.) → um dos mais comuns é o de multiplicação de matrizes em GPUs
 
-Existiam outros processadores vetoriais antes das GPUs. Outros dois exemplos  de problemas linear: 1. Big Data e 2. Treinamento de redes neurais
+
+
+### Slide 3
+
+Outros dois exemplos de problemas lineares: 1. Big Data e 2. Treinamento de redes neurais
 
 Escolhemos o de Big Data
 
 
 
-### Slide 3
-
-[TODO: Por quê o K-means?]
-
-Inicialmente, a GPGPU era um processo dificultado, requerendo “converter” os problemas para um contexto gráfico (transformar dados em texturas, shaders, etc.)
+### Slide ???
 
 Agrupamento de dados é uma etapa comumente usada no pré-processamento do data mining
 
@@ -79,7 +79,18 @@ Várias operações no agrupamento de dados são independentes entre si, podendo
 
 
 
-### Slide 4
+### Slide ???
+
+Existiam outros processadores vetoriais antes das GPUs.
+
+Inicialmente, a GPGPU era um processo dificultado, requerendo “converter” os problemas para um contexto gráfico (transformar dados em texturas, shaders, etc.)
+
+
+
+
+### Slide ???
+
+[TODO: Por quê o K-means?]
 
 [TODO: Paralelismo CPU vs GPU]
 
@@ -87,37 +98,37 @@ Embora CPUs há mais de uma década possuam vários núcleos e threads, os SOs d
 
 
 
-### Slide 5
+### Slide ???
 
 [TODO: Apresentar estrutura da monografia]
 
 
 
-### Slide 6
+### Slide ???
 
 [TBA]
 
 
 
-### Slide 7
+### Slide ???
 
 [TBA]
 
 
 
-### Slide 8
+### Slide ???
 
 [TBA]
 
 
 
-### Slide 9
+### Slide ???
 
 [TBA]
 
 
 
-### Slide 10
+### Slide ???
 
 [TBA]
 
