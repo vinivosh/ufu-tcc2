@@ -49,31 +49,47 @@ O que será dito a cada slide, especificamente.
 
 ### Slide 1
 
-[TBA]
+[TODO: Apresentações]
 
 
 
 ### Slide 2
 
-[TBA]
+[TODO: Motivação]
+
+Trabalho surgiu da curiosidade de como utilizar GPUs para solucionar problemas matemáticos.
+
+GPGPU → para resolver problemas lineares (descrito através de A.L.) → um dos mais comuns é o de multiplicação de matrizes em GPUs
+
+Existiam outros processadores vetoriais antes das GPUs. Outros dois exemplos  de problemas linear: 1. Big Data e 2. Treinamento de redes neurais
+
+Escolhemos o de Big Data
 
 
 
 ### Slide 3
 
-[TBA]
+[TODO: Por quê o K-means?]
+
+Inicialmente, a GPGPU era um processo dificultado, requerendo “converter” os problemas para um contexto gráfico (transformar dados em texturas, shaders, etc.)
+
+Agrupamento de dados é uma etapa comumente usada no pré-processamento do data mining
+
+Várias operações no agrupamento de dados são independentes entre si, podendo ser altamente paralelizadas
 
 
 
 ### Slide 4
 
-[TBA]
+[TODO: Paralelismo CPU vs GPU]
+
+Embora CPUs há mais de uma década possuam vários núcleos e threads, os SOs dificultam a divisão de tarefas entre cada threads
 
 
 
 ### Slide 5
 
-[TBA]
+[TODO: Apresentar estrutura da monografia]
 
 
 
