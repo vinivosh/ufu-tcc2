@@ -71,7 +71,7 @@ Escolhemos o de Big Data
 
 
 
-### Slide ???
+### Slide 4
 
 Agrupamento de dados é uma etapa comumente usada no pré-processamento do data mining
 
@@ -79,7 +79,7 @@ Várias operações no agrupamento de dados são independentes entre si, podendo
 
 
 
-### Slide ???
+### Slide 5
 
 Existiam outros processadores vetoriais antes das GPUs.
 
@@ -88,25 +88,27 @@ Inicialmente, a GPGPU era um processo dificultado, requerendo “converter” os
 
 
 
-### Slide ???
+### Slide 6
 
-[TODO: Por quê o K-means?]
-
-[TODO: Paralelismo CPU vs GPU]
-
-Embora CPUs há mais de uma década possuam vários núcleos e threads, os SOs dificultam a divisão de tarefas entre cada threads
+Por quê o K-means?
 
 
 
-### Slide ???
+### Slide 7
 
-[TODO: Apresentar estrutura da monografia]
-
+Tudo explicado da motivação! (Exibido graficamente no slide de um jeito que será legal de se explicar.)
 
 
 ### Slide ???
 
 [TBA]
+
+[TODO: Apresentar estrutura da monografia]
+
+
+[TODO: Paralelismo CPU vs GPU]
+
+Embora CPUs há mais de uma década possuam vários núcleos e threads, os SOs dificultam a divisão de tarefas entre cada threads
 
 
 
