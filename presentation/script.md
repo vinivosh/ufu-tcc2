@@ -2,7 +2,7 @@
 
 Um simples script para planejamento do que será dito oralmente na apresentação. Uma versão bem menos resumida dos [slides](https://github.com/vinivosh/ufu-tcc2/blob/main/presentation/Apresenta%C3%A7%C3%A3o%20-%20TCC%202.odp), digamos.
 
-## Anotações
+# Anotações
 
 O que deve haver na apresentação (em ordem)?
 
@@ -41,21 +41,19 @@ O que deve haver na apresentação (em ordem)?
 
 
 
-## Falas por Slide
+# Falas por Slide
 
 O que será dito a cada slide, especificamente.
 
 
 
-### Slide 1
+## Slide 1
 
-[TODO: Apresentações]
+Apresentações
 
 
 
-### Slide 2
-
-[TODO: Motivação]
+## Slide 2
 
 Trabalho surgiu da curiosidade de como utilizar GPUs para solucionar problemas matemáticos.
 
@@ -63,7 +61,7 @@ GPGPU → para resolver problemas lineares (descrito através de A.L.) → um do
 
 
 
-### Slide 3
+## Slide 3
 
 Outros dois exemplos de problemas lineares: 1. Big Data e 2. Treinamento de redes neurais
 
@@ -71,7 +69,7 @@ Escolhemos o de Big Data
 
 
 
-### Slide 4
+## Slide 4
 
 Agrupamento de dados é uma etapa comumente usada no pré-processamento do data mining
 
@@ -79,7 +77,7 @@ Várias operações no agrupamento de dados são independentes entre si, podendo
 
 
 
-### Slide 5
+## Slide 5
 
 Existiam outros processadores vetoriais antes das GPUs.
 
@@ -88,18 +86,18 @@ Inicialmente, a GPGPU era um processo dificultado, requerendo “converter” os
 
 
 
-### Slide 6
+## Slide 6
 
 Por quê o K-means?
 
 
 
-### Slide 7
+## Slide 7
 
 Tudo explicado da motivação! (Exibido graficamente no slide de um jeito que será legal de se explicar.)
 
 
-### Slide ???
+## Slide ???
 
 [TBA]
 
@@ -112,25 +110,25 @@ Embora CPUs há mais de uma década possuam vários núcleos e threads, os SOs d
 
 
 
-### Slide ???
+## Slide ???
 
 [TBA]
 
 
 
-### Slide ???
+## Slide ???
 
 [TBA]
 
 
 
-### Slide ???
+## Slide ???
 
 [TBA]
 
 
 
-### Slide ???
+## Slide ???
 
 [TBA]
 
