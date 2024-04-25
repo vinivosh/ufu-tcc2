@@ -1,4 +1,4 @@
-import time; import numpy as np; import numba
+import time; import numpy as np
 
 def addArrayCPU(a, b):
     return a + b
