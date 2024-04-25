@@ -85,7 +85,6 @@ Inicialmente, a GPGPU era um processo dificultado, requerendo “converter” os
 
 
 
-
 ## Slide 6
 
 Por quê o K-means?
@@ -95,6 +94,7 @@ Por quê o K-means?
 ## Slide 7
 
 Tudo explicado da motivação! (Exibido graficamente no slide de um jeito que será legal de se explicar.)
+
 
 
 ## Slide ???
