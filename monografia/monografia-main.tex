@@ -270,6 +270,8 @@ rulecolor=\color{black},              % if not set, the frame-color may be chang
 
 O K-means é um algoritmo notório de agrupamento de dados que vem sendo usado extensivamente desde sua concepção no meio do século XX. Utilizando-o como exemplo de implementação, essa pesquisa visou implementar uma versão paralelizada, usando o processamento vetorial de uma GPU NVIDIA, para obter um ganho de performance significativo, sem afetar a precisão dos resultados. Buscou-se realizar essa implementação utilizando ferramentas de programação de mais alto-nível de abstração, especificamente a linguagem Python e as bibliotecas \textit{Numba}, \textit{Numpy} e \textit{Pandas}, explorando a possibilidade de se atingir grandes aumentos em velocidade de execução sem abrir mão da facilidade de desenvolvimento proporcionada pelo Python, se comparada com a complexidade de realizar uma implementação equivalente em C++ utilizando a API CUDA diretamente. Experimentos de desempenho foram realizados utilizando cinco conjuntos de dados com o número de instâncias variando entre 3.810 e 13.932.632 e o número de \textit{features} entre 3 a 50. Um aumento médio de peformance entre 9x a 42x foi atingido com sucesso sem prejudicar mensuravelmente a qualidade dos resultados, ao se comparar uma implementação serial em Python usando as bibliotecas \textit{Pandas} e \textit{Numpy} e uma paralela em Python usando, além dessas, a biblioteca \textit{Numba} para rodar funções em uma GPU NVIDIA. Além disso foi observado que o ganho de performance tende a aumentar para conjuntos de dados maiores.
 
+peidinho
+
 \vspace{\onelineskip}
   
 \noindent
@@ -357,13 +359,7 @@ O K-means é um algoritmo notório de agrupamento de dados que vem sendo usado e
 \chapter{Introdução}
 % * ############################################################################
 
-A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. Desde os primórdios da área busca-se algoritmos e procedimentos que, dados os mesmos parâmetros de entrada, executem a mesma tarefa na menor parcela de tempo possível. Outros recursos como espaço de memória utilizado, eficiência energética ou uso da rede em muitos cenários são mais importantes que o tempo de execução, mas ainda assim ela continua sendo um dos mais estudados parâmetros para categorização e avaliação de algoritmos e procedimentos na computação. De fato o tempo de execução --- em ciclos, ou passos, de processamento --- é a métrica utilizada na análise de uma das maiores incógnitas da computação, o problema P versus NP.
-
-% TODO
-% TODO
-% TODO: Adicionar no parágrafo acima uma citação básica sobre o problema P vs NP
-% TODO
-% TODO
+A busca pelo menor tempo de execução é uma diretriz ubíqua na computação. Desde os primórdios da área busca-se algoritmos e procedimentos que, dados os mesmos parâmetros de entrada, executem a mesma tarefa na menor parcela de tempo possível. Outros recursos como espaço de memória utilizado, eficiência energética ou uso da rede em muitos cenários são mais importantes que o tempo de execução, mas ainda assim ela continua sendo um dos mais estudados parâmetros para categorização e avaliação de algoritmos e procedimentos na computação. De fato o tempo de execução --- em ciclos, ou passos, de processamento --- é a métrica utilizada na análise de uma das maiores incógnitas da computação, o problema P versus NP \cite{pVsNpOriginal1}\cite{pVsNpOriginal2}.
 
 Um grande avanço na quantidade de poder de processamento dos computadores e, portanto, diminuição do tempo de execução de algoritmos, foi a criação dos processadores multinúcleo, permitindo a paralelização de processos. A habilidade de poder executar duas ou mais ações simultaneamente possibilitou muitos ganhos palpáveis na velocidade de execução de algoritmos e procedimentos, porém introduziu uma necessidade de mudança na forma de se pensar em resoluções de problemas computacionalmente: paralelizar um algoritmo serial (não-paralelo) não é uma tarefa trivial, e requer cuidados especiais com concorrência no acesso a recursos da máquina, interdependência de dados e cálculos, sincronização, entre outros dilemas.
 
