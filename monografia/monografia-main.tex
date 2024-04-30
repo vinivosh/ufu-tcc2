@@ -882,7 +882,7 @@ Todavia, essa performance pode ser melhorada ainda mais utilizando mais poder de
   firstline=23,
   lastline=26,
   label=code:addArrayGPUv3.snippet1.cpp,
-  % caption={Implementação vetorial de soma de vetores usando CUDA --- Trecho 1},
+  caption={Implementação vetorial de soma de vetores usando CUDA --- Trecho 1},
 ]{code-snippets/addArrayGPUv3.cu}
 
 A modificação acima é feita na chamada da função \textit{add} (linha 24 no Algoritmo \ref{code:addArrayGPUv2.cpp}). O tamanho do bloco é definido como 1.024 threads, como antes, mas o valor é salvo na variável \textit{blockSize}, para ser utilizada na definição do número de blocos. Esse número é definido dividindo $N$ pela quantidade de blocos por \textit{thread}, arredondando para cima (com a função \textit{ceil}) para lidar com o caso de $N$ não ser divisível por \textit{blockSize}. Assim, é garantido que haverão, no mínimo, $N$ \textit{threads} no total. Nesse caso específico ($N = 2^{28}$), haverão exatamente 262.144 \textit{blocos}, cada um com 1.024 \textit{threads}.
@@ -895,7 +895,7 @@ No entanto, como há mais de um bloco agora, é necessário que seja modificado 
   firstline=4,
   lastline=10,
   label=code:addArrayGPUv3.snippet2.cpp,
-  % caption={Implementação vetorial de soma de vetores usando CUDA --- Trecho 1},
+  caption={Implementação vetorial de soma de vetores usando CUDA --- Trecho 2},
 ]{code-snippets/addArrayGPUv3.cu}
 
 O trecho acima (que corresponde às linhas 4--11 do Algoritmo \ref{code:addArrayGPUv2.cpp}), descreve a nova definição do \textit{kernel}. Aqui, é usada uma nova variável disponibilizada pela API CUDA, a \textit{blockIdx.x}, que contém o índice do bloco onde se encontra a \textit{thread} atual. Usando essa variável e as outras duas já conhecidas, é possível dividir ainda mais o processamento da soma dos vetores.
@@ -905,6 +905,20 @@ A variável \textit{index} é definida dessa vez pela expressão idiomática CUD
 Para clarificar, num exemplo mais simples onde $N = 128$ e há $2$ blocos com $32$ \textit{threads} cada, a \textit{thread} de índice $0$ do bloco de índice $0$ somaria os valores \textit{x[i] + y[i]} para $i = \{0, 64\}$, a \textit{thread} de índice $1$ do mesmo bloco para $i = \{1, 65\}$, e assim por diante, até a última \textit{thread} do bloco $0$, a de índice $31$, trabalhando com $i = \{31, 95 \}$. No bloco de índice $1$, o mesmo ocorre, mas agora sua \textit{thread} de índice $0$ processa os elementos onde $i = \{32, 96\}$, a \textit{thread} $1$ trabalha com $i = \{33, 97\}$, até chegar na sua última \textit{thread}, a de índice $31$, que processa $i = \{63, 127\}$. O processamento, então, seria efetivamente dividido em $64$ partes iguais, cada uma realizada por uma \textit{thread}.
 
 Rodando o algoritmo e medindo o tempo cada execução, obtem-se o tempo médio de cerca de \textbf{11 milissegundos}. O erro máximo continua em zero. Houve agora um \textit{speed-up} de cerca de 8,45 vezes em relação à versão vetorial anterior (Algoritmo \ref{code:addArrayGPUv2.cpp}) e de exatamente 28 vezes em relação à versão serial rodando em CPU (Algoritmo \ref{code:addArrayCPU.cpp}).
+
+\begin{table}[h]
+  \centering
+  \caption{Comparação de performance da soma de vetores (com $2^{28}$ elementos) em C++. \textit{Speed-up} calculado em relação à versão serial (CPU)}
+  \label{tab:sumArrCPP}
+  \begin{tabular}{|l|l|l|}
+    \hline
+    \rowcolor[HTML]{9B9B9B} 
+    \textbf{Implementação} & \textbf{Tempo de Exec. (ms)} & \textbf{Speed-up} \\ \hline
+    CPU (Algoritmo \ref{code:addArrayCPU.cpp}) & 308 & --- \\ \hline
+    GPU (ingênua) (Algoritmo \ref{code:addArrayGPUv2.cpp}) & 93 & 3.31x \\ \hline
+    GPU (Algoritmo \ref{code:addArrayGPUv3.snippet1.cpp} e \ref{code:addArrayGPUv3.snippet2.cpp}) & 11 & 28x \\ \hline
+  \end{tabular}
+\end{table}
 
 Como é possível perceber, as implementações em CUDA requerem um conhecimento em uma das linguagens a que dá suporte nativo, como C, C++ e Fortran, além de uma manipulação mais direta da memória da CPU e GPU. Seu uso também prescinde de um gerenciamento avançado da aritmética usada para gerenciar execuções paralelas, gerando um código que pode ser confuso e de difícil manutenção.
 
