@@ -942,9 +942,9 @@ Como uma tentativa de unir o melhor dos dois mundos --- a velocidade de uma ling
 
 Seguindo o foco desse trabalho, a biblioteca foi utilizada para tornar mais performáticas as partes mais custosas computacionalmente do algoritmo k-means, através da vetorização de funções anteriormente seriais.
 
-Para exemplificar como foi feito o processo, um algoritmo simples, extremamente semelhante ao usado para demonstrar o uso da API CUDA em C++ no Capítulo \ref{ssc:implementaçãoCUDA}, foi implementado, primeiro serialmente, e depois paralelamente, utilizando a GPU.
+Para exemplificar como foi feito o processo, um algoritmo simples, equivalente ao usado para demonstrar o uso da API CUDA em C++ no Capítulo \ref{ssc:implementaçãoCUDA}, foi implementado, primeiro serialmente, e depois paralelamente, utilizando a GPU.
 
-O Algoritmo \ref{code:addArrayCPU.py} abaixo executa a adição de dois vetores, retornando o resultado num terceiro vetor novo. No entanto, os vetores aqui, diferentemente dos exemplos em C++ anteriores, são bidimensionais. Note que foram usadas, em ambas versões do algoritmo, as bibliotecas \textit{Numba} e \textit{Numpy}, importada com o nome \textit{np}. Os comandos de \textit{\codeinline{import}} foram todos omitidos por brevidade. Foram utilizados vetores e funções do \textit{Numpy} pois são mais performáticos do que seus equivalentes em Python puro.
+O Algoritmo \ref{code:addArrayCPU.py} abaixo executa a adição de dois vetores, retornando o resultado num terceiro vetor novo. Note que foram importadas, em ambas versões do algoritmo, as bibliotecas \textit{Numba} e \textit{Numpy}, importada com o nome \textit{np}. Os comandos de \textit{\codeinline{import}} foram todos omitidos por brevidade. Foram utilizados vetores e funções do \textit{Numpy} pois são mais performáticos do que seus equivalentes em Python puro.
 
 \codeexternal[
   firstline=3,
@@ -953,16 +953,18 @@ O Algoritmo \ref{code:addArrayCPU.py} abaixo executa a adição de dois vetores,
   caption={Implementação serial de adição de vetores 2D em Python},
 ]{code-snippets/addArrayCPU.py}
 
-O código acima é auto-explicativo e está comentado para melhor compreensão. Se assemelha bastante com o Algoritmo \ref{code:addArrayCPU.cpp} exibido no Capítulo \ref{ssc:implementaçãoCUDA}. As diferenças práticas são o tamanho dos vetores. Aqui, eles possuem a dimensões $N \cdot D$, onde $N = 100.663.296$ e $D = 4$, totalizando $402.653.184$ elementos. Isso são exatamente 50\% a mais elementos do que havia no exemplo em C++.
+O código acima é auto-explicativo e está comentado para melhor compreensão. Se assemelha bastante com o Algoritmo \ref{code:addArrayCPU.cpp} exibido no Capítulo \ref{ssc:implementaçãoCUDA}. Os vetores continuam com o mesmo tamanho de $N = 402.653.184$. A única diferença prática é que aqui o resultado é retornado em um novo vetor (variável $c$), ao invés de haver uma sobrescrita dos valores do segundo vetor da soma (varíavel $b$).
 
-Rodando o código e realizando a medição da velocidade de execução da função \textit{addArrayCPU}, encontra-se o tempo médio (de cem execuções) de cerca de 2.501,24 milissegundos. O erro máximo (calculado pela função \textit{checkMaxErr} na última linha) é de zero.
+% As diferenças práticas são o tamanho dos vetores. Aqui, eles possuem a dimensões $N \cdot D$, onde $N = 100.663.296$ e $D = 4$, totalizando $402.653.184$ elementos. Isso são exatamente 50\% a mais elementos do que havia no exemplo em C++.
+
+Rodando o código e realizando a medição da velocidade de execução da função \textit{addArrayCPU}, encontra-se o tempo médio (de cem execuções) de cerca de \textbf{1.624,79 milissegundos}. O erro máximo (calculado pela função \textit{checkMaxErr} na última linha) é de zero.
 
 Adaptar esse algoritmo para rodar paralelamente na GPU é extremamente simples usando a biblioteca Numba. O trecho de código abaixo mostra a única modificação a ser feita ao chamar a função que soma os vetores.
 
 \codeexternal[
   numbers=none,
-  firstline=29,
-  lastline=33,
+  firstline=26,
+  lastline=30,
   label=code:addArrayGPU.snippet1.py,
   % caption={Implementação vetorial de adição de vetores 2D em Python},
 ]{code-snippets/addArrayGPU.py}
@@ -974,26 +976,26 @@ Esse recurso do Numba é o decorador \textit{\textbf{guvectorize}}, inserido ant
 \codeexternal[
   numbers=none,
   firstline=3,
-  lastline=10,
+  lastline=8,
   label=code:addArrayGPU.snippet2.py,
   % caption={Implementação vetorial de adição de vetores 2D em Python},
 ]{code-snippets/addArrayGPU.py}
 
-Com apenas essa modificação a mais o código está pronto para ser executado paralelamente pela GPU.
+Com apenas essa modificação a mais o código está pronto para ser executado paralelamente pela GPU. Note que, mesmo a função \textit{addArrayGPU} lidando apenas com valores escalares, eles devem ser acessados como o primeiro elemento de listas (\textit{a[0]} ao invés de apenas \textit{a}). Isso é um requerimento do uso da funcionalidade \textit{guvectorize} do \textit{Numba}.
 
-Porém, o funcionamento da função não é tão intuitivo. Como é possível ver nas três linhas do corpo da função, ela trabalha com apenas um elemento do vetor --- uma linha, se imaginando o vetor bidimensional inteiro como uma tabela. Contudo, diferente de como era feito em C++ com a API CUDA diretamente, não é necessário que seja feita nenhuma aritmética interna para diferenciar as execuções da milhares de instâncias da função.
+O funcionamento da função não é exatamente intuitivo. Como é possível ver na única linha do corpo da função, ela trabalha com apenas um elemento de cada vetor. Contudo, diferente de como era feito em C++ com a API CUDA diretamente, não é necessário que seja feita nenhuma aritmética interna para diferenciar as execuções da milhares de instâncias da função.
 
-De fato, tudo o que o corpo da função faz é iterar sobre as $D$ variáveis de um elemento dos vetores \enquote{externos} (com $N$ elementos), somando os valores do elemento $a$ ao $b$ e armazenando o resultado no $c$. Mas quando a função é chamada, o que é passado de argumento não são os elementos dos vetores, mas sim os vetores inteiros. O que parece ser um erro na verdade é exatamente como a implementação do paralelismo funciona ao se utilizar tal recurso do Numba.
+De fato, tudo o que o corpo da função faz é somar os valores do elemento $a$ com o $b$ e armazenar o resultado no $c$. Mas quando a função é chamada, o que é passado de argumento não são os elementos dos vetores, mas sim os vetores inteiros. O que parece ser um erro na verdade é exatamente como a implementação do paralelismo funciona ao se utilizar tal recurso do Numba.
 
-Essa abstração só é possível pois a biblioteca Numba se encarrega de traduzir esse código para seu equivalente em CUDA, gerenciando sozinha toda aritmética necessária para garantir que realmente cada instância da função acesse apenas sua porção definida dos dados dos vetores inteiros passados como argumentos, e o processamento seja de fato dividido entre milhares de \textit{threads}. Além disso, a biblioteca e seu compilador se encarregam de automatizar qualquer alocação e transferência de estrutura de dados entre CPU e GPU ou vice-versa.
+Essa abstração só é possível pois a biblioteca Numba se encarrega de traduzir esse código para seu equivalente em CUDA, gerenciando sozinha toda a aritmética necessária para garantir que realmente cada instância da função acesse apenas sua porção definida dos dados dos vetores inteiros passados como argumentos, e o processamento seja de fato dividido entre milhares de \textit{threads}. Além disso, a biblioteca e seu compilador se encarregam de automatizar qualquer alocação e transferência de estrutura de dados entre CPU e GPU ou vice-versa.
 
-Tudo que é necessário para tal funcionamento extremamente automatizado de paralelização é, primeiro, implementar a função vetorial em Python como uma que recebe apenas um elemento da estrutura de dados maior que de fato é que está sendo processada, como foi feito aqui, e, segundo, informar ao decorador \textit{guvectorize} alguns argumentos a respeito dos dados que a função irá receber e também sobre seu modo de compilação e execução.
+Tudo que é necessário para tal funcionamento extremamente automatizado de paralelização é, primeiro, implementar a função vetorial em Python como uma que recebe e processa apenas um elemento da estrutura de dados maior que de fato está sendo processada, como foi feito aqui, e, segundo, informar ao decorador \textit{guvectorize} alguns argumentos a respeito dos dados que a função irá receber e também sobre seu modo de compilação e execução.
 
-São passados quatro argumentos aqui para o decorador. O primeiro é uma lista de um elemento do tipo \textit{string} que define os tipos de variáveis que cada instância da função vai receber, em sua \textit{thread}. Nesse caso, como há três argumentos em \textit{addArrayGPU}, são definidos três tipos dentro dos parênteses após a palavra \textit{void}. Todos os tipos são \textit{float32[:]}, o que indica que são vetores unidimensionas contendo números de ponto flutuante (\textit{float}) de precisão simples.
+São passados quatro argumentos para o decorador. O primeiro é uma lista de um elemento do tipo \textit{string} que define os tipos de variáveis que cada instância da função vai receber, em sua \textit{thread}. Nesse caso, como há três argumentos em \textit{addArrayGPU}, são definidos três tipos dentro dos parênteses após a palavra \textit{void}. Todos os tipos são \textit{float32[:]}, o que indica que são escalares ou vetores unidimensionas contendo números de ponto flutuante (\textit{float}) de precisão simples. Nesse caso, os elementos serão escalares. Se fossem vetores bidimensionais, a sintaxe seria \textit{float32[:,:]}; se tridimensionais, \textit{float32[:,:,:]} e assim por diante.
 
-O segundo argumento do decorador é uma \textit{string} que denota a dimensionalidade dos argumentos que cada instância da função vai receber e processar, em sua \textit{thread}. A sintaxe aqui usada, \textit{(d),(d)->(d)} indica que há dois vetores de entrada, ambos de tamanho $d$, e um de saída, também de tamanho $d$.
+O segundo argumento do decorador é uma \textit{string} que denota a dimensionalidade dos argumentos que cada instância da função vai receber e processar, em sua \textit{thread}. A sintaxe aqui usada, \textit{(),()->()} indica que há dois valores escalares de entrada e um de saída. Para vetores unidimensionais de tamanho $n$, a sintaxe seria \textit{(n),(n)->(n)}; para bidimensionais de tamanho $n \cdot d$, seria \textit{(n,d),(n,d)->(n,d)} e assim por diante. Importante notar que a dimensionalidade pode diferir entre os argumentos.
 
-Note que ambos o primeiro e segundo argumento do decorador definem o formato de dado que cada instância da função recebe, e não o formato da estrutura de dados inteira a ser processada. Como a função foi definida para receber um vetor unidimensional de tamanho $d$, quando ela é de fato chamada e um vetor bidimensional de tamanho $n \cdot d$ é passado, o compilador do Numba infere que devem ser criadas $n$ instâncias da função, e cada uma delas processará apenas um vetor de tamanho $d$ diferente, paralelizando automaticamente o processo.
+Note que ambos o primeiro e segundo argumento do decorador definem o formato de dado que cada instância da função recebe, e não o formato da estrutura de dados inteira a ser processada. Como a função foi definida para receber um valor escalar, quando ela é de fato chamada e um vetor de tamanho $n$ é passado, o compilador do \textit{Numba} infere que devem ser criadas $n$ instâncias da função, e cada uma delas processará apenas um elemento diferente, de valor escalar, paralelizando automaticamente o processo.
 
 O terceiro argumento, de nome \textit{nopython}, deve ser definido como \textit{True} para garantir que o código gerado seja todo executado na GPU. Sem essa definição, recursos não implementados pela biblioteca que fossem utilizados dentro da função iriam causar uma execução na CPU --- um modo chamado de \textit{object mode}.
 
@@ -1001,36 +1003,21 @@ O quarto e último argumento, de nome \textit{target}, recebe uma \textit{string
 
 % RESULTADOS MAIS COMPLETOS
 % 
-% (.venv) ↪ python3 ./addArrayCPU.py
-% Realizando benchmark de addArrayCPU (rodando 15x)...
-% Max error = 0.0
-% Benchmark concluído! Tempo médio: 1769.419212 ± 1067.915306 ms
+% CPU:
+% Benchmark concluído! Tempo médio: 1624.789522 ± 346.362247 ms
+% 
+% GPU:
+% Benchmark concluído! Tempo médio: 384.859739 ± 24.824842 ms
+% 
+% Speed-up = 4.2217x
 
-% (.venv) ↪ python3 ./addArrayGPU.py
-% Realizando benchmark de addArrayGPU (rodando 15x)...
-% Max error = 0.0
-% Benchmark concluído! Tempo médio: 398.349615 ± 19.305945 ms
-% 
-% 
-% 
-% Resultados ainda mais completos aqui, agora com mais RUNS
-% 
-% (.venv) ↪ python3 ./addArrayCPU.py && sleep 5 && echo -------------------------------------------------------- && python3 ./addArrayGPU.py
-% Realizando benchmark de addArrayCPU (rodando 100x)...
-% Max error: 0.0
-% Benchmark concluído! Tempo médio: 2501.242067 ± 818.957387 ms
-% --------------------------------------------------------
-% Realizando benchmark de addArrayGPU (rodando 100x)...
-% Max error: 0.0
-% Benchmark concluído! Tempo médio: 397.501782 ± 43.113490 ms
-
-Rodando o algoritmo e medindo, como anteriormente, a velocidade de execução da função \textit{addArrayGPU}, se constata o tempo médio de aproximadamente de 397,50 milissegundos. O erro máximo também é zero, como esperado. Foi obtido um \textit{speed-up} de cerca de 6,29 vezes em relação à versão serial implementada usando apenas funções do \textit{Numpy}.
+Rodando o algoritmo e medindo, como anteriormente, a velocidade de execução da função \textit{addArrayGPU}, se constata o tempo médio de aproximadamente de \textbf{384,86 milissegundos}. O erro máximo também é zero, como esperado. Foi obtido um \textit{speed-up} de cerca de \textbf{4,22 vezes} em relação à versão serial implementada usando apenas funções do \textit{Numpy} (que rodava, em média, em 1624.79 ms).
 
 Fica evidente a facilidade muito maior em se implementar o poder do paralelismo proporcionado pela API CUDA ao se usar a linguagem Python em conjunto com a biblioteca Numba.
 
 É possível adentrar na área de GPGPU sem abrir mão de abstrações de mais alto-nível proporcionadas pela linguagem, além de usufruir, simultaneamente, da imensa gama de bibliotecas de ciência de dados implementadas em Python, como \textit{Numpy} e \textit{Pandas}, que foram também amplamente utilizadas nas implementações do algoritmo k-means, exploradas no Capítulo \ref{sec:kMeansImplementações}.
 
-É importante notar também que ainda há uma penalidade considerável no potencial de ganho de performance, se comparando implementações usando CUDA em C++ e as usando Numba em Python. O ganho de velocidade foi de 28 vezes em C++, enquanto em Python foi de apenas 6,29 vezes. Ainda assim, o \textit{speed-up} obtido nas execuções do k-means acelerado usando o Numba foram de magnitudes ainda maiores que o apresentado neste exemplo simples, como explicitado no capítulo \ref{sec:resultados}.
+É importante notar também que ainda há uma penalidade considerável no potencial de ganho de performance, se comparando implementações usando CUDA em C++ e as usando Numba em Python. O ganho de velocidade foi de 28 vezes em C++, enquanto em Python foi de apenas 4,22 vezes. Ainda assim, o \textit{speed-up} obtido nas execuções do k-means acelerado usando o Numba foram de magnitudes ainda maiores que o apresentado neste exemplo simples, como explicitado no capítulo \ref{sec:resultados}.
 
 
 
