@@ -657,7 +657,7 @@ Com o surgimento das GPUs, desenvolvidas com o propósito inicial de acelerar a 
 
 Um exemplo prático de operações gráficas comumente realizadas por GPUs é exemplificado nas figuras \ref{fig:cubeBefore} e \ref{fig:cubeAfter}, que exibem, respectivamente, um cubo no espaço tridimensional antes e depois de sofrer duas rotações --- uma de 60 graus no sentido horário no eixo $x$ e outra de 30 graus no sentido anti-horário no eixo $y$, seguindo a convenção da \textit{Regra de Fleming}, popularmente conhecida como \enquote{\textit{regra da mão direita}}.
 
-Essa operação de rotação pode parecer simples visualmente, mas internamente requer duas multiplicações de matrizes com valores são obtidos através das operações trigonométricas de seno e cosseno. Essas multiplicações de matrizes, exibidas nas equações \ref{eq:rotationX60CW} e \ref{eq:rotationY30CCW}, precisam ser realizadas para cada vértice de todos os polígonos visíveis na cena a ser renderizada pela placa de vídeo.
+Essa operação de rotação pode parecer simples visualmente, mas internamente requer duas multiplicações de matrizes com valores obtidos através das operações trigonométricas de seno e cosseno. Essas multiplicações de matrizes, exibidas nas equações \ref{eq:rotationX60CW} e \ref{eq:rotationY30CCW}, precisam ser realizadas para cada vértice de todos os polígonos visíveis na cena a ser renderizada pela placa de vídeo.
 
 \begin{eqfloat}[h]
   \begin{equation}
@@ -951,7 +951,7 @@ O Algoritmo \ref{code:addArrayCPU.py} abaixo executa a adição de dois vetores,
 \codeexternal[
   firstline=3,
   lastline=26,
-  caption={Implementação serial de adição de vetores 2D em Python},
+  caption={Implementação serial de adição de vetores em Python},
   label=code:addArrayCPU.py,
 ]{code-snippets/addArrayCPU.py}
 
@@ -1472,7 +1472,7 @@ Nas linhas 1--4 temos, como sempre, a definição de dimensionalidade e tipo das
 
 Experimentos foram realizados para averiguar os ganhos de velocidade de execução da implementação paralela em relação à implementação serial do k-means, além de testes de precisão para checar se houveram mudanças quanto à qualidade do resultado do k-means ao se paralelizá-lo.
 
-Neste capítulo são explicados os procedimentos e metodologia de todos os experimentos, além de descrições a respeito dos conjutos de dados utilizados nestes. No capítulo seguinte (Capítulo \ref{sec:resultados}) são exibidos e discutidos os resultados dos experimentos.
+Neste capítulo são explicados os procedimentos e metodologia de todos os experimentos, além de descrições a respeito dos conjutos de dados utilizados nestes. No Capítulo \ref{sec:resultados} são exibidos e discutidos os resultados dos experimentos.
 
 
 
