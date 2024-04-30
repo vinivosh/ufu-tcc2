@@ -647,9 +647,103 @@ A ideia por trás da programação vetorial é aproveitar ao máximo o poder de 
 
 Ao longo do tempo, a programação vetorial evoluiu significativamente, impulsionada pelo avanço das arquiteturas de processadores e pela demanda por computação paralela cada vez mais poderosa. Um dos marcos importantes nessa evolução foi a introdução do tipo de processamento SIMD (Single Instruction, Multiple Data) nos supercomputadores na década de 1970. Essa abordagem permitiu que uma única instrução fosse executada em múltiplos dados simultaneamente, proporcionando um aumento significativo no desempenho computacional para uma ampla gama de aplicações.
 
-Com o surgimento das GPUs, inicialmente desenvolvidas para renderização gráfica em jogos e aplicações de multimídia, surgiu uma nova oportunidade para a programação vetorial. As GPUs são compostas por centenas ou até milhares de núcleos de processamento, o que as torna altamente paralelizáveis e adequadas para executar operações vetoriais em larga escala. Isso possibilitou a utilização das GPUs não apenas para gráficos, mas também para tarefas de computação de propósito geral (área chamada também de \textit{GPGPU}), incluindo processamento de grandes conjuntos de dados e algoritmos de aprendizado de máquina.
+Com o surgimento das GPUs, desenvolvidas com o propósito inicial de acelerar a renderização gráfica em jogos e aplicações de multimídia, surgiu uma nova oportunidade para a programação vetorial. As GPUs são compostas por centenas ou até milhares de núcleos de processamento, o que as torna altamente paralelizáveis e adequadas para executar operações vetoriais em larga escala. Isso possibilitou a utilização das GPUs não apenas para gráficos, mas também para tarefas de computação de propósito geral (área chamada também de \textit{GPGPU}), incluindo processamento de grandes conjuntos de dados e algoritmos de aprendizado de máquina.
 
-Um exemplo emblemático da aplicação da programação vetorial em GPUs NVIDIA é o algoritmo de agrupamento de dados conhecido como k-means. O k-means é amplamente utilizado em análise de dados e mineração de dados para agrupar pontos de dados em clusters com base em características semelhantes. A paralelização deste algoritmo em GPUs NVIDIA pode resultar em um aumento significativo de desempenho, permitindo o processamento rápido de grandes conjuntos de dados.
+\begin{figure}[h]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \caption{Cubo antes de rotações}
+    \includegraphics[width=0.9\textwidth]{defaultCube.png}
+    \label{fig:cubeBefore}
+  \end{minipage}\hfill
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \caption{Cubo após rotações}
+    \includegraphics[width=0.9\textwidth]{defaultCubeRotated.png}
+    \label{fig:cubeAfter}
+  \end{minipage}
+\end{figure}
+
+Um exemplo prático de operações gráficas comumente realizadas por GPUs é exemplificado nas figuras \ref{fig:cubeBefore} e \ref{fig:cubeAfter}, que exibem, respectivamente, um cubo no espaço tridimensional antes e depois de sofrer duas rotações, uma de 60 graus no sentido horário no eixo $x$ e outra de 30 graus no sentido anti-horário no eixo $y$.
+
+Essa operação de rotação pode parecer simples visualmente, mas requer duas multiplicações de matrizes com valores são obtidos através das operações trigonométricas de seno e cosseno.
+
+\begin{eqfloat}[h]
+  \begin{equation}
+    P * R_x(-60^{\circ}) =
+    \left[ {\begin{array}{*{20}c}
+      x \\
+      y \\
+      z \\
+    \end{array} } \right]
+    \cdot
+    \left[ {\begin{array}{*{20}c}
+      1 & 0 & 0 \\
+      0 & \cos{(-60)} & -\sin{(-60)} \\
+      0 & \sin{(-60)} & \cos{(-60)} \\
+    \end{array} } \right]
+    =
+    \left[ {\begin{array}{*{20}c}
+      x \\
+      y \\
+      z \\
+    \end{array} } \right]
+    \cdot
+    \left[ {\begin{array}{*{20}c}
+      1 & 0 & 0 \\
+      0 & 0.5 & 0.866 \\
+      0 & -0.866 & 0.5 \\
+    \end{array} } \right]
+  \end{equation}
+  \label{eq:rotationX60CW}
+  \caption{Operação para rotacionar pontos 60 graus no sentido horário no eixo $x$}
+\end{eqfloat}
+
+\begin{eqfloat}[h]
+  \begin{equation}
+    P * R_y(30^{\circ}) =
+    \left[ {\begin{array}{*{20}c}
+      x \\
+      y \\
+      z \\
+    \end{array} } \right]
+    \cdot
+    \left[ {\begin{array}{*{20}c}
+      \cos{(30)} & 0 & \sin{(30)} \\
+      0 & 1 & 0 \\
+      -\sin{(30)} & 0 & \cos{(30)} \\
+    \end{array} } \right]
+    =
+    \left[ {\begin{array}{*{20}c}
+      x \\
+      y \\
+      z \\
+    \end{array} } \right]
+    \cdot
+    \left[ {\begin{array}{*{20}c}
+      0.866 & 0 & 0.5 \\
+      0 & 1 & 0 \\
+      -0.5 & 0 & 0.866 \\
+    \end{array} } \right]
+  \end{equation}
+  \label{eq:rotationY30CCW}
+  \caption{Operação para rotacionar pontos 30 graus no sentido anti-horário no eixo $y$}
+\end{eqfloat}
+
+% \[
+% \left[ {\begin{array}{*{20}c}
+%   x & y  \\
+%   z & w  \\    
+% \end{array} } \right]
+% \cdot
+% \left[ {\begin{array}{*{20}c}
+%   x2 & y2  \\
+%   z2 & w2  \\    
+% \end{array} } \right]
+% \]
+
+% Uma aplicação da programação vetorial na área de GPGPU é a versão algoritmo de agrupamento de dados conhecido como k-means. O k-means é amplamente utilizado em análise de dados e mineração de dados para agrupar pontos de dados em clusters com base em características semelhantes. A paralelização deste algoritmo em GPUs NVIDIA pode resultar em um aumento significativo de desempenho, permitindo o processamento rápido de grandes conjuntos de dados.
 
 Em suma, a programação vetorial desempenha um papel fundamental no avanço da computação paralela e no desenvolvimento de algoritmos eficientes para lidar com conjuntos massivos de dados. Com a contínua evolução da arquitetura de processadores e o aumento da demanda por computação paralela, é esperado que a programação vetorial continue a desempenhar um papel crucial no desenvolvimento de soluções computacionais rápidas e escaláveis para uma variedade de aplicações, como processamento de sinais, computação gráfica, simulações físicas, aprendizado de máquina e muito mais. Ela permite acelerar algoritmos complexos, reduzindo o tempo de execução e aumentando a eficiência computacional.
 
