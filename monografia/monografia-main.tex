@@ -510,14 +510,18 @@ O resultado, ou saída, de um algoritmo de agrupamento é comumente um rotulamen
 
 Os algoritmos de agrupamento são essenciais na análise de dados, permitindo a identificação de padrões e estruturas em conjuntos de dados não rotulados. Eles pertencem à categoria de \textbf{algoritmos de aprendizado não supervisionado} e são amplamente utilizados em diversas áreas da computação, matemática, economia, estatística, dentre outras. A paralelização desses algoritmos visa melhorar a eficiência computacional, permitindo o processamento mais rápido de grandes volumes de dados.
 
+Existem diversos algoritmos de agrupamento, e todos possuem vantagens e desvantagens quanto à eficiência de seus resultados para diferentes tipos de conjuntos de dados, além de diferentes complexidades computacionais e tempos de execução.
+
 \begin{figure}[h]
-  \caption{Demonstração de algoritmos de agrupamento em datasets variados}
+  \caption{Demonstração de algoritmos de agrupamento em conjuntos de dados 2D variados}
   \centering
   \includegraphics[width=0.95\textwidth]{clusteringExamplesScikitLearn.png}
   \label{fig:clusteringExamples}
 \end{figure}
 
-Diversos algoritmos de agrupamento existem, como exemplificados na Figura \ref{fig:clusteringExamples} \cite{clusteringExamplesSciKitLearn}, e todos possuem vantagens e desvantagens quanto à eficiência de seus resultados para diferentes tipos de conjuntos de dados, além de diferentes complexidades computacionais e tempos de execução.
+Essa diversidade é exemplificada na Figura \ref{fig:clusteringExamples} \cite{clusteringExamplesSciKitLearn}, retirada da documentação da biblioteca \textbf{SciKit Learn} para a linguagem Python, que oferece diversas ferramentas e algoritmos essenciais para área de ciência de dados e aprendizado de máquina. Na imagem, são exibidas as saídas de oito algoritmos de agrupamento de dados, ao processarem quatro conjuntos de dados compostos por objetos com duas \textit{features} (variáveis). Essas saídas são representadas graficamente distribuindo os pontos de dados em dois eixos, cada um representando uma variável que descreve o ponto. A cor dos pontos representa a qual grupo cada objeto de dado pertence. Há também o tempo de execução, em segundos, no canto inferior direito de cada saída.
+
+O algoritmo \textit{Mini-Batch K-Means}, por exemplo, não foi capaz de dividir adequadamente o primeiro conjunto de dados, com dois grupos no formato de círculos circunscritos, enquanto o \textit{DBSCAN} e \textit{Agglomerative Clustering} conseguiram diferenciar os dois grupos sem problemas. O mesmo cenário ocorreu com o segundo conjunto de dados, com datapoints distribuídos em segmentos de elipses. É possível notar também que os algoritmos \textit{Affinity Propagation} e \textit{Spectral Clustering} possuem tempos de execução significativamente maiores que os outros seis algoritmos.
 
 
 
