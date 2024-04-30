@@ -7,19 +7,19 @@ using namespace std::chrono;
 
 
 // Função que adiciona os elementos de dois vetores
-void add(int n, float *x, float *y){
-  for (int i = 0; i < n; i++)
+void add(long n, float *x, float *y){
+  for (long i = 0; i < n; i++)
     y[i] += x[i];
 }
 
 int main(void){
-  int N = 1<<28; // 268.435.456 elementos
+  long N = long(1<<28) + long(1<<27); // 402.653.184 elementos
 
   float *x = new float[N];
   float *y = new float[N];
 
   // Inicializar vetores no host
-  for (int i = 0; i < N; i++) {
+  for (long i = 0; i < N; i++) {
     x[i] = 3.77f; y[i] = 3.23f;
   }
 
@@ -37,7 +37,7 @@ int main(void){
   // Checar se há erros (todos valores devem ser 3.23f + runs * 3.77f)
   float expectedSum = 3.23f + runs * 3.77f;
   float maxError = 0.0f;
-  for (int i = 0; i < N; i++)
+  for (long i = 0; i < N; i++)
     maxError = fmax(maxError, fabs(y[i] - expectedSum));
   std::cout << "Max error: " << maxError << "\n";
 

@@ -6,21 +6,21 @@ using namespace std::chrono;
 
 // Kernel que adiciona os elementos de dois vetores
 __global__
-void add(int n, float *x, float *y){
+void add(long n, float *x, float *y){
   int index = blockIdx.x * blockDim.x + threadIdx.x;
   int stride = blockDim.x * gridDim.x;
-  for (int i = index; i < n; i += stride)
+  for (long i = index; i < n; i += stride)
     y[i] += x[i];
 }
 
 int main(void){
-  int N = 1<<28; // 268.435.456 elementos
+  long N = long(1<<28) + long(1<<27); // 402.653.184 elementos
 
   float *x, *y;
   cudaMallocManaged(&x, N*sizeof(float));
   cudaMallocManaged(&y, N*sizeof(float));
 
-  for (int i = 0; i < N; i++) {
+  for (long i = 0; i < N; i++) {
     x[i] = 3.77f; y[i] = 3.23f;
   }
 
@@ -30,7 +30,7 @@ int main(void){
   int runs = 100;
   auto startTime = high_resolution_clock::now();
 
-  for (int i = 0; i < runs; i++) {
+  for (long i = 0; i < runs; i++) {
     add<<<numBlocks, blockSize>>>(N, x, y);
     cudaDeviceSynchronize();
   }
@@ -40,7 +40,7 @@ int main(void){
 
   float expectedSum = 3.23f + runs * 3.77f;
   float maxError = 0.0f;
-  for (int i = 0; i < N; i++)
+  for (long i = 0; i < N; i++)
     maxError = fmax(maxError, fabs(y[i] - expectedSum));
   std::cout << "Max error: " << maxError << "\n";
 

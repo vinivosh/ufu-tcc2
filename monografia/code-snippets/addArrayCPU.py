@@ -5,20 +5,19 @@ def addArrayCPU(a, b):
 
 def checkMaxErr(c):
     # Checando erro máximo (todos elementos devem ser 42.0):
-    minRow = c.min(axis=0)
-    maxRow = c.max(axis=0)
+    minElem = c.min()
+    maxElem = c.max()
     maxErr = 0.0
-    for dIdx in range(D):
-        maxErr = max(maxErr, abs(42.0 - minRow[dIdx]))
-        maxErr = max(maxErr, abs(42.0 - maxRow[dIdx]))
+
+    maxErr = max(maxErr, abs(42.0 - minElem))
+    maxErr = max(maxErr, abs(42.0 - maxElem))
     print(f'Max error: {maxErr}')
 
-D = 2**2
-N = int(2**28 * 1.5) // D # N * D = 402.653.184 elementos
+N = 2**28 + 2**27 # 402.653.184 elementos
 
 # Inicializando vetores
-a = np.full((N, D), 27.2, np.float32)
-b = np.full((N, D), 14.8, np.float32)
+a = np.full(N, 27.2, np.float32)
+b = np.full(N, 14.8, np.float32)
 
 # Realizando adição
 c = addArrayCPU(a, b)
