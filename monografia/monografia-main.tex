@@ -647,8 +647,6 @@ A ideia por trás da programação vetorial é aproveitar ao máximo o poder de 
 
 Ao longo do tempo, a programação vetorial evoluiu significativamente, impulsionada pelo avanço das arquiteturas de processadores e pela demanda por computação paralela cada vez mais poderosa. Um dos marcos importantes nessa evolução foi a introdução do tipo de processamento SIMD (Single Instruction, Multiple Data) nos supercomputadores na década de 1970. Essa abordagem permitiu que uma única instrução fosse executada em múltiplos dados simultaneamente, proporcionando um aumento significativo no desempenho computacional para uma ampla gama de aplicações.
 
-Com o surgimento das GPUs, desenvolvidas com o propósito inicial de acelerar a renderização gráfica em jogos e aplicações de multimídia, surgiu uma nova oportunidade para a programação vetorial. As GPUs são compostas por centenas ou até milhares de núcleos de processamento, o que as torna altamente paralelizáveis e adequadas para executar operações vetoriais em larga escala. Isso possibilitou a utilização das GPUs não apenas para gráficos, mas também para tarefas de computação de propósito geral (área chamada também de \textit{GPGPU}), incluindo processamento de grandes conjuntos de dados e algoritmos de aprendizado de máquina.
-
 \begin{figure}[h]
   \centering
   \begin{minipage}{0.48\textwidth}
@@ -665,9 +663,11 @@ Com o surgimento das GPUs, desenvolvidas com o propósito inicial de acelerar a 
   \end{minipage}
 \end{figure}
 
-Um exemplo prático de operações gráficas comumente realizadas por GPUs é exemplificado nas figuras \ref{fig:cubeBefore} e \ref{fig:cubeAfter}, que exibem, respectivamente, um cubo no espaço tridimensional antes e depois de sofrer duas rotações, uma de 60 graus no sentido horário no eixo $x$ e outra de 30 graus no sentido anti-horário no eixo $y$.
+Com o surgimento das GPUs, desenvolvidas com o propósito inicial de acelerar a renderização gráfica em jogos e aplicações de multimídia, surgiu uma nova oportunidade para a programação vetorial. As GPUs são compostas por centenas ou até milhares de núcleos de processamento, o que as torna altamente paralelizáveis e adequadas para executar operações vetoriais em larga escala. Isso possibilitou a utilização das GPUs não apenas para gráficos, mas também para tarefas de computação de propósito geral (área chamada também de \textit{GPGPU}), incluindo processamento de grandes conjuntos de dados e algoritmos de aprendizado de máquina.
 
-Essa operação de rotação pode parecer simples visualmente, mas requer duas multiplicações de matrizes com valores são obtidos através das operações trigonométricas de seno e cosseno.
+Um exemplo prático de operações gráficas comumente realizadas por GPUs é exemplificado nas figuras \ref{fig:cubeBefore} e \ref{fig:cubeAfter}, que exibem, respectivamente, um cubo no espaço tridimensional antes e depois de sofrer duas rotações --- uma de 60 graus no sentido horário no eixo $x$ e outra de 30 graus no sentido anti-horário no eixo $y$, seguindo a convenção da \textit{Regra de Fleming}, popularmente conhecida como \enquote{\textit{regra da mão direita}}.
+
+Essa operação de rotação pode parecer simples visualmente, mas internamente requer duas multiplicações de matrizes com valores são obtidos através das operações trigonométricas de seno e cosseno. Essas multiplicações de matrizes, exibidas nas equações \ref{eq:rotationX60CW} e \ref{eq:rotationY30CCW}, precisam ser realizadas para cada vértice de todos os polígonos visíveis na cena a ser renderizada pela placa de vídeo.
 
 \begin{eqfloat}[h]
   \begin{equation}
@@ -696,8 +696,8 @@ Essa operação de rotação pode parecer simples visualmente, mas requer duas m
       0 & -0.866 & 0.5 \\
     \end{array} } \right]
   \end{equation}
-  \label{eq:rotationX60CW}
   \caption{Operação para rotacionar pontos 60 graus no sentido horário no eixo $x$}
+  \label{eq:rotationX60CW}
 \end{eqfloat}
 
 \begin{eqfloat}[h]
@@ -727,21 +727,11 @@ Essa operação de rotação pode parecer simples visualmente, mas requer duas m
       -0.5 & 0 & 0.866 \\
     \end{array} } \right]
   \end{equation}
-  \label{eq:rotationY30CCW}
   \caption{Operação para rotacionar pontos 30 graus no sentido anti-horário no eixo $y$}
+  \label{eq:rotationY30CCW}
 \end{eqfloat}
 
-% \[
-% \left[ {\begin{array}{*{20}c}
-%   x & y  \\
-%   z & w  \\    
-% \end{array} } \right]
-% \cdot
-% \left[ {\begin{array}{*{20}c}
-%   x2 & y2  \\
-%   z2 & w2  \\    
-% \end{array} } \right]
-% \]
+Em uma cena simples, como a da figura \ref{fig:cubeAfter}, haveria apenas oito vértices para serem recalculados, mas é evidente como o número de vértices e operações a serem realizadas aumenta drasticamente em uma cena como a de um jogo de computador moderno, com dezenas a centenas de milhares de faces triangulares formando objetos e personagens na tela. Considerando que em jogos é comum serem exigidas taxas de atualização da tela entre 30 a 60 vezes por segundo para garantir a responsividade dos controles e a imersão do jogador, o recálculo da miríade de vértices que formam cada imagem deve ser realizado muito rapidamente, na faixa de $33$ à $16$ milissegundos por atualização (\textit{frame}). Como quase sempre existem diversos outros efeitos gráficos a serem aplicados à cada imagem, além da rotação de vértices, esse tempo de execução deve ser mantido ainda mais baixo, para acomodar outras etapas do \textit{pipeline} de vídeo.
 
 % Uma aplicação da programação vetorial na área de GPGPU é a versão algoritmo de agrupamento de dados conhecido como k-means. O k-means é amplamente utilizado em análise de dados e mineração de dados para agrupar pontos de dados em clusters com base em características semelhantes. A paralelização deste algoritmo em GPUs NVIDIA pode resultar em um aumento significativo de desempenho, permitindo o processamento rápido de grandes conjuntos de dados.
 
@@ -1297,9 +1287,9 @@ Na linha 15 finalmente é feito o cálculo dos novos centroides, após armazenar
 \begin{eqfloat}[h]
   \begin{equation}
     \sqrt[n]{\displaystyle \prod_{i=1}^{n} a_{i}}
-  \label{eq:geoMean}
   \end{equation}
   \caption{Definição da média geométrica}
+  \label{eq:geoMean}
 \end{eqfloat}
 
 % Sendo a operação equivalente:
@@ -1309,9 +1299,9 @@ Na linha 15 finalmente é feito o cálculo dos novos centroides, após armazenar
 \begin{eqfloat}[h]
   \begin{equation}
     \exp{(\frac{1}{n} \cdot \displaystyle \sum_{i=1}^{n} \ln{a_{i}})}
-  \label{eq:geoMeanAlt}
   \end{equation}
   \caption{Uma definição alternativa equivalente da média geométrica}
+  \label{eq:geoMeanAlt}
 \end{eqfloat}
 
 Essa escolha foi feita pois é computacionalmente muito mais eficiente utilizar o exponencial ($e^{x}$) da média aritmética das somas dos logaritmos naturais dos $n$ elementos ao invés de utilizar a raiz $n$-ésima da multiplicação dos $n$ elementos. De fato, para datasets grandes com milhões de instâncias por cluster, seria inviável multiplicar tantos números e depois calcular a raíz $n$-ésima destes. Uma operação desse tipo necessitaria de quantidades exorbitantes de memória para armazenar o gigantesco resultado da multiplicação dessa miríade de termos. Utilizando a operação equivalente, é possível efetivamente \enquote{trocar} essa multiplicação por uma adição, uma operação muito menos custosa em espaço de memória, tornando o cálculo inteiro viável. Além disso, como foram pré-calculados os logarítimos naturais de todos datapoints anteriormente, na linha 5, não é necessário realizar essa operação a cada iteração, economizando mais poder computacional.
