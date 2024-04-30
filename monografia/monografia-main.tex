@@ -557,8 +557,8 @@ Um dos motivos da fama do k-means é a simplicidade de se entender sua lógica e
   % lastline=,
   mathescape,
   numbers=none,
-  label=code:kMeans.pseudo,
   caption={Implementação padrão em pseudocódigo do k-means},
+  label=code:kMeans.pseudo,
 ]{code-snippets/kMeans.pseudo}
 
  Não há garantia de que o processo convirja para um máximo global, apenas para um máximo local que, dependendo dos centróides iniciais escolhidos, pode ser arbitrariamente pior que o máximo global.
@@ -822,8 +822,8 @@ O Algoritmo \ref{code:addArrayCPU.cpp} abaixo contém o programa supracitado, qu
   language=C++,
   % firstline=42,
   % lastline=,
-  label=code:addArrayCPU.cpp,
   caption={Implementação serial de soma de vetores em C++},
+  label=code:addArrayCPU.cpp,
 ]{code-snippets/addArrayCPU.cpp}
 
 O código é bem auto-explicativo com comentários incluídos em diversas linhas. Um trecho notável é o contido nas linhas 25--28, que confere o resultado da soma para encontrar o maior erro --- definido pelo valor absoluto da subtração entre o valor encontrado no vetor e o valor esperado. Assim é possível constatar qualquer imprecisão que possa ser introduzida ao se modificar o algoritmo.
@@ -836,8 +836,8 @@ Rodando o programa e medindo o tempo de execução da função \textit{add}, é 
 %   language=C++,
 %   % firstline=42,
 %   % lastline=,
-%   label=code:addArrayGPUv1.cpp,
 %   caption={Implementação serial (CUDA) de soma de vetores em C++},
+%   label=code:addArrayGPUv1.cpp,
 % ]{code-snippets/addArrayGPUv1.cu}
 
 % \textbf{Explicar o código do addArrayGPUv1. Tempo de execução média em 10 execuções do: ~28,345 s.}
@@ -848,8 +848,8 @@ Para paralelizar o algoritmo e rodá-lo na GPU, é preciso fazer algumas modific
   language=C++,
   % firstline=42,
   % lastline=,
-  label=code:addArrayGPUv2.cpp,
   caption={Implementação vetorial (ingênua) de soma de vetores usando CUDA},
+  label=code:addArrayGPUv2.cpp,
 ]{code-snippets/addArrayGPUv2.cu}
 
 As mudanças em relação ao algoritmo \ref{code:addArrayCPU.cpp} começam na linha 4, onde acima da função \textit{add} é declarado um \textit{kernel} CUDA usando a palavra reservada \textit{\_\_global\_\_}. Ao se inserir esse especificador imediatamente antes da declaração de uma função, ela é marcada como função que pode rodar na placa de vídeo, sendo chamada de \textit{kernel} na documentação.
@@ -881,8 +881,8 @@ Todavia, essa performance pode ser melhorada ainda mais utilizando mais poder de
   numbers=none,
   firstline=23,
   lastline=26,
-  label=code:addArrayGPUv3.snippet1.cpp,
   caption={Implementação vetorial de soma de vetores usando CUDA --- Trecho 1},
+  label=code:addArrayGPUv3.snippet1.cpp,
 ]{code-snippets/addArrayGPUv3.cu}
 
 A modificação acima é feita na chamada da função \textit{add} (linha 24 no Algoritmo \ref{code:addArrayGPUv2.cpp}). O tamanho do bloco é definido como 1.024 threads, como antes, mas o valor é salvo na variável \textit{blockSize}, para ser utilizada na definição do número de blocos. Esse número é definido dividindo $N$ pela quantidade de blocos por \textit{thread}, arredondando para cima (com a função \textit{ceil}) para lidar com o caso de $N$ não ser divisível por \textit{blockSize}. Assim, é garantido que haverão, no mínimo, $N$ \textit{threads} no total. Nesse caso específico ($N = 2^{28} + 2^{27}$), haverão exatamente 393.216 \textit{blocos}, cada um com 1.024 \textit{threads}.
@@ -894,8 +894,8 @@ No entanto, como há mais de um bloco agora, é necessário que seja modificado 
   numbers=none,
   firstline=4,
   lastline=10,
-  label=code:addArrayGPUv3.snippet2.cpp,
   caption={Implementação vetorial de soma de vetores usando CUDA --- Trecho 2},
+  label=code:addArrayGPUv3.snippet2.cpp,
 ]{code-snippets/addArrayGPUv3.cu}
 
 O trecho acima (que corresponde às linhas 4--11 do Algoritmo \ref{code:addArrayGPUv2.cpp}), descreve a nova definição do \textit{kernel}. Aqui, é usada uma nova variável disponibilizada pela API CUDA, a \textit{blockIdx.x}, que contém o índice do bloco onde se encontra a \textit{thread} atual. Usando essa variável e as outras duas já conhecidas, é possível dividir ainda mais o processamento da soma dos vetores.
@@ -949,8 +949,8 @@ O Algoritmo \ref{code:addArrayCPU.py} abaixo executa a adição de dois vetores,
 \codeexternal[
   firstline=3,
   lastline=26,
-  label=code:addArrayCPU.py,
   caption={Implementação serial de adição de vetores 2D em Python},
+  label=code:addArrayCPU.py,
 ]{code-snippets/addArrayCPU.py}
 
 O código acima é auto-explicativo e está comentado para melhor compreensão. Se assemelha bastante com o Algoritmo \ref{code:addArrayCPU.cpp} exibido no Capítulo \ref{ssc:implementaçãoCUDA}. Os vetores continuam com o mesmo tamanho de $N = 402.653.184$. A única diferença prática é que aqui o resultado é retornado em um novo vetor (variável $c$), ao invés de haver uma sobrescrita dos valores do segundo vetor da soma (varíavel $b$).
@@ -965,8 +965,8 @@ Adaptar esse algoritmo para rodar paralelamente na GPU é extremamente simples u
   numbers=none,
   firstline=26,
   lastline=30,
+  caption={Implementação vetorial de adição de vetores em Python --- trecho 1},
   label=code:addArrayGPU.snippet1.py,
-  % caption={Implementação vetorial de adição de vetores 2D em Python},
 ]{code-snippets/addArrayGPU.py}
 
 A função, chamada dessa vez de \textit{addArrayGPU}, agora precisa de um vetor de retorno, inicializado aqui logo antes de sua chamada. Isso é necessário pois o recurso do Numba utilizado na implementação da função não permite o retorno direto de uma variável.
@@ -977,8 +977,8 @@ Esse recurso do Numba é o decorador \textit{\textbf{guvectorize}}, inserido ant
   numbers=none,
   firstline=3,
   lastline=8,
+  caption={Implementação vetorial de adição de vetores em Python --- trecho 2},
   label=code:addArrayGPU.snippet2.py,
-  % caption={Implementação vetorial de adição de vetores 2D em Python},
 ]{code-snippets/addArrayGPU.py}
 
 Com apenas essa modificação a mais o código está pronto para ser executado paralelamente pela GPU. Note que, mesmo a função \textit{addArrayGPU} lidando apenas com valores escalares, eles devem ser acessados como o primeiro elemento de listas (\textit{a[0]} ao invés de apenas \textit{a}). Isso é um requerimento do uso da funcionalidade \textit{guvectorize} do \textit{Numba}.
@@ -989,7 +989,7 @@ De fato, tudo o que o corpo da função faz é somar os valores do elemento $a$ 
 
 Essa abstração só é possível pois a biblioteca Numba se encarrega de traduzir esse código para seu equivalente em CUDA, gerenciando sozinha toda a aritmética necessária para garantir que realmente cada instância da função acesse apenas sua porção definida dos dados dos vetores inteiros passados como argumentos, e o processamento seja de fato dividido entre milhares de \textit{threads}. Além disso, a biblioteca e seu compilador se encarregam de automatizar qualquer alocação e transferência de estrutura de dados entre CPU e GPU ou vice-versa.
 
-Tudo que é necessário para tal funcionamento extremamente automatizado de paralelização é, primeiro, implementar a função vetorial em Python como uma que recebe e processa apenas um elemento da estrutura de dados maior que de fato está sendo processada, como foi feito aqui, e, segundo, informar ao decorador \textit{guvectorize} alguns argumentos a respeito dos dados que a função irá receber e também sobre seu modo de compilação e execução.
+Tudo que é necessário para tal funcionamento extremamente automatizado de paralelização é, primeiro, implementar a função vetorial em Python como uma que recebe e processa apenas um elemento da estrutura de dados maior que de fato está sendo processada, como foi feito na última linha do Algoritmo \ref{code:addArrayGPU.snippet2.py}, e, segundo, informar ao decorador \textit{guvectorize} alguns argumentos a respeito dos dados que a função irá receber e também sobre seu modo de compilação e execução.
 
 São passados quatro argumentos para o decorador. O primeiro é uma lista de um elemento do tipo \textit{string} que define os tipos de variáveis que cada instância da função vai receber, em sua \textit{thread}. Nesse caso, como há três argumentos em \textit{addArrayGPU}, são definidos três tipos dentro dos parênteses após a palavra \textit{void}. Todos os tipos são \textit{float32[:]}, o que indica que são escalares ou vetores unidimensionas contendo números de ponto flutuante (\textit{float}) de precisão simples. Nesse caso, os elementos serão escalares. Se fossem vetores bidimensionais, a sintaxe seria \textit{float32[:,:]}; se tridimensionais, \textit{float32[:,:,:]} e assim por diante.
 
@@ -1205,8 +1205,8 @@ A identificação de trechos altamente paralelizáveis do algotimo k-means é si
   lastline=12,
   mathescape,
   numbers=none,
-  label=code:kMeans.snippet1.pseudo,
   % caption={Implementação padrão em pseudocódigo do k-means},
+  label=code:kMeans.snippet1.pseudo,
 ]{code-snippets/kMeans.pseudo}
 
 É simples perceber que os trechos com maiores potenciais de paralelização são o passo 2.1 e o 2.2.
@@ -1247,8 +1247,8 @@ O \textbf{Algoritmo \ref{code:kMeansCPU}} abaixo é a implementação da versão
 \codeexternal[
   firstline=3,
   % lastline=,
-  label=code:kMeansCPU,
   caption={Implementação serial do k-means},
+  label=code:kMeansCPU,
 ]{code-snippets/kMeansCPU.py}
 
 A função \textit{\codeinline{kMeansCPU}} declarada na linha 1 é uma implementação \enquote{concreta} do pseudocódigo apresentado no capítulo \ref{sec:kMeans}. Ela recebe o dataset com os dados a serem agrupados através de um dataframe do Pandas (variável \textit{\codeinline{dataset}}), além dos outros dois argumentos essenciais do k-means: o número de clusters \textit{\codeinline{k}} e o número de iterações máximas \textit{\codeinline{maxIter}}.
@@ -1309,8 +1309,8 @@ Há três trechos de código onde tal potencial de ganho de velocidade é imenso
   numbers=none,
   firstline=7,
   lastline=7,
-  label=codeSnippet:kMeansCPU.logs,
   % caption={K-means serial: cálculo de logarítimos dos datapoints},
+  label=codeSnippet:kMeansCPU.logs,
 ]{code-snippets/kMeansCPU.py}
 
 Essa linha de código é executada apenas uma vez no algoritmo. Porém, o cálculo realizado por ela é feito em todos os elementos do dataset. Logo, é uma operação de complexidade de tempo $O(n)$, podendo ser bem custosa para datasets com um alto número de instâncias. Como o cálculo é uma simples função matemática aplicada à cada datapoint, sem nenhum outro valor de entrada para computar o resultado, conclui-se então que cada operação é independente das outras.
@@ -1321,8 +1321,8 @@ O trecho abaixo é o segundo que é promissor para ganhos com a paralelização.
   numbers=none,
   firstline=12,
   lastline=12,
-  label=codeSnippet:kMeansCPU.distances,
   % caption={K-means serial: cálculo de disâncias},
+  label=codeSnippet:kMeansCPU.distances,
 ]{code-snippets/kMeansCPU.py}
 
 Aqui é feita uma operação de cálculo de distância euclidiana entre todas as $n$ instâncias do dataset e todos os $k$ centroides. Essa operação é realizada dentro de um laço de repetição que será executado $i$ vezes, onde $i$ é o número de iterações necessárias para convergir nos centroides finais. Logo, é uma operação de complexidade $O(nki)$, ainda mais custosa que a anterior. Novamente, o cálculo não depende de nenhuma informação a não ser as coordenadas de um datapoint e um centroide em particular, logo são independentes entre si e podem ser paralelizadas.
@@ -1333,8 +1333,8 @@ O terceiro e último trecho custoso e paralelizável abaixo é o da linha 11, on
   numbers=none,
   firstline=13,
   lastline=13,
-  label=codeSnippet:kMeansCPU.closestCentroids,
   % caption={K-means serial: busca das menores distâncias},
+  label=codeSnippet:kMeansCPU.closestCentroids,
 ]{code-snippets/kMeansCPU.py}
 
 A operação realizada aqui é uma busca feita no vetor de centroides, de tamanho $k$, para cada datapoint do dataset. Assim, como a linha 10 explicada anteriormente, essa também está dentro do laço de repetição das iterações do k-means. Logo, a operação inteira também possui complexidade $O(nki)$. Uma simples busca pelo menor valor no vetor de centroides é menos custosa computacionalmente que o cálculo das distâncias euclidianas, porém ainda assim há um bom potencial em se paralelizar essa busca na GPU, visto que $n$ cresce muito ao se trabalhar com big data e ciência de dados.
@@ -1352,8 +1352,8 @@ O \textbf{Algoritmo \ref{code:kMeansGPU}} abaixo é a implementação da versão
 \codeexternal[
   firstline=42,
   % lastline=,
-  label=code:kMeansGPU,
   caption={Implementação paralela do k-means (função principal)},
+  label=code:kMeansGPU,
 ]{code-snippets/kMeansGPU.py}
   
 A função \textit{\codeinline{kMeansGPU}} acima é a função principal dessa implementação do k-means, que por sua vez chama outras três onde o processamento mais intenso é realizado paralelamente pela GPU. Essas outras funções são discutidas mais adiante (algoritmos \ref{code:kMeansGPU.calcLogs}, \ref{code:kMeansGPU.calcDistances} e \ref{code:kMeansGPU.calcClosestCentroids}). A estrutura do código não muda muito em relação ao Algoritmo \ref{code:kMeansCPU}, então apenas as partes mais modificadas serão explicadas aqui.
@@ -1411,8 +1411,8 @@ Os Algoritmos \ref{code:kMeansGPU.calcLogs}, \ref{code:kMeansGPU.calcDistances} 
 \codeexternal[
   firstline=3,
   lastline=8,
-  label=code:kMeansGPU.calcLogs,
   caption={Implementação paralela do cálculo dos logarítmos naturais dos datapoints},
+  label=code:kMeansGPU.calcLogs,
 ]{code-snippets/kMeansGPU.py}
   
 A função \textit{\codeinline{calcLogs}} acima é chamada apenas uma vez em cada execução do Algoritmo \ref{code:kMeansGPU} (na linha 14) para calcular o logarítimo de todos os datapoints do conjunto de dados.
@@ -1422,8 +1422,8 @@ Ela recebe um datapoint apenas (\textit{\codeinline{rowDataset}}) e, na linha 6,
 \codeexternal[
   firstline=11,
   lastline=23,
-  label=code:kMeansGPU.calcDistances,
   caption={Implementação paralela do cálculo de distâncias},
+  label=code:kMeansGPU.calcDistances,
 ]{code-snippets/kMeansGPU.py}
 
 A função \textit{\codeinline{calcDistances}} acima é chamada a cada iteração do Algoritmo \ref{code:kMeansGPU} (na linha 20) para calcular as distâncias euclidianas entre todos os datapoints do dataset e cada um dos $k$ centroides.
@@ -1437,8 +1437,8 @@ Nas linhas 2 e 3 são declarados o tipo e dimensionalidade dos argumentos da fun
 \codeexternal[
   firstline=26,
   lastline=39,
-  label=code:kMeansGPU.calcClosestCentroids,
   caption={Implementação paralela do cálculo dos centroides mais próximos},
+  label=code:kMeansGPU.calcClosestCentroids,
 ]{code-snippets/kMeansGPU.py}
 
 Por fim, há a função acima, \textit{\codeinline{calcClosestCentroids}}, a última função vetorial chamada pela \textit{\codeinline{kMeansGPU}}. A chamada é realizada a cada iteração do Algoritmo \ref{code:kMeansGPU} (na linha 23) para encontrar o centroide mais próximo de cada datapoint do dataset.
