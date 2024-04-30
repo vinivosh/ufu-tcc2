@@ -513,7 +513,7 @@ Os algoritmos de agrupamento são essenciais na análise de dados, permitindo a 
 Existem diversos algoritmos de agrupamento, e todos possuem vantagens e desvantagens quanto à eficiência de seus resultados para diferentes tipos de conjuntos de dados, além de diferentes complexidades computacionais e tempos de execução.
 
 \begin{figure}[h]
-  \caption{Demonstração de algoritmos de agrupamento em conjuntos de dados 2D variados}
+  \caption{Saída de algoritmos de agrupamento de dados ao processarem conjuntos de dados 2D variados}
   \centering
   \includegraphics[width=0.95\textwidth]{clusteringExamplesScikitLearn.png}
   \label{fig:clusteringExamples}
@@ -542,6 +542,8 @@ A importância histórica e a evolução contínua do k-means mostram seu valor 
 agrupamento de dados em larga escala.
 
 O k-means foi o escolhido como foco desse trabalho por ser, até na modernidade, um algoritmo extremamente utilizado na prática, mesmo com suas limitações, além de ter uma implementação inicialmente simples e de possuir uma estrutura amigável para a paralelização.
+
+A implementação de versões paralelas de outros algoritmos de agrupamento de dados envolveria um processo de identificação de partes de código paralelizável diferente para cada algoritmo, mesmo que semelhante ao realizado aqui para o k-means --- processo apresentado no capítulo \ref{chp:identifPotencParalel}. Algumas dificuldades peculiares também poderiam se apresentar para cada algoritmo a ser paralelizado, como operações de redução, onde a entrada é vetorial e a saída é escalar, que são mais difíceis de se paralelizar do que operações onde ambas a entrada e saída são vetoriais. Um exemplo de operação como essa existe no próprio algoritmo k-means, e é comentada mais a fundo no capítulo \ref{sec:kMeansImplementações}.
 
 % * ##########################
 
