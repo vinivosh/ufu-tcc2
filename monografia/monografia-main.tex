@@ -622,24 +622,12 @@ O k-means também tem aplicações significativas no processamento de imagens, c
 
 \section{Programação Vetorial}
 
-% % ? ################
-% % ? Planning writing
-% % ? ################
-
-% [Escrever uma sub-seção sobre Programação Vetorial]
-
-% \begin{itemize}
-  %   \item Tópico histórico, de onde ela vem, pra que ela serve
-  %   \item Processadores que dão suporte pra operações vetoriais (hoje em dia, basicamente apenas GPUs. APUs tbm?)
-  %   \item História da NVIDIA criando o CUDA
-%   \item Mudança de paradigma em relação à programação serial: escalar -> vetorial
-% \end{itemize}
-
 A programação vetorial é uma abordagem computacional que visa aproveitar ao máximo o potencial de processamento de unidades de processamento que suportam operações vetoriais. Essa abordagem permite realizar operações em conjuntos de dados (vetores) de uma só vez, em vez de processar individualmente cada elemento do vetor. Isso resulta em um aumento significativo no desempenho computacional, especialmente em algoritmos que manipulam grandes volumes de dados.
 
 
 
 \subsection{História}
+\label{ssc:historiaProgVetorial}
 
 A história da programação vetorial é intrinsecamente ligada ao avanço da computação e à necessidade de lidar com conjuntos massivos de dados de maneira eficiente. O conceito de processamento vetorial remonta ao desenvolvimento dos primeiros supercomputadores e ao surgimento das primeiras GPUs, com destaque para a evolução da arquitetura das GPUs NVIDIA.
 
@@ -755,7 +743,7 @@ Os \textbf{processadores} com suporte de processamento paralelo \textbf{SIMD} de
 
 Os \textbf{processadores VLIW} (\textit{Very Long Instruction Word}) são definidos pela sua capacidade de executar múltiplas operações em paralelo por meio de instruções muito longas. Destaca-se sua presença em sistemas embarcados e a eficiência proporcionada pela execução simultânea de operações vetoriais, especialmente em aplicações de processamento de sinal e comunicações digitais. Arquiteturas deste tipo já foram amplamente utilizadas em GPUs, porém houve uma mudança para arquiteturas RISC (\textit{Reduced Instruction Set Computer}), mais simples, para acelerar também a execução de tarefas não-gráficas.
 
-As \textbf{Unidades de Processamento Gráfico} (\textit{Graphical Processing Units}), ou GPUs, são processadores especializados em operações úteis para aplicações gráficas, como cálculos geométricos para renderização 3D, mapeamento de texturas, rotação ou translação de vértices, aplicação de \textit{shaders}, aceleração de decodificação de vídeo, entre muitas outras. Tais operações na grande maioria dos casos envolvem vetores ou matrizes sendo manipuladas, com cálculos sendo aplicados a todos seus elementos. Logo, para lidar eficientemente com essas operações, esses processadores possuem uma unidade de memória dedicada (VRAM, \textit{Video RAM}) e empregam milhares de núcleos para processamento paralelo.
+As \textbf{Unidades de Processamento Gráfico} (\textit{Graphical Processing Units}), ou GPUs, são processadores especializados em operações úteis para aplicações gráficas, como cálculos geométricos para renderização 3D, mapeamento de texturas, rotação ou translação de vértices, aplicação de \textit{shaders}, aceleração de decodificação de vídeo, entre muitas outras. Tais operações na grande maioria dos casos envolvem vetores ou matrizes sendo manipuladas, com cálculos sendo aplicados a todos seus elementos (um exemplo concreto de operação gráfica realizada pela GPU é exibido no Capítulo \ref{ssc:historiaProgVetorial}). Logo, para lidar eficientemente com essas operações, esses processadores possuem uma unidade de memória dedicada (VRAM, \textit{Video RAM}) e empregam milhares de núcleos para processamento paralelo.
 
 As GPUs, sendo processadores intrinsecamente vetoriais, são o foco deste trabalho. Com o advento de ferramentas como a arquitetura CUDA para GPUs produzidas pela NVIDIA, se tornou cada vez mais fácil utilizar esses processadores para aplicações gerais, não apenas gráficas, como é o caso estudado aqui, de se utilizar tais processadores para acelerar algoritmos de agrupamento de dados.
 
