@@ -1038,7 +1038,7 @@ A necessidade de processamento mais rápido de grandes conjuntos de dados é evi
 
 Portanto, surge a necessidade de paralelizar esses algoritmos, aproveitando o poder computacional de sistemas distribuídos, clusters de computadores ou arquiteturas de hardware com múltiplos núcleos. A paralelização não apenas acelera o processo de agrupamento, mas também permite lidar com conjuntos de dados cada vez maiores, garantindo que as análises permaneçam viáveis e eficientes em um cenário de big data.
 
-As pesquisas aqui resumidas buscam explorar a história da paralelização de algoritmos de agrupamento, destacando os avanços significativos nesta área e sua importância contínua na era da análise de enormes volumes de dados. Este segmento do trabalho serve como uma ponte entre o passado e o presente, ilustrando não apenas estudos mais antigos que formaram uma base teórica e prática na áreal, mas também como a introdução das (GPUs) transformou fundamentalmente este campo. Ao revisitar os marcos históricos, é possível delinear o caminho de inovações e aprimoramentos que permitiram a jornada até a era atual, onde a paralelização possibilita o processamento de conjuntos de dados de magnitude anteriormente inimaginável com eficiência e rapidez sem precedentes.
+As pesquisas aqui resumidas buscam explorar a história da paralelização de algoritmos de agrupamento, destacando os avanços significativos nesta área e sua importância contínua na era da análise de enormes volumes de dados. Esse segmento do trabalho serve como uma ponte entre o passado e o presente, ilustrando não apenas estudos mais antigos que formaram uma base teórica e prática na área, mas também como a introdução das (GPUs) transformou fundamentalmente este campo. Ao revisitar os marcos históricos, é possível delinear o caminho de inovações e aprimoramentos que permitiram a jornada até a era atual, onde a paralelização possibilita o processamento de conjuntos de dados de magnitude anteriormente inimaginável com eficiência e rapidez sem precedentes.
 
 % ?
 % ? Concluindo...
@@ -1419,6 +1419,12 @@ A função \textit{\codeinline{calcLogs}} acima é chamada apenas uma vez em cad
 
 Ela recebe um datapoint apenas (\textit{\codeinline{rowDataset}}) e, na linha 6, calcula o logarítimo natural ($\ln{x}$) de cada variável que compõe o datapoint, salvando o resultado no array de retorno (\textit{\codeinline{rowResults}}). A operação é realizada com a função \textit{\codeinline{log}} da biblioteca integrada \textit{math}, já que a função correspondente na biblioteca \textit{Numpy} não é suportada dentro de funções \textit{Numba} rodando em CUDA. Nas linhas 2 e 3 são declaradas as especificações obrigatórias de tipo e dimensionalidade dos argumentos da função. Ambos são vetores unidimensionais de floats de 64 bits e de tamanho $d$, letra que representa a quantidade de dimensões dos datapoints.
 
+% TODO
+% TODO
+% TODO: Se der tempo, criar uma sub-seção que sumarize algumas das dificuldades e limitações encontradas ao se tentar implementar o k-means GPU com o Numba
+% TODO
+% TODO
+
 \codeexternal[
   firstline=11,
   lastline=23,
@@ -1571,7 +1577,7 @@ Utilizando os cinco datasets detalhados anteriormente, foram realizadas diversas
 \begin{figure}[h]
   \caption{Tempo médio de execução do k-means}
   \centering
-  \includegraphics[width=0.95\textwidth]{kMeansAvgTime.png}
+  \includegraphics[width=0.95\textwidth]{kMeansAvgTimeLog.png}
   \label{fig:kMeansAvgTime}
 \end{figure}
 
@@ -1593,7 +1599,7 @@ Na Figura \ref{fig:kMeansAvgTime} e na Tabela \ref{tab:avgTimeResults} é visív
   \end{tabular}
 \end{table}
 
-Os fatores de \textit{speed-up} são mais claros ainda no gráfico de barras da Figura \ref{fig:kMeansAvgSpeedup} abaixo. O padrão esperado foi de fato experimentalmente encontrado. O ganho de velocidade fica cada vez melhor com datasets cada vez maiores.
+Os fatores de \textit{speed-up} são ainda mais claros no gráfico de barras da Figura \ref{fig:kMeansAvgSpeedup} abaixo. O padrão esperado foi de fato experimentalmente encontrado. O ganho de velocidade fica cada vez melhor com datasets cada vez maiores.
 
 \begin{figure}[h]
   \caption{Ganho médio de velocidade do k-means}
