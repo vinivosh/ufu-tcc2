@@ -492,7 +492,7 @@ Também é imprescindível explorar o funcionamento dos processadores vetoriais 
 
 % * ####################################
 
-\section{Agrupamento de dados}
+\section{Agrupamento de Dados}
 
 O agrupamento de dados, também chamado de clusterização de dados (data clustering, em inglês), é a tarefa de agrupar um conjunto de elementos de modo que cada elemento de um grupo se \enquote{pareça} mais com outros elementos do grupo (\textit{cluster}) que pertence do que com elementos dos grupos que não pertencem, dado algum significado bem definido de semelhança entre os dados. É um processo muito comum e virtualmente imprescindível nas áreas de mineração de dados, análise estatística, análise de imagem, aprendizado de máquina, reconhecimento de padrões, e muitas outras.
 
@@ -509,6 +509,15 @@ Diversos modelos de grupo podem ser usados para definir o que é um grupo. Dentr
 O resultado, ou saída, de um algoritmo de agrupamento é comumente um rotulamento dos datapoints passados na entrada, o que indicará a divisão em grupos feita por ele. Classificações podem ser feitas quanto à natureza do agrupamento obtido pelos algoritmos: \textbf{\textit{hard clustering}}, onde cada objeto pertence ou não a um grupo; \textbf{\textit{fuzzy clustering}}, onde cada objeto pertence uma certa porcentagem a cada grupo, o que pode representar, por exemplo, a chance do objeto pertencer àquele grupo, ou até o grau de semelhança do datapoint comparado aos outros datapoints de cada grupo \cite{FuzzyClusteringSurvey}. E subclassificações ainda mais granulares podem ser definidas, como: \textbf{clusterização de particionamento estrito}, onde cada objeto pertence a exatamente um cluster; \textbf{clusterização de particionamento estrito com \textit{outliers}}, onde objetos pertencem a exatamente um cluster, ou nenhum cluster, assim sendo considerados \textit{outliers}, entre outras classificações.
 
 Os algoritmos de agrupamento são essenciais na análise de dados, permitindo a identificação de padrões e estruturas em conjuntos de dados não rotulados. Eles pertencem à categoria de \textbf{algoritmos de aprendizado não supervisionado} e são amplamente utilizados em diversas áreas da computação, matemática, economia, estatística, dentre outras. A paralelização desses algoritmos visa melhorar a eficiência computacional, permitindo o processamento mais rápido de grandes volumes de dados.
+
+\begin{figure}[h]
+  \caption{Demonstração de algoritmos de agrupamento em datasets variados}
+  \centering
+  \includegraphics[width=0.95\textwidth]{clusteringExamplesScikitLearn.png}
+  \label{fig:clusteringExamples}
+\end{figure}
+
+Diversos algoritmos de agrupamento existem, como exemplificados na Figura \ref{fig:clusteringExamples}, e todos possuem vantagens e desvantagens quanto à eficiência de seus resultados para diferentes tipos de conjuntos de dados, além de diferentes complexidades computacionais e tempos de execução.
 
 
 
@@ -528,7 +537,7 @@ O desenvolvimento do algoritmo k-means não parou com essas contribuições inic
 A importância histórica e a evolução contínua do k-means mostram seu valor duradouro na análise de dados e machine learning. Desde sua concepção, o algoritmo não só inspirou avanços na teoria matemática, mas também provou ser uma ferramenta indispensável na era moderna da computação, especialmente em aplicações de 
 agrupamento de dados em larga escala.
 
-O k-means foi o escolhido como foco desse trabalho por ser, até na modernidade, um algoritmo extremamente utilizado na prática, mesmo com suas limitações, além de ter uma implementação inicialmente simples e de possuir uma estrutura mais amigável para a paralelização.
+O k-means foi o escolhido como foco desse trabalho por ser, até na modernidade, um algoritmo extremamente utilizado na prática, mesmo com suas limitações, além de ter uma implementação inicialmente simples e de possuir uma estrutura amigável para a paralelização.
 
 % * ##########################
 
