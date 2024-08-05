@@ -7,6 +7,6 @@ notebook~=6.5
 numba~=0.59
 pandas~=2.0
 scikit-learn~=1.2
-setuptools~=65.5
+setuptools~=70.0
 uri-template~=1.2
 webcolors~=1.13
